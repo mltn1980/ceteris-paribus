@@ -34,6 +34,7 @@ header .sub{font-weight:300;color:rgba(247,245,240,0.6);max-width:600px;margin:0
 nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:4px;padding:10px 20px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 nav a{white-space:nowrap;padding:6px 16px;border-radius:6px;font-size:0.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all 0.15s;}
 nav a:hover{background:var(--surface2);color:var(--text);}
+nav a.active {background: var(--surface2);color: var(--green);}
 main{max-width:1000px;margin:0 auto;padding:40px 24px 72px;}
 .section-label{display:flex;align-items:center;gap:10px;margin:40px 0 18px;padding-bottom:8px;border-bottom:2px solid var(--border);}
 .section-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
@@ -279,7 +280,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <div class="about">
             <p>Para consultas, colaboraciones o propuestas comerciales:</p>
             <p><strong>Email:</strong> contacto@ceterisparibus-uy.com</p>
-            <p>Montevideo, Uruguay <span style="font-size:1.1em;">🇺🇾</span></p>
+            <p>Montevideo, Uruguay 🇺🇾 </p>
         </div>
 </main>
 <footer>
@@ -288,5 +289,27 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 <!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a68ce16539eb4039834b5be25208c526"}'></script><!-- End Cloudflare Web Analytics -->
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+    const sections = document.querySelectorAll("main .section-label");
+    const navLinks = document.querySelectorAll("nav a");
+
+    window.addEventListener("scroll", () => {
+        let current = "";
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (scrollY >= sectionTop) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>
  </body>
 </html>
