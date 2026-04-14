@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maíz Mundial y Uruguay 2025/26 — USDA Abril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0A0D0A;
+  --bg2:     #111811;
+  --bg3:     #182018;
+  --edge:    rgba(255,255,255,0.07);
+  --edge2:   rgba(255,255,255,0.13);
+  --txt:     #D4E4D4;
+  --txt2:    #7A9A7A;
+  --txt3:    #3A5A3A;
+  --gold:    #F5C842;
+  --gold-bg: rgba(245,200,66,0.08);
+  --red:     #FF5A5A;
+  --red-bg:  rgba(255,90,90,0.08);
+  --green:   #4CC97A;
+  --grn-bg:  rgba(76,201,122,0.08);
+  --white:   #EEFAEE;
+  --corn:    #F5C842;
+  --corn2:   #E8A800;
+  --corn-bg: rgba(245,200,66,0.08);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:16px;
+  line-height:1.75;
+}
+
+/* ─── TICKER BAR ─── */
+.ticker {
+  background:var(--corn);
+  overflow:hidden;
+  height:34px;
+  display:flex;
+  align-items:center;
+}
+.ticker-inner {
+  display:flex;
+  gap:0;
+  animation:tick 30s linear infinite;
+  white-space:nowrap;
+}
+@keyframes tick {
+  0%   { transform:translateX(0); }
+  100% { transform:translateX(-50%); }
+}
+.ticker-item {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;font-weight:600;
+  color:#0A0D0A;
+  padding:0 32px;
+  border-right:1px solid rgba(0,0,0,0.15);
+  display:flex;align-items:center;gap:8px;height:34px;
+}
+.ticker-item .sep { opacity:.4; }
+
+/* ─── HERO ─── */
+.hero {
+  background:var(--bg2);
+  border-bottom:1px solid var(--edge2);
+  padding:72px 48px 0;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after {
+  content:'MAÍZ';
+  font-family:'Bebas Neue',sans-serif;
+  font-size:340px;
+  color:rgba(245,200,66,0.04);
+  position:absolute;
+  right:-20px;bottom:-60px;
+  line-height:1;pointer-events:none;user-select:none;
+  letter-spacing:-.02em;
+}
+.hero-top {
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;
+  gap:48px;align-items:end;
+  position:relative;z-index:1;
+}
+@media(max-width:700px){ .hero-top{grid-template-columns:1fr;} }
+.hero-tag {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--corn);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-tag::before{content:'▶';font-size:8px;opacity:.6;}
+.hero h1 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(64px,8vw,110px);
+  line-height:.92;color:var(--white);
+  letter-spacing:.01em;
+}
+.hero h1 span { color:var(--corn); }
+.hero-sub {
+  font-size:16px;font-style:italic;font-weight:300;
+  color:var(--txt2);margin-top:12px;
+}
+.hero-kpis {
+  display:flex;flex-direction:column;
+  gap:0;min-width:220px;
+  border-left:1px solid var(--edge);
+  padding-left:36px;
+}
+.hk { padding:14px 0;border-bottom:1px solid var(--edge); }
+.hk:last-child{border-bottom:none;}
+.hk-l {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--corn);margin-bottom:5px;
+}
+.hk-v {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:38px;color:var(--white);line-height:1;
+}
+.hk-d {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;font-weight:600;margin-top:4px;
+}
+.dup{color:var(--green);}
+.ddn{color:var(--red);}
+.dne{color:var(--corn);}
+
+/* ─── STAT STRIP ─── */
+.stat-strip {
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;
+  border-top:1px solid var(--edge2);
+  border-left:1px solid var(--edge2);
+  position:relative;z-index:1;
+  margin-top:48px;
+}
+.ss {
+  padding:22px 20px;
+  border-right:1px solid var(--edge2);
+  border-bottom:1px solid var(--edge2);
+}
+.ss-l{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--corn);margin-bottom:7px;}
+.ss-v{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--white);line-height:1;}
+.ss-u{font-size:11px;color:var(--txt2);margin-top:3px;}
+.ss-d{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;margin-top:6px;}
+@media(max-width:800px){ .stat-strip{grid-template-columns:1fr 1fr;} }
+@media(max-width:480px){ .stat-strip{grid-template-columns:1fr;} }
+
+/* ─── NAV ─── */
+.nav {
+  background:var(--bg2);
+  border-bottom:1px solid var(--edge2);
+  position:sticky;top:0;z-index:100;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav ul{max-width:1100px;margin:0 auto;padding:0 48px;display:flex;list-style:none;}
+.nav a {
+  display:block;padding:13px 16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--txt2);text-decoration:none;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .15s,border-color .15s;
+}
+.nav a:hover{color:var(--corn);border-bottom-color:var(--corn);}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 48px;}
+@media(max-width:600px){.wrap{padding:0 18px;}}
+section{padding:68px 0;border-bottom:1px solid var(--edge);}
+section:last-of-type{border-bottom:none;}
+
+/* ─── SECTION HEADER ─── */
+.sh {
+  display:grid;grid-template-columns:auto 1fr;
+  gap:0;margin-bottom:40px;
+}
+.sh-num {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:80px;color:var(--corn-bg);
+  border-right:2px solid var(--corn);
+  line-height:1;padding-right:24px;margin-right:24px;
+  letter-spacing:.02em;
+  /* inlined color override for actual text */
+  -webkit-text-stroke:1px rgba(245,200,66,0.25);
+}
+.sh-inner { padding-top:8px; }
+.sh-tag {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--corn);margin-bottom:8px;
+}
+.sh-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(26px,3.5vw,42px);
+  color:var(--white);line-height:1.1;letter-spacing:.02em;
+}
+
+/* ─── GRIDS ─── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:800px){.g2,.g3{grid-template-columns:1fr;}.g4{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.g4{grid-template-columns:1fr;}}
+
+/* ─── TEXT ─── */
+p{font-size:15.5px;color:var(--txt2);font-weight:300;margin-bottom:.85em;line-height:1.78;}
+p strong{color:var(--txt);font-weight:600;}
+h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;color:var(--corn);
+  letter-spacing:.04em;margin:26px 0 10px;
+}
+h3:first-child{margin-top:0;}
+.lede{
+  font-size:17px;font-style:italic;font-weight:300;
+  color:var(--txt);line-height:1.65;
+  border-left:3px solid var(--corn);
+  padding-left:18px;margin-bottom:28px;
+}
+
+/* ─── CARDS ─── */
+.card{
+  background:var(--bg2);border:1px solid var(--edge);
+  padding:22px;
+}
+.card.corn-top{border-top:2px solid var(--corn);}
+.card.red-top{border-top:2px solid var(--red);}
+.card.grn-top{border-top:2px solid var(--green);}
+
+/* ─── KPI CARDS ─── */
+.kc{
+  background:var(--bg2);border:1px solid var(--edge);
+  padding:20px;position:relative;
+}
+.kc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--corn);
+}
+.kc.red::before{background:var(--red);}
+.kc.grn::before{background:var(--green);}
+.kc-l{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--corn);margin-bottom:9px;
+}
+.kc.red .kc-l{color:var(--red);}
+.kc.grn .kc-l{color:var(--green);}
+.kc-v{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:44px;color:var(--white);line-height:1;
+}
+.kc-u{font-size:12px;color:var(--txt2);margin-top:3px;}
+.kc-d{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;margin-top:9px;}
+
+/* ─── PANELS ─── */
+.panel{
+  background:var(--corn-bg);
+  border:1px solid rgba(245,200,66,.15);
+  border-left:3px solid var(--corn);
+  padding:20px 24px;margin:22px 0;
+}
+.panel.red{background:var(--red-bg);border-color:rgba(255,90,90,.15);border-left-color:var(--red);}
+.panel.grn{background:var(--grn-bg);border-color:rgba(76,201,122,.15);border-left-color:var(--green);}
+.panel p{margin:0;font-size:14.5px;}
+
+/* ─── ALERT ─── */
+.alrt{
+  background:var(--red-bg);
+  border:1px solid rgba(255,90,90,.25);
+  padding:22px 26px;margin:24px 0;
+}
+.alrt-h{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--red);
+  margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.alrt-h::before{content:'⚠';}
+.alrt p{margin:0;font-size:14.5px;}
+
+/* ─── TABLES ─── */
+.dt{width:100%;border-collapse:collapse;margin:18px 0;}
+.dt thead{border-bottom:1px solid var(--corn);}
+.dt th{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--corn);padding:10px 12px;text-align:left;
+  background:var(--corn-bg);
+}
+.dt td{
+  padding:9px 12px;font-size:14.5px;
+  border-bottom:1px solid var(--edge);
+  color:var(--txt2);font-weight:300;
+}
+.dt tr:hover td{background:rgba(245,200,66,0.03);}
+.dt td.n{font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;}
+.dt td.pos{color:var(--green);font-weight:600;}
+.dt td.neg{color:var(--red);font-weight:600;}
+.dt td.b{font-weight:600;color:var(--txt);font-size:15px;}
+.dt td.ne{color:var(--corn);font-weight:600;}
+.dt tr.hl td{background:rgba(245,200,66,0.05);}
+.dt tr.hl td.neg{color:var(--red);}
+.dt tr.tot td{
+  background:rgba(245,200,66,0.1);
+  border-top:1px solid var(--corn);
+  font-weight:700;color:var(--white);font-size:15px;
+}
+
+/* ─── BARS ─── */
+.bars{margin:18px 0;}
+.bar-r{
+  display:grid;grid-template-columns:148px 1fr 95px;
+  align-items:center;gap:12px;margin-bottom:8px;
+}
+.bar-l{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt2);text-align:right;}
+.bar-t{height:9px;background:var(--bg3);border-radius:1px;overflow:hidden;}
+.bar-f{height:100%;border-radius:1px;background:var(--corn);}
+.bar-f.g{background:var(--green);}
+.bar-f.r{background:var(--red);}
+.bar-f.d{background:rgba(245,200,66,.28);}
+.bar-v{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt);}
+
+/* ─── PRICE TABLE ─── */
+.price-row{
+  display:grid;grid-template-columns:130px 1fr 75px 60px;
+  align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--edge);
+}
+.price-row:last-child{border-bottom:none;}
+.pr-n{font-size:13.5px;font-weight:600;color:var(--txt);}
+.pr-bar{height:8px;background:var(--bg3);border-radius:1px;overflow:hidden;}
+.pr-bar-f{height:100%;border-radius:1px;}
+.pr-v{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;font-weight:600;}
+.pr-d{font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:right;}
+
+/* ─── DIVIDER ─── */
+.div{
+  display:flex;align-items:center;gap:12px;margin:26px 0;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--txt3);
+}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--edge);}
+
+/* ─── CHART ─── */
+.chart-wrap{position:relative;width:100%;}
+.chart-legend{
+  display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt2);
+}
+.cleg{display:flex;align-items:center;gap:6px;}
+.cleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+/* ─── BIG QUOTE ─── */
+.bq{
+  background:var(--bg2);border-left:4px solid var(--corn);
+  padding:28px 34px;margin:30px 0;
+}
+.bq p{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:18px;font-style:italic;font-weight:300;
+  color:var(--txt);line-height:1.6;margin:0 0 12px;
+}
+.bq cite{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--corn);font-style:normal;
+}
+
+/* ─── CONCLUSIONS ─── */
+.con{
+  background:var(--bg2);border:1px solid var(--edge);
+  padding:26px;position:relative;overflow:hidden;
+}
+.con::after{
+  content:attr(data-n);
+  font-family:'Bebas Neue',sans-serif;font-size:100px;
+  color:rgba(245,200,66,0.05);
+  position:absolute;bottom:-14px;right:12px;
+  line-height:1;pointer-events:none;
+}
+.con-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--corn);margin-bottom:10px;
+}
+.con-h{
+  font-family:'Bebas Neue',sans-serif;font-size:21px;
+  letter-spacing:.03em;color:var(--white);
+  margin-bottom:12px;line-height:1.2;max-width:96%;
+}
+.con-b{font-size:14px;color:var(--txt2);line-height:1.8;}
+.con-b strong{color:var(--txt);font-weight:600;}
+
+/* ─── FN ─── */
+.fn{font-size:11.5px;color:var(--txt3);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--edge);line-height:1.65;}
+.mt16{margin-top:16px;}.mt24{margin-top:24px;}.mt32{margin-top:32px;}
+
+/* ─── FOOTER ─── */
+footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px;}
+.fi{
+  max-width:1100px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+}
+.fi-brand{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em;color:var(--white);}
+.fi-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--txt3);text-align:right;line-height:2;}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item">🌽 MAÍZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN RÉCORD 1,301 MMT <span class="sep">+5.7%</span></div>
+    <div class="ticker-item">🇺🇸 EE.UU. 432.3 MMT <span class="sep">+14.3%</span></div>
+    <div class="ticker-item">🇧🇷 BRASIL 132 MMT <span class="sep">−2.9%</span></div>
+    <div class="ticker-item">🇦🇷 ARGENTINA 52 MMT <span class="sep">+4%</span></div>
+    <div class="ticker-item">🇺🇾 URUGUAY 1.2 MMT <span class="sep">−38%</span></div>
+    <div class="ticker-item">FOB ARG US$209/T <span class="sep">·</span> FOB BRA US$225/T <span class="sep">·</span> FOB EE.UU. US$217/T</div>
+    <div class="ticker-item">🇺🇾 EXPORTACIONES UY 2025/26 = CERO <span class="sep">·</span> REVERTIDO DESDE 300K TMM</div>
+    <div class="ticker-item">🌽 MAÍZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN RÉCORD 1,301 MMT <span class="sep">+5.7%</span></div>
+    <div class="ticker-item">🇺🇸 EE.UU. 432.3 MMT <span class="sep">+14.3%</span></div>
+    <div class="ticker-item">🇧🇷 BRASIL 132 MMT <span class="sep">−2.9%</span></div>
+    <div class="ticker-item">🇦🇷 ARGENTINA 52 MMT <span class="sep">+4%</span></div>
+    <div class="ticker-item">🇺🇾 URUGUAY 1.2 MMT <span class="sep">−38%</span></div>
+    <div class="ticker-item">FOB ARG US$209/T <span class="sep">·</span> FOB BRA US$225/T <span class="sep">·</span> FOB EE.UU. US$217/T</div>
+    <div class="ticker-item">🇺🇾 EXPORTACIONES UY 2025/26 = CERO <span class="sep">·</span> REVERTIDO DESDE 300K TMM</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-top">
+    <div>
+      <p class="hero-tag">USDA · FAS/ERS · Informes Abril 2026 · WASDE-584</p>
+      <h1>MAÍZ<br><span>2025/26</span></h1>
+      <p class="hero-sub">Mercado mundial en récord histórico — Uruguay en mínimos por sequía</p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hk">
+        <div class="hk-l">Producción mundial</div>
+        <div class="hk-v">1,301</div>
+        <p style="font-size:11px;color:var(--txt2);margin:2px 0 4px;">MMT · Récord absoluto</p>
+        <div class="hk-d dup">▲ +5.7% vs. 2024/25</div>
+      </div>
+      <div class="hk">
+        <div class="hk-l">Uruguay 2025/26</div>
+        <div class="hk-v">1.2</div>
+        <p style="font-size:11px;color:var(--txt2);margin:2px 0 4px;">MMT · Sequía severa</p>
+        <div class="hk-d ddn">▼ −38% · Exportaciones: 0</div>
+      </div>
+      <div class="hk">
+        <div class="hk-l">FOB Argentina (7 abr)</div>
+        <div class="hk-v">$209</div>
+        <p style="font-size:11px;color:var(--txt2);margin:2px 0 4px;">US$/ton · Origen más barato</p>
+        <div class="hk-d ddn">▼ −5% vs. abr 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="ss">
+      <div class="ss-l">EE.UU. 2025/26</div>
+      <div class="ss-v">432</div>
+      <div class="ss-u">MMT · +14.3%</div>
+      <div class="ss-d dup">▲ Mayor aumento del mundo</div>
+    </div>
+    <div class="ss">
+      <div class="ss-l">Brasil 2025/26</div>
+      <div class="ss-v">132</div>
+      <div class="ss-u">MMT · −2.9%</div>
+      <div class="ss-d ddn">▼ Baja pero sobre promedio 5 años</div>
+    </div>
+    <div class="ss">
+      <div class="ss-l">China 2025/26</div>
+      <div class="ss-v">301</div>
+      <div class="ss-u">MMT · +2.1%</div>
+      <div class="ss-d dup">▲ 2° productor mundial</div>
+    </div>
+    <div class="ss">
+      <div class="ss-l">India 2025/26</div>
+      <div class="ss-v">46.2</div>
+      <div class="ss-u">MMT · Mayor alza rel. (+9.3%)</div>
+      <div class="ss-d dup">▲ +3.9 vs. 2024/25</div>
+    </div>
+    <div class="ss">
+      <div class="ss-l">Uruguay — Área cosechada</div>
+      <div class="ss-v">250K</div>
+      <div class="ss-u">Ha · vs 289K intención DIEA</div>
+      <div class="ss-d ddn">▼ −7% vs. mes anterior</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <ul>
+    <li><a href="#mundial">Mundial</a></li>
+    <li><a href="#eeuu">EE.UU.</a></li>
+    <li><a href="#sudamerica">Sudamérica</a></li>
+    <li><a href="#precios">Precios FOB</a></li>
+    <li><a href="#comercio">Comercio</a></li>
+    <li><a href="#uruguay">Uruguay</a></li>
+    <li><a href="#diea">Datos DIEA</a></li>
+    <li><a href="#perspectiva">Perspectiva</a></li>
+    <li><a href="#conclusiones">Conclusiones</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ 01 PRODUCCIÓN MUNDIAL ═══ -->
+<section id="mundial">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">01</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Producción global 2025/26</p>
+        <h2 class="sh-title">Récord histórico mundial: 1,301 MMT — el mayor salto en una década</h2>
+      </div>
+    </div>
+
+    <p class="lede">La producción mundial de maíz 2025/26 alcanza <strong>1,301 MMT</strong>, el nivel más alto de la historia, superando los 1,231 MMT de los dos años anteriores. El crecimiento es de +69.7 MMT (+5.7%) en un solo ciclo, impulsado principalmente por EE.UU. (+54 MMT) y en menor medida por India, China y países africanos.</p>
+
+    <div class="g2">
+      <div>
+        <h3>¿Qué explica el récord?</h3>
+        <p>La expansión es genuinamente amplia: múltiples países crecen simultáneamente. EE.UU. lidera con una recuperación de <strong>+54 MMT</strong> tras la baja de 2024/25, volviendo a condiciones climáticas favorables en el Corn Belt. India sorprende con <strong>+3.9 MMT</strong> (+9.3%) gracias a mayor área y rendimientos sostenidos. Sudáfrica suma <strong>+0.03 MMT</strong> adicionales a su ya elevada cosecha del año anterior. Indonesia expande área a niveles récord (+0.3 MMT). China crece modestamente +6.3 MMT (+2.1%).</p>
+        <p>Las únicas caídas significativas son Brasil (−4 MMT, −2.9%, aunque sigue muy por encima del promedio histórico), la Unión Europea (−2.8 MMT, −4.7% por condiciones climáticas adversas en el Danubio), y Uruguay (−0.75 MMT, −38% por sequía severa).</p>
+        <p>Los granos gruesos en total alcanzan <strong>1,598 MMT</strong>, también récord, con el maíz representando más del 81% del total. El consumo mundial proyectado asciende a 1,288 MMT, generando un <strong>superávit de ~13 MMT</strong> que va a existencias.</p>
+      </div>
+      <div>
+        <h3>Producción vs. consumo mundial</h3>
+        <div class="chart-wrap" style="height:220px;">
+          <canvas id="worldChart"></canvas>
+        </div>
+        <div class="chart-legend" id="worldLeg"></div>
+
+        <div class="panel mt24">
+          <p>El resultado es un <strong>mercado sobreabastecido</strong> en 2025/26. Las existencias finales mundiales de maíz se proyectan en <strong>294.8 MMT</strong>, casi estables respecto a los 296.3 MMT de 2024/25. EE.UU. eleva sus stocks finales a <strong>54 MMT</strong> (+15 MMT vs. año anterior), un máximo histórico impulsado en parte por el informe NASS Grain Stocks de marzo que registró récord de existencias en todas las posiciones.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">Producción de maíz por país · Miles de TM · USDA WAP Abril 2026</div>
+
+    <table class="dt">
+      <thead>
+        <tr>
+          <th>País / Región</th>
+          <th class="n">Área Cosechada (Mha)</th>
+          <th class="n">Rendimiento (t/ha)</th>
+          <th class="n">2023/24</th>
+          <th class="n">2024/25</th>
+          <th class="n">2025/26 Mar</th>
+          <th class="n">2025/26 Abr</th>
+          <th class="n">Δ anual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tot"><td>🌍 World Total</td><td class="n">211.95</td><td class="n">6.14</td><td class="n">1,231.1</td><td class="n">1,231.4</td><td class="n">1,297.4</td><td class="n">1,301.1</td><td class="n pos">+5.7%</td></tr>
+        <tr><td class="b">🇺🇸 EE.UU.</td><td class="n">36.93</td><td class="n">11.71</td><td class="n">389.7</td><td class="n">378.3</td><td class="n">432.3</td><td class="n">432.3</td><td class="n pos">+14.3%</td></tr>
+        <tr><td class="b">🇨🇳 China</td><td class="n">44.96</td><td class="n">6.70</td><td class="n">288.8</td><td class="n">294.9</td><td class="n">301.2</td><td class="n">301.2</td><td class="n pos">+2.1%</td></tr>
+        <tr><td class="b">🇧🇷 Brasil</td><td class="n">22.80</td><td class="n">5.79</td><td class="n">119.0</td><td class="n">136.0</td><td class="n">132.0</td><td class="n">132.0</td><td class="n neg">−2.9%</td></tr>
+        <tr><td class="b">🇦🇷 Argentina</td><td class="n">7.50</td><td class="n">6.93</td><td class="n">51.6</td><td class="n">50.0</td><td class="n">52.0</td><td class="n">52.0</td><td class="n pos">+4.0%</td></tr>
+        <tr><td class="b">🇺🇦 Ucrania</td><td class="n">4.37</td><td class="n">7.03</td><td class="n">32.5</td><td class="n">26.8</td><td class="n">30.7</td><td class="n">30.7</td><td class="n pos">+14.6%</td></tr>
+        <tr><td class="b">🇮🇳 India</td><td class="n">13.00</td><td class="n">3.55</td><td class="n">37.7</td><td class="n">42.3</td><td class="n">43.0</td><td class="n">46.2</td><td class="n pos">+9.3%</td></tr>
+        <tr><td class="b">🇲🇽 México</td><td class="n">6.70</td><td class="n">3.84</td><td class="n">23.6</td><td class="n">23.1</td><td class="n">25.7</td><td class="n">25.7</td><td class="n pos">+11.3%</td></tr>
+        <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">8.19</td><td class="n">6.94</td><td class="n">62.0</td><td class="n">59.6</td><td class="n">57.0</td><td class="n">56.8</td><td class="n neg">−4.7%</td></tr>
+        <tr><td class="b">🇿🇦 Sudáfrica</td><td class="n">3.08</td><td class="n">5.63</td><td class="n">13.4</td><td class="n">17.3</td><td class="n">16.5</td><td class="n">17.3</td><td class="n pos">+0.2%</td></tr>
+        <tr><td class="b">🇮🇩 Indonesia</td><td class="n">3.55</td><td class="n">3.75</td><td class="n">12.7</td><td class="n">13.1</td><td class="n">13.0</td><td class="n">13.3</td><td class="n pos">+1.5%</td></tr>
+        <tr class="hl"><td class="b">🇺🇾 Uruguay</td><td class="n">0.25</td><td class="n neg">4.80</td><td class="n">0.8</td><td class="n">1.95</td><td class="n">1.80</td><td class="n neg">1.20</td><td class="n neg">−38.5%</td></tr>
+      </tbody>
+    </table>
+    <p class="fn">Fuente: USDA FAS — World Agricultural Production, Tabla 04, Abril 2026. Columnas Mar/Abr muestran revisiones del WASDE-584 vs. mes anterior. Uruguay sufre el mayor recorte porcentual de todos los países incluidos en la tabla.</p>
+  </div>
+</section>
+
+<!-- ═══ 02 EE.UU. ═══ -->
+<section id="eeuu">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">02</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Estados Unidos · El motor del crecimiento</p>
+        <h2 class="sh-title">EE.UU.: +54 MMT en un año — recuperación del Corn Belt</h2>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div>
+        <h3>La recuperación más grande del ciclo</h3>
+        <p>EE.UU. produce <strong>432.3 MMT</strong> en 2025/26, el mayor salto interanual de cualquier país en el ciclo: +54 MMT (+14.3%) respecto a los 378.3 MMT de 2024/25. El crecimiento se apoya en expansión de área (36.93 Mha, la mayor en años recientes) y rendimientos de <strong>11.71 t/ha</strong>, reflejando condiciones climáticas favorables en el Corn Belt durante la campaña.</p>
+        <p>El precio de temporada proyectado para el maíz americano es de <strong>$4.15/bushel</strong> (revisado +5¢ en el WASDE de abril), el precio más bajo en varios años dado el excedente masivo. Las existencias finales americanas alcanzan <strong>54 MMT</strong>, prácticamente el máximo histórico.</p>
+        <p>El informe NASS Grain Stocks del 31 de marzo registró <strong>stocks en todas las posiciones en nivel récord al 1° de marzo</strong>, lo que presionó los precios americanos a la baja en el período. El buen inicio de la siembra de maíz 2026/27 en las condiciones actuales también contribuye a mantener la presión sobre los precios.</p>
+      </div>
+      <div>
+        <h3>Balance oferta-uso EE.UU.</h3>
+        <div style="background:var(--bg2);border:1px solid var(--edge);padding:0;overflow:hidden;">
+          <div style="background:var(--bg3);padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--corn);">EE.UU. MAÍZ 2025/26 (MMT)</div>
+          <div style="padding:2px 0;">
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Stocks iniciales</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;">39.4</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Producción</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);">432.3</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Importaciones</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;">0.7</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;background:rgba(245,200,66,0.04);font-weight:700;"><span style="color:var(--txt);">Oferta total</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--white);">472.4</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Exportaciones</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;">82.0</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Uso doméstico total</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;">334.5</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 18px;font-size:14px;background:rgba(245,200,66,0.04);font-weight:700;"><span style="color:var(--txt);">Stocks finales</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);">54.0 ← Récord</span></div>
+          </div>
+        </div>
+        <p class="fn mt16">Fuente: USDA WAP Tabla 01 + Grain WMT resumen Apr 2026. Precio temporada: $4.15/bu (+5¢ vs. mar).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 03 SUDAMÉRICA ═══ -->
+<section id="sudamerica">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">03</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Sudamérica · Grandes productores</p>
+        <h2 class="sh-title">Sudamérica: Brasil baja pero sigue sobre su media; Argentina y Uruguay divergen</h2>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card corn-top">
+        <h3 style="margin-bottom:12px;">🇧🇷 Brasil — 132 MMT</h3>
+        <p>Brasil produce <strong>132 MMT</strong> en 2025/26, una caída de 4 MMT (−2.9%) respecto al récord de 136 MMT del año anterior. Sin embargo, esta cifra sigue siendo un <strong>11% superior al promedio de los últimos 5 años</strong>, lo que pone la "caída" en perspectiva: sigue siendo una cosecha excepcional.</p>
+        <p>El área cosechada sube a un récord de <strong>22.8 Mha</strong> (+2%), pero el rendimiento baja ligeramente a 5.79 t/ha (vs. 6.10 el año anterior). La demora en la siembra del maíz safrinha —segunda cosecha que representa >75% de la producción anual— en Goiás y Mato Grosso do Sul fue la principal fuente de incertidumbre, aunque Mato Grosso (casi la mitad del safrinha) sembró normalmente.</p>
+        <div class="panel mt16"><p><strong>Brasil como exportador:</strong> las exportaciones de maíz de Brasil se proyectan en <strong>~39 MMT</strong> para 2025/26, manteniéndolo como el segundo exportador mundial. El FOB Paranaguá cotiza $225/ton (−$4 vs. marzo), competitivo pero por encima de Argentina.</p></div>
+      </div>
+      <div class="card corn-top">
+        <h3 style="margin-bottom:12px;">🇦🇷 Argentina — 52 MMT</h3>
+        <p>Argentina produce <strong>52 MMT</strong> en 2025/26, recuperando el nivel de 2023/24 (51.6 MMT) tras una leve baja en 2024/25 (50 MMT). El área cosechada sube a 7.5 Mha (+0.6 Mha) con rendimiento de 6.93 t/ha.</p>
+        <p>El FOB Argentina Up River cotiza <strong>$209/ton</strong>, el precio más competitivo entre los grandes exportadores mundiales. Este diferencial está impulsando la demanda hacia Argentina en el Sudeste Asiático y en el mercado forrajero europeo donde el trigo argentino también compite.</p>
+        <p>Argentina exporta principalmente en el período noviembre-abril cuando su cosecha sale al mercado, precisamente en la temporada de menor disponibilidad del hemisferio norte. Su posición geográfica en el Mar del Plata y acceso a Hidrovía facilita embarques eficientes.</p>
+      </div>
+      <div class="card red-top">
+        <h3 style="margin-bottom:12px;">🇺🇾 Uruguay — 1.2 MMT</h3>
+        <p>Uruguay produce <strong>1.2 MMT</strong> en 2025/26, una caída del <strong>38.5%</strong> respecto a los 1.95 MMT del año anterior. El rendimiento colapsa a <strong>4.80 t/ha</strong> (vs. 6.75 t/ha en 2024/25), consecuencia directa de la sequía de febrero-marzo 2026.</p>
+        <p>El USDA WAP señala explícitamente que <strong>"una porción significativa del cultivo 2025/26 probablemente no sea cosechada para grano"</strong>. Productores en zonas afectadas optaron por cosechar para silaje o usar los campos como pastoreo directo del ganado.</p>
+        <div class="alrt mt16">
+          <p class="alrt-h">Exportaciones eliminadas</p>
+          <p>Las exportaciones de maíz uruguayo fueron revisadas de las <strong>300.000 TM proyectadas en marzo a cero en abril 2026</strong>. Con solo 1.2 MMT de producción y demanda doméstica (ganadería, avicultura, porcicultura), no queda saldo exportable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 PRECIOS FOB ═══ -->
+<section id="precios">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">04</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Precios internacionales · FOB 7 de abril 2026</p>
+        <h2 class="sh-title">Precios: Argentina lidera competitividad con $209/ton, EE.UU. bajo presión</h2>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div>
+        <h3>Estructura de precios FOB</h3>
+        <div class="mt16">
+          <div class="price-row">
+            <span class="pr-n">🇦🇷 Argentina</span>
+            <div class="pr-bar"><div class="pr-bar-f" style="width:96%;height:100%;background:var(--green);"></div></div>
+            <span class="pr-v" style="color:var(--green);">$209</span>
+            <span class="pr-d dup">+$1 vs. mar</span>
+          </div>
+          <div class="price-row">
+            <span class="pr-n">🇺🇸 EE.UU. (3YC)</span>
+            <div class="pr-bar"><div class="pr-bar-f" style="width:100%;height:100%;background:var(--corn);"></div></div>
+            <span class="pr-v" style="color:var(--corn);">$217</span>
+            <span class="pr-d ddn">−$4 vs. mar</span>
+          </div>
+          <div class="price-row">
+            <span class="pr-n">🇺🇦 Ucrania</span>
+            <div class="pr-bar"><div class="pr-bar-f" style="width:104%;height:100%;background:rgba(245,200,66,.45);"></div></div>
+            <span class="pr-v">$227</span>
+            <span class="pr-d dup">+$2 vs. mar</span>
+          </div>
+          <div class="price-row">
+            <span class="pr-n">🇧🇷 Brasil</span>
+            <div class="pr-bar"><div class="pr-bar-f" style="width:108%;height:100%;background:rgba(245,200,66,.3);"></div></div>
+            <span class="pr-v">$225</span>
+            <span class="pr-d ddn">−$4 vs. mar</span>
+          </div>
+        </div>
+        <p class="fn">Fuente: International Grains Council / USDA FAS Grain WMT Abr. 2026. Argentina Up River; EE.UU. Gulf No.3 Yellow Corn; Ucrania Black Sea; Brasil Paranaguá.</p>
+      </div>
+      <div>
+        <h3>Análisis de la estructura de precios</h3>
+        <p>Argentina mantiene la posición más competitiva con <strong>$209/ton</strong>, seguida de cerca por EE.UU. ($217/ton, −$4 en el mes tras el récord de stocks NASS). La diferencia de $8/ton entre Argentina y EE.UU. es relativamente pequeña en términos históricos, pero en un mercado con excedentes significativos es suficiente para que los compradores asiáticos y europeos prefieran el origen sudamericano.</p>
+        <p>Brasil cotiza $225/ton, por encima de EE.UU. Esto refleja los costos de logística del interior brasileño hacia los puertos y la apreciación relativa del real. Ucrania a $227/ton sigue siendo competitiva para sus mercados naturales (Europa, Medio Oriente) dada la proximidad geográfica que reduce el flete.</p>
+        <p>Los precios globales permanecen bajo presión por la abundante oferta mundial. El rally de +$1 en Argentina refleja "fuerte demanda exportadora compensando levemente la presión de cosecha". Los compradores están bien abastecidos y negocian con ventaja.</p>
+
+        <div class="panel mt16">
+          <p>Comparando precios actuales vs. abril 2025: Argentina −5% ($209 vs. $219), Brasil +1% ($225 vs. $223), EE.UU. +1.4% ($217 vs. $214). El maíz se negocia en niveles similares o levemente inferiores al año anterior a pesar del récord de producción, lo que confirma que la demanda está creciendo para absorber la oferta adicional.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 05 COMERCIO ═══ -->
+<section id="comercio">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">05</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Flujos comerciales globales</p>
+        <h2 class="sh-title">Comercio: 200.5 MMT proyectados — EE.UU. consolida segundo lugar exportador</h2>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div>
+        <h3>Exportaciones: los grandes flujos</h3>
+        <p>El comercio mundial de maíz se proyecta en <strong>200.5 MMT para 2025/26</strong>, según el resumen del Grain WMT de abril. EE.UU. exporta <strong>82 MMT</strong>, recuperando posiciones respecto a los 75.2 MMT del año anterior. Brasil mantiene el liderazgo global con ~39 MMT. Argentina, Ucrania y Sudáfrica completan el grupo de grandes exportadores.</p>
+        <p>Los cambios más relevantes en las revisiones de abril vs. marzo incluyen: <strong>India +350k TM</strong> (mayor cosecha kharif y fuerte demanda regional), <strong>Sudáfrica +200k TM</strong> (mayor cosecha), <strong>Rusia +300k TM</strong> (datos de embarques y mayor cosecha).</p>
+        <p>Las reducciones incluyen: <strong>Uruguay −300k TM</strong> (sequía, llevado a cero), <strong>Pakistan −300k TM</strong> (mayor uso doméstico), <strong>Indonesia −300k TM importaciones</strong> (mayor producción local a área récord).</p>
+      </div>
+      <div>
+        <h3>Cambios clave revisión Marzo→Abril 2026</h3>
+        <div class="bars mt16">
+          <p style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--corn);margin-bottom:12px;">Revisiones de exportación (000 TM)</p>
+          <div class="bar-r"><span class="bar-l">India exp.</span><div class="bar-t"><div class="bar-f g" style="width:35%"></div></div><span class="bar-v" style="color:var(--green);">+350k</span></div>
+          <div class="bar-r"><span class="bar-l">Rusia exp.</span><div class="bar-t"><div class="bar-f g" style="width:30%"></div></div><span class="bar-v" style="color:var(--green);">+300k</span></div>
+          <div class="bar-r"><span class="bar-l">Sudáfrica exp.</span><div class="bar-t"><div class="bar-f g" style="width:20%"></div></div><span class="bar-v" style="color:var(--green);">+200k</span></div>
+          <div class="bar-r"><span class="bar-l" style="color:var(--red);font-weight:700;">🇺🇾 Uruguay exp.</span><div class="bar-t"><div class="bar-f r" style="width:100%"></div></div><span class="bar-v" style="color:var(--red);font-weight:700;">−300k (=0)</span></div>
+          <div class="bar-r"><span class="bar-l">Pakistan exp.</span><div class="bar-t"><div class="bar-f r" style="width:100%"></div></div><span class="bar-v" style="color:var(--red);">−300k</span></div>
+        </div>
+        <p class="fn">Fuente: USDA FAS — Grain: World Markets and Trade, Tabla de cambios en comercio 2025/26, Abril 2026.</p>
+      </div>
+    </div>
+
+    <div class="div">Exportaciones de maíz · Grandes exportadores · MMT · 2025/26</div>
+    <div class="bars">
+      <div class="bar-r"><span class="bar-l">🇧🇷 Brasil</span><div class="bar-t"><div class="bar-f" style="width:100%"></div></div><span class="bar-v">~39 MMT</span></div>
+      <div class="bar-r"><span class="bar-l">🇺🇸 EE.UU.</span><div class="bar-t"><div class="bar-f" style="width:82%"></div></div><span class="bar-v">~82 MMT ▲</span></div>
+      <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:45%"></div></div><span class="bar-v">~35 MMT</span></div>
+      <div class="bar-r"><span class="bar-l">🇺🇦 Ucrania</span><div class="bar-t"><div class="bar-f d" style="width:34%"></div></div><span class="bar-v">~26 MMT</span></div>
+      <div class="bar-r"><span class="bar-l">🇿🇦 Sudáfrica</span><div class="bar-t"><div class="bar-f d" style="width:7%"></div></div><span class="bar-v">2.3 MMT ▲</span></div>
+      <div class="bar-r"><span class="bar-l" style="color:var(--red);">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f r" style="width:0.1%"></div></div><span class="bar-v" style="color:var(--red);">0 TM ▼</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 URUGUAY DETALLE ═══ -->
+<section id="uruguay">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">06</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Uruguay · Situación 2025/26</p>
+        <h2 class="sh-title">Uruguay: exportaciones a cero, rendimientos en mínimo — la sequía lo explica todo</h2>
+      </div>
+    </div>
+
+    <p class="lede">En un año en que el mundo produce maíz en cantidades récord, Uruguay vive la situación opuesta: producción mínima, rendimientos históricamentw bajos, y exportaciones eliminadas por primera vez en años. La causa es única: la sequía de 80 días entre enero y marzo de 2026.</p>
+
+    <div class="g4">
+      <div class="kc red">
+        <div class="kc-l">Producción 2025/26</div>
+        <div class="kc-v">1.2</div>
+        <div class="kc-u">MMT</div>
+        <div class="kc-d ddn">▼ −38% vs. 2024/25</div>
+      </div>
+      <div class="kc red">
+        <div class="kc-l">Rendimiento</div>
+        <div class="kc-v">4.80</div>
+        <div class="kc-u">t/ha</div>
+        <div class="kc-d ddn">▼ −29% vs. 6.75 t/ha año ant.</div>
+      </div>
+      <div class="kc red">
+        <div class="kc-l">Área cosechada grano</div>
+        <div class="kc-v">250K</div>
+        <div class="kc-u">ha · −7% vs. mes anterior</div>
+        <div class="kc-d ddn">▼ Parte cosechada para silaje</div>
+      </div>
+      <div class="kc red">
+        <div class="kc-l">Exportaciones</div>
+        <div class="kc-v">0</div>
+        <div class="kc-u">TM · (eran 300k proyectadas)</div>
+        <div class="kc-d ddn">▼ −100% · sin saldo exportable</div>
+      </div>
+    </div>
+
+    <div class="g2 mt32">
+      <div>
+        <h3>El mecanismo del daño</h3>
+        <p>El maíz es especialmente vulnerable a la sequía en dos etapas críticas: la <strong>floración/polinización</strong> (cuando la falta de agua impide la formación del grano) y el <strong>llenado de grano</strong> (cuando el déficit hídrico reduce el peso y calidad del grano).</p>
+        <p>La última lluvia significativa en la zona occidental productora fue el <strong>10 de enero de 2026</strong>. El maíz de primera siembra (noviembre-diciembre) estaba en plena floración o inicio de llenado. El maíz de segunda siembra (diciembre-enero) estaba en estadios vegetativos tardíos o inicio de floración. Ambas situaciones son críticas para la definición del rendimiento.</p>
+        <p>El USDA WAP señala dos destinos alternativos para los lotes más afectados: <strong>cosecha para silaje</strong> (en zonas donde el volumen de masa verde aún justifica el costo) o <strong>pastoreo directo del ganado</strong> sobre los rastrojos, eliminando completamente el ingreso por grano pero aprovechando el valor nutritivo del material vegetal para reducir costos de alimentación animal.</p>
+        <p>Estos destinos alternativos tienen implicancias positivas para el sector ganadero: mayor disponibilidad de silaje a menor costo que en años normales puede mejorar la suplementación invernal del rodeo, especialmente relevante en un año donde las pasturas también sufrieron el déficit hídrico.</p>
+      </div>
+      <div>
+        <h3>Serie histórica y contexto</h3>
+        <table class="dt">
+          <thead>
+            <tr><th>Año</th><th class="n">Área (Mha)</th><th class="n">Rend. (t/ha)</th><th class="n">Prod. (MMT)</th><th class="n">Exp. (000 TM)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="b">2021/22</td><td class="n">0.19</td><td class="n">4.87</td><td class="n">0.92</td><td class="n">—</td></tr>
+            <tr><td class="b">2022/23</td><td class="n">0.27</td><td class="n">4.32</td><td class="n">1.17</td><td class="n">127</td></tr>
+            <tr><td class="b">2023/24</td><td class="n">0.17</td><td class="n">4.85</td><td class="n">0.80</td><td class="n">350</td></tr>
+            <tr><td class="b">2024/25</td><td class="n">0.27</td><td class="n">6.75</td><td class="n">1.95</td><td class="n">187</td></tr>
+            <tr class="hl"><td class="b">2025/26 Mar(F)</td><td class="n">0.27</td><td class="n">6.67</td><td class="n">1.80</td><td class="n ne">300</td></tr>
+            <tr class="hl"><td class="b">2025/26 Abr(F)</td><td class="n neg">0.25</td><td class="n neg">4.80</td><td class="n neg">1.20</td><td class="n neg">0</td></tr>
+          </tbody>
+        </table>
+        <p class="fn">Fuente: USDA WAP Abr. 2026, Tabla 04; Grain WMT Abr. 2026, tabla de cambios. La revisión de marzo a abril implica −600k TM de producción (−33%) y −300k TM de exportaciones (−100%). El rendimiento de 4.80 t/ha es el más bajo de la serie mostrada.</p>
+
+        <div class="bq mt24">
+          <p>"Teniendo en cuenta la situación climática, es muy probable que parte de la superficie sembrada de maíz que inicialmente se registró con destino a grano seco, cambie de destino para la encuesta de invierno 2026."</p>
+          <cite>MGAP-DIEA · Encuesta Agrícola Primavera-verano 2025/26 · Enero 2026</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="alrt mt32">
+      <p class="alrt-h">Impacto acumulado en exportaciones de maíz Uruguay 2025/26</p>
+      <p>Uruguay exportó <strong>350.000 TM</strong> en 2023/24 y <strong>187.000 TM</strong> en 2024/25. En 2025/26, las exportaciones proyectadas son <strong>cero</strong>. A un precio FOB de referencia de ~$210/ton, la pérdida de ingreso de divisas por exportaciones de maíz representa unos <strong>~USD 40–70 millones</strong> adicionales a la pérdida en soja. La totalidad de la producción disponible será absorbida por el mercado doméstico (feedlot, avicultura, porcicultura), donde el costo de insumos forrajeros igualmente subirá ante la menor oferta local.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 07 DATOS DIEA ═══ -->
+<section id="diea">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">07</div>
+      <div class="sh-inner">
+        <p class="sh-tag">MGAP-DIEA · Encuesta enero 2026</p>
+        <h2 class="sh-title">DIEA: intención de siembra de 289k ha — la realidad fue muy diferente</h2>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div>
+        <h3>La intención de siembra: optimismo de enero</h3>
+        <p>La Encuesta Agrícola Primavera-verano 2025/26 del MGAP-DIEA, realizada entre diciembre 2025 y enero 2026, registró una intención de siembra de maíz de <strong>289.063 hectáreas</strong>, un 11% más que las 260.000 ha sembradas en la zafra 2024/25. Este dato es un indicador del comportamiento <em>antes</em> de que la sequía se manifestara en toda su severidad.</p>
+        <p>La distribución entre primera y segunda siembra era casi equitativa: <strong>142.210 ha de maíz de primera</strong> (sembrada en octubre-noviembre) y <strong>146.852 ha de maíz de segunda</strong> (sembrada en diciembre-enero sobre rastrojos de cultivos de invierno). Al momento de la encuesta, ya estaban sembradas 218.543 ha, con 70.519 ha aún por sembrar.</p>
+        <p>El propio informe DIEA advertía: <em>"Teniendo en cuenta la situación climática, es muy probable que parte de la superficie sembrada de maíz que inicialmente se registró con destino a grano seco, cambie de destino."</em> Esta advertencia se materializó plenamente.</p>
+      </div>
+      <div>
+        <h3>Del plan a la realidad: la brecha</h3>
+        <table class="dt mt16">
+          <thead>
+            <tr><th>Indicador</th><th class="n">DIEA (ene. 2026)</th><th class="n">USDA WAP (abr. 2026)</th><th class="n">Brecha</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Área sembrada (ha)</td><td class="n">289,063</td><td class="n">250,000</td><td class="n neg">−39,063</td></tr>
+            <tr><td>Rendimiento proyectado</td><td class="n">~6-7 t/ha</td><td class="n neg">4.80 t/ha</td><td class="n neg">−28%</td></tr>
+            <tr><td>Producción implícita</td><td class="n">~1.75–2.0 MMT</td><td class="n neg">1.20 MMT</td><td class="n neg">−35 a −40%</td></tr>
+            <tr><td>Exportaciones previstas</td><td class="n">~300k TM</td><td class="n neg">0 TM</td><td class="n neg">−100%</td></tr>
+          </tbody>
+        </table>
+        <p class="fn">La diferencia entre el plan de enero y la realidad de abril refleja el impacto de la sequía posterior. El área efectivamente cosechada para grano (250k ha) es menor a la intención inicial (289k ha) porque parte del área sembrada fue destinada a silaje o pastoreo. Los rendimientos de 4.80 t/ha están muy por debajo de los ~6.75 t/ha del año anterior.</p>
+
+        <div class="panel grn mt16">
+          <p>El sorgo, otro cultivo de verano seguido por DIEA, tuvo una intención de siembra de 12.504 ha (primera + segunda). Aunque pequeño en volumen, el sorgo tiene mayor tolerancia a la sequía que el maíz y pudo haber ofrecido resultados relativamente mejores en las zonas más afectadas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 08 PERSPECTIVA ═══ -->
+<section id="perspectiva">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">08</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Perspectiva y proyecciones</p>
+        <h2 class="sh-title">2026/27: El Niño promete rebote — pero los márgenes siguen ajustados</h2>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div>
+        <h3>Uruguay: rebote condicionado al clima</h3>
+        <p>Para la zafra 2026/27, las perspectivas son de recuperación siempre que las condiciones climáticas se normalicen. Se espera un año de <strong>El Niño</strong>, fenómeno que históricamente trae mayor humedad a Uruguay durante el verano, favoreciendo los cultivos de secano como soja y maíz.</p>
+        <p>Si las lluvias acompañan, el maíz podría retornar a rendimientos de <strong>6.5-7 t/ha</strong> y una producción de <strong>1.6-1.9 MMT</strong>, con exportaciones que podrían recuperar el rango de 150-250k TM. Sin embargo, la decisión de cuántas hectáreas sembrar dependerá de: la situación financiera de los productores tras la pérdida de 2025/26, el precio del maíz en los mercados a futuro al momento de la siembra (oct-nov 2026), y la competencia con la soja por el área disponible.</p>
+        <p>El informe DIEA actualizará los datos definitivos de la zafra de verano 2025/26 y la intención de siembra de cultivos de invierno 2026 en la encuesta de <strong>junio de 2026</strong>.</p>
+      </div>
+      <div>
+        <h3>Mundial: ¿seguirá el récord?</h3>
+        <p>Los indicadores apuntan a que 2026/27 podría ser otro año productivo fuerte. Las señales tempranas de siembra en EE.UU. para el ciclo siguiente sugieren área elevada. Sin embargo, los precios bajos ($4.15/bu para EE.UU.) ya están generando presión sobre el área en algunos estados del Corn Belt donde los márgenes son negativos.</p>
+        <p>Los riesgos al alza incluyen: evento climático adverso en el Corn Belt americano (La Niña podría afectar la próxima temporada), reducción del área safrinha en Brasil si los precios no mejoran, y posibles restricciones de exportación en países emergentes.</p>
+        <p>Los riesgos a la baja incluyen: expansión continua del área en India (potencial +5-8 MMT adicionales si el gobierno mantiene incentivos), y buena temporada en Ucrania si se resuelven restricciones logísticas.</p>
+
+        <div class="panel mt24">
+          <p>La paradoja del maíz 2025/26: un mercado mundial en récord de producción con precios contenidos, mientras Uruguay vive su peor año en una década. La contracara es que <strong>los precios bajos del mercado mundial no ayudan a financiar la recuperación del productor uruguayo afectado</strong> — que necesitaría precios más altos para justificar la inversión en la siembra 2026/27 con el historial de pérdidas reciente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 09 CONCLUSIONES ═══ -->
+<section id="conclusiones" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-num">09</div>
+      <div class="sh-inner">
+        <p class="sh-tag">Síntesis analítica</p>
+        <h2 class="sh-title">Cinco ideas que definen el maíz en 2025/26</h2>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="con" data-n="1">
+        <p class="con-tag">Récord mundial vs. colapso local</p>
+        <p class="con-h">El mayor contraste del año: 1,301 MMT en el mundo, 1.2 MMT en Uruguay</p>
+        <p class="con-b">El mercado global de maíz 2025/26 alcanza su máximo histórico mientras Uruguay registra su peor producción reciente. <strong>La distancia entre ambas realidades ilustra cómo la variabilidad climática sub-regional puede generar situaciones opuestas en el mismo ciclo.</strong> A 500 km del corredor occidental uruguayo, Brasil y Argentina tienen cosechas normales o superiores al promedio.</p>
+      </div>
+      <div class="con" data-n="2">
+        <p class="con-tag">El timing es todo</p>
+        <p class="con-h">80 días sin lluvia en enero-marzo coincidieron exactamente con floración y llenado</p>
+        <p class="con-b">La sequía de 2026 no fue necesariamente la más larga históricamente, pero ocurrió en el momento exactamente más crítico del ciclo del maíz. <strong>En agricultura, el momento del déficit hídrico es tan determinante como su magnitud.</strong> Un déficit en el estadio vegetativo hubiera tenido impacto moderado; en floración-llenado fue devastador. El USDA fue directo: parte del cultivo "probablemente no sea cosechada para grano."</p>
+      </div>
+      <div class="con" data-n="3">
+        <p class="con-tag">Exportaciones a cero</p>
+        <p class="con-h">De 300k TM proyectadas a cero — el ajuste más drástico en la tabla de cambios del USDA</p>
+        <p class="con-b">La eliminación total de las exportaciones de maíz uruguayo en la revisión de abril 2026 es el indicador más contundente del daño. <strong>No es solo una reducción — es una eliminación completa del saldo exportable.</strong> Toda la producción disponible (1.2 MMT) será absorbida por el mercado doméstico (ganadería, avicultura, porcicultura), que igual enfrentará mayor costo de alimentación por la reducción de oferta local.</p>
+      </div>
+      <div class="con" data-n="4">
+        <p class="con-tag">El silaje como válvula</p>
+        <p class="con-h">Los lotes sin condiciones para cosechar grano se convierten en silaje o pastoreo — amortiguando el impacto en ganadería</p>
+        <p class="con-b">Una parte del daño del maíz tiene un destino alternativo con valor económico: el silaje producido de los lotes afectados sirve para reducir costos de suplementación invernal del ganado. <strong>Esta conversión involuntaria de maíz grano a silaje actúa como colchón para el sector pecuario</strong>, que en un año de menor disponibilidad de forraje necesita más reservas. No compensa la pérdida de exportaciones pero atenúa el impacto sobre la cadena cárnica.</p>
+      </div>
+      <div class="con" data-n="5">
+        <p class="con-tag">Perspectiva 2026/27</p>
+        <p class="con-h">El Niño favorece el rebote — pero los precios mundiales bajos complican la decisión de siembra</p>
+        <p class="con-b">Las condiciones estructurales para un rebote productivo en 2026/27 existen: El Niño esperado, área disponible, tecnología, semillas. Pero <strong>la combinación de precios mundiales del maíz en mínimos de varios años + productores con pérdidas acumuladas + 70% del área en tierra arrendada hace que la decisión de siembra sea económicamente difícil.</strong> El productor que perdió dinero en 2025/26 tiene menos capital propio para financiar la siguiente campaña, justo cuando los precios no justifican el riesgo asumido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fi">
+    <div class="fi-brand">MAÍZ 2025/26 · USDA + MGAP-DIEA</div>
+    <div class="fi-meta">
+      World Agricultural Production WAP 04-26 (USDA FAS/IPAD, 9 Abr. 2026) · WASDE-584<br>
+      Grain: World Markets and Trade (USDA FAS, Abr. 2026)<br>
+      MGAP-DIEA · Encuesta Agrícola Primavera-verano 2025/26 · 23 Ene. 2026
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  const grid = 'rgba(255,255,255,0.06)';
+  const corn = '#F5C842';
+  const red  = '#FF5A5A';
+  const grn  = '#4CC97A';
+  const tick = '#7A9A7A';
+
+  const wc = document.getElementById('worldChart');
+  if(wc){
+    new Chart(wc, {
+      type:'bar',
+      data:{
+        labels:['2021/22','2022/23','2023/24','2024/25','2025/26F'],
+        datasets:[
+          {
+            label:'Producción (MMT)',
+            data:[1211,1163,1231,1231,1301],
+            backgroundColor:[
+              'rgba(245,200,66,0.25)','rgba(245,200,66,0.25)',
+              'rgba(245,200,66,0.35)','rgba(245,200,66,0.45)',corn
+            ],
+            borderWidth:0,borderRadius:2,order:1
+          },
+          {
+            label:'Consumo (MMT)',
+            data:[1178,1195,1213,1249,1288],
+            type:'line',
+            borderColor:red,backgroundColor:'transparent',
+            borderWidth:2,pointRadius:4,pointBackgroundColor:red,
+            borderDash:[5,3],tension:0.3,order:0
+          }
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(0)+' MMT'}}
+        },
+        scales:{
+          x:{ticks:{color:tick,font:{family:'IBM Plex Mono',size:10}},grid:{color:grid}},
+          y:{
+            min:1100,max:1350,
+            ticks:{color:tick,font:{family:'IBM Plex Mono',size:10},callback:v=>v+'M'},
+            grid:{color:grid}
+          }
+        }
+      }
+    });
+    const wl=document.getElementById('worldLeg');
+    if(wl){
+      wl.innerHTML=
+        '<span class="cleg"><span class="cleg-dot" style="background:'+corn+'"></span>Producción</span>'+
+        '<span class="cleg"><span class="cleg-dot" style="background:'+red+'"></span>Consumo</span>';
+    }
+  }
+})();
+</script>
+</body>
+</html>
