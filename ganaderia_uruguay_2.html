@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ganadería Bovina Uruguay — Informe Consolidado</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-campo: #2d5016;
+    --verde-medio: #4a7c2f;
+    --verde-claro: #8ab55a;
+    --tierra: #8b6914;
+    --tierra-claro: #c4940e;
+    --tierra-palido: #f5e9c8;
+    --cielo: #d4e8f0;
+    --crema: #faf6ed;
+    --crema-oscuro: #f0e8d0;
+    --carbon: #1a1a16;
+    --grafito: #3d3d35;
+    --piedra: #7a7a6e;
+    --blanco: #fefef8;
+    --acento-rojo: #8b2020;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--crema);
+    color: var(--carbon);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background:
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%234a7c2f' stroke-width='0.3' opacity='0.15'%3E%3Cpath d='M0 40 Q20 20 40 40 Q60 60 80 40'/%3E%3Cpath d='M0 20 Q20 0 40 20 Q60 40 80 20'/%3E%3Cpath d='M0 60 Q20 40 40 60 Q60 80 80 60'/%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(160deg, #1c2f0e 0%, #2d5016 35%, #1a2d08 70%, #0d1a04 100%);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(138,181,90,0.08) 0%, transparent 70%);
+  }
+
+  .hero-nav {
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-nav .marca {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--verde-claro);
+    text-transform: uppercase;
+  }
+
+  .hero-nav .año {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 4rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    color: var(--tierra-claro);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--tierra-claro);
+  }
+
+  .hero-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--blanco);
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+    margin-bottom: 1rem;
+  }
+
+  .hero-titulo em {
+    font-style: italic;
+    color: var(--verde-claro);
+    font-weight: 400;
+  }
+
+  .hero-subtitulo {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.55);
+    max-width: 42ch;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--tierra-claro);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  .hero-footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-fuentes {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { width: 20px; opacity: 0.2; }
+    50% { width: 50px; opacity: 0.5; }
+  }
+
+  /* ── NAV LATERAL ── */
+  .nav-lateral {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(45,80,22,0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid rgba(45,80,22,0.2);
+  }
+
+  .nav-dot:hover, .nav-dot.active {
+    background: var(--verde-medio);
+    transform: scale(1.5);
+  }
+
+  /* ── LAYOUT PRINCIPAL ── */
+  main {
+    position: relative;
+  }
+
+  /* ── SECCIONES ── */
+  section {
+    padding: 6rem 0;
+    position: relative;
+  }
+
+  .section-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4rem;
+  }
+
+  /* ── SEPARADORES DE SECCIÓN ── */
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem;
+    font-weight: 900;
+    line-height: 0.85;
+    color: var(--verde-claro);
+    opacity: 0.18;
+    user-select: none;
+  }
+
+  .section-title-group {
+    padding-top: 1rem;
+  }
+
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    color: var(--tierra);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--verde-campo);
+    letter-spacing: -0.01em;
+  }
+
+  .section-rule {
+    width: 3rem;
+    height: 2px;
+    background: var(--verde-claro);
+    margin-top: 1rem;
+  }
+
+  /* ── FONDOS ALTERNADOS ── */
+  .bg-crema { background: var(--crema); }
+  .bg-blanco { background: var(--blanco); }
+  .bg-campo {
+    background: var(--verde-campo);
+    color: var(--crema);
+  }
+  .bg-tierra-palido { background: var(--tierra-palido); }
+  .bg-cielo { background: var(--cielo); }
+
+  /* ── RESUMEN EJECUTIVO ── */
+  #resumen {
+    background: var(--blanco);
+  }
+
+  .resumen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .resumen-lead {
+    font-size: 1.35rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--grafito);
+    border-left: 3px solid var(--verde-claro);
+    padding-left: 2rem;
+  }
+
+  .resumen-body p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--grafito);
+    margin-bottom: 1.2rem;
+  }
+
+  .destacado-box {
+    background: var(--tierra-palido);
+    border-top: 3px solid var(--tierra);
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--tierra);
+    position: relative;
+  }
+
+  .destacado-box::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--tierra-claro);
+    opacity: 0.25;
+    position: absolute;
+    top: -0.5rem;
+    left: 1.5rem;
+    line-height: 1;
+  }
+
+  /* ── TARJETAS INDICADORES ── */
+  .indicadores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid rgba(45,80,22,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 3rem 0;
+  }
+
+  .indicador-card {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(45,80,22,0.15);
+    background: var(--blanco);
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .indicador-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--verde-claro);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .indicador-card:hover::after { transform: scaleX(1); }
+  .indicador-card:last-child { border-right: none; }
+
+  .ind-valor {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--verde-campo);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .ind-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--piedra);
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .ind-nota {
+    font-size: 0.8rem;
+    color: var(--piedra);
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* ── CONTENIDO DOS COLUMNAS ── */
+  .dos-col {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .tres-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* ── SUBTÍTULOS ── */
+  h2.sub {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--verde-campo);
+    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+    letter-spacing: -0.01em;
+  }
+
+  h3.sub3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--tierra);
+    margin-bottom: 0.8rem;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+  }
+
+  p.body {
+    font-size: 1rem;
+    line-height: 1.82;
+    color: var(--grafito);
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── TABLA ── */
+  .tabla-wrapper {
+    overflow-x: auto;
+    margin: 2.5rem 0;
+    border: 1px solid rgba(45,80,22,0.12);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  thead tr {
+    background: var(--verde-campo);
+    color: var(--blanco);
+  }
+
+  thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.2rem;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(45,80,22,0.08);
+    transition: background 0.2s;
+  }
+
+  tbody tr:hover { background: rgba(138,181,90,0.07); }
+  tbody tr:nth-child(even) { background: rgba(45,80,22,0.025); }
+  tbody tr:nth-child(even):hover { background: rgba(138,181,90,0.07); }
+
+  tbody td {
+    padding: 0.8rem 1.2rem;
+    color: var(--grafito);
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+
+  tbody td:first-child { font-weight: 600; color: var(--verde-campo); }
+  tbody td.dest { color: var(--acento-rojo); font-weight: 600; }
+
+  tfoot tr { background: var(--crema-oscuro); }
+  tfoot td {
+    padding: 0.5rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--piedra);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  /* ── BARRA VISUAL ── */
+  .barra-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .barra-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    width: 9rem;
+    flex-shrink: 0;
+    color: var(--grafito);
+  }
+
+  .barra-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(45,80,22,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .barra-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--verde-medio), var(--verde-claro));
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .barra-valor {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--verde-campo);
+    width: 4rem;
+    text-align: right;
+  }
+
+  /* ── BLOQUE OSCURO CAMPO ── */
+  .campo-section {
+    background: var(--verde-campo);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .campo-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='white' stroke-width='0.2' opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='25'/%3E%3Ccircle cx='30' cy='30' r='15'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .campo-section .section-title { color: var(--blanco); }
+  .campo-section .section-eyebrow { color: var(--verde-claro); }
+  .campo-section .section-num { color: var(--blanco); }
+  .campo-section h2.sub { color: var(--blanco); }
+  .campo-section h3.sub3 { color: var(--tierra-claro); }
+  .campo-section p.body { color: rgba(255,255,255,0.75); }
+  .campo-section .section-rule { background: var(--verde-claro); }
+
+  /* ── HALLAZGOS (bullets) ── */
+  .hallazgos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hallazgo-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0;
+    border-bottom: 1px solid rgba(45,80,22,0.1);
+    padding: 1.5rem 0;
+    transition: background 0.2s;
+  }
+
+  .hallazgo-item:hover {
+    background: rgba(138,181,90,0.05);
+    padding-left: 0.5rem;
+  }
+
+  .hallazgo-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--verde-claro);
+    opacity: 0.4;
+    line-height: 1;
+    padding-top: 0.15rem;
+  }
+
+  .hallazgo-texto {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--grafito);
+  }
+
+  .hallazgo-titulo {
+    font-weight: 600;
+    color: var(--verde-campo);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  /* ── PERSPECTIVAS TARJETAS ── */
+  .perspectivas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(45,80,22,0.12);
+    border: 2px solid rgba(45,80,22,0.12);
+    margin: 2.5rem 0;
+  }
+
+  .perspectiva-card {
+    background: var(--blanco);
+    padding: 2rem 2.5rem;
+  }
+
+  .perspectiva-card.destaca {
+    background: var(--verde-campo);
+    color: var(--blanco);
+  }
+
+  .persp-icono {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .persp-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--verde-campo);
+    margin-bottom: 0.8rem;
+  }
+
+  .perspectiva-card.destaca .persp-titulo {
+    color: var(--verde-claro);
+  }
+
+  .persp-texto {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--grafito);
+  }
+
+  .perspectiva-card.destaca .persp-texto {
+    color: rgba(255,255,255,0.72);
+  }
+
+  /* ── ETIQUETAS DATOS ── */
+  .dato-inline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: rgba(45,80,22,0.08);
+    color: var(--verde-campo);
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .campo-section .dato-inline {
+    background: rgba(138,181,90,0.2);
+    color: var(--verde-claro);
+  }
+
+  /* ── ASIMETRÍA VISUAL ── */
+  .asimetria-viz {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(45,80,22,0.1);
+    margin: 2rem 0;
+  }
+
+  .asim-panel {
+    padding: 2rem;
+    background: var(--blanco);
+  }
+
+  .asim-panel.caida { background: rgba(139,32,32,0.06); }
+  .asim-panel.subida { background: rgba(45,80,22,0.04); }
+
+  .asim-titulo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .asim-panel.caida .asim-titulo { color: var(--acento-rojo); }
+  .asim-panel.subida .asim-titulo { color: var(--verde-medio); }
+
+  .asim-valor {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .asim-panel.caida .asim-valor { color: var(--acento-rojo); }
+  .asim-panel.subida .asim-valor { color: var(--verde-campo); }
+
+  .asim-desc {
+    font-size: 0.88rem;
+    color: var(--piedra);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── FUENTES ── */
+  .fuentes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .fuente-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(45,80,22,0.08);
+    font-size: 0.82rem;
+    color: var(--piedra);
+    line-height: 1.5;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0.5rem;
+    align-items: start;
+    padding-right: 2rem;
+  }
+
+  .fuente-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--verde-claro);
+    opacity: 0.7;
+    margin-top: 0.1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--carbon);
+    color: rgba(255,255,255,0.35);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .marca-footer {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+  }
+
+  footer .info-footer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+
+  /* ── ANIMACIONES ENTRADA ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-nav, .hero-content, .hero-footer { padding-left: 2rem; padding-right: 2rem; }
+    .section-wrapper { padding: 0 2rem; }
+    .indicadores-grid { grid-template-columns: 1fr 1fr; }
+    .resumen-grid, .dos-col, .fuentes-grid, .perspectivas-grid { grid-template-columns: 1fr; }
+    .tres-col { grid-template-columns: 1fr 1fr; }
+    footer { padding: 2rem; flex-direction: column; text-align: center; }
+    footer .info-footer { text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-titulo { font-size: 3rem; }
+    .hero-stats { gap: 1.5rem; }
+    .indicadores-grid { grid-template-columns: 1fr; }
+    .tres-col { grid-template-columns: 1fr; }
+    .asimetria-viz { grid-template-columns: 1fr; }
+    .nav-lateral { display: none; }
+    .section-num { font-size: 4rem; }
+  }
+
+  /* ── MAPA DESTINOS BAR ── */
+  .destinos-viz {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .destino-row {
+    display: grid;
+    grid-template-columns: 10rem 1fr 4rem;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .destino-nombre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--grafito);
+  }
+
+  .destino-barra-wrap {
+    background: rgba(45,80,22,0.08);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .destino-barra {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--verde-campo), var(--verde-claro));
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  }
+
+  .destino-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--verde-campo);
+    text-align: right;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    margin: 2rem 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 3.5rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(45,80,22,0.2);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1.5rem;
+    padding: 1.2rem 0;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 3.1rem;
+    top: 1.6rem;
+    width: 9px;
+    height: 9px;
+    background: var(--verde-claro);
+    border-radius: 50%;
+    border: 2px solid var(--blanco);
+    box-shadow: 0 0 0 1px var(--verde-medio);
+  }
+
+  .timeline-año {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--tierra);
+    padding-top: 0.1rem;
+    text-align: right;
+    padding-right: 1rem;
+  }
+
+  .timeline-texto {
+    font-size: 0.9rem;
+    color: var(--grafito);
+    line-height: 1.65;
+  }
+
+  .timeline-texto strong {
+    color: var(--verde-campo);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV LATERAL -->
+<nav class="nav-lateral" id="navLateral">
+  <div class="nav-dot active" data-section="hero" title="Inicio"></div>
+  <div class="nav-dot" data-section="resumen" title="Resumen"></div>
+  <div class="nav-dot" data-section="internacional" title="Internacional"></div>
+  <div class="nav-dot" data-section="produccion" title="Producción"></div>
+  <div class="nav-dot" data-section="productividad" title="Productividad"></div>
+  <div class="nav-dot" data-section="precios" title="Precios"></div>
+  <div class="nav-dot" data-section="exportaciones" title="Exportaciones"></div>
+  <div class="nav-dot" data-section="perspectivas" title="Perspectivas"></div>
+  <div class="nav-dot" data-section="fuentes" title="Fuentes"></div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="hero">
+  <div class="hero-nav">
+    <span class="marca">OPYPA · INAC · CERES · INIA</span>
+    <span class="año">Informe Consolidado 2020–2025</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Análisis Sectorial</div>
+    <h1 class="hero-titulo">
+      Ganadería<br>
+      <em>Bovina</em><br>
+      Uruguay
+    </h1>
+    <p class="hero-subtitulo">Situación actual, evolución histórica y perspectivas del sector cárnico uruguayo a partir de los informes técnicos más recientes</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">+20%</div>
+        <div class="hero-stat-label">de exportaciones<br>de bienes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">90K</div>
+        <div class="hero-stat-label">empleos<br>directos</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">$700M</div>
+        <div class="hero-stat-label">aporte<br>impositivo anual</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">11,5M</div>
+        <div class="hero-stat-label">cabezas de<br>stock bovino</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-footer">
+    <span class="hero-fuentes">Fuentes: OPYPA-MGAP · INAC · CERES · INIA · USDA · FAO · DICOSE · SNIG</span>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Desplazar
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 0. RESUMEN EJECUTIVO -->
+<!-- ═══════════════════════════════════════ -->
+<section id="resumen" class="bg-blanco">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">00</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Punto de Partida</div>
+        <h1 class="section-title">Resumen Ejecutivo</h1>
+        <div class="section-rule"></div>
+      </div>
+    </div>
+
+    <div class="indicadores-grid fade-in">
+      <div class="indicador-card">
+        <div class="ind-valor">+10%</div>
+        <div class="ind-label">Impacto en el PBI</div>
+        <div class="ind-nota">Incluyendo encadenamientos productivos</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-valor">134 kg</div>
+        <div class="ind-label">Exportación per cápita</div>
+        <div class="ind-nota">N.º 1 exportador per cápita del mundo</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-valor">76</div>
+        <div class="ind-label">Mercados destino</div>
+        <div class="ind-nota">Exportaciones de carne y subproductos en 2023</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-valor">+237%</div>
+        <div class="ind-label">Crecimiento en valor</div>
+        <div class="ind-nota">Exportaciones carne bovina 2004–2023</div>
+      </div>
+    </div>
+
+    <div class="resumen-grid fade-in">
+      <p class="resumen-lead">
+        La ganadería bovina es uno de los pilares fundamentales de la economía uruguaya: genera más del 20% de las exportaciones de bienes, emplea a 90.000 personas de manera directa y aporta cerca de USD 700 millones anuales en impuestos.
+      </p>
+      <div class="resumen-body">
+        <p class="body">Este informe consolida los principales hallazgos de investigaciones producidas entre 2020 y 2025 por OPYPA-MGAP, INAC, CERES, INIA y otras instituciones del ecosistema agropecuario uruguayo.</p>
+        <p class="body">Abarca desde la dinámica internacional del mercado hasta los determinantes micro de la productividad predial, la estructura fiscal, las asimetrías de precios, la logística de exportación y las herramientas de modelización sectorial.</p>
+      </div>
+    </div>
+
+    <div class="destacado-box fade-in">
+      El diagnóstico central es el de un sector estratégico con sólidas ventajas comparativas en calidad y sostenibilidad, pero con productividad agregada estancada desde mediados de los 2000, alta concentración en un único mercado (China) y persistentes brechas de eficiencia entre productores. Las perspectivas son favorables dado el alza histórica de precios a 2025, pero el crecimiento de largo plazo requiere reformas en productividad, diversificación de mercados e inserción en acuerdos comerciales.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 1. CONTEXTO INTERNACIONAL -->
+<!-- ═══════════════════════════════════════ -->
+<section id="internacional" class="bg-crema">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">01</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Mercado Global</div>
+        <h1 class="section-title">Contexto Internacional</h1>
+        <div class="section-rule"></div>
+      </div>
+    </div>
+
+    <div class="dos-col">
+      <div class="fade-in">
+        <h2 class="sub">Producción y Comercio Global</h2>
+        <p class="body">La producción mundial de carne bovina alcanzó <span class="dato-inline">61,6 millones de toneladas</span> equivalente carcasa en 2025, con un crecimiento acumulado del 6% entre 2021 y 2025. Detrás de este dato global se esconden dinámicas muy divergentes entre países.</p>
+        <p class="body">Estados Unidos, mayor productor mundial (~20% del total), viene reduciendo su producción desde 2022. Su stock bovino alcanzó en 2024 el <strong>mínimo en 74 años</strong> (86,7 millones de cabezas). En contraste, Brasil (+22%), Australia (+40%) y China (+11%) lideraron la expansión productiva.</p>
+        <p class="body">En exportaciones, el comercio global creció un 15% entre 2021 y 2025. Brasil domina con el <span class="dato-inline">29% del mercado</span>, seguido por Australia (15%) e India (12%, principalmente carne de búfalo). La consolidación del liderazgo brasileño es notable: del 20% en 2018 al ~30% en 2025.</p>
+      </div>
+
+      <div class="fade-in fade-in-delay-2">
+        <h3 class="sub3">Principales exportadores 2025 (Mt peso carcasa)</h3>
+        <div class="destinos-viz">
+          <div class="destino-row">
+            <span class="destino-nombre">Brasil</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="95%"></div></div>
+            <span class="destino-pct">3,8 Mt</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">Australia</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="53%"></div></div>
+            <span class="destino-pct">2,0 Mt</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">India</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="40%"></div></div>
+            <span class="destino-pct">1,6 Mt</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">EE.UU.</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="32%"></div></div>
+            <span class="destino-pct">1,2 Mt</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">Argentina</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="21%"></div></div>
+            <span class="destino-pct">0,8 Mt</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre" style="color:var(--verde-campo);font-weight:600">Uruguay</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="13%"></div></div>
+            <span class="destino-pct" style="color:var(--verde-campo)">0,5 Mt</span>
+          </div>
+        </div>
+
+        <h3 class="sub3" style="margin-top:2rem">Precios internacionales FAO (2025)</h3>
+        <p class="body" style="font-size:0.9rem">El índice FAO de precios de carne bovina alcanzó en octubre 2025 un <strong>máximo histórico desde 1990</strong>: +28% respecto a enero 2024, +15% respecto a octubre 2024. Las proyecciones OCDE-FAO para 2025-2034 anticipan precios al alza por reconstrucción de rodeos que limitará la oferta.</p>
+      </div>
+    </div>
+
+    <h2 class="sub fade-in">Posición Competitiva de Uruguay</h2>
+
+    <div class="tres-col fade-in">
+      <div>
+        <h3 class="sub3">Aranceles en mercados clave</h3>
+        <p class="body" style="font-size:0.88rem">Uruguay paga <span class="dato-inline">38,5%</span> en Japón, frente al <span class="dato-inline">9%</span> final de Australia (CPTPP). En Canadá: <span class="dato-inline">26,5%</span> vs. <span class="dato-inline">0%</span> australiano. Esta desventaja explica que Uruguay solo exporte el 5% de su carne al bloque Transpacífico, vs. el 30% de Australia.</p>
+      </div>
+      <div>
+        <h3 class="sub3">Distancia a mercados</h3>
+        <p class="body" style="font-size:0.88rem">El Índice de Tiempos de Transporte (ITT) de Uruguay es de <span class="dato-inline">42 días promedio</span>, el mayor entre todos los exportadores globales. El doble que EE.UU. Cada día adicional puede reducir las exportaciones en promedio un 6% (Djankov et al.).</p>
+      </div>
+      <div>
+        <h3 class="sub3">Potencial CPTPP</h3>
+        <p class="body" style="font-size:0.88rem">La adhesión al Acuerdo Transpacífico generaría un ingreso incremental de <span class="dato-inline">USD 39–95M/año</span> en 2023, creciendo a <span class="dato-inline">USD 79–184M</span> en 2033 mediante redireccionamiento desde China hacia Japón y Canadá.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 2. PRODUCCIÓN NACIONAL -->
+<!-- ═══════════════════════════════════════ -->
+<section id="produccion" class="bg-blanco">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">02</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Sector Primario</div>
+        <h1 class="section-title">Producción Nacional</h1>
+        <div class="section-rule"></div>
+      </div>
+    </div>
+
+    <div class="dos-col">
+      <div class="fade-in">
+        <h2 class="sub">Stock Ganadero</h2>
+        <p class="body">El stock bovino uruguayo ha mantenido cierta estabilidad estructural en las últimas tres décadas, oscilando entre 11 y 12 millones de cabezas. Al 30 de junio de 2024, se registraron <span class="dato-inline">11,5 millones de animales</span>, un descenso del 3,6% respecto al año anterior, por debajo del promedio de la última década de 11,7 millones.</p>
+        <p class="body">La composición del stock ha evolucionado significativamente desde 1990: el porcentaje de vacas entoradas aumentó del 32% al 36%, los terneros del 20% al 24%. En contraste, los novillos de más de 3 años cayeron del 8% al 4%, reflejo del acortamiento del ciclo de invernada.</p>
+        <p class="body">En contraste drástico, el stock ovino cayó un 75% en tres décadas: de 25 millones de cabezas (que duplicaban al bovino) a menos de la mitad del stock bovino actual. Esta transformación refleja cambios profundos en la rentabilidad relativa de las especies.</p>
+
+        <h3 class="sub3" style="margin-top:2rem">Composición del stock bovino (junio 2024)</h3>
+        <div style="margin-top:1rem">
+          <div class="barra-row">
+            <span class="barra-label">Vacas de cría</span>
+            <div class="barra-track"><div class="barra-fill" style="width:0" data-width="38%"></div></div>
+            <span class="barra-valor">38%</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label">Terneros/as</span>
+            <div class="barra-track"><div class="barra-fill" style="width:0" data-width="23%"></div></div>
+            <span class="barra-valor">23%</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label">Novillos</span>
+            <div class="barra-track"><div class="barra-fill" style="width:0" data-width="19%"></div></div>
+            <span class="barra-valor">19%</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label">Vaquillonas</span>
+            <div class="barra-track"><div class="barra-fill" style="width:0" data-width="15%"></div></div>
+            <span class="barra-valor">15%</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label">Vacas invernada</span>
+            <div class="barra-track"><div class="barra-fill" style="width:0" data-width="4%"></div></div>
+            <span class="barra-valor">4%</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label">Toros</span>
+            <div class="barra-track"><div class="barra-fill" style="width:0" data-width="2%"></div></div>
+            <span class="barra-valor">2%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-2">
+        <h2 class="sub">Faena y Pesos</h2>
+        <p class="body">La faena bovina alcanzó un récord histórico de <span class="dato-inline">2,75 millones de cabezas</span> en el ejercicio 2021/22. En 2022/23 bajó a 2,15 millones por la menor demanda china y la sequía.</p>
+        <p class="body"><strong>Cambio estructural clave:</strong> La participación de novillos jóvenes (2-4 dientes) llegó al 31% en 2022/23, máximo en dos décadas. Los novillos de 8 dientes cayeron sostenidamente. La edad media de faena bajó de 4,5 a 3,7 años.</p>
+        <p class="body">Los corrales de engorde representaron el 15,4% de la faena total en 2020, con una prima de precio del 13-17% respecto a animales de campo.</p>
+
+        <h2 class="sub">Pesos de Faena</h2>
+        <p class="body">En 25 años, el peso medio aumentó más de <span class="dato-inline">40 kg por animal</span> (+9,5%). El ejercicio 2018/19 promedió 37,2 kg más que 2006/07, con dos saltos de nivel: en 2012 y en 2017.</p>
+        <p class="body">Un modelo de regresión con efectos fijos explica el <span class="dato-inline">89% de la varianza</span> del peso de faena. La variable más determinante es la categoría del animal (explica el 85% de la varianza), seguida por el año agrícola (1,8%), departamento (1,4%) y mes (0,4%).</p>
+        <p class="body">Los animales más pesados provienen de <strong>Colonia y San José</strong> (cuenca lechera), con 28 kg más que los de Artigas. Los animales faenados en noviembre son los más pesados (7,7 kg más que en enero).</p>
+      </div>
+    </div>
+
+    <h2 class="sub fade-in">Evolución Histórica Clave</h2>
+    <div class="timeline fade-in">
+      <div class="timeline-item">
+        <div class="timeline-año">2008/09</div>
+        <div class="timeline-texto"><strong>Gran sequía:</strong> aumento en faena de vacas, caída del peso promedio nacional. El área de praderas cayó un 28%.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-año">2012</div>
+        <div class="timeline-texto"><strong>Primer salto en pesos de faena</strong> para todas las categorías INAC. Posiblemente asociado a la expansión de corrales de engorde.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-año">2017</div>
+        <div class="timeline-texto"><strong>Segundo salto en pesos de faena.</strong> Desde 2016/17 también se reduce la variabilidad de pesos, especialmente en novillos.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-año">2019/20</div>
+        <div class="timeline-texto"><strong>Récord de procreo:</strong> 63,4% y 3 millones de terneros. La faena cae por efectos de pandemia y alteraciones comerciales con China.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-año">2021/22</div>
+        <div class="timeline-texto"><strong>Récord histórico de faena:</strong> 2,75 millones de cabezas. Indicadores extraordinarios en productividad, exportaciones y precios internos.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-año">2023</div>
+        <div class="timeline-texto"><strong>Sequía severa</strong> de tres años acumulados. Ingreso de capital de los productores cae 52% respecto al ejercicio anterior según Carpetas Verdes.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-año">2025</div>
+        <div class="timeline-texto"><strong>Precios récord históricos.</strong> Índice FAO de carne bovina en máximo desde 1990. USMCA desplaza a China como principal destino de carne uruguaya.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 3. PRODUCTIVIDAD (SECCIÓN OSCURA) -->
+<!-- ═══════════════════════════════════════ -->
+<section id="productividad" class="campo-section">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">03</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Eficiencia Predial</div>
+        <h1 class="section-title">Productividad y Heterogeneidad</h1>
+        <div class="section-rule"></div>
+      </div>
+    </div>
+
+    <div class="dos-col">
+      <div class="fade-in">
+        <h2 class="sub">Brechas de Productividad</h2>
+        <p class="body">Uno de los hallazgos más relevantes del análisis predial (CGA 2011 + SNIG) es la enorme heterogeneidad en la productividad entre establecimientos. El p90 de productividad es <span class="dato-inline" style="background:rgba(138,181,90,0.2);color:var(--verde-claro)">5,3 veces</span> el p10. El promedio es 94 kg/ha/año, pero la mediana es de 80 kg/ha/año.</p>
+        <p class="body">Esta brecha implica un potencial de mejora sin expandir stock ni área: si los establecimientos del 50% inferior alcanzasen la productividad media del 50% superior, la producción total aumentaría significativamente.</p>
+
+        <h3 class="sub3" style="margin-top:2rem">Distribución de productividad (kg carne/ha/año)</h3>
+        <div style="margin-top:1rem">
+          <div class="barra-row">
+            <span class="barra-label" style="color:rgba(255,255,255,0.65)">P10 (inferior)</span>
+            <div class="barra-track" style="background:rgba(255,255,255,0.08)"><div class="barra-fill" style="width:0" data-width="19%"></div></div>
+            <span class="barra-valor" style="color:var(--verde-claro)">31 kg</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label" style="color:rgba(255,255,255,0.65)">Mediana</span>
+            <div class="barra-track" style="background:rgba(255,255,255,0.08)"><div class="barra-fill" style="width:0" data-width="48%"></div></div>
+            <span class="barra-valor" style="color:var(--verde-claro)">80 kg</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label" style="color:rgba(255,255,255,0.65)">Promedio</span>
+            <div class="barra-track" style="background:rgba(255,255,255,0.08)"><div class="barra-fill" style="width:0" data-width="57%"></div></div>
+            <span class="barra-valor" style="color:var(--verde-claro)">94 kg</span>
+          </div>
+          <div class="barra-row">
+            <span class="barra-label" style="color:rgba(255,255,255,0.65)">P90 (superior)</span>
+            <div class="barra-track" style="background:rgba(255,255,255,0.08)"><div class="barra-fill" style="width:0" data-width="100%"></div></div>
+            <span class="barra-valor" style="color:var(--verde-claro)">166 kg</span>
+          </div>
+        </div>
+
+        <h2 class="sub" style="margin-top:3rem">Estructura Impositiva</h2>
+        <p class="body">El 42% de las explotaciones (10.671 establecimientos) tienen menos de 100 UG. Estos pequeños productores no tributan IRAE, Impuesto Primaria ni Patrimonio. Los modelos de mayor escala sí pagan todos los tributos, incluyendo IRAE con tasas del 25%.</p>
+        <p class="body">El aporte impositivo total de la cadena asciende a USD 700 millones/año: USD 306M en fase primaria, USD 18M en transporte, USD 364M en industria.</p>
+      </div>
+
+      <div class="fade-in fade-in-delay-2">
+        <h2 class="sub">Perfil del Productor Ganadero</h2>
+        <div class="tres-col" style="grid-template-columns:1fr; gap:1rem; margin-top:0">
+
+          <div style="background:rgba(255,255,255,0.05); padding:1.5rem; border-top:2px solid var(--verde-claro)">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--verde-claro); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem">Edad promedio</div>
+            <div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--blanco)">55,6</div>
+            <div style="font-size:0.82rem; color:rgba(255,255,255,0.5); margin-top:0.25rem">años · vs. 46 en mipymes no agro</div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.05); padding:1.5rem; border-top:2px solid var(--tierra-claro)">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--tierra-claro); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem">Sin mejoramientos</div>
+            <div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--blanco)">&gt;50%</div>
+            <div style="font-size:0.82rem; color:rgba(255,255,255,0.5); margin-top:0.25rem">de establecimientos (mediana = 0%)</div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.05); padding:1.5rem; border-top:2px solid rgba(255,255,255,0.2)">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:rgba(255,255,255,0.4); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem">Universidad completa</div>
+            <div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--blanco)">15,8%</div>
+            <div style="font-size:0.82rem; color:rgba(255,255,255,0.5); margin-top:0.25rem">vs. 33% en titulares de mipymes</div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.05); padding:1.5rem; border-top:2px solid rgba(255,255,255,0.2)">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:rgba(255,255,255,0.4); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem">Sin electricidad</div>
+            <div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--blanco)">21,7%</div>
+            <div style="font-size:0.82rem; color:rgba(255,255,255,0.5); margin-top:0.25rem">de los establecimientos ganaderos</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 4. PRECIOS Y TRANSMISIÓN -->
+<!-- ═══════════════════════════════════════ -->
+<section id="precios" class="bg-tierra-palido">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">04</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Cadena de Valor</div>
+        <h1 class="section-title">Precios y Asimetrías</h1>
+        <div class="section-rule" style="background:var(--tierra)"></div>
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <h2 class="sub" style="color:var(--tierra)">Asimetría en la Transmisión de Precios</h2>
+      <p class="body">Utilizando el modelo NARDL (retardos distribuidos no lineales) con datos mensuales de enero 2007 a octubre 2024 (<span class="dato-inline">R² = 97,6%</span>), se encontró evidencia robusta de <strong>asimetría negativa</strong> en la cadena cárnica uruguaya.</p>
+    </div>
+
+    <div class="asimetria-viz fade-in">
+      <div class="asim-panel caida">
+        <div class="asim-titulo">↘ Shocks negativos (caída de precios)</div>
+        <div class="asim-valor">3–4</div>
+        <div class="asim-desc">meses hasta el máximo impacto en precios al productor. Las caídas se transmiten <strong>rápido y con mayor magnitud</strong>, llegando a superar la caída original antes de converger.</div>
+      </div>
+      <div class="asim-panel subida">
+        <div class="asim-titulo">↗ Shocks positivos (suba de precios)</div>
+        <div class="asim-valor">4+</div>
+        <div class="asim-desc">meses para que solo la <strong>mitad del aumento</strong> se transfiera al productor. El equilibrio se alcanza recién luego de <strong>10 meses</strong>.</div>
+      </div>
+    </div>
+
+    <div class="destacado-box fade-in" style="border-top-color:var(--tierra); background:rgba(139,105,20,0.08)">
+      <strong>Implicancia de política:</strong> A pesar del alto nivel de apertura comercial y la condición de tomadora de precios de la cadena cárnica uruguaya, existen condiciones en el mercado de haciendas que generan este rezago asimétrico. Las posibles causas incluyen poder de mercado de la industria frigorífica, costos de transacción y asimetría de información. Se requiere mayor investigación y posibles intervenciones regulatorias para mejorar la transparencia.
+    </div>
+
+    <h2 class="sub fade-in" style="color:var(--tierra)">Precios Internos: Evolución Reciente</h2>
+    <div class="tabla-wrapper fade-in">
+      <table>
+        <thead>
+          <tr>
+            <th>Período</th>
+            <th>Evento</th>
+            <th>Impacto en precio del novillo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2019 (4T)</td>
+            <td>Pico demanda china + fiebre porcina</td>
+            <td class="dest">Máximo histórico: USD 4,31/kg carcasa</td>
+          </tr>
+          <tr>
+            <td>Abril 2020</td>
+            <td>Pandemia COVID-19 · restricciones China</td>
+            <td>Caída a USD 3,29/kg (-24%)</td>
+          </tr>
+          <tr>
+            <td>2020/21</td>
+            <td>Recuperación + demanda sostenida China</td>
+            <td class="dest">Indicadores récord · precios al alza</td>
+          </tr>
+          <tr>
+            <td>2022/23</td>
+            <td>Sequía severa + caída demanda china</td>
+            <td>Ingreso de capital cae 52% (Carpetas Verdes)</td>
+          </tr>
+          <tr>
+            <td>2025</td>
+            <td>Escasez en EE.UU. + precios FAO históricos</td>
+            <td class="dest">Precios de hacienda y reposición en récords</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">Fuente: INAC · OPYPA · FAO · Elaboración propia</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 5. EXPORTACIONES -->
+<!-- ═══════════════════════════════════════ -->
+<section id="exportaciones" class="bg-blanco">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">05</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Inserción Internacional</div>
+        <h1 class="section-title">Exportaciones</h1>
+        <div class="section-rule"></div>
+      </div>
+    </div>
+
+    <div class="indicadores-grid fade-in">
+      <div class="indicador-card">
+        <div class="ind-valor">$2.097M</div>
+        <div class="ind-label">Exportaciones 2024</div>
+        <div class="ind-nota">496.000 t a 46 mercados</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-valor">84%</div>
+        <div class="ind-label">Producción exportada</div>
+        <div class="ind-nota">Del total de toneladas peso embarque</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-valor">+153%</div>
+        <div class="ind-label">Precio de exportación</div>
+        <div class="ind-nota">Crecimiento 2004–2023</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-valor">$13.272</div>
+        <div class="ind-label">USD/t carne enfriada</div>
+        <div class="ind-nota">Máximo entre competidores, sept. 2025</div>
+      </div>
+    </div>
+
+    <div class="dos-col">
+      <div class="fade-in">
+        <h2 class="sub">Concentración en China</h2>
+        <p class="body">China pasó de importar prácticamente nada desde Uruguay en 2006 a representar el <span class="dato-inline">60% de las exportaciones en 2019</span>. Aunque bajó al 47% en 2023, sigue siendo dominante. En 2025, el bloque USMCA (EE.UU.-México-Canadá) desplazó a China como principal destino.</p>
+        <p class="body">Esta dependencia presenta riesgos múltiples: el precio que paga China cayó un 8% en 2024; una contracción de la demanda china (como en 2022/23) se transmite directamente al precio interno; y el acceso puede verse afectado por decisiones sanitarias o políticas.</p>
+        <p class="body">Las menudencias tienen concentración aún mayor: 63% en China. La apertura del mercado chino a mondongos y librillos en 2024 generó <span class="dato-inline">USD 33M</span> en el primer año, con precios 2,5x superiores al segundo mejor mercado.</p>
+
+        <h3 class="sub3">Destinos exportación carne bovina 2023</h3>
+        <div class="destinos-viz" style="margin-top:1rem">
+          <div class="destino-row">
+            <span class="destino-nombre" style="color:var(--grafito)">China</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="47%"></div></div>
+            <span class="destino-pct">47%</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">EE.UU.</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="19%"></div></div>
+            <span class="destino-pct">19%</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">Unión Europea</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="14%"></div></div>
+            <span class="destino-pct">14%</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">América del Sur</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="6%"></div></div>
+            <span class="destino-pct">6%</span>
+          </div>
+          <div class="destino-row">
+            <span class="destino-nombre">Otros</span>
+            <div class="destino-barra-wrap"><div class="destino-barra" style="width:0" data-width="14%"></div></div>
+            <span class="destino-pct">14%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-2">
+        <h2 class="sub">Precios vs. Competidores</h2>
+        <p class="body">Uruguay lidera el precio de carne enfriada entre sus competidores desde 2025: <span class="dato-inline">USD 13.272/t</span>, por encima de Australia, Nueva Zelanda, Argentina y Brasil. En carne congelada se ubica en torno a USD 6.600/t, comparable a Australia.</p>
+        <p class="body">Estas diferencias reflejan mejor acceso a mercados de alto valor (UE, EE.UU.) y la mayor calidad percibida del producto uruguayo. Brasil mantiene precios sustancialmente inferiores en ambas categorías, con carne enfriada brasileña hasta un 46% más barata que la uruguaya en algunos períodos.</p>
+
+        <h3 class="sub3">Subproductos y menudencias</h3>
+        <p class="body" style="font-size:0.88rem">El sector cárnico exporta también subproductos (grasas, sebos, suero fetal: 12% del valor) y menudencias (tendones, rabos, lenguas, mondongos: 5%). La apertura de nuevos mercados para subproductos representa una vía de incremento de valor sin aumentar la faena.</p>
+
+        <h3 class="sub3" style="margin-top:1.5rem">Ganado en pie</h3>
+        <p class="body" style="font-size:0.88rem">Las exportaciones en pie promediaron el 2% del stock y el 10,2% de la faena en la última década. Actualmente en niveles elevados. Representan una válvula de ajuste del rodeo pero también exportan valor agregado potencial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 6. PERSPECTIVAS -->
+<!-- ═══════════════════════════════════════ -->
+<section id="perspectivas" class="bg-cielo">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">06</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Mirada Prospectiva</div>
+        <h1 class="section-title">Hallazgos y Perspectivas</h1>
+        <div class="section-rule" style="background:var(--verde-campo)"></div>
+      </div>
+    </div>
+
+    <h2 class="sub fade-in" style="color:var(--verde-campo)">Hallazgos Principales</h2>
+    <div class="hallazgos-lista fade-in">
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">1</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Sector estratégico de alto impacto</span>
+          Más del 10% del PBI, 90.000 empleos directos, USD 700M en impuestos anuales y N.º 1 exportador per cápita del mundo (134 kg/habitante/año).
+        </div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">2</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Crecimiento por precio, no por volumen</span>
+          Las exportaciones crecieron +237% en valor entre 2004 y 2023, pero solo +41% en toneladas. El precio explica el 153% del crecimiento, reflejo de mejor mix de mercados y calidad.
+        </div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">3</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Productividad predial heterogénea con enorme potencial</span>
+          Brecha de 5,3x entre p90 y p10. Mejoramientos forrajeros (mediana = 0%), educación del productor y asistencia técnica son los factores más correlacionados con la eficiencia.
+        </div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">4</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Pesos de faena en alza sostenida</span>
+          +37,2 kg promedio entre 2006/07 y 2018/19, con dos saltos de nivel (2012 y 2017). Asociado a corrales de engorde, mejora genética y mejor gestión forrajera.
+        </div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">5</div>
+        <div class="hallazgo-titulo">Asimetría negativa en transmisión de precios</div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n" style="opacity:0"></div>
+        <div class="hallazgo-texto">Las caídas de precios se transmiten más rápido que las subidas (NARDL, R²=97,6%). Equilibrio solo a los 10 meses. Sugiere condiciones de mercado favorables a la industria frigorífica.</div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">6</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Concentración en China: riesgo estructural</span>
+          Aunque bajó del 60% al 47%, China sigue siendo dominante. En 2025 el USMCA ya desplazó a China. La diversificación es urgente y estratégica.
+        </div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">7</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Desventajas arancelarias significativas</span>
+          38,5% en Japón (vs. 9% australiano final), 26,5% en Canadá (vs. 0%). Adhesión al CPTPP generaría USD 79–184M adicionales/año en 2033.
+        </div>
+      </div>
+      <div class="hallazgo-item">
+        <div class="hallazgo-n">8</div>
+        <div class="hallazgo-texto">
+          <span class="hallazgo-titulo">Mayor tiempo de transporte entre exportadores globales</span>
+          42 días promedio, el doble que EE.UU. Cada día adicional puede reducir exportaciones en un 6%. El 78% de la producción se exporta, amplificando este riesgo logístico.
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sub fade-in" style="color:var(--verde-campo); margin-top:3rem">Oportunidades y Desafíos hacia 2030</h2>
+    <div class="perspectivas-grid fade-in">
+      <div class="perspectiva-card">
+        <span class="persp-icono">📈</span>
+        <div class="persp-titulo">Precios históricamente altos</div>
+        <p class="persp-texto">Los precios internacionales en máximos históricos desde 1990 (FAO 2025) ofrecen una ventana de mejora de resultados. La OCDE-FAO proyecta precios al alza en 2025-2034 por reconstrucción de rodeos globales.</p>
+      </div>
+      <div class="perspectiva-card destaca">
+        <span class="persp-icono">🌱</span>
+        <div class="persp-titulo">Posicionamiento sustentable</div>
+        <p class="persp-texto">Uruguay produce carne de alta calidad en campo natural, con trazabilidad individual completa y compromisos ambientales formales. En mercados que exigen sostenibilidad (UE), esto es ventaja competitiva creciente.</p>
+      </div>
+      <div class="perspectiva-card">
+        <span class="persp-icono">🤝</span>
+        <div class="persp-titulo">Apertura comercial pendiente</div>
+        <p class="persp-texto">CPTPP, TLC con la UE y expansión de habilitaciones sanitarias son prioridades. El potencial de ingresos adicionales por desgravación arancelaria es de decenas a más de cien millones de dólares anuales.</p>
+      </div>
+      <div class="perspectiva-card">
+        <span class="persp-icono">🔬</span>
+        <div class="persp-titulo">Tecnología y productividad predial</div>
+        <p class="persp-texto">PROCRÍA y el Plan de Lucha contra la Garrapata apuntan a los dos cuellos de botella históricos: la tasa de procreo (cayó al 44% en vaquillonas) y la sanidad. La trazabilidad individual ofrece mejores estimaciones para políticas.</p>
+      </div>
+    </div>
+
+    <div class="destacado-box fade-in">
+      Uruguay tiene una posición privilegiada en el mercado global de carne bovina de calidad. El crecimiento de largo plazo dependerá de la capacidad del sector para aumentar la productividad predial, diversificar mercados, reducir las desventajas arancelarias y consolidar su posicionamiento como proveedor premium de un mercado global que premia cada vez más la calidad y la responsabilidad ambiental. La demanda existe; el desafío es producir más, mejor y con menores costos relativos.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FUENTES -->
+<!-- ═══════════════════════════════════════ -->
+<section id="fuentes" class="bg-crema">
+  <div class="section-wrapper">
+    <div class="section-header fade-in">
+      <div class="section-num">—</div>
+      <div class="section-title-group">
+        <div class="section-eyebrow">Bibliografía</div>
+        <h1 class="section-title">Fuentes y Referencias</h1>
+        <div class="section-rule"></div>
+      </div>
+    </div>
+
+    <div class="fuentes-grid fade-in">
+      <div class="fuente-item"><span class="fuente-num">01</span><span>Gorga, L. y Piegas, F. (2025). <em>Cadena de la carne vacuna: situación y perspectivas.</em> Anuario OPYPA 2025, MGAP.</span></div>
+      <div class="fuente-item"><span class="fuente-num">02</span><span>Gorga, L. y Piegas, F. (2024). <em>Cadena de la carne vacuna: situación y perspectivas.</em> Anuario OPYPA 2024, MGAP.</span></div>
+      <div class="fuente-item"><span class="fuente-num">03</span><span>Gorga, L. y Mila, F. (2023). <em>Cadena de la carne vacuna: situación y perspectivas.</em> Anuario OPYPA 2023, MGAP.</span></div>
+      <div class="fuente-item"><span class="fuente-num">04</span><span>Gorga, L. y Mila, F. (2022). <em>Cadena de la carne vacuna: situación y perspectivas.</em> Anuario OPYPA 2022, MGAP.</span></div>
+      <div class="fuente-item"><span class="fuente-num">05</span><span>Frache, S. (2024). <em>Estimación de un modelo de proyección de stock y producción de carne bovina en Uruguay.</em> Anuario OPYPA 2024.</span></div>
+      <div class="fuente-item"><span class="fuente-num">06</span><span>Rostán, F. et al. (2024). <em>Asimetrías en la transmisión de precios de la cadena cárnica.</em> Anuario OPYPA 2024, INIA.</span></div>
+      <div class="fuente-item"><span class="fuente-num">07</span><span>Dávila, L. et al. (2022). <em>Acuerdo Transpacífico: impacto económico para la cadena de carne bovina.</em> Anuario OPYPA 2022.</span></div>
+      <div class="fuente-item"><span class="fuente-num">08</span><span>Dávila, L. et al. (2021). <em>Índice de tiempos de transporte: cadena cárnica bovina uruguaya.</em> Anuario OPYPA 2021.</span></div>
+      <div class="fuente-item"><span class="fuente-num">09</span><span>Aguirre, E. y Durán, V. <em>Evolución y variabilidad de los pesos de faena vacuna en Uruguay.</em> OPYPA-MGAP.</span></div>
+      <div class="fuente-item"><span class="fuente-num">10</span><span>Aguirre, E. (2019). <em>Productividad ganadera de los establecimientos de carne bovina del CGA 2011.</em> Anuario OPYPA 2019.</span></div>
+      <div class="fuente-item"><span class="fuente-num">11</span><span>Mila, F. (2019). <em>Análisis de los impuestos en la ganadería.</em> Anuario OPYPA 2019.</span></div>
+      <div class="fuente-item"><span class="fuente-num">12</span><span>Bervejillo, J. (2021 y 2020). <em>Comportamiento del sector de la carne vacuna.</em> Anuario OPYPA 2021 y 2020, MGAP.</span></div>
+      <div class="fuente-item"><span class="fuente-num">13</span><span>Bervejillo, J., Adam, L. y Piperno, P. (2021). <em>Mejor estimación de la producción de carne con datos administrativos.</em> Anuario OPYPA 2021.</span></div>
+      <div class="fuente-item"><span class="fuente-num">14</span><span>Román, N. et al. (2022). <em>Estimación de coeficientes de consumo de gasoil para actividades agropecuarias.</em> Anuario OPYPA 2022.</span></div>
+      <div class="fuente-item"><span class="fuente-num">15</span><span>CERES (2024). <em>Estado actual, impacto y potencial del sector cárnico del Uruguay.</em> Informe Especial, diciembre 2024.</span></div>
+      <div class="fuente-item"><span class="fuente-num">16</span><span>Uruguay XXI (2024). <em>Sector Ganadero en Uruguay.</em> Informe Ganadero, junio 2024.</span></div>
+      <div class="fuente-item"><span class="fuente-num">17</span><span>INAC (2025). <em>Anuario Estadístico 2024.</em> Instituto Nacional de Carnes, abril 2025.</span></div>
+      <div class="fuente-item"><span class="fuente-num">18</span><span>USDA. <em>Livestock and Poultry: World Markets and Trade.</em> Varios años.</span></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>
+    <div class="marca-footer">Ganadería Bovina · Uruguay</div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; margin-top:0.3rem; color:rgba(255,255,255,0.25)">Informe Consolidado 2020–2025</div>
+  </div>
+  <div class="info-footer">
+    Fuentes: OPYPA-MGAP · INAC · CERES · INIA · Uruguay XXI<br>
+    Datos: DICOSE · SNIG · USDA · FAO · BCU<br>
+    Período de análisis: 2020–2025
+  </div>
+</footer>
+
+<script>
+// ── Intersection Observer para animaciones de entrada ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Animar barras cuando entran en vista ──
+const barraObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.barra-fill, .destino-barra').forEach(bar => {
+        const targetWidth = bar.dataset.width;
+        if (targetWidth) {
+          setTimeout(() => { bar.style.width = targetWidth; }, 200);
+        }
+      });
+      barraObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.dos-col, .tres-col, .destinos-viz, [class*="barra"]').forEach(el => {
+  if (el.querySelector('.barra-fill, .destino-barra')) {
+    barraObserver.observe(el);
+  }
+});
+
+// También observer directo en cada sección
+document.querySelectorAll('section').forEach(sec => {
+  barraObserver.observe(sec);
+});
+
+// ── Nav lateral: highlight sección activa ──
+const secciones = ['hero','resumen','internacional','produccion','productividad','precios','exportaciones','perspectivas','fuentes'];
+const dots = document.querySelectorAll('.nav-dot');
+
+const secObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+      const id = entry.target.id;
+      dots.forEach(d => d.classList.remove('active'));
+      const dot = document.querySelector(`.nav-dot[data-section="${id}"]`);
+      if (dot) dot.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+secciones.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) secObserver.observe(el);
+});
+
+// ── Click en nav dots ──
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const id = dot.dataset.section;
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Consolidado de Mercados Agrícolas Mundiales — USDA Abril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1610;
+    --amber: #C8860A;
+    --amber-light: #E8A020;
+    --rust: #8B3A1C;
+    --sage: #4A6741;
+    --slate: #3D4E5C;
+    --gold: #D4A820;
+    --rule: #C8860A;
+    --paper: #FAF7F2;
+    --shadow: rgba(26,22,16,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(200,134,10,0.08) 39px,
+      rgba(200,134,10,0.08) 40px
+    );
+  }
+  .masthead-inner {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+  }
+  .masthead-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .masthead h1 em {
+    color: var(--amber-light);
+    font-style: normal;
+  }
+  .masthead-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.12em;
+    margin-top: 20px;
+    line-height: 2;
+  }
+  .masthead-badge {
+    background: var(--amber);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    white-space: nowrap;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── NAV STRIP ── */
+  .nav-strip {
+    background: var(--amber);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-strip::-webkit-scrollbar { display: none; }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+  }
+  .nav-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 20px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(26,22,16,0.15);
+    transition: background 0.2s;
+  }
+  .nav-item:hover { background: rgba(26,22,16,0.12); }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── LEAD / EXECUTIVE SUMMARY ── */
+  .lead-section {
+    padding: 56px 0 40px;
+    border-bottom: 2px solid var(--amber);
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.3;
+  }
+  .lead-deck {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--ink);
+    font-style: italic;
+    max-width: 740px;
+    margin-bottom: 32px;
+  }
+  .lead-body {
+    column-count: 2;
+    column-gap: 40px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2A251E;
+  }
+  @media (max-width: 640px) { .lead-body { column-count: 1; } }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--amber);
+    border: 1px solid var(--amber);
+    margin: 40px 0;
+  }
+  .kpi-cell {
+    background: var(--paper);
+    padding: 24px 20px;
+  }
+  .kpi-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .kpi-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-unit {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(26,22,16,0.5);
+  }
+  .kpi-trend { font-size: 12px; margin-top: 6px; }
+  .kpi-trend.up { color: var(--sage); }
+  .kpi-trend.down { color: var(--rust); }
+  .kpi-trend.neutral { color: var(--slate); }
+
+  /* ── COMMODITY SECTIONS ── */
+  .commodity-section {
+    padding: 56px 0;
+    border-bottom: 1px solid rgba(200,134,10,0.25);
+  }
+  .commodity-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .commodity-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(200,134,10,0.15);
+    line-height: 0.85;
+    user-select: none;
+  }
+  .commodity-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .commodity-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ── TWO-COL TEXT ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 700px) { .three-col { grid-template-columns: 1fr; } }
+
+  /* ── PULLQUOTE ── */
+  .pullquote {
+    border-left: 4px solid var(--amber);
+    padding: 20px 28px;
+    margin: 32px 0;
+    background: rgba(200,134,10,0.05);
+  }
+  .pullquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .pullquote cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-top: 12px;
+    font-style: normal;
+  }
+
+  /* ── DATA TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 14px;
+  }
+  .data-table thead tr {
+    border-bottom: 2px solid var(--amber);
+  }
+  .data-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(200,134,10,0.12);
+    color: #2A251E;
+    line-height: 1.4;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(200,134,10,0.04); }
+  .data-table td.num {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    text-align: right;
+  }
+  .data-table td.pos { color: var(--sage); font-weight: 600; }
+  .data-table td.neg { color: var(--rust); font-weight: 600; }
+
+  /* ── INSIGHT CARDS ── */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin: 32px 0;
+  }
+  .insight-card {
+    background: var(--paper);
+    border: 1px solid rgba(200,134,10,0.2);
+    padding: 24px;
+    position: relative;
+  }
+  .insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--amber);
+  }
+  .insight-card.rust::before { background: var(--rust); }
+  .insight-card.sage::before { background: var(--sage); }
+  .insight-card.slate::before { background: var(--slate); }
+  .insight-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .insight-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .insight-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #3A332A;
+  }
+
+  /* ── PRICE BAR ── */
+  .price-bar-group { margin: 24px 0; }
+  .price-bar-item {
+    display: grid;
+    grid-template-columns: 130px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+  .price-bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    letter-spacing: 0.08em;
+  }
+  .price-bar-track {
+    height: 8px;
+    background: rgba(200,134,10,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .price-bar-fill {
+    height: 100%;
+    background: var(--amber);
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+  .price-bar-fill.rust { background: var(--rust); }
+  .price-bar-fill.sage { background: var(--sage); }
+  .price-bar-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+    color: var(--ink);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 24px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 4px; bottom: 4px;
+    width: 1px;
+    background: rgba(200,134,10,0.3);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #3A332A;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 7px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--cream);
+  }
+  .timeline-item strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ── REGIONAL MAP GRID ── */
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(200,134,10,0.2);
+    border: 1px solid rgba(200,134,10,0.2);
+    margin: 28px 0;
+  }
+  @media (max-width: 640px) { .region-grid { grid-template-columns: 1fr 1fr; } }
+  .region-cell {
+    background: var(--paper);
+    padding: 18px 16px;
+  }
+  .region-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .region-headline {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .region-detail {
+    font-size: 12px;
+    color: #5A5040;
+    line-height: 1.5;
+  }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 32px 36px;
+    margin: 40px 0;
+    position: relative;
+  }
+  .callout::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    color: var(--amber);
+    opacity: 0.2;
+    position: absolute;
+    top: -10px; left: 20px;
+    line-height: 1;
+  }
+  .callout-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+  .callout-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── CONCLUSIONS ── */
+  .conclusions-section {
+    padding: 56px 0;
+    background: var(--ink);
+    color: var(--cream);
+    margin: 0 -40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .conclusions-section .section-label { color: var(--amber-light); }
+  .conclusions-section .section-label::after { background: var(--amber-light); }
+  .conclusion-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(200,134,10,0.2);
+  }
+  .conclusion-item:last-child { border-bottom: none; }
+  .conclusion-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .conclusion-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .conclusion-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.75);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--amber);
+    color: var(--ink);
+    padding: 24px 40px;
+  }
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+  }
+
+  /* ── PROSE HELPERS ── */
+  p { margin-bottom: 1em; }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+    color: var(--ink);
+  }
+  h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin: 24px 0 10px;
+  }
+  strong { font-weight: 600; }
+  .highlight { color: var(--amber); font-weight: 600; }
+  .highlight-red { color: var(--rust); font-weight: 600; }
+  .highlight-green { color: var(--sage); font-weight: 600; }
+
+  /* ── FULL-WIDTH WRAPPER ── */
+  .full-width { background: var(--paper); padding: 40px; margin: 0 -40px; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ MASTHEAD ════════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <p class="masthead-eyebrow">USDA · Foreign Agricultural Service · Economic Research Service</p>
+      <h1>Mercados Agrícolas<br>Mundiales <em>Abril 2026</em></h1>
+      <p class="masthead-meta">
+        Informe Consolidado · Granos · Oleaginosas · Ganadería · Lácteos · Aves<br>
+        Compilado a partir de publicaciones WASDE, WAP y LDP · Edición de análisis en español
+      </p>
+    </div>
+    <div class="masthead-badge">Análisis Consolidado — Abril 2026</div>
+  </div>
+</header>
+
+<!-- ════════════════════════ NAV ════════════════════════ -->
+<nav class="nav-strip">
+  <div class="nav-inner">
+    <a class="nav-item" href="#resumen">Resumen</a>
+    <a class="nav-item" href="#trigo">Trigo</a>
+    <a class="nav-item" href="#maiz">Maíz</a>
+    <a class="nav-item" href="#oleaginosas">Oleaginosas</a>
+    <a class="nav-item" href="#ganaderia">Ganadería</a>
+    <a class="nav-item" href="#lacteos">Lácteos</a>
+    <a class="nav-item" href="#aves">Aves & Cerdos</a>
+    <a class="nav-item" href="#conclusiones">Conclusiones</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════ RESUMEN EJECUTIVO ════════════════════════ -->
+<section id="resumen">
+  <div class="container">
+    <div class="lead-section">
+      <p class="section-label">Resumen Ejecutivo</p>
+      <p class="lead-deck">El ciclo agrícola mundial 2025/26 está marcado por una paradoja: abundancia histórica de granos coexiste con tensiones estructurales en proteínas animales, aceites vegetales y mercados lácteos.</p>
+      <div class="lead-body">
+        <p>Los informes del USDA de abril de 2026 presentan un panorama complejo. La producción global de trigo alcanzó niveles récord, superando el consumo por primera vez en varios años y generando un mercado con exceso de oferta que entrará a 2026/27 con existencias históricamente altas. Las principales naciones exportadoras —EU, Argentina, Rusia, Canadá— registran aumentos simultáneos de inventarios, lo que presiona los precios internacionales a la baja.</p>
+        <p>En el segmento de oleaginosas, Argentina emerge como protagonista con una cosecha casi récord de girasol, mientras los precios de soja navegan entre la volatilidad geopolítica —especialmente la demora en la cumbre Trump-Xi— y la fortaleza de la demanda de aceites vegetales impulsada por el sector de biocombustibles. El mercado ganadero en EE.UU. muestra la tensión entre la reducción del rodeo base y precios históricamente elevados. En el sector avícola, China redefine el equilibrio global del comercio de pollo al convertirse en exportador neto y diversificar agresivamente sus mercados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ KPI GRID ════════════════════════ -->
+<div class="container">
+  <div class="kpi-grid">
+    <div class="kpi-cell">
+      <div class="kpi-label">Producción Mundial de Trigo 2025/26</div>
+      <div class="kpi-value">+6%</div>
+      <div class="kpi-unit">Récord histórico</div>
+      <div class="kpi-trend up">▲ Stocks +9% interanual</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Precio Novillo EE.UU. Feb 2026</div>
+      <div class="kpi-value">$244</div>
+      <div class="kpi-unit">Por cwt — récord histórico mensual</div>
+      <div class="kpi-trend up">▲ +$42 vs. año anterior</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Precio Soja EE.UU. (USDA)</div>
+      <div class="kpi-value">$10.30</div>
+      <div class="kpi-unit">Por bushel — proy. temporada</div>
+      <div class="kpi-trend neutral">→ +10¢ vs. mes anterior</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Producción Girasol Argentina</div>
+      <div class="kpi-value">7.0</div>
+      <div class="kpi-unit">MMT — +25% interanual</div>
+      <div class="kpi-trend up">▲ Casi récord histórico</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Exportaciones Pollo China 2025</div>
+      <div class="kpi-value">$2.59B</div>
+      <div class="kpi-unit">Valor USD — casi doble de 2020</div>
+      <div class="kpi-trend up">▲ Volumen x3 desde 2020</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Precio Leche Entera EE.UU. 2026F</div>
+      <div class="kpi-value">$19.70</div>
+      <div class="kpi-unit">Por cwt — revisado al alza</div>
+      <div class="kpi-trend up">▲ +$0.75 vs. pronóstico anterior</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Producción Maíz Brasil 2025/26</div>
+      <div class="kpi-value">132</div>
+      <div class="kpi-unit">MMT — +11% sobre media 5 años</div>
+      <div class="kpi-trend neutral">→ -3% vs. año anterior</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-label">Prod. Maíz Sudáfrica 2025/26</div>
+      <div class="kpi-value">17.3</div>
+      <div class="kpi-unit">MMT — 2ª mayor cosecha récord</div>
+      <div class="kpi-trend up">▲ +7% sobre media 5 años</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ TRIGO ════════════════════════ -->
+<section id="trigo">
+  <div class="container">
+    <div class="commodity-section">
+      <div class="commodity-header">
+        <div class="commodity-number">01</div>
+        <div>
+          <div class="commodity-title">Trigo Global</div>
+          <div class="commodity-subtitle">Exceso de Oferta Histórico · Presión Bajista de Precios</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>Una Cosecha Sin Precedentes</h3>
+          <p>El año comercial 2025/26 registra producción mundial de trigo en niveles récord, con un incremento del <strong>6% respecto al año anterior</strong>. Este crecimiento fue especialmente pronunciado en los principales exportadores: la Unión Europea aumentó su producción un <strong>20%</strong>, Argentina un sorprendente <strong>51%</strong>, y tanto Rusia como Canadá crecieron un <strong>11%</strong> cada uno.</p>
+          <p>El resultado estructural es un mercado sobreabastecido. Las existencias finales globales se pronostican en aumento del <strong>9% al nivel más alto en 5 años</strong>, mientras que los stocks de los grandes exportadores —el indicador clave de disponibilidad para el mercado mundial— suben un extraordinario <strong>30%, alcanzando el máximo desde 2009/10</strong>.</p>
+          <p>Con producción superando al consumo en 2025/26, el mercado global entrará a 2026/27 con un claro excedente estructural que mantendrá la presión bajista sobre los precios durante el próximo ciclo.</p>
+        </div>
+        <div>
+          <h3>Precios y Dinámica Exportadora</h3>
+          <p>La sobreoferta ha pesado sobre los precios a lo largo de 2025/26, aunque en el último mes se registraron repuntes puntuales. Los precios FOB de exportación en los mercados de referencia muestran una competencia intensa entre orígenes:</p>
+
+          <div class="price-bar-group">
+            <div class="price-bar-item">
+              <span class="price-bar-label">Argentina</span>
+              <div class="price-bar-track"><div class="price-bar-fill sage" style="width:72%"></div></div>
+              <span class="price-bar-value">$230/MT</span>
+            </div>
+            <div class="price-bar-item">
+              <span class="price-bar-label">Unión Europea</span>
+              <div class="price-bar-track"><div class="price-bar-fill sage" style="width:74%"></div></div>
+              <span class="price-bar-value">$238/MT</span>
+            </div>
+            <div class="price-bar-item">
+              <span class="price-bar-label">Rusia</span>
+              <div class="price-bar-track"><div class="price-bar-fill" style="width:75%"></div></div>
+              <span class="price-bar-value">$239/MT</span>
+            </div>
+            <div class="price-bar-item">
+              <span class="price-bar-label">Australia</span>
+              <div class="price-bar-track"><div class="price-bar-fill" style="width:84%"></div></div>
+              <span class="price-bar-value">$270/MT</span>
+            </div>
+            <div class="price-bar-item">
+              <span class="price-bar-label">Canadá</span>
+              <div class="price-bar-track"><div class="price-bar-fill rust" style="width:85%"></div></div>
+              <span class="price-bar-value">$273/MT</span>
+            </div>
+            <div class="price-bar-item">
+              <span class="price-bar-label">Estados Unidos</span>
+              <div class="price-bar-track"><div class="price-bar-fill rust" style="width:85%"></div></div>
+              <span class="price-bar-value">$273/MT</span>
+            </div>
+          </div>
+          <p style="font-size:12px; color:#5A5040;">Argentina lidera como el origen más competitivo, ganando mercados en el Sudeste Asiático. EE.UU. enfrenta la presión más alta sobre sus márgenes exportadores.</p>
+        </div>
+      </div>
+
+      <div class="pullquote">
+        <p>Las existencias entre los grandes exportadores mundiales alcanzan el nivel más alto desde 2009/10 — un mercado estructuralmente sobreabastecido que presionará los márgenes de los productores en 2026/27.</p>
+        <cite>USDA FAS — Grain: World Markets and Trade, Abril 2026</cite>
+      </div>
+
+      <h4>Cambios de Comercio Clave 2025/26</h4>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>País</th>
+            <th>Atributo</th>
+            <th class="num">Anterior (MMT)</th>
+            <th class="num">Actual (MMT)</th>
+            <th class="num">Cambio</th>
+            <th>Razón</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Vietnam</td><td>Importaciones</td><td class="num">6.6</td><td class="num">7.3</td><td class="num pos">+700k</td><td>Alta demanda sectorial con trigo argentino barato</td></tr>
+          <tr><td>Argentina</td><td>Exportaciones</td><td class="num">19.0</td><td class="num">19.5</td><td class="num pos">+500k</td><td>Precios competitivos hacia Sudeste Asiático</td></tr>
+          <tr><td>Indonesia</td><td>Importaciones</td><td class="num">13.0</td><td class="num">13.2</td><td class="num pos">+200k</td><td>Grandes compras, incluyendo origen argentino</td></tr>
+          <tr><td>Brasil</td><td>Importaciones</td><td class="num">7.3</td><td class="num">6.8</td><td class="num neg">-500k</td><td>Demanda débil de importaciones</td></tr>
+          <tr><td>Pakistán</td><td>Importaciones</td><td class="num">0.5</td><td class="num">0.01</td><td class="num neg">-490k</td><td>Prohibición gubernamental de importaciones</td></tr>
+          <tr><td>Australia</td><td>Exportaciones</td><td class="num">27.0</td><td class="num">26.5</td><td class="num neg">-500k</td><td>Mayor competencia argentina en mercados tradicionales</td></tr>
+        </tbody>
+      </table>
+
+      <div class="insight-grid">
+        <div class="insight-card">
+          <span class="insight-icon">🇷🇺</span>
+          <div class="insight-title">Rusia: Stocks +40%</div>
+          <div class="insight-body">Las existencias rusas, el mayor exportador mundial, crecen más del 40% interanual gracias a una cosecha mayor. Rusia reintrodujo aranceles de exportación para sostener precios internos.</div>
+        </div>
+        <div class="insight-card rust">
+          <span class="insight-icon">🇺🇸</span>
+          <div class="insight-title">EE.UU.: Productores Reducen Área</div>
+          <div class="insight-body">Con stocks en máximo de 6 años y márgenes comprimidos por la competencia exterior, los productores planean sembrar 3% menos de trigo en 2026/27 según el informe de intenciones de siembra NASS.</div>
+        </div>
+        <div class="insight-card sage">
+          <span class="insight-icon">🇮🇳</span>
+          <div class="insight-title">India: Stocks Casi Triples</div>
+          <div class="insight-body">India mantiene 22 millones de toneladas en reservas, casi el triple del nivel de hace 2 años. El gobierno permite exportaciones limitadas bajo condiciones específicas, señal de posible relajamiento de la restricción vigente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ MAÍZ ════════════════════════ -->
+<section id="maiz">
+  <div class="container">
+    <div class="commodity-section">
+      <div class="commodity-header">
+        <div class="commodity-number">02</div>
+        <div>
+          <div class="commodity-title">Maíz Mundial</div>
+          <div class="commodity-subtitle">Cosechas Contrastadas · La Niña Favorece África y Asia</div>
+        </div>
+      </div>
+
+      <p>El maíz 2025/26 presenta un mosaico de condiciones regionales muy diversas, donde el clima —especialmente el fenómeno La Niña— ha generado tanto récords como fracasos de cosecha en distintas latitudes.</p>
+
+      <div class="region-grid">
+        <div class="region-cell">
+          <div class="region-name">Brasil</div>
+          <div class="region-headline">132 MMT — Sin Cambios</div>
+          <div class="region-detail">Área récord de 22.8 Mha. Siembra oportuna de la safrinha. 11% sobre la media de 5 años a pesar de rendimientos levemente menores al año anterior.</div>
+        </div>
+        <div class="region-cell">
+          <div class="region-name">Sudáfrica</div>
+          <div class="region-headline">17.3 MMT — 2ª Mayor Récord</div>
+          <div class="region-detail">La Niña proveyó lluvias por encima del promedio durante toda la temporada crítica. NDVI (índice de vegetación satelital) sobre la media desde noviembre hasta marzo.</div>
+        </div>
+        <div class="region-cell">
+          <div class="region-name">Indonesia</div>
+          <div class="region-headline">13.3 MMT — Área Récord</div>
+          <div class="region-detail">3.6 Mha cosechadas, máximo histórico. Las lluvias favorables de la temporada húmeda permitieron siembra en tiempo. Competencia con arroz limita el potencial alcista.</div>
+        </div>
+        <div class="region-cell">
+          <div class="region-name">Uruguay</div>
+          <div class="region-highlight" style="color:var(--rust); font-weight:600; margin-bottom:4px;">1.2 MMT — -33% mensual</div>
+          <div class="region-detail">Sequía persistente en febrero-marzo. Déficit severo de humedad. Buena parte de la cosecha se convertirá en silaje para ganado en lugar de grano.</div>
+        </div>
+        <div class="region-cell">
+          <div class="region-name">China</div>
+          <div class="region-headline">Demanda Estable</div>
+          <div class="region-detail">Históricamente mayor reserva de trigo. Existencias robustas aunque levemente menores. Gran consumidor que equilibra el mercado global.</div>
+        </div>
+        <div class="region-cell">
+          <div class="region-name">América del Sur</div>
+          <div class="region-headline">Divergencia Regional</div>
+          <div class="region-detail">Brasil en máximos de área mientras Uruguay sufre una de sus peores temporadas. La variabilidad climática sub-regional es el factor dominante del ciclo.</div>
+        </div>
+      </div>
+
+      <div class="pullquote">
+        <p>El contraste Uruguay-Brasil ilustra una realidad emergente: la variabilidad climática sub-regional dentro del mismo continente se intensifica, creando ganadores y perdedores incluso en temporadas globalmente favorables.</p>
+        <cite>Análisis derivado de USDA WAP — World Agricultural Production, Abril 2026</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ OLEAGINOSAS ════════════════════════ -->
+<section id="oleaginosas">
+  <div class="container">
+    <div class="commodity-section">
+      <div class="commodity-header">
+        <div class="commodity-number">03</div>
+        <div>
+          <div class="commodity-title">Oleaginosas</div>
+          <div class="commodity-subtitle">Soja · Girasol · Aceites Vegetales · Tensiones Geopolíticas</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>Argentina: El Protagonista Inesperado del Girasol</h3>
+          <p>Argentina produce cerca de un décimo de la producción mundial de girasol, pero en 2025/26 su impacto es desproporcionado. Con <strong>7.0 MMT de producción (+25% interanual)</strong>, la cosecha de verano austral —iniciada en febrero— llega cuando el hemisferio norte ya consumió sus reservas, ofreciendo un contrapunto estacional estratégico.</p>
+          <p>Las exportaciones de semilla de girasol de Argentina alcanzan máximos de décadas. Destino principal: las plantas crushers de Bulgaria y Rumania en la UE, donde los márgenes de molienda son altos dado el nivel de precios del aceite de girasol. El aceite de girasol promedia casi <strong>$1.300/ton FOB</strong> en septiembre 2025-marzo 2026, frente a $1.100/ton el año anterior.</p>
+          <p>Simultáneamente, Argentina exportará <strong>1.8 MMT de aceite y 1.8 MMT de harina de girasol</strong>, los máximos en más de 25 años. Esta es una transformación estructural en el perfil exportador argentino.</p>
+        </div>
+        <div>
+          <h3>Soja: Entre la Geopolítica y los Biocombustibles</h3>
+          <p>El mercado de soja en 2025/26 está dominado por dos grandes fuerzas en tensión. Por un lado, la incertidumbre comercial EE.UU.-China: el precio FOB de soja americana cayó abruptamente cuando se anunció que la cumbre Trump-Xi se postergaba hasta mediados de mayo, luego fluctuó alrededor de <strong>$460/ton</strong>. Brasil también sufrió volatilidad, aunque el real en alza y el petróleo más caro amortiguaron la caída al final del mes.</p>
+          <p>Por otro lado, los aceites vegetales en su conjunto registraron ganancias. El aceite de soja de EE.UU. alcanzó máximos no vistos desde el verano de 2023, sostenidos por <strong>los altos precios del petróleo y las normas finales de la EPA sobre Volúmenes de Energía Renovable</strong>. Brasil y Argentina replicaron el alza. El aceite de palma también subió levemente pero volvió a cotizar con descuento respecto al aceite de soja sudamericano.</p>
+          <p>El precio proyectado de la temporada para la soja en EE.UU. se ajustó al alza a <strong>$10.30 por bushel</strong>.</p>
+        </div>
+      </div>
+
+      <h4>Principales Cambios en Outlook de Oleaginosas 2025/26</h4>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>País</th>
+            <th>Commodity</th>
+            <th>Atributo</th>
+            <th class="num">Cambio (TMM)</th>
+            <th>Razón</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Brasil</td><td>Soja</td><td>Exportaciones</td><td class="num pos">+1,000k</td><td>Mayor oferta exportable y fuerte ritmo de embarques</td></tr>
+          <tr><td>Brasil</td><td>Soja</td><td>Crush</td><td class="num pos">Alza</td><td>Alta demanda de aceite y márgenes favorables</td></tr>
+          <tr><td>EE.UU.</td><td>Soja</td><td>Crush</td><td class="num pos">Alza</td><td>Precios de aceite de soja por biocombustibles</td></tr>
+          <tr><td>Argelia</td><td>Soja</td><td>Importaciones</td><td class="num pos">+350k</td><td>Fuerte demanda de molienda</td></tr>
+          <tr><td>Australia</td><td>Canola</td><td>Exportaciones</td><td class="num pos">+200k</td><td>Menores exportaciones de Ucrania</td></tr>
+          <tr><td>Argentina</td><td>Soja</td><td>Importaciones</td><td class="num neg">-200k</td><td>Menor perspectiva de demanda de importaciones</td></tr>
+          <tr><td>Argentina/Brasil</td><td>Soja</td><td>Stocks</td><td class="num neg">Baja</td><td>Reducción de existencias de cierre</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="callout-text">La combinación de mandatos de biocombustibles renovados, petróleo caro y la nueva cosecha de girasol argentina está redefiniendo los flujos de aceites vegetales globales en tiempo real, favoreciendo orígenes sudamericanos sobre los tradicionales del Mar Negro.</p>
+        <p class="callout-attr">Síntesis — USDA FAS Oilseeds World Markets and Trade, Abril 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ GANADERÍA ════════════════════════ -->
+<section id="ganaderia">
+  <div class="container">
+    <div class="commodity-section">
+      <div class="commodity-header">
+        <div class="commodity-number">04</div>
+        <div>
+          <div class="commodity-title">Ganadería Bovina</div>
+          <div class="commodity-subtitle">Precios Récord · Faena Mínima · Peso de la Canal Compensador</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>Producción: Menos Cabezas, Más Peso</h3>
+          <p>La proyección de producción de carne vacuna en EE.UU. para 2026 se redujo en <strong>110 millones de libras</strong> respecto al mes anterior, situándose en <strong>25.810 mil millones de libras</strong>, aproximadamente 1% por debajo de 2025 y 9% inferior al récord de 2022.</p>
+          <p>La faena de novillos en febrero fue la más lenta desde 2016. Sin embargo, los pesos de canal compensaron el menor número de animales: en febrero 2026 los pesos de canal fueron <strong>21 libras por encima del año anterior</strong>, con novillos y vaquillonas superando los promedios en 34 y 22 libras respectivamente.</p>
+          <p>Este fenómeno refleja una dinámica estructural: con pocas reses disponibles y precios del ganado en máximos históricos, los frigoríficos redujeron sus turnos de faena para optimizar la rentabilidad por cabeza, manteniendo los animales más tiempo en feedlots (más de 180-200 días), lo que aumenta el peso a la faena y compensa parcialmente el menor número.</p>
+        </div>
+        <div>
+          <h3>Precios Históricos — Con Presión a la Baja</h3>
+          <p>La semana terminada el 22 de febrero de 2026 marcó un hito: los novillos de faena en la región de los 5 Estados alcanzaron el <strong>precio récord histórico de $246.91/cwt</strong>. El promedio de febrero fue $244.23/cwt, casi $10 sobre enero y $42 sobre el año anterior.</p>
+          <p>Sin embargo, la dinámica se complicó en marzo: los márgenes de los frigoríficos están bajo presión extrema dado el alto costo de adquisición de los novillos, y los precios comenzaron a ceder, llegando a $239.94/cwt en la primera semana de marzo.</p>
+          <p>El precio de novillos feeders también marcó cuasi-récord: <strong>$371.42/cwt</strong> en Oklahoma City en febrero, $101 sobre el año anterior y segundo máximo mensual en historia.</p>
+
+          <div class="kpi-grid" style="margin-top: 20px;">
+            <div class="kpi-cell">
+              <div class="kpi-label">Novillo Faena 2026 (proy.)</div>
+              <div class="kpi-value">$242</div>
+              <div class="kpi-unit">Por cwt — +8% vs. 2025</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-label">Novillo Feeder 2026 (proy.)</div>
+              <div class="kpi-value">$367</div>
+              <div class="kpi-unit">Por cwt — +$3 vs. mes ant.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Comercio Exterior: El Factor China</h3>
+      <p>Las exportaciones de carne vacuna de EE.UU. en 2025 totalizaron <strong>2.577 mil millones de libras, una caída del 14% interanual</strong>. La contracción de las ventas a China representó más del 74% de toda la disminución. Esta es una señal de alerta estructural: la dependencia del mercado chino y su volatilidad expone a la industria exportadora norteamericana a un riesgo de concentración significativo.</p>
+
+      <div class="insight-grid">
+        <div class="insight-card rust">
+          <span class="insight-icon">🏭</span>
+          <div class="insight-title">Huelga en JBS Greeley, CO</div>
+          <div class="insight-body">El 6 de marzo de 2026, trabajadores de la planta JBS de Greeley, Colorado notificaron una huelga para el 15 de marzo. La planta procesa 5.000-6.000 cabezas por día. JBS anunció traslado de producción a otras plantas con capacidad excedente.</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-icon">📦</span>
+          <div class="insight-title">Importaciones al Alza</div>
+          <div class="insight-body">Las importaciones de carne vacuna para 2026 se proyectan en 5.675 mil millones de libras — el mercado interno absorbe suministro externo para compensar la menor producción doméstica.</div>
+        </div>
+        <div class="insight-card sage">
+          <span class="insight-icon">📊</span>
+          <div class="insight-title">Inventario en Corrales</div>
+          <div class="insight-body">Al 1 de febrero: 11.505 millones de cabezas, 2% bajo el año anterior. Los ingresos de enero (placements) fueron 5% menores interanual, confirmando el ciclo de retención del rodeo en curso desde 2022.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ LÁCTEOS ════════════════════════ -->
+<section id="lacteos">
+  <div class="container">
+    <div class="commodity-section">
+      <div class="commodity-header">
+        <div class="commodity-number">05</div>
+        <div>
+          <div class="commodity-title">Sector Lácteo</div>
+          <div class="commodity-subtitle">Rodeo en Expansión · Exportaciones Récord · Precios en Recuperación</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>Producción: Genética y Componentes</h3>
+          <p>Para 2026, el rodeo lechero en EE.UU. se proyecta en un promedio de <strong>9.570 millones de cabezas</strong>, incremento de 30.000 cabezas. La producción de leche se proyecta en <strong>234.7 mil millones de libras</strong>.</p>
+          <p>Destaca una tendencia estructural de largo plazo: los productores continúan adoptando rasgos genéticos que incrementan los componentes de la leche. En 2025, el contenido de grasa butírica promedió <strong>4.32%</strong> y los sólidos no grasos <strong>9.12%</strong>. La producción de grasa láctea creció 4.8% mientras los sólidos magros crecieron 3.3%.</p>
+          <p>En 2025, por primera vez en años recientes, el crecimiento en componentes se acompañó de crecimiento en volumen de producción total — rompiendo el patrón previo donde los ganaderos compensaban hatos más pequeños con mayor eficiencia por vaca.</p>
+        </div>
+        <div>
+          <h3>Precios 2026: Recuperación Asimétrica</h3>
+          <p>El precio de la leche entera 2026 se proyecta en <strong>$19.70/cwt</strong>, un alza de $0.75 respecto al pronóstico anterior. Sin embargo, la recuperación de precios no es uniforme entre productos:</p>
+
+          <table class="data-table">
+            <thead>
+              <tr><th>Producto</th><th class="num">Precio 2026 ($/lb)</th><th class="num">Cambio</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mantequilla</td><td class="num">$1.870</td><td class="num pos">+19.0¢</td></tr>
+              <tr><td>Leche Descremada (NDM)</td><td class="num">$1.390</td><td class="num pos">+7.5¢</td></tr>
+              <tr><td>Queso Cheddar</td><td class="num">$1.615</td><td class="num pos">+1.0¢</td></tr>
+              <tr><td>Suero Seco (Dry Whey)</td><td class="num">$0.660</td><td class="num neg">-3.0¢</td></tr>
+            </tbody>
+          </table>
+
+          <p style="font-size:14px; margin-top:12px;">La mantequilla lidera el alza (+$0.19/lb), impulsada por la fuerte demanda internacional. El suero seco cede terreno ante el cambio en la demanda hacia concentrados de proteína de suero (WPC).</p>
+        </div>
+      </div>
+
+      <h3>Exportaciones Lácteas: Año de Récords</h3>
+      <p>2025 fue un año excepcional para las exportaciones lácteas americanas, impulsado por precios domésticos competitivos frente a los internacionales:</p>
+
+      <div class="insight-grid">
+        <div class="insight-card sage">
+          <span class="insight-icon">🧈</span>
+          <div class="insight-title">Mantequilla: +162%</div>
+          <div class="insight-body">Exportaciones de mantequilla totalizaron 184.1 millones de libras en 2025, crecimiento del 162% interanual. El 80% se envió a 8 países, diversificando enormemente respecto a 2024 cuando solo 3 países recibían la mayoría.</div>
+        </div>
+        <div class="insight-card sage">
+          <span class="insight-icon">🧀</span>
+          <div class="insight-title">Queso: Nuevo Récord</div>
+          <div class="insight-body">Las exportaciones totales de queso en 2025 alcanzaron 1.351.5 millones de libras, superando el récord de 2024 en más del 20%. México, Corea del Sur y Japón concentraron más de la mitad de los embarques.</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-icon">📉</span>
+          <div class="insight-title">Leche Descremada: -9.3%</div>
+          <div class="insight-body">Los productos de leche descremada, concentrado de proteína de suero y lactosa declinaron en exportaciones, reflejando el cambio en preferencias de la industria procesadora global hacia formatos con mayor valor proteico.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ AVES Y CERDOS ════════════════════════ -->
+<section id="aves">
+  <div class="container">
+    <div class="commodity-section">
+      <div class="commodity-header">
+        <div class="commodity-number">06</div>
+        <div>
+          <div class="commodity-title">Aves, Cerdos &amp; Huevos</div>
+          <div class="commodity-subtitle">China Rediseña el Comercio Global · HPAI · Mercado Porcino Robusto</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>China Reescribe las Reglas del Pollo Global</h3>
+          <p>La noticia más relevante del mercado avícola mundial en 2026 es la consolidación de China como exportador neto de pollo. Habiendo cruzado ese umbral en 2024, en 2026 sus exportaciones se proyectan en <strong>1.4 millones de toneladas (+29% interanual)</strong>, mientras sus importaciones caen a 250.000 toneladas.</p>
+          <p>El proceso es vertiginoso: en 2025, las exportaciones de pollo chino valían <strong>$2.59 mil millones, casi el doble del valor de 2020</strong>, mientras que el volumen se triplicó. China diversificó agresivamente sus mercados: mientras en 2020 Japón y Hong Kong concentraban el 79% de sus envíos, en 2025 la concentración en esos dos mercados se redujo al 37%, con Rusia (11%), la UE (10%) y una docena de mercados emergentes absorbiendo el resto.</p>
+          <p>El nicho chino es el pollo de bajo costo para países en desarrollo. El crecimiento en Cambodia, Kirguistán, Iraq y África subsahariana ilustra esta estrategia: mercados price-sensitive donde China compite directamente con Brasil y EE.UU., aunque con acceso limitado a los 5 mayores importadores mundiales (Japón, Reino Unido, UE, Arabia Saudita y México).</p>
+        </div>
+        <div>
+          <h3>HPAI y la Amenaza Persistente</h3>
+          <p>La influenza aviar de alta patogenicidad (HPAI) continúa afectando las proyecciones del sector en EE.UU. La producción de huevos de mesa se revisó a la baja reflejando pérdidas recientes por HPAI, aunque los precios también se ajustaron abajo desde el mes anterior, moderando el efecto neto en ingresos.</p>
+          <p>La producción de pavos se redujo por pérdidas por HPAI, con los precios ajustados al alza en respuesta. La producción de pollos parrilleros, sin embargo, se ajustó levemente al alza en el primer semestre de 2026 reflejando datos favorables de incubadoras, con exportaciones sin cambios.</p>
+
+          <h3>Porcinos: Demanda Firme y Precios al Alza</h3>
+          <p>La producción de cerdo 2026 se mantiene sin cambios en <strong>28.3 mil millones de libras, 2.5% sobre 2025</strong>. El precio promedio de cerdos para 2026 se proyecta en <strong>$70/cwt (+2.1% vs. 2025)</strong>, con alzas en los trimestres 2, 3 y 4 reflejando <strong>fuerte demanda de los procesadores</strong>.</p>
+          <p>Las exportaciones de cerdo para 2026 se revisaron al alza en 50 millones de libras hasta <strong>7.2 mil millones de libras (+3.1%)</strong>, señal de que la demanda internacional por proteína porcina americana sigue siendo robusta.</p>
+        </div>
+      </div>
+
+      <h4>China — Evolución del Comercio de Pollo (Miles de Toneladas)</h4>
+      <table class="data-table">
+        <thead>
+          <tr><th>Año</th><th class="num">Producción</th><th class="num">Importaciones</th><th class="num">Exportaciones</th><th class="num">Exp. % Prod.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2020</td><td class="num">14,600</td><td class="num">999</td><td class="num">388</td><td class="num">3%</td></tr>
+          <tr><td>2022</td><td class="num">14,300</td><td class="num">633</td><td class="num">532</td><td class="num">4%</td></tr>
+          <tr><td>2024</td><td class="num">15,350</td><td class="num">477</td><td class="num">770</td><td class="num">5%</td></tr>
+          <tr><td>2025</td><td class="num">16,500</td><td class="num">297</td><td class="num">1,085</td><td class="num">7%</td></tr>
+          <tr><td><strong>2026 (F)</strong></td><td class="num"><strong>17,300</strong></td><td class="num"><strong>250</strong></td><td class="num"><strong>1,400</strong></td><td class="num"><strong>8%</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="pullquote">
+        <p>China se convirtió en exportador neto de pollo en 2024. En 2026, exportará 8% de su producción — un cambio estructural que redefine el mapa del comercio avícola mundial y amenaza los mercados de Brasil y EE.UU. en economías en desarrollo.</p>
+        <cite>USDA FAS — Livestock and Poultry World Markets and Trade, Abril 2026</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ CONCLUSIONES ════════════════════════ -->
+<section id="conclusiones">
+  <div class="container">
+    <div class="conclusions-section" style="margin:0; padding:56px 0;">
+      <p class="section-label">Conclusiones y Perspectivas</p>
+
+      <div class="conclusion-item">
+        <div class="conclusion-num">1</div>
+        <div>
+          <div class="conclusion-title">El Superciclo del Trigo Terminó: Entramos en una Era de Abundancia Presionada</div>
+          <div class="conclusion-body">El mercado mundial de trigo enfrenta su mayor sobreabastecimiento desde 2009/10. La coincidencia de récords de producción en múltiples exportadores simultáneamente (EU, Argentina, EE.UU., Rusia, Canadá) no es accidental — refleja mejoras tecnológicas y climáticas. El mercado necesitará varios años para reabsorber estos excedentes, manteniendo precios bajos y presionando a los productores más ineficientes a reducir área o salir del cultivo. La perspectiva para 2026/27 es de un mercado ya sobreabastecido que recibirá nueva producción sin haber digerido la del ciclo anterior.</div>
+        </div>
+      </div>
+
+      <div class="conclusion-item">
+        <div class="conclusion-num">2</div>
+        <div>
+          <div class="conclusion-title">Argentina Emerge como Swing Producer Global en Oleaginosas y Granos</div>
+          <div class="conclusion-body">En este ciclo, Argentina actúa como el mayor factor de cambio en múltiples commodities simultáneamente: exportador récord de trigo, near-record en girasol, fuerte expansión de soja y recordista en aceites de girasol. Su timing estacional (cosecha de verano austral) y la recuperación de su producción tras años difíciles le dan un peso desproporcionado en el balance global. Esto representa un riesgo climático concentrado: una sequía argentina en el próximo ciclo podría tener efectos globales significativos.</div>
+        </div>
+      </div>
+
+      <div class="conclusion-item">
+        <div class="conclusion-num">3</div>
+        <div>
+          <div class="conclusion-title">Proteínas Animales: Escasez Estructural en EE.UU., Abundancia Emergente en China</div>
+          <div class="conclusion-body">El mercado ganadero americano refleja 4 años de ciclo de liquidación: menos vacas, menos terneros, menos faena. Los precios récord son la consecuencia lógica. La recuperación del rodeo tomará años. En contraste, China está en plena expansión de su capacidad productiva avícola y porcina, exportando excedentes a mercados en desarrollo. Estas dos tendencias contrapuestas definirán los flujos comerciales de proteína animal por la próxima década.</div>
+        </div>
+      </div>
+
+      <div class="conclusion-item">
+        <div class="conclusion-num">4</div>
+        <div>
+          <div class="conclusion-title">Los Biocombustibles son el Nuevo Factor Estructural de los Aceites Vegetales</div>
+          <div class="conclusion-body">Las normas EPA de Volúmenes de Energía Renovable y el petróleo caro han creado un piso permanente para los precios de aceite de soja en EE.UU. con efectos globales. El aceite de girasol en máximos y el aceite de palma siendo desplazado como el más barato del mundo son síntomas del mismo fenómeno. El sector energético ya no es un mercado separado del agroalimentario — la interconexión es permanente y creciente.</div>
+        </div>
+      </div>
+
+      <div class="conclusion-item">
+        <div class="conclusion-num">5</div>
+        <div>
+          <div class="conclusion-title">La Geopolítica Comercial es el Mayor Riesgo de Volatilidad a Corto Plazo</div>
+          <div class="conclusion-body">La demora en la cumbre Trump-Xi tuvo un efecto inmediato y significativo sobre el precio de la soja americana. La caída del 14% en exportaciones de carne vacuna de EE.UU. en 2025 fue mayormente atribuible a la reducción de ventas a China. Las restricciones de exportación de trigo de Pakistán y la limitada apertura de India son variables geopolíticas que alteran flujos comerciales de decenas de millones de toneladas. En un mundo fragmentado, los productores agrícolas necesitan más que nunca diversificar mercados y reducir dependencia de relaciones bilaterales volátiles.</div>
+        </div>
+      </div>
+
+      <div class="conclusion-item">
+        <div class="conclusion-num">6</div>
+        <div>
+          <div class="conclusion-title">El Sector Lácteo Americano en Transición Hacia la Exportación</div>
+          <div class="conclusion-body">La combinación de expansión del rodeo, mejoras genéticas en componentes y precios competitivos frente a los benchmarks internacionales de Oceanía y Europa está convirtiendo a EE.UU. en un exportador lácteo de mayor peso global. Los récords de exportación de mantequilla (+162%) y queso (+20% sobre récord anterior) en 2025 no son anomalías: son la manifestación de una reconfiguración estructural del sector que busca mercados externos como válvula de equilibrio ante el crecimiento de producción doméstico.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Informe Consolidado USDA — Mercados Agrícolas Mundiales</div>
+    <div class="footer-meta">
+      Basado en: Grain WMT · Oilseeds WMT · World Agricultural Production · Livestock & Poultry WMT · LDP Outlook<br>
+      Fuente: USDA FAS / ERS / NASS · Publicaciones de Abril 2026 · Análisis consolidado en español
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
