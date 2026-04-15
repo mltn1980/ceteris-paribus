@@ -242,745 +242,885 @@ footer{background:var(--ink);padding:26px 44px;}
 </head>
 <body>
 
-<!-- ══════════ MASTHEAD ══════════ -->
-<header class="mast">
-  <div class="mast-inner">
-    <div>
-      <p class="mast-sup">USDA · FAS / ERS · Informe Consolidado</p>
-      <h1>Mercado<br>Mundial<br>del <span class="accent">Trigo</span></h1>
-      <p class="mast-lead">Síntesis analítica basada en tres publicaciones simultáneas del USDA: <em>Wheat Outlook: March 2026</em> (ERS), <em>Grain: World Markets and Trade: April 2026</em> (FAS), y <em>World Agricultural Production: April 2026</em> (FAS/IPAD). El ciclo 2025/26 marca el mayor excedente de oferta triguera en más de una década.</p>
-    </div>
-    <div class="mast-side">
-      <div class="kpi-item">
-        <div class="kpi-lbl">Producción mundial 2025/26</div>
-        <div class="kpi-val">844</div>
-        <div class="kpi-unit">Millones de toneladas — Récord histórico</div>
-        <span class="kpi-tag t-up">▲ +6% vs. año anterior</span>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-lbl">Stocks exportadores líderes</div>
-        <div class="kpi-val">+30%</div>
-        <div class="kpi-unit">Mayor nivel desde 2009/10</div>
-        <span class="kpi-tag t-dn">▼ Presión bajista de precios</span>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-lbl">Precio granja EE.UU. 2025/26</div>
-        <div class="kpi-val">$4.95</div>
-        <div class="kpi-unit">Por bushel (proy. marzo) — mínimo 6 años</div>
-        <span class="kpi-tag t-mid">→ Revisado +5¢ en abril</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- ══════════ NAV ══════════ -->
-<nav class="sitenav">
-  <ul>
-    <li><a href="#produccion">Producción</a></li>
-    <li><a href="#eeuu">EE.UU.</a></li>
-    <li><a href="#stocks">Existencias</a></li>
-    <li><a href="#precios">Precios FOB</a></li>
-    <li><a href="#comercio">Comercio</a></li>
-    <li><a href="#exportadores">Exportadores</a></li>
-    <li><a href="#importadores">Importadores</a></li>
-    <li><a href="#regional">Regional</a></li>
-    <li><a href="#outlook">Perspectiva</a></li>
-    <li><a href="#conclusiones">Conclusiones</a></li>
-  </ul>
-</nav>
-
-<!-- ══════════ 01 PRODUCCIÓN ══════════ -->
-<section id="produccion">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">01</div>
-      <div>
-        <p class="sec-tag">Cosecha global 2025/26</p>
-        <h2 class="sec-title">Producción récord: el mundo produce más trigo que nunca en la historia</h2>
-      </div>
-    </div>
-
-    <p class="lede">844 millones de toneladas métricas. La cifra es histórica, y lo que la hace excepcional es que el crecimiento fue simultáneo en casi todos los grandes exportadores — un evento estadísticamente poco frecuente que transforma las condiciones del mercado global.</p>
-
-    <div class="g2">
-      <div>
-        <h3>La confluencia que creó el récord</h3>
-        <p>El ciclo 2025/26 reúne cosechas excepcionales en los principales países productores al mismo tiempo. La Unión Europea lidera el rebote con <strong>145 MMT (+20%)</strong>, recuperándose completamente de las pérdidas climáticas del año anterior para alcanzar su mayor cosecha en 10 años. Argentina sorprende con <strong>27.9 MMT (+51%)</strong>, impulsada por expansión de área tras años de sequía. Rusia suma <strong>90.3 MMT (+11%)</strong> y Canadá sube a <strong>40 MMT (+11%)</strong>. India marca su propio récord nacional en <strong>117.9 MMT (+4%)</strong>.</p>
-        <p>EE.UU. completa cuatro años consecutivos de producción creciente, estabilizándose en <strong>54 MMT</strong>. La producción global supera al consumo proyectado en aproximadamente <strong>24 millones de toneladas</strong> — toda esa diferencia va directamente a engrosar stocks y profundiza el mercado sobreabastecido.</p>
-
-        <div class="panel mt24">
-          <p>La producción global supera al consumo por primera vez en varios años. Esta brecha de ~24 MMT —equivalente a toda la producción anual de Argentina— se acumula como existencias y entrará sin digerir al ciclo 2026/27.</p>
+    <!-- ══════════ MASTHEAD ══════════ -->
+    <header class="mast">
+        <div class="mast-inner">
+            <div>
+                <p class="mast-sup">USDA · FAS / ERS · Informe Consolidado</p>
+                <h1>Mercado<br>Mundial<br>del <span class="accent">Trigo</span></h1>
+                <p class="mast-lead">Síntesis analítica basada en tres publicaciones simultáneas del USDA: <em>Wheat Outlook: March 2026</em> (ERS), <em>Grain: World Markets and Trade: April 2026</em> (FAS), y <em>World Agricultural Production: April 2026</em> (FAS/IPAD). El ciclo 2025/26 marca el mayor excedente de oferta triguera en más de una década.</p>
+            </div>
+            <div class="mast-side">
+                <div class="kpi-item">
+                    <div class="kpi-lbl">Producción mundial 2025/26</div>
+                    <div class="kpi-val">844</div>
+                    <div class="kpi-unit">Millones de toneladas — Récord histórico</div>
+                    <span class="kpi-tag t-up">▲ +6% vs. año anterior</span>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-lbl">Stocks exportadores líderes</div>
+                    <div class="kpi-val">+30%</div>
+                    <div class="kpi-unit">Mayor nivel desde 2009/10</div>
+                    <span class="kpi-tag t-dn">▼ Presión bajista de precios</span>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-lbl">Precio granja EE.UU. 2025/26</div>
+                    <div class="kpi-val">$4.95</div>
+                    <div class="kpi-unit">Por bushel (proy. marzo) — mínimo 6 años</div>
+                    <span class="kpi-tag t-mid">→ Revisado +5¢ en abril</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <div>
-        <h3>Producción vs. consumo: el quiebre estructural</h3>
-        <p>El consumo mundial se proyecta en <strong>820 MMT</strong>, con una reducción notable para India de 5 MMT respecto al pronóstico previo. El crecimiento de la demanda global es real pero insuficiente para absorber la oleada de oferta. El USDA elevó levemente la estimación de uso forrajero global, ya que el trigo se vuelve competitivo para alimentación animal cuando sus precios caen en relación al maíz — fenómeno visible especialmente en la Unión Europea.</p>
-        <p>La brecha entre los ciclos productivos muestra la volatilidad del mercado: la UE cayó a 121 MMT en 2024/25 tras pérdidas climáticas, y en 2025/26 salta a 145 MMT. Argentina pasó de 12.5 MMT en 2022/23 a casi 28 MMT en 2025/26. Estos oscilaciones de cosecha a cosecha amplifican la volatilidad de precios.</p>
+    </header>
 
-        <div class="chart-box mt24" style="height:260px;">
-          <canvas id="prodChart" role="img" aria-label="Gráfico de producción mundial de trigo 2021 a 2026">Producción: 780, 790, 791, 799, 844 millones de toneladas en años 2021/22 a 2025/26.</canvas>
+    <!-- ══════════ NAV ══════════ -->
+    <nav class="sitenav">
+        <ul>
+            <li><a href="#produccion">Producción</a></li>
+            <li><a href="#eeuu">EE.UU.</a></li>
+            <li><a href="#stocks">Existencias</a></li>
+            <li><a href="#precios">Precios FOB</a></li>
+            <li><a href="#comercio">Comercio</a></li>
+            <li><a href="#exportadores">Exportadores</a></li>
+            <li><a href="#importadores">Importadores</a></li>
+            <li><a href="#regional">Regional</a></li>
+            <li><a href="#outlook">Perspectiva</a></li>
+            <li><a href="#conclusiones">Conclusiones</a></li>
+        </ul>
+    </nav>
+
+    <!-- ══════════ 01 PRODUCCIÓN ══════════ -->
+    <section id="produccion">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">01</div>
+                <div>
+                    <p class="sec-tag">Cosecha global 2025/26</p>
+                    <h2 class="sec-title">Producción récord: el mundo produce más trigo que nunca en la historia</h2>
+                </div>
+            </div>
+
+            <p class="lede">844 millones de toneladas métricas. La cifra es histórica, y lo que la hace excepcional es que el crecimiento fue simultáneo en casi todos los grandes exportadores — un evento estadísticamente poco frecuente que transforma las condiciones del mercado global.</p>
+
+            <div class="g2">
+                <div>
+                    <h3>La confluencia que creó el récord</h3>
+                    <p>El ciclo 2025/26 reúne cosechas excepcionales en los principales países productores al mismo tiempo. La Unión Europea lidera el rebote con <strong>145 MMT (+20%)</strong>, recuperándose completamente de las pérdidas climáticas del año anterior para alcanzar su mayor cosecha en 10 años. Argentina sorprende con <strong>27.9 MMT (+51%)</strong>, impulsada por expansión de área tras años de sequía. Rusia suma <strong>90.3 MMT (+11%)</strong> y Canadá sube a <strong>40 MMT (+11%)</strong>. India marca su propio récord nacional en <strong>117.9 MMT (+4%)</strong>.</p>
+                    <p>EE.UU. completa cuatro años consecutivos de producción creciente, estabilizándose en <strong>54 MMT</strong>. La producción global supera al consumo proyectado en aproximadamente <strong>24 millones de toneladas</strong> — toda esa diferencia va directamente a engrosar stocks y profundiza el mercado sobreabastecido.</p>
+
+                    <div class="panel mt24">
+                        <p>La producción global supera al consumo por primera vez en varios años. Esta brecha de ~24 MMT —equivalente a toda la producción anual de Argentina— se acumula como existencias y entrará sin digerir al ciclo 2026/27.</p>
+                    </div>
+                </div>
+                <div>
+                    <h3>Producción vs. consumo: el quiebre estructural</h3>
+                    <p>El consumo mundial se proyecta en <strong>820 MMT</strong>, con una reducción notable para India de 5 MMT respecto al pronóstico previo. El crecimiento de la demanda global es real pero insuficiente para absorber la oleada de oferta. El USDA elevó levemente la estimación de uso forrajero global, ya que el trigo se vuelve competitivo para alimentación animal cuando sus precios caen en relación al maíz — fenómeno visible especialmente en la Unión Europea.</p>
+                    <p>La brecha entre los ciclos productivos muestra la volatilidad del mercado: la UE cayó a 121 MMT en 2024/25 tras pérdidas climáticas, y en 2025/26 salta a 145 MMT. Argentina pasó de 12.5 MMT en 2022/23 a casi 28 MMT en 2025/26. Estos oscilaciones de cosecha a cosecha amplifican la volatilidad de precios.</p>
+
+                    <div class="chart-box mt24" style="height:260px;">
+                        <canvas id="prodChart" role="img" aria-label="Gráfico de producción mundial de trigo 2021 a 2026">Producción: 780, 790, 791, 799, 844 millones de toneladas en años 2021/22 a 2025/26.</canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="div">Producción por país · Miles de toneladas · Años comerciales locales</div>
+
+            <table class="dt">
+                <thead>
+                    <tr>
+                        <th>País</th>
+                        <th class="n">2021/22</th>
+                        <th class="n">2022/23</th>
+                        <th class="n">2023/24</th>
+                        <th class="n">2024/25</th>
+                        <th class="n">2025/26 Mar.F</th>
+                        <th class="n">2025/26 Abr.F</th>
+                        <th class="n">Δ anual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">138,479</td><td class="n">134,492</td><td class="n">135,375</td><td class="n">121,055</td><td class="n">144,000</td><td class="n">145,106</td><td class="n pos">+20%</td></tr>
+                    <tr><td class="b">🇨🇳 China</td><td class="n">136,946</td><td class="n">137,723</td><td class="n">136,590</td><td class="n">140,099</td><td class="n">140,070</td><td class="n">140,070</td><td class="n">0%</td></tr>
+                    <tr><td class="b">🇮🇳 India</td><td class="n">109,586</td><td class="n">104,000</td><td class="n">110,554</td><td class="n">113,292</td><td class="n">117,945</td><td class="n">117,945</td><td class="n pos">+4%</td></tr>
+                    <tr><td class="b">🇷🇺 Rusia</td><td class="n">75,158</td><td class="n">92,000</td><td class="n">91,500</td><td class="n">81,600</td><td class="n">89,500</td><td class="n">90,300</td><td class="n pos">+11%</td></tr>
+                    <tr><td class="b">🇨🇦 Canadá</td><td class="n">22,422</td><td class="n">34,879</td><td class="n">33,414</td><td class="n">35,939</td><td class="n">39,955</td><td class="n">39,955</td><td class="n pos">+11%</td></tr>
+                    <tr><td class="b">🇦🇺 Australia</td><td class="n">36,237</td><td class="n">40,545</td><td class="n">25,960</td><td class="n">34,110</td><td class="n">36,000</td><td class="n">36,000</td><td class="n pos">+6%</td></tr>
+                    <tr><td class="b">🇦🇷 Argentina</td><td class="n">22,150</td><td class="n">12,550</td><td class="n">15,850</td><td class="n">18,510</td><td class="n">27,800</td><td class="n">27,919</td><td class="n pos">+51%</td></tr>
+                    <tr><td class="b">🇺🇦 Ucrania</td><td class="n">33,007</td><td class="n">21,500</td><td class="n">23,000</td><td class="n">23,400</td><td class="n">23,800</td><td class="n">24,000</td><td class="n pos">+3%</td></tr>
+                    <tr><td class="b">🇺🇸 Estados Unidos</td><td class="n">44,804</td><td class="n">44,898</td><td class="n">49,095</td><td class="n">53,851</td><td class="n">54,010</td><td class="n">54,010</td><td class="n">0%</td></tr>
+                    <tr><td class="b">🇵🇰 Pakistán</td><td class="n">27,464</td><td class="n">26,209</td><td class="n">28,161</td><td class="n">31,438</td><td class="n">28,980</td><td class="n">28,980</td><td class="n neg">−8%</td></tr>
+                    <tr class="tot"><td>Total mundial</td><td class="n">780,820</td><td class="n">790,475</td><td class="n">791,531</td><td class="n">799,328</td><td class="n">842,120</td><td class="n">844,152</td><td class="n pos">+6%</td></tr>
+                </tbody>
+            </table>
+            <p class="fn">Fuente: USDA FAS — Grain: World Markets and Trade, Abril 2026. Mar.F = pronóstico publicado en marzo 2026, Abr.F = revisión de abril 2026. Los cambios entre columnas reflejan actualizaciones con datos oficiales definitivos de cosecha.</p>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="div">Producción por país · Miles de toneladas · Años comerciales locales</div>
+    <!-- ══════════ 02 EE.UU. ══════════ -->
+    <section id="eeuu">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">02</div>
+                <div>
+                    <p class="sec-tag">Mercado doméstico · EE.UU.</p>
+                    <h2 class="sec-title">EE.UU.: stocks en máximo de 6 años y precio en mínimo de 6 años</h2>
+                </div>
+            </div>
 
-    <table class="dt">
-      <thead>
-        <tr>
-          <th>País</th><th class="n">2021/22</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 Mar.F</th><th class="n">2025/26 Abr.F</th><th class="n">Δ anual</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">138,479</td><td class="n">134,492</td><td class="n">135,375</td><td class="n">121,055</td><td class="n">144,000</td><td class="n">145,106</td><td class="n pos">+20%</td></tr>
-        <tr><td class="b">🇨🇳 China</td><td class="n">136,946</td><td class="n">137,723</td><td class="n">136,590</td><td class="n">140,099</td><td class="n">140,070</td><td class="n">140,070</td><td class="n">0%</td></tr>
-        <tr><td class="b">🇮🇳 India</td><td class="n">109,586</td><td class="n">104,000</td><td class="n">110,554</td><td class="n">113,292</td><td class="n">117,945</td><td class="n">117,945</td><td class="n pos">+4%</td></tr>
-        <tr><td class="b">🇷🇺 Rusia</td><td class="n">75,158</td><td class="n">92,000</td><td class="n">91,500</td><td class="n">81,600</td><td class="n">89,500</td><td class="n">90,300</td><td class="n pos">+11%</td></tr>
-        <tr><td class="b">🇨🇦 Canadá</td><td class="n">22,422</td><td class="n">34,879</td><td class="n">33,414</td><td class="n">35,939</td><td class="n">39,955</td><td class="n">39,955</td><td class="n pos">+11%</td></tr>
-        <tr><td class="b">🇦🇺 Australia</td><td class="n">36,237</td><td class="n">40,545</td><td class="n">25,960</td><td class="n">34,110</td><td class="n">36,000</td><td class="n">36,000</td><td class="n pos">+6%</td></tr>
-        <tr><td class="b">🇦🇷 Argentina</td><td class="n">22,150</td><td class="n">12,550</td><td class="n">15,850</td><td class="n">18,510</td><td class="n">27,800</td><td class="n">27,919</td><td class="n pos">+51%</td></tr>
-        <tr><td class="b">🇺🇦 Ucrania</td><td class="n">33,007</td><td class="n">21,500</td><td class="n">23,000</td><td class="n">23,400</td><td class="n">23,800</td><td class="n">24,000</td><td class="n pos">+3%</td></tr>
-        <tr><td class="b">🇺🇸 Estados Unidos</td><td class="n">44,804</td><td class="n">44,898</td><td class="n">49,095</td><td class="n">53,851</td><td class="n">54,010</td><td class="n">54,010</td><td class="n">0%</td></tr>
-        <tr><td class="b">🇵🇰 Pakistán</td><td class="n">27,464</td><td class="n">26,209</td><td class="n">28,161</td><td class="n">31,438</td><td class="n">28,980</td><td class="n">28,980</td><td class="n neg">−8%</td></tr>
-        <tr class="tot"><td>Total mundial</td><td class="n">780,820</td><td class="n">790,475</td><td class="n">791,531</td><td class="n">799,328</td><td class="n">842,120</td><td class="n">844,152</td><td class="n pos">+6%</td></tr>
-      </tbody>
-    </table>
-    <p class="fn">Fuente: USDA FAS — Grain: World Markets and Trade, Abril 2026. Mar.F = pronóstico publicado en marzo 2026, Abr.F = revisión de abril 2026. Los cambios entre columnas reflejan actualizaciones con datos oficiales definitivos de cosecha.</p>
-  </div>
-</section>
+            <div class="g2">
+                <div>
+                    <h3>Balance oferta-demanda 2025/26</h3>
+                    <p>La situación del mercado triguero americano en 2025/26 se resume en una paradoja producida por el exceso: EE.UU. produce y exporta más que el año anterior, pero los precios están en mínimos de seis años porque el resto del mundo también produce y exporta más. Los stocks al cierre del ciclo se proyectan en <strong>931 millones de bushels</strong>, máximo en seis años.</p>
+                    <p>Las exportaciones americanas alcanzan <strong>900 millones de bushels (+9% interanual)</strong>, el mejor ritmo exportador en años, impulsado por ventas a Nigeria —que más que duplicaron—, Indonesia, Bangladesh, México y Filipinas. Compromisos de exportación acumulados al 26 de febrero alcanzan 23 MMT (847 millones de bushels), 14% por encima del año pasado, representando el 94% del pronóstico anual completo —por encima del promedio histórico a esta altura del año.</p>
+                    <p>Sin embargo, el ritmo de ventas de exportación se desaceleró en los últimos meses, después de un período fuerte al inicio del año comercial. El USDA lo describe como "slowing but still on target."</p>
+                </div>
+                <div>
+                    <div class="sue">
+                        <div class="sue-title">Balance de oferta y uso EE.UU. 2025/26 — Millones de bushels</div>
+                        <div class="sue-row"><span class="sue-lbl">Stocks iniciales</span><span class="sue-val">855</span></div>
+                        <div class="sue-row"><span class="sue-lbl">Producción</span><span class="sue-val">1,985</span></div>
+                        <div class="sue-row"><span class="sue-lbl">Importaciones</span><span class="sue-val">120</span></div>
+                        <div class="sue-row"><span class="sue-lbl"><strong>Oferta total</strong></span><span class="sue-val"><strong>2,959</strong></span></div>
+                        <div class="sue-row"><span class="sue-lbl">Uso alimentario</span><span class="sue-val">967</span></div>
+                        <div class="sue-row"><span class="sue-lbl">Uso forrajero</span><span class="sue-val">100</span></div>
+                        <div class="sue-row"><span class="sue-lbl">Semilla</span><span class="sue-val">61</span></div>
+                        <div class="sue-row"><span class="sue-lbl">Exportaciones</span><span class="sue-val">900</span></div>
+                        <div class="sue-row"><span class="sue-lbl"><strong>Uso total</strong></span><span class="sue-val"><strong>2,028</strong></span></div>
+                        <div class="sue-row"><span class="sue-lbl"><strong>Stocks finales (F)</strong></span><span class="sue-val pos"><strong>931 — máx. 6 años</strong></span></div>
+                        <div class="sue-row"><span class="sue-lbl"><strong>Precio prom. ($/bu)</strong></span><span class="sue-val neg"><strong>$4.95 — mín. 6 años</strong></span></div>
+                    </div>
+                    <p class="fn">Fuente: USDA ERS — Wheat Outlook: March 2026 / USDA WASDE. Año comercial junio–mayo.</p>
+                </div>
+            </div>
 
-<!-- ══════════ 02 EE.UU. ══════════ -->
-<section id="eeuu">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">02</div>
-      <div>
-        <p class="sec-tag">Mercado doméstico · EE.UU.</p>
-        <h2 class="sec-title">EE.UU.: stocks en máximo de 6 años y precio en mínimo de 6 años</h2>
-      </div>
-    </div>
-
-    <div class="g2">
-      <div>
-        <h3>Balance oferta-demanda 2025/26</h3>
-        <p>La situación del mercado triguero americano en 2025/26 se resume en una paradoja producida por el exceso: EE.UU. produce y exporta más que el año anterior, pero los precios están en mínimos de seis años porque el resto del mundo también produce y exporta más. Los stocks al cierre del ciclo se proyectan en <strong>931 millones de bushels</strong>, máximo en seis años.</p>
-        <p>Las exportaciones americanas alcanzan <strong>900 millones de bushels (+9% interanual)</strong>, el mejor ritmo exportador en años, impulsado por ventas a Nigeria —que más que duplicaron—, Indonesia, Bangladesh, México y Filipinas. Compromisos de exportación acumulados al 26 de febrero alcanzan 23 MMT (847 millones de bushels), 14% por encima del año pasado, representando el 94% del pronóstico anual completo —por encima del promedio histórico a esta altura del año.</p>
-        <p>Sin embargo, el ritmo de ventas de exportación se desaceleró en los últimos meses, después de un período fuerte al inicio del año comercial. El USDA lo describe como "slowing but still on target."</p>
-      </div>
-      <div>
-        <div class="sue">
-          <div class="sue-title">Balance de oferta y uso EE.UU. 2025/26 — Millones de bushels</div>
-          <div class="sue-row"><span class="sue-lbl">Stocks iniciales</span><span class="sue-val">855</span></div>
-          <div class="sue-row"><span class="sue-lbl">Producción</span><span class="sue-val">1,985</span></div>
-          <div class="sue-row"><span class="sue-lbl">Importaciones</span><span class="sue-val">120</span></div>
-          <div class="sue-row"><span class="sue-lbl"><strong>Oferta total</strong></span><span class="sue-val"><strong>2,959</strong></span></div>
-          <div class="sue-row"><span class="sue-lbl">Uso alimentario</span><span class="sue-val">967</span></div>
-          <div class="sue-row"><span class="sue-lbl">Uso forrajero</span><span class="sue-val">100</span></div>
-          <div class="sue-row"><span class="sue-lbl">Semilla</span><span class="sue-val">61</span></div>
-          <div class="sue-row"><span class="sue-lbl">Exportaciones</span><span class="sue-val">900</span></div>
-          <div class="sue-row"><span class="sue-lbl"><strong>Uso total</strong></span><span class="sue-val"><strong>2,028</strong></span></div>
-          <div class="sue-row"><span class="sue-lbl"><strong>Stocks finales (F)</strong></span><span class="sue-val pos"><strong>931 — máx. 6 años</strong></span></div>
-          <div class="sue-row"><span class="sue-lbl"><strong>Precio prom. ($/bu)</strong></span><span class="sue-val neg"><strong>$4.95 — mín. 6 años</strong></span></div>
+            <h3 class="mt32">Los mercados de exportación de EE.UU.: quién sube y quién baja</h3>
+            <div class="g2">
+                <div>
+                    <p>Varias economías firmaron <em>Memoranda of Understanding</em> (MOU) con EE.UU. para comprar volúmenes adicionales de trigo, lo que impulsó compromisos de exportación en Indonesia y Bangladesh a niveles muy superiores al año pasado. Nigeria destaca al más que duplicar sus compras de trigo americano, registrando los compromisos más altos desde 2021/22.</p>
+                    <p>La competencia de los orígenes del hemisferio sur —especialmente Argentina— presiona los mercados asiáticos donde EE.UU. tradicionalmente competía por calidad. Corea del Sur redujo compromisos respecto al año anterior, mientras que México, Filipinas y Japón compensaron al alza.</p>
+                </div>
+                <div>
+                    <div class="panel green">
+                        <p><strong>Señal de ajuste:</strong> el informe NASS Prospective Plantings del 31 de marzo indicó que los productores americanos planean sembrar <strong>3% menos trigo</strong> en 2026/27. Con stocks en máximo de seis años y márgenes comprimidos, el mercado está enviando la señal de ajuste al productor — la respuesta de oferta tardará un ciclo completo en materializarse.</p>
+                    </div>
+                    <div class="panel red mt16">
+                        <p><strong>Precio en mínimo de seis años:</strong> el precio promedio de temporada se proyecta en <strong>$4.95/bushel</strong> (ERS marzo) y <strong>$5.00/bushel</strong> (WASDE abril, revisado +5¢ por sequía en zonas Hard Red Winter y alza energética). En ambos casos, es el nivel más bajo desde 2019/20.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="fn">Fuente: USDA ERS — Wheat Outlook: March 2026 / USDA WASDE. Año comercial junio–mayo.</p>
-      </div>
-    </div>
+    </section>
 
-    <h3 class="mt32">Los mercados de exportación de EE.UU.: quién sube y quién baja</h3>
-    <div class="g2">
-      <div>
-        <p>Varias economías firmaron <em>Memoranda of Understanding</em> (MOU) con EE.UU. para comprar volúmenes adicionales de trigo, lo que impulsó compromisos de exportación en Indonesia y Bangladesh a niveles muy superiores al año pasado. Nigeria destaca al más que duplicar sus compras de trigo americano, registrando los compromisos más altos desde 2021/22.</p>
-        <p>La competencia de los orígenes del hemisferio sur —especialmente Argentina— presiona los mercados asiáticos donde EE.UU. tradicionalmente competía por calidad. Corea del Sur redujo compromisos respecto al año anterior, mientras que México, Filipinas y Japón compensaron al alza.</p>
-      </div>
-      <div>
-        <div class="panel green">
-          <p><strong>Señal de ajuste:</strong> el informe NASS Prospective Plantings del 31 de marzo indicó que los productores americanos planean sembrar <strong>3% menos trigo</strong> en 2026/27. Con stocks en máximo de seis años y márgenes comprimidos, el mercado está enviando la señal de ajuste al productor — la respuesta de oferta tardará un ciclo completo en materializarse.</p>
+    <!-- ══════════ 03 STOCKS ══════════ -->
+    <section id="stocks">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">03</div>
+                <div>
+                    <p class="sec-tag">Existencias finales</p>
+                    <h2 class="sec-title">Stocks: el barómetro que mueve precios — máximo en 5 años</h2>
+                </div>
+            </div>
+
+            <div class="g4">
+                <div class="sc">
+                    <div class="sc-lbl">Stocks globales fin 2025/26</div>
+                    <div class="sc-val">283</div>
+                    <div class="sc-unit">Millones de toneladas</div>
+                    <div class="sc-delta up">▲ +9% — máximo 5 años</div>
+                </div>
+                <div class="sc red">
+                    <div class="sc-lbl">Stocks exportadores líderes</div>
+                    <div class="sc-val">+30%</div>
+                    <div class="sc-unit">Variación interanual</div>
+                    <div class="sc-delta dn">Mayor nivel desde 2009/10</div>
+                </div>
+                <div class="sc green">
+                    <div class="sc-lbl">India — mayor alza del año</div>
+                    <div class="sc-val">22</div>
+                    <div class="sc-unit">Millones de toneladas</div>
+                    <div class="sc-delta up">▲ +86% — casi x3 vs. hace 2 años</div>
+                </div>
+                <div class="sc blue">
+                    <div class="sc-lbl">China — mayor stockpile del mundo</div>
+                    <div class="sc-val">124.8</div>
+                    <div class="sc-unit">Millones de toneladas</div>
+                    <div class="sc-delta ne">→ Levemente menor, pero robusto</div>
+                </div>
+            </div>
+
+            <div class="g2 mt32">
+                <div>
+                    <h3>Por qué los stocks de exportadores son el indicador clave</h3>
+                    <p>Los stocks de los grandes exportadores son la medida más relevante del mercado global porque representan el trigo <em>disponible para venta</em> al mercado internacional. Cuando estos stocks suben, los exportadores compiten entre sí para colocar el excedente, presionando los precios a la baja. El nivel actual — el más alto desde 2009/10 — explica por qué los precios internacionales han estado bajo presión constante durante todo el ciclo 2025/26.</p>
+                    <p>Todos los 8 grandes exportadores monitoreados por USDA (Argentina, Australia, Canadá, UE, Kazajistán, Rusia, Ucrania y EE.UU.) terminarán el ciclo con <strong>stocks mayores que el año anterior</strong> — un hecho extraordinario que raramente ocurre de forma simultánea. EE.UU. acumula stocks desde 2022/23 de manera continua, Rusia sube más del 40%, la UE más del 45%, Ucrania sube a los niveles más altos desde el inicio del conflicto.</p>
+                </div>
+                <div>
+                    <h3>India y China: las reservas estratégicas globales</h3>
+                    <p><strong>China</strong> posee el mayor stockpile del mundo: <strong>124.8 MMT</strong>, el 44% de los stocks globales. Esta concentración es un fenómeno geopolítico: las decisiones de compra o auto-abastecimiento chinas mueven el mercado global más que casi cualquier otro factor. En 2023/24 importó 13.6 MMT (un récord); en 2024/25 solo 4.2 MMT cuando su producción se recuperó; en 2025/26 proyectan 6 MMT — política deliberada de diversificación de proveedores.</p>
+                    <p><strong>India</strong> presenta la historia más dramática del año: sus stocks se proyectan en <strong>22 MMT, casi el triple del nivel de hace dos años</strong>. El gobierno indio mantenía prohibición total de exportaciones, pero en 2025/26 comenzó a permitir volúmenes limitados bajo condiciones específicas. Esta apertura es la primera señal de relajamiento de la restricción. Si India habilita exportaciones significativas en 2026/27, agregaría un nuevo origen al mercado ya sobreabastecido.</p>
+                </div>
+            </div>
+
+            <div class="div">Existencias finales por país · Miles de toneladas · 2021/22–2025/26</div>
+
+            <table class="dt">
+                <thead>
+                    <tr><th>País</th><th class="n">2021/22</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 (F)</th><th class="n">Δ anual</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="b">🇨🇳 China</td><td class="n">136,759</td><td class="n">138,818</td><td class="n">134,523</td><td class="n">127,775</td><td class="n">124,845</td><td class="n neg">−2%</td></tr>
+                    <tr><td class="b">🇮🇳 India</td><td class="n">19,500</td><td class="n">9,500</td><td class="n">7,500</td><td class="n">11,800</td><td class="n">22,000</td><td class="n pos">+86%</td></tr>
+                    <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">13,631</td><td class="n">16,268</td><td class="n">15,794</td><td class="n">11,076</td><td class="n">16,182</td><td class="n pos">+46%</td></tr>
+                    <tr><td class="b">🇷🇺 Rusia</td><td class="n">12,088</td><td class="n">14,388</td><td class="n">11,688</td><td class="n">10,588</td><td class="n">14,988</td><td class="n pos">+42%</td></tr>
+                    <tr><td class="b">🇺🇸 EE.UU.</td><td class="n">18,355</td><td class="n">15,501</td><td class="n">18,954</td><td class="n">23,262</td><td class="n">25,517</td><td class="n pos">+10%</td></tr>
+                    <tr><td class="b">🇨🇦 Canadá</td><td class="n">4,169</td><td class="n">5,706</td><td class="n">5,293</td><td class="n">4,181</td><td class="n">5,886</td><td class="n pos">+41%</td></tr>
+                    <tr><td class="b">🇦🇺 Australia</td><td class="n">3,454</td><td class="n">4,371</td><td class="n">2,412</td><td class="n">3,991</td><td class="n">4,621</td><td class="n pos">+16%</td></tr>
+                    <tr><td class="b">🇦🇷 Argentina</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">~2,500</td><td class="n">~2,900</td><td class="n pos">Alza</td></tr>
+                    <tr class="tot"><td>Total mundial</td><td class="n">275,273</td><td class="n">274,689</td><td class="n">269,645</td><td class="n">259,090</td><td class="n">283,120</td><td class="n pos">+9%</td></tr>
+                </tbody>
+            </table>
         </div>
-        <div class="panel red mt16">
-          <p><strong>Precio en mínimo de seis años:</strong> el precio promedio de temporada se proyecta en <strong>$4.95/bushel</strong> (ERS marzo) y <strong>$5.00/bushel</strong> (WASDE abril, revisado +5¢ por sequía en zonas Hard Red Winter y alza energética). En ambos casos, es el nivel más bajo desde 2019/20.</p>
+    </section>
+
+    <!-- ══════════ 04 PRECIOS ══════════ -->
+    <section id="precios">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">04</div>
+                <div>
+                    <p class="sec-tag">Estructura de precios FOB</p>
+                    <h2 class="sec-title">Precios: tendencia bajista estructural con repuntes puntuales en abril</h2>
+                </div>
+            </div>
+
+            <div class="g2">
+                <div>
+                    <h3>La lógica bajista y sus perturbaciones</h3>
+                    <p>Los precios del trigo han estado bajo presión bajista sostenida a lo largo de 2025/26 como consecuencia directa del exceso de oferta. Sin embargo, el mes de abril de 2026 registró alzas puntuales que no alteran la tendencia de fondo pero merecen atención:</p>
+                    <p>En EE.UU., Hard Red Winter ganó <strong>$4/ton a $273/MT</strong> y Soft Red Winter también subió <strong>$4/ton a $255/MT</strong>. Los catalizadores del alza puntual son tres: el informe de intenciones de siembra que señaló 3% menos de área en 2026/27, condiciones secas en zonas clave de Kansas y Oklahoma para el trigo de invierno, y el alza en los precios energéticos que incrementa costos de producción.</p>
+                    <p>Globalmente, las cotizaciones subieron para todos los orígenes excepto la UE. Argentina registró el mayor salto (+$21/ton) pero sigue siendo el más competitivo. Australia subió $8/ton por fuerte demanda. Rusia subió $4/ton apoyada por la reimplementación del arancel de exportación. El precio promedio de temporada americano se revisó 5¢ al alza a <strong>$5.00/bushel</strong> en el WASDE de abril.</p>
+                </div>
+                <div>
+                    <h3>Comparativa de precios FOB de exportación (7 abril 2026)</h3>
+
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>Origen</th>
+                                <th style="text-align:right;">Precio FOB</th>
+                                <th style="text-align:right;">Δ mes</th>
+                                <th>Referencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="country">🇦🇷 Argentina</td>
+                                <td class="price" style="color:var(--green);">$230/MT</td>
+                                <td class="change pos">+$21</td>
+                                <td class="bar-cell"><div class="pbar" style="width:72%;height:7px;background:var(--green);border-radius:1px;"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="country">🇪🇺 Unión Europea</td>
+                                <td class="price">$238/MT</td>
+                                <td class="change neg">−$2</td>
+                                <td class="bar-cell"><div class="pbar" style="width:75%;height:7px;background:var(--gold);border-radius:1px;"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="country">🇷🇺 Rusia</td>
+                                <td class="price">$239/MT</td>
+                                <td class="change ne">+$4</td>
+                                <td class="bar-cell"><div class="pbar" style="width:75.5%;height:7px;background:var(--gold);border-radius:1px;"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="country">🇦🇺 Australia</td>
+                                <td class="price">$270/MT</td>
+                                <td class="change ne">+$8</td>
+                                <td class="bar-cell"><div class="pbar" style="width:85%;height:7px;background:var(--gold-d);border-radius:1px;"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="country">🇨🇦 Canadá (CWRS)</td>
+                                <td class="price" style="color:var(--red);">$273/MT</td>
+                                <td class="change ne">+$2</td>
+                                <td class="bar-cell"><div class="pbar" style="width:86%;height:7px;background:var(--red);border-radius:1px;"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="country">🇺🇸 EE.UU. (HRW)</td>
+                                <td class="price" style="color:var(--red);">$273/MT</td>
+                                <td class="change ne">+$4</td>
+                                <td class="bar-cell"><div class="pbar" style="width:86%;height:7px;background:var(--red);border-radius:1px;"></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="fn">Fuente: International Grains Council. Argentina: 12% proteína, up river; UE: Francia grado 1, Rouen; Rusia: Mar Negro molinería; EE.UU.: HRW 11.5% Golfo; Canadá: CWRS 13.5%, Vancouver.</p>
+                </div>
+            </div>
+
+            <div class="bq">
+                <p>"La diferencia de $43/MT entre Argentina y EE.UU. en precios FOB explica en gran medida por qué Vietnam aumentó 700.000 toneladas sus importaciones de Argentina y por qué Australia perdió terreno en sus mercados tradicionales del Sudeste Asiático."</p>
+                <cite>Síntesis analítica — USDA FAS Grain WMT Abril 2026 + ERS Wheat Outlook Marzo 2026</cite>
+            </div>
+
+            <div class="g3 mt16">
+                <div>
+                    <h3 style="font-size:17px;">Cuatro variedades de trigo americano</h3>
+                    <p style="font-size:13.5px;">El mercado americano cotiza cuatro clases: HRW $273/MT, SRW $255/MT, SWW $252/MT y HRS $279/MT. La dispersión refleja diferente demanda por proteína y uso final. HRS (Hard Red Spring, alto contenido proteico) cotiza el mayor premium, abasteciendo molinería de alta calidad.</p>
+                </div>
+                <div>
+                    <h3 style="font-size:17px;">El arancel ruso como piso de precio</h3>
+                    <p style="font-size:13.5px;">Rusia reintrodujo su arancel de exportación flotante, que establece un precio de referencia mínimo para sus exportadores. Sin este mecanismo, la competencia interna rusa podría haber deprimido aun más los precios FOB del Mar Negro. El arancel funciona como piso implícito para el mercado.</p>
+                </div>
+                <div>
+                    <h3 style="font-size:17px;">Australia: demanda fuerte, competencia creciente</h3>
+                    <p style="font-size:13.5px;">Las cotizaciones australianas subieron $8/ton por fuerte demanda, pero a $270/MT sigue siendo significativamente más cara que los orígenes del Mar Negro y Argentina. Esto explica la pérdida de 500.000 toneladas de exportaciones proyectadas respecto al pronóstico anterior.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ══════════ 03 STOCKS ══════════ -->
-<section id="stocks">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">03</div>
-      <div>
-        <p class="sec-tag">Existencias finales</p>
-        <h2 class="sec-title">Stocks: el barómetro que mueve precios — máximo en 5 años</h2>
-      </div>
-    </div>
+    <!-- ══════════ 05 COMERCIO ══════════ -->
+    <section id="comercio">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">05</div>
+                <div>
+                    <p class="sec-tag">Flujos de comercio global</p>
+                    <h2 class="sec-title">Comercio: rebote a 222 MMT — el segundo nivel más alto de la historia</h2>
+                </div>
+            </div>
 
-    <div class="g4">
-      <div class="sc">
-        <div class="sc-lbl">Stocks globales fin 2025/26</div>
-        <div class="sc-val">283</div>
-        <div class="sc-unit">Millones de toneladas</div>
-        <div class="sc-delta up">▲ +9% — máximo 5 años</div>
-      </div>
-      <div class="sc red">
-        <div class="sc-lbl">Stocks exportadores líderes</div>
-        <div class="sc-val">+30%</div>
-        <div class="sc-unit">Variación interanual</div>
-        <div class="sc-delta dn">Mayor nivel desde 2009/10</div>
-      </div>
-      <div class="sc green">
-        <div class="sc-lbl">India — mayor alza del año</div>
-        <div class="sc-val">22</div>
-        <div class="sc-unit">Millones de toneladas</div>
-        <div class="sc-delta up">▲ +86% — casi x3 vs. hace 2 años</div>
-      </div>
-      <div class="sc blue">
-        <div class="sc-lbl">China — mayor stockpile del mundo</div>
-        <div class="sc-val">124.8</div>
-        <div class="sc-unit">Millones de toneladas</div>
-        <div class="sc-delta ne">→ Levemente menor, pero robusto</div>
-      </div>
-    </div>
+            <div class="g2">
+                <div>
+                    <h3>Un rebote impulsado por abundancia exportadora</h3>
+                    <p>El comercio mundial de trigo en 2025/26 se proyecta en <strong>221.9 MMT</strong> (FAS abril), un incremento sustancial respecto a los 204.5 MMT de 2024/25 — el segundo nivel más alto de la historia, solo superado por 2023/24 cuando la demanda china, europea y turca fue excepcionalmente alta. El ERS (marzo) proyecta cifras similares.</p>
+                    <p>Casi todos los grandes exportadores aumentan sus embarques. El mayor incremento interanual es de Argentina (+8.6 MMT según ERS), seguido por Australia (+5.7 MMT) y la UE (+2.6 MMT). La única excepción significativa es Ucrania (−2.3 MMT) por dificultades logísticas.</p>
+                    <p>El uso forrajero global de trigo se proyecta en <strong>niveles récord</strong>: cuando el precio del trigo cae en relación al maíz, los formuladores de alimentos balanceados lo sustituyen. Este fenómeno amplifica la demanda y limita parcialmente la caída de precios.</p>
+                </div>
+                <div>
+                    <h3>Cambios más relevantes en la revisión de abril</h3>
+                    <p>Los ajustes del informe de abril respecto al mes anterior revelan las tendencias en tiempo real del mercado:</p>
 
-    <div class="g2 mt32">
-      <div>
-        <h3>Por qué los stocks de exportadores son el indicador clave</h3>
-        <p>Los stocks de los grandes exportadores son la medida más relevante del mercado global porque representan el trigo <em>disponible para venta</em> al mercado internacional. Cuando estos stocks suben, los exportadores compiten entre sí para colocar el excedente, presionando los precios a la baja. El nivel actual — el más alto desde 2009/10 — explica por qué los precios internacionales han estado bajo presión constante durante todo el ciclo 2025/26.</p>
-        <p>Todos los 8 grandes exportadores monitoreados por USDA (Argentina, Australia, Canadá, UE, Kazajistán, Rusia, Ucrania y EE.UU.) terminarán el ciclo con <strong>stocks mayores que el año anterior</strong> — un hecho extraordinario que raramente ocurre de forma simultánea. EE.UU. acumula stocks desde 2022/23 de manera continua, Rusia sube más del 40%, la UE más del 45%, Ucrania sube a los niveles más altos desde el inicio del conflicto.</p>
-      </div>
-      <div>
-        <h3>India y China: las reservas estratégicas globales</h3>
-        <p><strong>China</strong> posee el mayor stockpile del mundo: <strong>124.8 MMT</strong>, el 44% de los stocks globales. Esta concentración es un fenómeno geopolítico: las decisiones de compra o auto-abastecimiento chinas mueven el mercado global más que casi cualquier otro factor. En 2023/24 importó 13.6 MMT (un récord); en 2024/25 solo 4.2 MMT cuando su producción se recuperó; en 2025/26 proyectan 6 MMT — política deliberada de diversificación de proveedores.</p>
-        <p><strong>India</strong> presenta la historia más dramática del año: sus stocks se proyectan en <strong>22 MMT, casi el triple del nivel de hace dos años</strong>. El gobierno indio mantenía prohibición total de exportaciones, pero en 2025/26 comenzó a permitir volúmenes limitados bajo condiciones específicas. Esta apertura es la primera señal de relajamiento de la restricción. Si India habilita exportaciones significativas en 2026/27, agregaría un nuevo origen al mercado ya sobreabastecido.</p>
-      </div>
-    </div>
+                    <div class="bars">
+                        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-d);margin-bottom:10px;">Cambios netos de importación (Miles TMM)</p>
+                        <div class="bar-r"><span class="bar-l">Vietnam</span><div class="bar-t"><div class="bar-f green" style="width:70%"></div></div><span class="bar-v" style="color:var(--green);">+700k</span></div>
+                        <div class="bar-r"><span class="bar-l">Indonesia</span><div class="bar-t"><div class="bar-f green" style="width:20%"></div></div><span class="bar-v" style="color:var(--green);">+200k</span></div>
+                        <div class="bar-r"><span class="bar-l">Bangladesh</span><div class="bar-t"><div class="bar-f green" style="width:20%"></div></div><span class="bar-v" style="color:var(--green);">+200k</span></div>
+                        <div class="bar-r"><span class="bar-l">Brasil</span><div class="bar-t"><div class="bar-f red" style="width:50%"></div></div><span class="bar-v" style="color:var(--red);">−500k</span></div>
+                        <div class="bar-r"><span class="bar-l">Pakistán</span><div class="bar-t"><div class="bar-f red" style="width:49%"></div></div><span class="bar-v" style="color:var(--red);">−490k</span></div>
+                        <div class="bar-r"><span class="bar-l">Corea del Sur</span><div class="bar-t"><div class="bar-f red" style="width:20%"></div></div><span class="bar-v" style="color:var(--red);">−200k</span></div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="div">Existencias finales por país · Miles de toneladas · 2021/22–2025/26</div>
+            <div class="div">Principales cambios de comercio 2025/26 vs. pronóstico anterior — Miles de toneladas métricas</div>
 
-    <table class="dt">
-      <thead>
-        <tr><th>País</th><th class="n">2021/22</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 (F)</th><th class="n">Δ anual</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="b">🇨🇳 China</td><td class="n">136,759</td><td class="n">138,818</td><td class="n">134,523</td><td class="n">127,775</td><td class="n">124,845</td><td class="n neg">−2%</td></tr>
-        <tr><td class="b">🇮🇳 India</td><td class="n">19,500</td><td class="n">9,500</td><td class="n">7,500</td><td class="n">11,800</td><td class="n">22,000</td><td class="n pos">+86%</td></tr>
-        <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">13,631</td><td class="n">16,268</td><td class="n">15,794</td><td class="n">11,076</td><td class="n">16,182</td><td class="n pos">+46%</td></tr>
-        <tr><td class="b">🇷🇺 Rusia</td><td class="n">12,088</td><td class="n">14,388</td><td class="n">11,688</td><td class="n">10,588</td><td class="n">14,988</td><td class="n pos">+42%</td></tr>
-        <tr><td class="b">🇺🇸 EE.UU.</td><td class="n">18,355</td><td class="n">15,501</td><td class="n">18,954</td><td class="n">23,262</td><td class="n">25,517</td><td class="n pos">+10%</td></tr>
-        <tr><td class="b">🇨🇦 Canadá</td><td class="n">4,169</td><td class="n">5,706</td><td class="n">5,293</td><td class="n">4,181</td><td class="n">5,886</td><td class="n pos">+41%</td></tr>
-        <tr><td class="b">🇦🇺 Australia</td><td class="n">3,454</td><td class="n">4,371</td><td class="n">2,412</td><td class="n">3,991</td><td class="n">4,621</td><td class="n pos">+16%</td></tr>
-        <tr><td class="b">🇦🇷 Argentina</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">~2,500</td><td class="n">~2,900</td><td class="n pos">Alza</td></tr>
-        <tr class="tot"><td>Total mundial</td><td class="n">275,273</td><td class="n">274,689</td><td class="n">269,645</td><td class="n">259,090</td><td class="n">283,120</td><td class="n pos">+9%</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ══════════ 04 PRECIOS ══════════ -->
-<section id="precios">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">04</div>
-      <div>
-        <p class="sec-tag">Estructura de precios FOB</p>
-        <h2 class="sec-title">Precios: tendencia bajista estructural con repuntes puntuales en abril</h2>
-      </div>
-    </div>
-
-    <div class="g2">
-      <div>
-        <h3>La lógica bajista y sus perturbaciones</h3>
-        <p>Los precios del trigo han estado bajo presión bajista sostenida a lo largo de 2025/26 como consecuencia directa del exceso de oferta. Sin embargo, el mes de abril de 2026 registró alzas puntuales que no alteran la tendencia de fondo pero merecen atención:</p>
-        <p>En EE.UU., Hard Red Winter ganó <strong>$4/ton a $273/MT</strong> y Soft Red Winter también subió <strong>$4/ton a $255/MT</strong>. Los catalizadores del alza puntual son tres: el informe de intenciones de siembra que señaló 3% menos de área en 2026/27, condiciones secas en zonas clave de Kansas y Oklahoma para el trigo de invierno, y el alza en los precios energéticos que incrementa costos de producción.</p>
-        <p>Globalmente, las cotizaciones subieron para todos los orígenes excepto la UE. Argentina registró el mayor salto (+$21/ton) pero sigue siendo el más competitivo. Australia subió $8/ton por fuerte demanda. Rusia subió $4/ton apoyada por la reimplementación del arancel de exportación. El precio promedio de temporada americano se revisó 5¢ al alza a <strong>$5.00/bushel</strong> en el WASDE de abril.</p>
-      </div>
-      <div>
-        <h3>Comparativa de precios FOB de exportación (7 abril 2026)</h3>
-
-        <table class="price-table">
-          <thead>
-            <tr>
-              <th>Origen</th>
-              <th style="text-align:right;">Precio FOB</th>
-              <th style="text-align:right;">Δ mes</th>
-              <th>Referencia</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="country">🇦🇷 Argentina</td>
-              <td class="price" style="color:var(--green);">$230/MT</td>
-              <td class="change pos">+$21</td>
-              <td class="bar-cell"><div class="pbar" style="width:72%;height:7px;background:var(--green);border-radius:1px;"></div></td>
-            </tr>
-            <tr>
-              <td class="country">🇪🇺 Unión Europea</td>
-              <td class="price">$238/MT</td>
-              <td class="change neg">−$2</td>
-              <td class="bar-cell"><div class="pbar" style="width:75%;height:7px;background:var(--gold);border-radius:1px;"></div></td>
-            </tr>
-            <tr>
-              <td class="country">🇷🇺 Rusia</td>
-              <td class="price">$239/MT</td>
-              <td class="change ne">+$4</td>
-              <td class="bar-cell"><div class="pbar" style="width:75.5%;height:7px;background:var(--gold);border-radius:1px;"></div></td>
-            </tr>
-            <tr>
-              <td class="country">🇦🇺 Australia</td>
-              <td class="price">$270/MT</td>
-              <td class="change ne">+$8</td>
-              <td class="bar-cell"><div class="pbar" style="width:85%;height:7px;background:var(--gold-d);border-radius:1px;"></div></td>
-            </tr>
-            <tr>
-              <td class="country">🇨🇦 Canadá (CWRS)</td>
-              <td class="price" style="color:var(--red);">$273/MT</td>
-              <td class="change ne">+$2</td>
-              <td class="bar-cell"><div class="pbar" style="width:86%;height:7px;background:var(--red);border-radius:1px;"></div></td>
-            </tr>
-            <tr>
-              <td class="country">🇺🇸 EE.UU. (HRW)</td>
-              <td class="price" style="color:var(--red);">$273/MT</td>
-              <td class="change ne">+$4</td>
-              <td class="bar-cell"><div class="pbar" style="width:86%;height:7px;background:var(--red);border-radius:1px;"></div></td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="fn">Fuente: International Grains Council. Argentina: 12% proteína, up river; UE: Francia grado 1, Rouen; Rusia: Mar Negro molinería; EE.UU.: HRW 11.5% Golfo; Canadá: CWRS 13.5%, Vancouver.</p>
-      </div>
-    </div>
-
-    <div class="bq">
-      <p>"La diferencia de $43/MT entre Argentina y EE.UU. en precios FOB explica en gran medida por qué Vietnam aumentó 700.000 toneladas sus importaciones de Argentina y por qué Australia perdió terreno en sus mercados tradicionales del Sudeste Asiático."</p>
-      <cite>Síntesis analítica — USDA FAS Grain WMT Abril 2026 + ERS Wheat Outlook Marzo 2026</cite>
-    </div>
-
-    <div class="g3 mt16">
-      <div>
-        <h3 style="font-size:17px;">Cuatro variedades de trigo americano</h3>
-        <p style="font-size:13.5px;">El mercado americano cotiza cuatro clases: HRW $273/MT, SRW $255/MT, SWW $252/MT y HRS $279/MT. La dispersión refleja diferente demanda por proteína y uso final. HRS (Hard Red Spring, alto contenido proteico) cotiza el mayor premium, abasteciendo molinería de alta calidad.</p>
-      </div>
-      <div>
-        <h3 style="font-size:17px;">El arancel ruso como piso de precio</h3>
-        <p style="font-size:13.5px;">Rusia reintrodujo su arancel de exportación flotante, que establece un precio de referencia mínimo para sus exportadores. Sin este mecanismo, la competencia interna rusa podría haber deprimido aun más los precios FOB del Mar Negro. El arancel funciona como piso implícito para el mercado.</p>
-      </div>
-      <div>
-        <h3 style="font-size:17px;">Australia: demanda fuerte, competencia creciente</h3>
-        <p style="font-size:13.5px;">Las cotizaciones australianas subieron $8/ton por fuerte demanda, pero a $270/MT sigue siendo significativamente más cara que los orígenes del Mar Negro y Argentina. Esto explica la pérdida de 500.000 toneladas de exportaciones proyectadas respecto al pronóstico anterior.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ 05 COMERCIO ══════════ -->
-<section id="comercio">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">05</div>
-      <div>
-        <p class="sec-tag">Flujos de comercio global</p>
-        <h2 class="sec-title">Comercio: rebote a 222 MMT — el segundo nivel más alto de la historia</h2>
-      </div>
-    </div>
-
-    <div class="g2">
-      <div>
-        <h3>Un rebote impulsado por abundancia exportadora</h3>
-        <p>El comercio mundial de trigo en 2025/26 se proyecta en <strong>221.9 MMT</strong> (FAS abril), un incremento sustancial respecto a los 204.5 MMT de 2024/25 — el segundo nivel más alto de la historia, solo superado por 2023/24 cuando la demanda china, europea y turca fue excepcionalmente alta. El ERS (marzo) proyecta cifras similares.</p>
-        <p>Casi todos los grandes exportadores aumentan sus embarques. El mayor incremento interanual es de Argentina (+8.6 MMT según ERS), seguido por Australia (+5.7 MMT) y la UE (+2.6 MMT). La única excepción significativa es Ucrania (−2.3 MMT) por dificultades logísticas.</p>
-        <p>El uso forrajero global de trigo se proyecta en <strong>niveles récord</strong>: cuando el precio del trigo cae en relación al maíz, los formuladores de alimentos balanceados lo sustituyen. Este fenómeno amplifica la demanda y limita parcialmente la caída de precios.</p>
-      </div>
-      <div>
-        <h3>Cambios más relevantes en la revisión de abril</h3>
-        <p>Los ajustes del informe de abril respecto al mes anterior revelan las tendencias en tiempo real del mercado:</p>
-
-        <div class="bars">
-          <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-d);margin-bottom:10px;">Cambios netos de importación (Miles TMM)</p>
-          <div class="bar-r"><span class="bar-l">Vietnam</span><div class="bar-t"><div class="bar-f green" style="width:70%"></div></div><span class="bar-v" style="color:var(--green);">+700k</span></div>
-          <div class="bar-r"><span class="bar-l">Indonesia</span><div class="bar-t"><div class="bar-f green" style="width:20%"></div></div><span class="bar-v" style="color:var(--green);">+200k</span></div>
-          <div class="bar-r"><span class="bar-l">Bangladesh</span><div class="bar-t"><div class="bar-f green" style="width:20%"></div></div><span class="bar-v" style="color:var(--green);">+200k</span></div>
-          <div class="bar-r"><span class="bar-l">Brasil</span><div class="bar-t"><div class="bar-f red" style="width:50%"></div></div><span class="bar-v" style="color:var(--red);">−500k</span></div>
-          <div class="bar-r"><span class="bar-l">Pakistán</span><div class="bar-t"><div class="bar-f red" style="width:49%"></div></div><span class="bar-v" style="color:var(--red);">−490k</span></div>
-          <div class="bar-r"><span class="bar-l">Corea del Sur</span><div class="bar-t"><div class="bar-f red" style="width:20%"></div></div><span class="bar-v" style="color:var(--red);">−200k</span></div>
+            <table class="dt">
+                <thead>
+                    <tr><th>País</th><th>Atributo</th><th class="n">Anterior</th><th class="n">Actual</th><th class="n">Cambio</th><th>Razón</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="b">🇻🇳 Vietnam</td><td>Importaciones</td><td class="n">6,600</td><td class="n">7,300</td><td class="n pos">+700</td><td>Fuerte demanda forrajera + trigo argentino barato</td></tr>
+                    <tr><td class="b">🇷🇺 Rusia</td><td>Exportaciones</td><td class="n">43,500</td><td class="n">44,500</td><td class="n pos">+1,000</td><td>Mayor cosecha y volumen elevado en marzo</td></tr>
+                    <tr><td class="b">🇰🇿 Kazajistán</td><td>Exportaciones</td><td class="n">10,500</td><td class="n">11,000</td><td class="n pos">+500</td><td>Envíos masivos a Uzbekistán y Afganistán</td></tr>
+                    <tr><td class="b">🇦🇷 Argentina</td><td>Exportaciones</td><td class="n">19,000</td><td class="n">19,500</td><td class="n pos">+500</td><td>Precios competitivos impulsan embarques al Sudeste Asiático</td></tr>
+                    <tr><td class="b">🇮🇩 Indonesia</td><td>Importaciones</td><td class="n">13,000</td><td class="n">13,200</td><td class="n pos">+200</td><td>Grandes compras, incluyendo origen argentino</td></tr>
+                    <tr><td class="b">🇧🇩 Bangladesh</td><td>Importaciones</td><td class="n">7,400</td><td class="n">7,600</td><td class="n pos">+200</td><td>Embarques continuos desde Argentina</td></tr>
+                    <tr><td class="b">🇧🇷 Brasil</td><td>Importaciones</td><td class="n">7,300</td><td class="n">6,800</td><td class="n neg">−500</td><td>Demanda débil de importaciones</td></tr>
+                    <tr><td class="b">🇵🇰 Pakistán</td><td>Importaciones</td><td class="n">500</td><td class="n">10</td><td class="n neg">−490</td><td>Prohibición gubernamental de importaciones en vigor</td></tr>
+                    <tr><td class="b">🇺🇦 Ucrania</td><td>Exportaciones</td><td class="n">13,500</td><td class="n">12,500</td><td class="n neg">−1,000</td><td>Dificultades logísticas obstaculizan embarques</td></tr>
+                    <tr><td class="b">🇦🇺 Australia</td><td>Exportaciones</td><td class="n">27,000</td><td class="n">26,500</td><td class="n neg">−500</td><td>Mayor competencia argentina en mercados tradicionales</td></tr>
+                    <tr><td class="b">🇰🇷 Corea del Sur</td><td>Importaciones</td><td class="n">4,900</td><td class="n">4,700</td><td class="n neg">−200</td><td>Menor demanda de trigo forrajero</td></tr>
+                    <tr><td class="b">🇳🇬 Nigeria</td><td>Importaciones</td><td class="n">6,400</td><td class="n">6,200</td><td class="n neg">−200</td><td>Lento ritmo de importaciones de trigo molinero</td></tr>
+                </tbody>
+            </table>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="div">Principales cambios de comercio 2025/26 vs. pronóstico anterior — Miles de toneladas métricas</div>
+    <!-- ══════════ 06 EXPORTADORES ══════════ -->
+    <section id="exportadores">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">06</div>
+                <div>
+                    <p class="sec-tag">Los grandes vendedores</p>
+                    <h2 class="sec-title">Exportadores: Rusia lidera, Argentina irrumpe, Australia retrocede</h2>
+                </div>
+            </div>
 
-    <table class="dt">
-      <thead>
-        <tr><th>País</th><th>Atributo</th><th class="n">Anterior</th><th class="n">Actual</th><th class="n">Cambio</th><th>Razón</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="b">🇻🇳 Vietnam</td><td>Importaciones</td><td class="n">6,600</td><td class="n">7,300</td><td class="n pos">+700</td><td>Fuerte demanda forrajera + trigo argentino barato</td></tr>
-        <tr><td class="b">🇷🇺 Rusia</td><td>Exportaciones</td><td class="n">43,500</td><td class="n">44,500</td><td class="n pos">+1,000</td><td>Mayor cosecha y volumen elevado en marzo</td></tr>
-        <tr><td class="b">🇰🇿 Kazajistán</td><td>Exportaciones</td><td class="n">10,500</td><td class="n">11,000</td><td class="n pos">+500</td><td>Envíos masivos a Uzbekistán y Afganistán</td></tr>
-        <tr><td class="b">🇦🇷 Argentina</td><td>Exportaciones</td><td class="n">19,000</td><td class="n">19,500</td><td class="n pos">+500</td><td>Precios competitivos impulsan embarques al Sudeste Asiático</td></tr>
-        <tr><td class="b">🇮🇩 Indonesia</td><td>Importaciones</td><td class="n">13,000</td><td class="n">13,200</td><td class="n pos">+200</td><td>Grandes compras, incluyendo origen argentino</td></tr>
-        <tr><td class="b">🇧🇩 Bangladesh</td><td>Importaciones</td><td class="n">7,400</td><td class="n">7,600</td><td class="n pos">+200</td><td>Embarques continuos desde Argentina</td></tr>
-        <tr><td class="b">🇧🇷 Brasil</td><td>Importaciones</td><td class="n">7,300</td><td class="n">6,800</td><td class="n neg">−500</td><td>Demanda débil de importaciones</td></tr>
-        <tr><td class="b">🇵🇰 Pakistán</td><td>Importaciones</td><td class="n">500</td><td class="n">10</td><td class="n neg">−490</td><td>Prohibición gubernamental de importaciones en vigor</td></tr>
-        <tr><td class="b">🇺🇦 Ucrania</td><td>Exportaciones</td><td class="n">13,500</td><td class="n">12,500</td><td class="n neg">−1,000</td><td>Dificultades logísticas obstaculizan embarques</td></tr>
-        <tr><td class="b">🇦🇺 Australia</td><td>Exportaciones</td><td class="n">27,000</td><td class="n">26,500</td><td class="n neg">−500</td><td>Mayor competencia argentina en mercados tradicionales</td></tr>
-        <tr><td class="b">🇰🇷 Corea del Sur</td><td>Importaciones</td><td class="n">4,900</td><td class="n">4,700</td><td class="n neg">−200</td><td>Menor demanda de trigo forrajero</td></tr>
-        <tr><td class="b">🇳🇬 Nigeria</td><td>Importaciones</td><td class="n">6,400</td><td class="n">6,200</td><td class="n neg">−200</td><td>Lento ritmo de importaciones de trigo molinero</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+            <div class="story">
+                <div class="st-item">
+                    <p class="st-tag">Exportador N° 1</p>
+                    <p class="st-title">🇷🇺 Rusia — 44.5 MMT · Mayor exportador mundial</p>
+                    <p class="st-body">Rusia mantiene el liderazgo con <strong>44.5 MMT</strong>, ajustado al alza en abril por grandes volúmenes embarcados en marzo y cosecha mayor. El arancel de exportación reimplementado actúa como mecanismo de precio mínimo, evitando que los exportadores privados rusos compitan destructivamente entre sí. Sus stocks suben más del <strong>42% interanual</strong>: incluso siendo el mayor exportador del mundo, el excedente ruso es enorme. Sus destinos principales son Egipto, Turquía, África y el Cercano Oriente.</p>
+                </div>
+                <div class="st-item">
+                    <p class="st-tag">Exportador N° 2</p>
+                    <p class="st-title">🇪🇺 Unión Europea — 30.5 MMT · Rebote completo</p>
+                    <p class="st-body">La UE recupera terreno exportador con <strong>30.5 MMT</strong> tras un año débil. Con una producción de 145 MMT (+20%), la mayor en 10 años, las existencias suben más del 45% y las exportaciones se expanden. Sin embargo, la competencia rusa y argentina presiona sus mercados habituales: el precio FOB de Francia cedió $2/ton en el mes, y las importaciones de la UE caen de 10.6 a 6 MMT porque el excedente interno los hace autosuficientes.</p>
+                </div>
+                <div class="st-item">
+                    <p class="st-tag">Exportador N° 3</p>
+                    <p class="st-title">🇨🇦 Canadá — 29 MMT · Calidad premium en mercados selectivos</p>
+                    <p class="st-body">Canadá consolida 29 MMT con su trigo CWRS (proteína 13.5%), que cotiza premium por su excepcional calidad panadera. El diferencial de precio vs. Argentina ($43/MT) lo excluye de los mercados forrajeros, pero lo mantiene en molinería de alta calidad. Sus stocks suben un 41% al cierre del ciclo, el mayor nivel en años.</p>
+                </div>
+                <div class="st-item">
+                    <p class="st-tag">Exportador N° 4</p>
+                    <p class="st-title">🇦🇺 Australia — 26.5 MMT · Pierde terreno frente a Argentina</p>
+                    <p class="st-body">Australia baja medio millón de toneladas de sus proyecciones por la <strong>competencia argentina en sus mercados tradicionales del Sudeste Asiático</strong>. Sus cotizaciones subieron $8/ton pero siguen $40 por encima del precio argentino. Mantiene posición en mercados premium como Japón y Corea del Sur donde la calidad es el criterio dominante. Según ABARES, la cosecha australiana 2025/26 es la <strong>tercera más alta de la historia</strong>, con condiciones mixtas pero un nuevo récord de producción en Australia Occidental.</p>
+                </div>
+                <div class="st-item">
+                    <p class="st-tag">Exportador N° 5 · La gran sorpresa del ciclo</p>
+                    <p class="st-title">🇦🇷 Argentina — 19.5 MMT · De 4.7 a 19.5 en tres años</p>
+                    <p class="st-body">Argentina es la historia más dramática del ciclo. Con una cosecha de <strong>27.9 MMT (+51%)</strong> tras años de sequía, exporta a precios de $230/MT —los más competitivos del mundo— capturando mercados en Sudeste Asiático que Australia y EE.UU. consideraban suyos. El ERS (marzo 2026) señala que el mayor incremento interanual de exportaciones de cualquier exportador es el de Argentina (+8.6 MMT). Bangladesh, Indonesia y Vietnam aumentaron compras argentinas sustancialmente. Parte de la cosecha argentina es de calidad forrajera, y se dirige a mercados donde el trigo compite directamente con el maíz. <strong>Argentina es el swing producer del mercado triguero global en 2025/26.</strong></p>
+                </div>
+                <div class="st-item">
+                    <p class="st-tag">El caso especial</p>
+                    <p class="st-title">🇺🇦 Ucrania — 12.5 MMT · Logística como límite</p>
+                    <p class="st-body">Ucrania exporta 12.5 MMT, con una reducción de 1 MMT respecto al pronóstico anterior por <strong>dificultades logísticas continuas</strong>. La menor competitividad con la UE como destino (que ahora tiene su propio excedente) presiona los volúmenes. Sus stocks suben a los niveles más altos desde el inicio del conflicto en 2022. La producción de 24 MMT muestra la notable resiliencia del sector agrícola ucraniano bajo condiciones adversas.</p>
+                </div>
+            </div>
 
-<!-- ══════════ 06 EXPORTADORES ══════════ -->
-<section id="exportadores">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">06</div>
-      <div>
-        <p class="sec-tag">Los grandes vendedores</p>
-        <h2 class="sec-title">Exportadores: Rusia lidera, Argentina irrumpe, Australia retrocede</h2>
-      </div>
-    </div>
-
-    <div class="story">
-      <div class="st-item">
-        <p class="st-tag">Exportador N° 1</p>
-        <p class="st-title">🇷🇺 Rusia — 44.5 MMT · Mayor exportador mundial</p>
-        <p class="st-body">Rusia mantiene el liderazgo con <strong>44.5 MMT</strong>, ajustado al alza en abril por grandes volúmenes embarcados en marzo y cosecha mayor. El arancel de exportación reimplementado actúa como mecanismo de precio mínimo, evitando que los exportadores privados rusos compitan destructivamente entre sí. Sus stocks suben más del <strong>42% interanual</strong>: incluso siendo el mayor exportador del mundo, el excedente ruso es enorme. Sus destinos principales son Egipto, Turquía, África y el Cercano Oriente.</p>
-      </div>
-      <div class="st-item">
-        <p class="st-tag">Exportador N° 2</p>
-        <p class="st-title">🇪🇺 Unión Europea — 30.5 MMT · Rebote completo</p>
-        <p class="st-body">La UE recupera terreno exportador con <strong>30.5 MMT</strong> tras un año débil. Con una producción de 145 MMT (+20%), la mayor en 10 años, las existencias suben más del 45% y las exportaciones se expanden. Sin embargo, la competencia rusa y argentina presiona sus mercados habituales: el precio FOB de Francia cedió $2/ton en el mes, y las importaciones de la UE caen de 10.6 a 6 MMT porque el excedente interno los hace autosuficientes.</p>
-      </div>
-      <div class="st-item">
-        <p class="st-tag">Exportador N° 3</p>
-        <p class="st-title">🇨🇦 Canadá — 29 MMT · Calidad premium en mercados selectivos</p>
-        <p class="st-body">Canadá consolida 29 MMT con su trigo CWRS (proteína 13.5%), que cotiza premium por su excepcional calidad panadera. El diferencial de precio vs. Argentina ($43/MT) lo excluye de los mercados forrajeros, pero lo mantiene en molinería de alta calidad. Sus stocks suben un 41% al cierre del ciclo, el mayor nivel en años.</p>
-      </div>
-      <div class="st-item">
-        <p class="st-tag">Exportador N° 4</p>
-        <p class="st-title">🇦🇺 Australia — 26.5 MMT · Pierde terreno frente a Argentina</p>
-        <p class="st-body">Australia baja medio millón de toneladas de sus proyecciones por la <strong>competencia argentina en sus mercados tradicionales del Sudeste Asiático</strong>. Sus cotizaciones subieron $8/ton pero siguen $40 por encima del precio argentino. Mantiene posición en mercados premium como Japón y Corea del Sur donde la calidad es el criterio dominante. Según ABARES, la cosecha australiana 2025/26 es la <strong>tercera más alta de la historia</strong>, con condiciones mixtas pero un nuevo récord de producción en Australia Occidental.</p>
-      </div>
-      <div class="st-item">
-        <p class="st-tag">Exportador N° 5 · La gran sorpresa del ciclo</p>
-        <p class="st-title">🇦🇷 Argentina — 19.5 MMT · De 4.7 a 19.5 en tres años</p>
-        <p class="st-body">Argentina es la historia más dramática del ciclo. Con una cosecha de <strong>27.9 MMT (+51%)</strong> tras años de sequía, exporta a precios de $230/MT —los más competitivos del mundo— capturando mercados en Sudeste Asiático que Australia y EE.UU. consideraban suyos. El ERS (marzo 2026) señala que el mayor incremento interanual de exportaciones de cualquier exportador es el de Argentina (+8.6 MMT). Bangladesh, Indonesia y Vietnam aumentaron compras argentinas sustancialmente. Parte de la cosecha argentina es de calidad forrajera, y se dirige a mercados donde el trigo compite directamente con el maíz. <strong>Argentina es el swing producer del mercado triguero global en 2025/26.</strong></p>
-      </div>
-      <div class="st-item">
-        <p class="st-tag">El caso especial</p>
-        <p class="st-title">🇺🇦 Ucrania — 12.5 MMT · Logística como límite</p>
-        <p class="st-body">Ucrania exporta 12.5 MMT, con una reducción de 1 MMT respecto al pronóstico anterior por <strong>dificultades logísticas continuas</strong>. La menor competitividad con la UE como destino (que ahora tiene su propio excedente) presiona los volúmenes. Sus stocks suben a los niveles más altos desde el inicio del conflicto en 2022. La producción de 24 MMT muestra la notable resiliencia del sector agrícola ucraniano bajo condiciones adversas.</p>
-      </div>
-    </div>
-
-    <div class="div">Exportaciones mundiales de trigo · Miles de toneladas · Año comercial jul/jun</div>
-    <div class="chart-box" style="height:320px;">
-      <canvas id="expChart" role="img" aria-label="Gráfico de barras de exportaciones mundiales de trigo por país 2025/26">Rusia 44500, UE 30500, Canadá 29000, Australia 26500, EE.UU. 24500, Argentina 19500, Kazajistán 11000, Ucrania 12500 miles de toneladas.</canvas>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ 07 IMPORTADORES ══════════ -->
-<section id="importadores">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">07</div>
-      <div>
-        <p class="sec-tag">Los grandes compradores</p>
-        <h2 class="sec-title">Importadores: África y Sudeste Asiático lideran el crecimiento de demanda</h2>
-      </div>
-    </div>
-
-    <div class="g2">
-      <div>
-        <h3>El mapa de la dependencia importadora</h3>
-        <p>Los mayores importadores de trigo son naciones con grandes poblaciones y producción doméstica estructuralmente insuficiente. Indonesia (13.2 MMT) y Egipto (13 MMT) lideran el ranking. Lo que distingue a 2025/26 es el <strong>crecimiento del Sudeste Asiático como motor de la demanda</strong>: Vietnam alcanza 7.3 MMT (máximo histórico), Indonesia expande compras, Filipinas llega a 7.6 MMT.</p>
-        <p>Norte de África sigue siendo la región de mayor dependencia importadora estructural: Argelia (9.5 MMT), Marruecos (7 MMT), Egipto (13 MMT), Sudán (2.55 MMT) y Nigeria (6.2 MMT) en África subsahariana combinan más de 38 MMT de importaciones anuales.</p>
-        <p>China merece análisis especial: importó 13.6 MMT en 2023/24, cayó a 4.2 MMT en 2024/25 cuando su producción se recuperó, y proyecta 6 MMT en 2025/26. Esta volatilidad de ±9 MMT en dos años muestra que China no importa por necesidad estructural sino como <strong>instrumento de política de diversificación y reservas estratégicas</strong>.</p>
-      </div>
-      <div>
-        <h3>Los grandes cambios del ciclo</h3>
-        <p><strong>Vietnam (+1.6 MMT)</strong> es el importador con mayor crecimiento. La demanda forrajera — trigo como sustituto de maíz en dietas animales cuando el precio lo permite — impulsa compras masivas de trigo argentino barato. Esta es demanda nueva, más elástica al precio y más volátil que la demanda molinera tradicional.</p>
-        <p><strong>Turquía (7.7 MMT)</strong> regresa como importador relevante luego del mínimo histórico de 2.9 MMT en 2024/25 cuando su propia cosecha fue excepcional. Este tipo de variaciones turkas —de 12.5 MMT en un año a 2.9 MMT y luego 7.7 MMT— ilustran la volatilidad que generan los grandes productores-consumidores cuando pasan de exportadores netos a importadores netos según el resultado de su cosecha.</p>
-        <p><strong>Pakistán (10.000 toneladas)</strong> es el recorte más extremo del ciclo: de 500.000 toneladas proyectadas a prácticamente cero por la prohibición gubernamental de importaciones. Una sola decisión de política eliminó el 99.98% de las compras proyectadas.</p>
-      </div>
-    </div>
-
-    <div class="div">Top importadores 2025/26 · Miles de toneladas métricas · Año comercial jul/jun</div>
-    <table class="dt">
-      <thead>
-        <tr><th>Importador</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 (F)</th><th class="n">Δ anual</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="b">🇮🇩 Indonesia</td><td class="n">9,446</td><td class="n">13,015</td><td class="n">10,452</td><td class="n">13,200</td><td class="n pos">+26%</td></tr>
-        <tr><td class="b">🇪🇬 Egipto</td><td class="n">11,218</td><td class="n">12,440</td><td class="n">12,428</td><td class="n">13,000</td><td class="n pos">+5%</td></tr>
-        <tr><td class="b">🇩🇿 Argelia</td><td class="n">8,600</td><td class="n">9,600</td><td class="n">9,100</td><td class="n">9,500</td><td class="n pos">+4%</td></tr>
-        <tr><td class="b">🇹🇷 Turquía</td><td class="n">12,500</td><td class="n">8,921</td><td class="n">2,985</td><td class="n">7,700</td><td class="n pos">+158%</td></tr>
-        <tr><td class="b">🇵🇭 Filipinas</td><td class="n">5,750</td><td class="n">6,915</td><td class="n">6,351</td><td class="n">7,600</td><td class="n pos">+20%</td></tr>
-        <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">5,120</td><td class="n">6,650</td><td class="n">5,800</td><td class="n">7,600</td><td class="n pos">+31%</td></tr>
-        <tr><td class="b">🇻🇳 Vietnam</td><td class="n">4,317</td><td class="n">5,403</td><td class="n">5,700</td><td class="n">7,300</td><td class="n pos">+28%</td></tr>
-        <tr><td class="b">🇧🇷 Brasil</td><td class="n">4,985</td><td class="n">5,917</td><td class="n">7,299</td><td class="n">6,800</td><td class="n neg">−7%</td></tr>
-        <tr><td class="b">🇲🇦 Marruecos</td><td class="n">5,770</td><td class="n">6,205</td><td class="n">6,328</td><td class="n">7,000</td><td class="n pos">+11%</td></tr>
-        <tr><td class="b">🇨🇳 China</td><td class="n">13,282</td><td class="n">13,627</td><td class="n">4,169</td><td class="n">6,000</td><td class="n pos">+44%</td></tr>
-        <tr><td class="b">🇲🇽 México</td><td class="n">5,232</td><td class="n">5,292</td><td class="n">5,607</td><td class="n">6,200</td><td class="n pos">+11%</td></tr>
-        <tr><td class="b">🇳🇬 Nigeria</td><td class="n">4,703</td><td class="n">5,105</td><td class="n">6,227</td><td class="n">6,200</td><td class="n neg">−0.4%</td></tr>
-        <tr><td class="b">🇵🇰 Pakistán</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">10</td><td class="n neg">−98%</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ══════════ 08 REGIONAL ══════════ -->
-<section id="regional">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">08</div>
-      <div>
-        <p class="sec-tag">Análisis por región</p>
-        <h2 class="sec-title">Mapa regional: cada bloque con su propia dinámica</h2>
-      </div>
-    </div>
-
-    <div class="rg">
-      <div class="rc">
-        <div class="rc-tag">América del Norte</div>
-        <div class="rc-head">Producción +11% · Stocks máximo 6 años</div>
-        <div class="rc-body">EE.UU. en 54 MMT estable, Canadá en 40 MMT (+11%). Exportaciones americanas alcanzan 24.5 MMT (+9%) con fuerte demanda de Nigeria, Indonesia y Bangladesh (MOU). Los productores planean sembrar 3% menos en 2026/27 ante precios en mínimo de seis años y stocks récord. La región acumula 31.9 MMT de existencias finales.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">América del Sur</div>
-        <div class="rc-head">Argentina +51% — El factor dominante</div>
-        <div class="rc-body">Argentina produce 27.9 MMT y exporta 19.5 MMT a los precios más competitivos del mundo ($230/MT). El rebote desde la sequía transforma el panorama global. La región exporta más de 21 MMT en total, máximo histórico. Brasil baja importaciones a 6.8 MMT por demanda débil local.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">Unión Europea</div>
-        <div class="rc-head">Récord en 10 años · +20% producción</div>
-        <div class="rc-body">Recuperación completa de pérdidas climáticas 2024/25. Con 145 MMT, la mayor cosecha desde 2014. Exporta 30.5 MMT y sus importaciones caen de 10.6 a 6 MMT al volverse autosuficiente. El uso forrajero sube porque el trigo es más competitivo que el maíz dado el excedente interno. Stocks +46%.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">Ex Unión Soviética (FSU)</div>
-        <div class="rc-head">Rusia + Kazajistán dominan</div>
-        <div class="rc-body">La región supera 148 MMT de producción. Rusia con 90.3 MMT y Kazajistán con 19.3 MMT son los motores. Ucrania produce 24 MMT pero exportaciones limitadas por logística. La FSU acumula 26.2 MMT de stocks, máximo en varios años. Kazajistán amplía envíos a Uzbekistán y Afganistán.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">Sur de Asia</div>
-        <div class="rc-head">India récord · Pakistán autobloqueado</div>
-        <div class="rc-body">India produce 117.9 MMT (récord nacional) y acumula 22 MMT de stocks, casi el triple de hace dos años. El gobierno flexibiliza levemente la prohibición de exportaciones. Pakistán (28.9 MMT) prohíbe importaciones llevándolas de 500.000 a 10.000 toneladas — decisión política que distorsiona el mercado regional.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">Sudeste Asiático</div>
-        <div class="rc-head">Motor de crecimiento importador</div>
-        <div class="rc-body">La región importa 35 MMT totales, máximo histórico. Vietnam (7.3 MMT), Indonesia (13.2 MMT) y Filipinas (7.6 MMT) son los drivers. El trigo argentino barato se convierte en insumo forrajero masivo, compitiendo con el maíz en dietas animales. Demanda más elástica al precio que la molinería tradicional.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">Norte de África</div>
-        <div class="rc-head">Dependencia estructural sostenida</div>
-        <div class="rc-body">La región importa 33.4 MMT. Egipto (13 MMT) sigue siendo el mayor comprador individual del mundo. Marruecos baja a 7 MMT por perspectivas favorables para su propia cosecha. Argelia mantiene 9.5 MMT como importador estable con poca sensibilidad al precio gracias a subsidios estatales al consumidor.</div>
-      </div>
-      <div class="rc">
-        <div class="rc-tag">Medio Oriente</div>
-        <div class="rc-head">Turquía regresa al mercado</div>
-        <div class="rc-body">La región importa ~31 MMT. Turquía vuelve con 7.7 MMT luego del mínimo histórico de 2.9 MMT en 2024/25. Arabia Saudita (3.8 MMT) amplía importaciones por una gran compra en tender reciente. Yemen (3.95 MMT) mantiene niveles de dependencia humanitaria. La demanda regional es relativamente inelástica al precio.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ 09 PERSPECTIVA ══════════ -->
-<section id="outlook">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">09</div>
-      <div>
-        <p class="sec-tag">Perspectiva de mercado</p>
-        <h2 class="sec-title">2026/27: un mercado que entrará sobreabastecido desde el arranque</h2>
-      </div>
-    </div>
-
-    <div class="g2">
-      <div>
-        <h3>Las señales anticipadas que ya están en marcha</h3>
-        <p>El mercado ya está enviando señales de ajuste para 2026/27. El informe NASS Prospective Plantings (31 de marzo de 2026) confirmó que los productores americanos planean sembrar un <strong>3% menos de trigo</strong> el próximo ciclo. Esta reducción de área es la respuesta racional al precio en mínimo de seis años y los stocks en máximo de seis años.</p>
-        <p>La pregunta es si ese ajuste de área, más los posibles ajustes en otros países, será suficiente para reequilibrar el mercado en un solo ciclo. La respuesta del USDA es implícita: <em>"an oversupplied market heading into 2026/27"</em> — el excedente no se absorberá en un ciclo.</p>
-        <p>Los factores de incertidumbre clave para 2026/27 son: si India habilitará exportaciones significativas (transformaría la sobreoferta en grave), si la producción rusa y de la UE se mantiene en niveles elevados (probable) y si Argentina repite o reduce su cosecha excepcional (altamente dependiente del clima).</p>
-      </div>
-      <div>
-        <h3>Los drivers que podrían cambiar el escenario</h3>
-
-        <div class="panel green">
-          <p><strong>Escenario alcista:</strong> un evento climático adverso severo en uno o más de los grandes exportadores simultáneamente — sequía en el cinturón triguero americano o europeo, heladas tardías en Rusia, o una nueva temporada seca en Argentina — podría absorber los excedentes en un solo ciclo. Sin este tipo de shock, la presión bajista persiste.</p>
+            <div class="div">Exportaciones mundiales de trigo · Miles de toneladas · Año comercial jul/jun</div>
+            <div class="chart-box" style="height:320px;">
+                <canvas id="expChart" role="img" aria-label="Gráfico de barras de exportaciones mundiales de trigo por país 2025/26">Rusia 44500, UE 30500, Canadá 29000, Australia 26500, EE.UU. 24500, Argentina 19500, Kazajistán 11000, Ucrania 12500 miles de toneladas.</canvas>
+            </div>
         </div>
-        <div class="panel red mt16">
-          <p><strong>Escenario bajista adicional:</strong> si India habilita exportaciones masivas en 2026/27 y la producción global se mantiene en niveles elevados, los precios podrían caer por debajo del costo de producción de los orígenes menos eficientes, acelerando la reducción de área en EE.UU., Canadá y la UE más allá de lo proyectado.</p>
+    </section>
+
+    <!-- ══════════ 07 IMPORTADORES ══════════ -->
+    <section id="importadores">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">07</div>
+                <div>
+                    <p class="sec-tag">Los grandes compradores</p>
+                    <h2 class="sec-title">Importadores: África y Sudeste Asiático lideran el crecimiento de demanda</h2>
+                </div>
+            </div>
+
+            <div class="g2">
+                <div>
+                    <h3>El mapa de la dependencia importadora</h3>
+                    <p>Los mayores importadores de trigo son naciones con grandes poblaciones y producción doméstica estructuralmente insuficiente. Indonesia (13.2 MMT) y Egipto (13 MMT) lideran el ranking. Lo que distingue a 2025/26 es el <strong>crecimiento del Sudeste Asiático como motor de la demanda</strong>: Vietnam alcanza 7.3 MMT (máximo histórico), Indonesia expande compras, Filipinas llega a 7.6 MMT.</p>
+                    <p>Norte de África sigue siendo la región de mayor dependencia importadora estructural: Argelia (9.5 MMT), Marruecos (7 MMT), Egipto (13 MMT), Sudán (2.55 MMT) y Nigeria (6.2 MMT) en África subsahariana combinan más de 38 MMT de importaciones anuales.</p>
+                    <p>China merece análisis especial: importó 13.6 MMT en 2023/24, cayó a 4.2 MMT en 2024/25 cuando su producción se recuperó, y proyecta 6 MMT en 2025/26. Esta volatilidad de ±9 MMT en dos años muestra que China no importa por necesidad estructural sino como <strong>instrumento de política de diversificación y reservas estratégicas</strong>.</p>
+                </div>
+                <div>
+                    <h3>Los grandes cambios del ciclo</h3>
+                    <p><strong>Vietnam (+1.6 MMT)</strong> es el importador con mayor crecimiento. La demanda forrajera — trigo como sustituto de maíz en dietas animales cuando el precio lo permite — impulsa compras masivas de trigo argentino barato. Esta es demanda nueva, más elástica al precio y más volátil que la demanda molinera tradicional.</p>
+                    <p><strong>Turquía (7.7 MMT)</strong> regresa como importador relevante luego del mínimo histórico de 2.9 MMT en 2024/25 cuando su propia cosecha fue excepcional. Este tipo de variaciones turkas —de 12.5 MMT en un año a 2.9 MMT y luego 7.7 MMT— ilustran la volatilidad que generan los grandes productores-consumidores cuando pasan de exportadores netos a importadores netos según el resultado de su cosecha.</p>
+                    <p><strong>Pakistán (10.000 toneladas)</strong> es el recorte más extremo del ciclo: de 500.000 toneladas proyectadas a prácticamente cero por la prohibición gubernamental de importaciones. Una sola decisión de política eliminó el 99.98% de las compras proyectadas.</p>
+                </div>
+            </div>
+
+            <div class="div">Top importadores 2025/26 · Miles de toneladas métricas · Año comercial jul/jun</div>
+            <table class="dt">
+                <thead>
+                    <tr><th>Importador</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 (F)</th><th class="n">Δ anual</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="b">🇮🇩 Indonesia</td><td class="n">9,446</td><td class="n">13,015</td><td class="n">10,452</td><td class="n">13,200</td><td class="n pos">+26%</td></tr>
+                    <tr><td class="b">🇪🇬 Egipto</td><td class="n">11,218</td><td class="n">12,440</td><td class="n">12,428</td><td class="n">13,000</td><td class="n pos">+5%</td></tr>
+                    <tr><td class="b">🇩🇿 Argelia</td><td class="n">8,600</td><td class="n">9,600</td><td class="n">9,100</td><td class="n">9,500</td><td class="n pos">+4%</td></tr>
+                    <tr><td class="b">🇹🇷 Turquía</td><td class="n">12,500</td><td class="n">8,921</td><td class="n">2,985</td><td class="n">7,700</td><td class="n pos">+158%</td></tr>
+                    <tr><td class="b">🇵🇭 Filipinas</td><td class="n">5,750</td><td class="n">6,915</td><td class="n">6,351</td><td class="n">7,600</td><td class="n pos">+20%</td></tr>
+                    <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">5,120</td><td class="n">6,650</td><td class="n">5,800</td><td class="n">7,600</td><td class="n pos">+31%</td></tr>
+                    <tr><td class="b">🇻🇳 Vietnam</td><td class="n">4,317</td><td class="n">5,403</td><td class="n">5,700</td><td class="n">7,300</td><td class="n pos">+28%</td></tr>
+                    <tr><td class="b">🇧🇷 Brasil</td><td class="n">4,985</td><td class="n">5,917</td><td class="n">7,299</td><td class="n">6,800</td><td class="n neg">−7%</td></tr>
+                    <tr><td class="b">🇲🇦 Marruecos</td><td class="n">5,770</td><td class="n">6,205</td><td class="n">6,328</td><td class="n">7,000</td><td class="n pos">+11%</td></tr>
+                    <tr><td class="b">🇨🇳 China</td><td class="n">13,282</td><td class="n">13,627</td><td class="n">4,169</td><td class="n">6,000</td><td class="n pos">+44%</td></tr>
+                    <tr><td class="b">🇲🇽 México</td><td class="n">5,232</td><td class="n">5,292</td><td class="n">5,607</td><td class="n">6,200</td><td class="n pos">+11%</td></tr>
+                    <tr><td class="b">🇳🇬 Nigeria</td><td class="n">4,703</td><td class="n">5,105</td><td class="n">6,227</td><td class="n">6,200</td><td class="n neg">−0.4%</td></tr>
+                    <tr><td class="b">🇵🇰 Pakistán</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">10</td><td class="n neg">−98%</td></tr>
+                </tbody>
+            </table>
         </div>
-        <div class="panel mt16">
-          <p><strong>Escenario base:</strong> producción global levemente menor en 2026/27 por reducción de área en EE.UU. y ajuste climático ordinario, consumo creciendo gradualmente, stocks que disminuyen pero permanecen elevados. Precios que se recuperan modestamente pero no vuelven a los niveles de 2022–2023 en el corto plazo.</p>
+    </section>
+
+    <!-- ══════════ 08 REGIONAL ══════════ -->
+    <section id="regional">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">08</div>
+                <div>
+                    <p class="sec-tag">Análisis por región</p>
+                    <h2 class="sec-title">Mapa regional: cada bloque con su propia dinámica</h2>
+                </div>
+            </div>
+
+            <div class="rg">
+                <div class="rc">
+                    <div class="rc-tag">América del Norte</div>
+                    <div class="rc-head">Producción +11% · Stocks máximo 6 años</div>
+                    <div class="rc-body">EE.UU. en 54 MMT estable, Canadá en 40 MMT (+11%). Exportaciones americanas alcanzan 24.5 MMT (+9%) con fuerte demanda de Nigeria, Indonesia y Bangladesh (MOU). Los productores planean sembrar 3% menos en 2026/27 ante precios en mínimo de seis años y stocks récord. La región acumula 31.9 MMT de existencias finales.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">América del Sur</div>
+                    <div class="rc-head">Argentina +51% — El factor dominante</div>
+                    <div class="rc-body">Argentina produce 27.9 MMT y exporta 19.5 MMT a los precios más competitivos del mundo ($230/MT). El rebote desde la sequía transforma el panorama global. La región exporta más de 21 MMT en total, máximo histórico. Brasil baja importaciones a 6.8 MMT por demanda débil local.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">Unión Europea</div>
+                    <div class="rc-head">Récord en 10 años · +20% producción</div>
+                    <div class="rc-body">Recuperación completa de pérdidas climáticas 2024/25. Con 145 MMT, la mayor cosecha desde 2014. Exporta 30.5 MMT y sus importaciones caen de 10.6 a 6 MMT al volverse autosuficiente. El uso forrajero sube porque el trigo es más competitivo que el maíz dado el excedente interno. Stocks +46%.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">Ex Unión Soviética (FSU)</div>
+                    <div class="rc-head">Rusia + Kazajistán dominan</div>
+                    <div class="rc-body">La región supera 148 MMT de producción. Rusia con 90.3 MMT y Kazajistán con 19.3 MMT son los motores. Ucrania produce 24 MMT pero exportaciones limitadas por logística. La FSU acumula 26.2 MMT de stocks, máximo en varios años. Kazajistán amplía envíos a Uzbekistán y Afganistán.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">Sur de Asia</div>
+                    <div class="rc-head">India récord · Pakistán autobloqueado</div>
+                    <div class="rc-body">India produce 117.9 MMT (récord nacional) y acumula 22 MMT de stocks, casi el triple de hace dos años. El gobierno flexibiliza levemente la prohibición de exportaciones. Pakistán (28.9 MMT) prohíbe importaciones llevándolas de 500.000 a 10.000 toneladas — decisión política que distorsiona el mercado regional.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">Sudeste Asiático</div>
+                    <div class="rc-head">Motor de crecimiento importador</div>
+                    <div class="rc-body">La región importa 35 MMT totales, máximo histórico. Vietnam (7.3 MMT), Indonesia (13.2 MMT) y Filipinas (7.6 MMT) son los drivers. El trigo argentino barato se convierte en insumo forrajero masivo, compitiendo con el maíz en dietas animales. Demanda más elástica al precio que la molinería tradicional.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">Norte de África</div>
+                    <div class="rc-head">Dependencia estructural sostenida</div>
+                    <div class="rc-body">La región importa 33.4 MMT. Egipto (13 MMT) sigue siendo el mayor comprador individual del mundo. Marruecos baja a 7 MMT por perspectivas favorables para su propia cosecha. Argelia mantiene 9.5 MMT como importador estable con poca sensibilidad al precio gracias a subsidios estatales al consumidor.</div>
+                </div>
+                <div class="rc">
+                    <div class="rc-tag">Medio Oriente</div>
+                    <div class="rc-head">Turquía regresa al mercado</div>
+                    <div class="rc-body">La región importa ~31 MMT. Turquía vuelve con 7.7 MMT luego del mínimo histórico de 2.9 MMT en 2024/25. Arabia Saudita (3.8 MMT) amplía importaciones por una gran compra en tender reciente. Yemen (3.95 MMT) mantiene niveles de dependencia humanitaria. La demanda regional es relativamente inelástica al precio.</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ══════════ 10 CONCLUSIONES ══════════ -->
-<section id="conclusiones" style="border-bottom:none;">
-  <div class="wrap">
-    <div class="sec-hd">
-      <div class="sec-n">10</div>
-      <div>
-        <p class="sec-tag">Síntesis analítica</p>
-        <h2 class="sec-title">Conclusiones: seis ideas que definen el mercado triguero global en 2026</h2>
-      </div>
-    </div>
+    <!-- ══════════ 09 PERSPECTIVA ══════════ -->
+    <section id="outlook">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">09</div>
+                <div>
+                    <p class="sec-tag">Perspectiva de mercado</p>
+                    <h2 class="sec-title">2026/27: un mercado que entrará sobreabastecido desde el arranque</h2>
+                </div>
+            </div>
 
-    <div class="g2">
-      <div class="con" data-n="1">
-        <p class="con-tag">Mercado sobreabastecido</p>
-        <p class="con-title">El excedente no se resolverá en un solo ciclo — el oversupply es estructural de mediano plazo</p>
-        <p class="con-body">Con stocks de exportadores en máximo desde 2009/10 y producción superando al consumo, el mercado entra a 2026/27 con un lastre acumulado. No hay mecanismo de ajuste rápido: <strong>la reducción del 3% de área en EE.UU.</strong> tardará una o dos temporadas en impactar la oferta, y otros países con cosechas récord seguirán exportando agresivamente. El oversupply es un fenómeno que se desarrollará en 2 a 3 ciclos comerciales, manteniendo los precios bajo presión crónica.</p>
-      </div>
-      <div class="con" data-n="2">
-        <p class="con-tag">Argentina como swing producer</p>
-        <p class="con-title">Argentina pasó de 4.7 a 19.5 MMT de exportaciones en tres años — un riesgo bidireccional</p>
-        <p class="con-body">La transformación exportadora argentina es la historia más relevante del ciclo. Su concentración de oferta crea un <strong>riesgo bidireccional</strong>: amplifica los excedentes cuando llueve (como ahora) y los déficits cuando hay sequía (como en 2022/23). El mercado mundial del trigo nunca había tenido a Argentina con este peso relativo. Una sequía argentina en el próximo ciclo tendría efectos globales de precios significativos.</p>
-      </div>
-      <div class="con" data-n="3">
-        <p class="con-tag">Productores americanos</p>
-        <p class="con-title">EE.UU. frente a su mayor desafío de competitividad exportadora en décadas</p>
-        <p class="con-body">Con el precio FOB más alto entre exportadores ($273/MT) y el diferencial de <strong>$43/MT con Argentina</strong>, EE.UU. pierde mercados que no pagan por calidad. Los productores ya responden ajustando área (−3% planificado), pero el ajuste es gradual. La paradoja es que las exportaciones americanas 2025/26 son buenas (+9%), pero logradas gracias a acuerdos MOUs que abren mercados nuevos — no a competitividad de precio en los mercados tradicionales.</p>
-      </div>
-      <div class="con" data-n="4">
-        <p class="con-tag">India y China como variables geopolíticas</p>
-        <p class="con-title">Las decisiones de política asiática tienen más poder sobre el precio global que el clima</p>
-        <p class="con-body">India tiene 22 MMT de stocks y empieza a flexibilizar la prohibición de exportaciones. Si India habilita exportaciones significativas en 2026/27, agregaría un nuevo origen masivo al mercado ya sobreabastecido. China, con 124.8 MMT propios, importó 6 MMT no por necesidad sino por política de diversificación. <strong>Estas dos decisiones de política, no de mercado, tienen más poder sobre el precio global que cualquier variación climática ordinaria.</strong></p>
-      </div>
-      <div class="con" data-n="5">
-        <p class="con-tag">Demanda emergente</p>
-        <p class="con-title">El Sudeste Asiático reemplaza al Medio Oriente como motor del crecimiento de importaciones</p>
-        <p class="con-body">Durante décadas, el Medio Oriente y Norte de África dominaron el crecimiento de importaciones. En 2025/26, es el Sudeste Asiático quien crece más rápido: Vietnam +1.6 MMT, Indonesia +2.7 MMT, Filipinas +1.2 MMT. El motor clave es el <strong>trigo como sustituto forrajero del maíz</strong> cuando el precio lo permite — demanda nueva, más elástica al precio, más volátil, y más disputada entre exportadores.</p>
-      </div>
-      <div class="con" data-n="6">
-        <p class="con-tag">Perspectiva 2027+</p>
-        <p class="con-title">El mercado necesita un shock climático negativo para reequilibrarse rápidamente</p>
-        <p class="con-body">En condiciones de producción normales-altas, <strong>el mercado triguero mundial permanecerá sobreabastecido en 2026/27</strong>. El único escenario de reequilibrio rápido requeriría un evento climático adverso mayor simultáneo en varios exportadores. En ausencia de ese shock, la presión bajista de precios continúa, los márgenes de los productores en los orígenes más caros (EE.UU., Canadá) permanecen comprimidos, y el proceso de ajuste de área se desarrolla gradualmente a lo largo de múltiples ciclos.</p>
-      </div>
-    </div>
-  </div>
-</section>
+            <div class="g2">
+                <div>
+                    <h3>Las señales anticipadas que ya están en marcha</h3>
+                    <p>El mercado ya está enviando señales de ajuste para 2026/27. El informe NASS Prospective Plantings (31 de marzo de 2026) confirmó que los productores americanos planean sembrar un <strong>3% menos de trigo</strong> el próximo ciclo. Esta reducción de área es la respuesta racional al precio en mínimo de seis años y los stocks en máximo de seis años.</p>
+                    <p>La pregunta es si ese ajuste de área, más los posibles ajustes en otros países, será suficiente para reequilibrar el mercado en un solo ciclo. La respuesta del USDA es implícita: <em>"an oversupplied market heading into 2026/27"</em> — el excedente no se absorberá en un ciclo.</p>
+                    <p>Los factores de incertidumbre clave para 2026/27 son: si India habilitará exportaciones significativas (transformaría la sobreoferta en grave), si la producción rusa y de la UE se mantiene en niveles elevados (probable) y si Argentina repite o reduce su cosecha excepcional (altamente dependiente del clima).</p>
+                </div>
+                <div>
+                    <h3>Los drivers que podrían cambiar el escenario</h3>
 
-<!-- ══════════ FOOTER ══════════ -->
-<footer>
-  <div class="fi">
-    <div class="fi-brand">Mercado Mundial del Trigo · USDA Informe Consolidado Abril 2026</div>
-    <div class="fi-meta">
-      Wheat Outlook: March 2026 (USDA ERS, WHS-26c, 12 Mar. 2026)<br>
-      Grain: World Markets and Trade (USDA FAS, Abril 2026)<br>
-      World Agricultural Production (USDA FAS/IPAD, WAP 04-26, Abril 2026)<br>
-      Análisis consolidado elaborado en español
-    </div>
-  </div>
-</footer>
+                    <div class="panel green">
+                        <p><strong>Escenario alcista:</strong> un evento climático adverso severo en uno o más de los grandes exportadores simultáneamente — sequía en el cinturón triguero americano o europeo, heladas tardías en Rusia, o una nueva temporada seca en Argentina — podría absorber los excedentes en un solo ciclo. Sin este tipo de shock, la presión bajista persiste.</p>
+                    </div>
+                    <div class="panel red mt16">
+                        <p><strong>Escenario bajista adicional:</strong> si India habilita exportaciones masivas en 2026/27 y la producción global se mantiene en niveles elevados, los precios podrían caer por debajo del costo de producción de los orígenes menos eficientes, acelerando la reducción de área en EE.UU., Canadá y la UE más allá de lo proyectado.</p>
+                    </div>
+                    <div class="panel mt16">
+                        <p><strong>Escenario base:</strong> producción global levemente menor en 2026/27 por reducción de área en EE.UU. y ajuste climático ordinario, consumo creciendo gradualmente, stocks que disminuyen pero permanecen elevados. Precios que se recuperan modestamente pero no vuelven a los niveles de 2022–2023 en el corto plazo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
-const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
-const labelColor = isDark ? 'rgba(255,255,255,0.5)' : '#5C5849';
-const goldLine = '#C9960C';
-const goldFill = 'rgba(201,150,12,0.15)';
-const redLine = '#A82922';
+    <!-- ══════════ 10 CONCLUSIONES ══════════ -->
+    <section id="conclusiones" style="border-bottom:none;">
+        <div class="wrap">
+            <div class="sec-hd">
+                <div class="sec-n">10</div>
+                <div>
+                    <p class="sec-tag">Síntesis analítica</p>
+                    <h2 class="sec-title">Conclusiones: seis ideas que definen el mercado triguero global en 2026</h2>
+                </div>
+            </div>
 
-new Chart(document.getElementById('prodChart'), {
-  type: 'line',
-  data: {
-    labels: ['2021/22','2022/23','2023/24','2024/25','2025/26F'],
-    datasets: [
-      {
-        label: 'Producción (MMT)',
-        data: [780.8, 790.5, 791.5, 799.3, 844.2],
-        borderColor: goldLine,
-        backgroundColor: goldFill,
-        borderWidth: 2,
-        pointRadius: 5,
-        pointBackgroundColor: goldLine,
-        tension: 0.35,
-        fill: true
-      },
-      {
-        label: 'Consumo (MMT)',
-        data: [790.8, 791.1, 796.6, 809.9, 820.1],
-        borderColor: redLine,
-        backgroundColor: 'transparent',
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: redLine,
-        borderDash: [6, 3],
-        tension: 0.35,
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + ' MMT'
+            <div class="g2">
+                <div class="con" data-n="1">
+                    <p class="con-tag">Mercado sobreabastecido</p>
+                    <p class="con-title">El excedente no se resolverá en un solo ciclo — el oversupply es estructural de mediano plazo</p>
+                    <p class="con-body">Con stocks de exportadores en máximo desde 2009/10 y producción superando al consumo, el mercado entra a 2026/27 con un lastre acumulado. No hay mecanismo de ajuste rápido: <strong>la reducción del 3% de área en EE.UU.</strong> tardará una o dos temporadas en impactar la oferta, y otros países con cosechas récord seguirán exportando agresivamente. El oversupply es un fenómeno que se desarrollará en 2 a 3 ciclos comerciales, manteniendo los precios bajo presión crónica.</p>
+                </div>
+                <div class="con" data-n="2">
+                    <p class="con-tag">Argentina como swing producer</p>
+                    <p class="con-title">Argentina pasó de 4.7 a 19.5 MMT de exportaciones en tres años — un riesgo bidireccional</p>
+                    <p class="con-body">La transformación exportadora argentina es la historia más relevante del ciclo. Su concentración de oferta crea un <strong>riesgo bidireccional</strong>: amplifica los excedentes cuando llueve (como ahora) y los déficits cuando hay sequía (como en 2022/23). El mercado mundial del trigo nunca había tenido a Argentina con este peso relativo. Una sequía argentina en el próximo ciclo tendría efectos globales de precios significativos.</p>
+                </div>
+                <div class="con" data-n="3">
+                    <p class="con-tag">Productores americanos</p>
+                    <p class="con-title">EE.UU. frente a su mayor desafío de competitividad exportadora en décadas</p>
+                    <p class="con-body">Con el precio FOB más alto entre exportadores ($273/MT) y el diferencial de <strong>$43/MT con Argentina</strong>, EE.UU. pierde mercados que no pagan por calidad. Los productores ya responden ajustando área (−3% planificado), pero el ajuste es gradual. La paradoja es que las exportaciones americanas 2025/26 son buenas (+9%), pero logradas gracias a acuerdos MOUs que abren mercados nuevos — no a competitividad de precio en los mercados tradicionales.</p>
+                </div>
+                <div class="con" data-n="4">
+                    <p class="con-tag">India y China como variables geopolíticas</p>
+                    <p class="con-title">Las decisiones de política asiática tienen más poder sobre el precio global que el clima</p>
+                    <p class="con-body">India tiene 22 MMT de stocks y empieza a flexibilizar la prohibición de exportaciones. Si India habilita exportaciones significativas en 2026/27, agregaría un nuevo origen masivo al mercado ya sobreabastecido. China, con 124.8 MMT propios, importó 6 MMT no por necesidad sino por política de diversificación. <strong>Estas dos decisiones de política, no de mercado, tienen más poder sobre el precio global que cualquier variación climática ordinaria.</strong></p>
+                </div>
+                <div class="con" data-n="5">
+                    <p class="con-tag">Demanda emergente</p>
+                    <p class="con-title">El Sudeste Asiático reemplaza al Medio Oriente como motor del crecimiento de importaciones</p>
+                    <p class="con-body">Durante décadas, el Medio Oriente y Norte de África dominaron el crecimiento de importaciones. En 2025/26, es el Sudeste Asiático quien crece más rápido: Vietnam +1.6 MMT, Indonesia +2.7 MMT, Filipinas +1.2 MMT. El motor clave es el <strong>trigo como sustituto forrajero del maíz</strong> cuando el precio lo permite — demanda nueva, más elástica al precio, más volátil, y más disputada entre exportadores.</p>
+                </div>
+                <div class="con" data-n="6">
+                    <p class="con-tag">Perspectiva 2027+</p>
+                    <p class="con-title">El mercado necesita un shock climático negativo para reequilibrarse rápidamente</p>
+                    <p class="con-body">En condiciones de producción normales-altas, <strong>el mercado triguero mundial permanecerá sobreabastecido en 2026/27</strong>. El único escenario de reequilibrio rápido requeriría un evento climático adverso mayor simultáneo en varios exportadores. En ausencia de ese shock, la presión bajista de precios continúa, los márgenes de los productores en los orígenes más caros (EE.UU., Canadá) permanecen comprimidos, y el proceso de ajuste de área se desarrolla gradualmente a lo largo de múltiples ciclos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════ FOOTER ══════════ -->
+    <footer>
+        <div class="fi">
+            <div class="fi-brand">Mercado Mundial del Trigo · USDA Informe Consolidado Abril 2026</div>
+            <div class="fi-meta">
+                Wheat Outlook: March 2026 (USDA ERS, WHS-26c, 12 Mar. 2026)<br>
+                Grain: World Markets and Trade (USDA FAS, Abril 2026)<br>
+                World Agricultural Production (USDA FAS/IPAD, WAP 04-26, Abril 2026)<br>
+                Análisis consolidado elaborado en español
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+        const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+        const labelColor = isDark ? 'rgba(255,255,255,0.5)' : '#5C5849';
+        const goldLine = '#C9960C';
+        const goldFill = 'rgba(201,150,12,0.15)';
+        const redLine = '#A82922';
+
+        new Chart(document.getElementById('prodChart'), {
+            type: 'line',
+            data: {
+                labels: ['2021/22', '2022/23', '2023/24', '2024/25', '2025/26F'],
+                datasets: [
+                    {
+                        label: 'Producción (MMT)',
+                        data: [780.8, 790.5, 791.5, 799.3, 844.2],
+                        borderColor: goldLine,
+                        backgroundColor: goldFill,
+                        borderWidth: 2,
+                        pointRadius: 5,
+                        pointBackgroundColor: goldLine,
+                        tension: 0.35,
+                        fill: true
+                    },
+                    {
+                        label: 'Consumo (MMT)',
+                        data: [790.8, 791.1, 796.6, 809.9, 820.1],
+                        borderColor: redLine,
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: redLine,
+                        borderDash: [6, 3],
+                        tension: 0.35,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + ' MMT'
+                        }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: labelColor, font: { family: 'JetBrains Mono', size: 11 } }, grid: { color: gridColor } },
+                    y: {
+                        min: 760, max: 860,
+                        ticks: { color: labelColor, font: { family: 'JetBrains Mono', size: 11 }, callback: v => v + ' MMT' },
+                        grid: { color: gridColor }
+                    }
+                }
+            }
+        });
+
+        const legProd = document.createElement('div');
+        legProd.style.cssText = 'display:flex;gap:20px;font-size:11px;color:' + labelColor + ';margin-top:8px;font-family:JetBrains Mono,monospace;';
+        legProd.innerHTML = '<span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;background:' + goldLine + ';display:inline-block;border-radius:1px;"></span>Producción</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;background:' + redLine + ';display:inline-block;border-radius:1px;border-top:2px dashed ' + redLine + ';"></span>Consumo</span>';
+        document.getElementById('prodChart').parentNode.after(legProd);
+
+        new Chart(document.getElementById('expChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Rusia', 'UE', 'Canadá', 'Australia', 'EE.UU.', 'Argentina', 'Ucrania', 'Kazajistán'],
+                datasets: [{
+                    label: 'Exportaciones 2025/26 (miles TMM)',
+                    data: [44500, 30500, 29000, 26500, 24500, 19500, 12500, 11000],
+                    backgroundColor: [
+                        goldLine, goldLine, goldLine, 'rgba(201,150,12,0.5)',
+                        'rgba(201,150,12,0.5)', '#2A6130', '#A82922', 'rgba(201,150,12,0.4)'
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 2
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: ctx => ctx.parsed.x.toLocaleString() + ' miles TMM' } }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: labelColor, font: { family: 'JetBrains Mono', size: 11 }, callback: v => (v / 1000).toFixed(0) + 'M' },
+                        grid: { color: gridColor }
+                    },
+                    y: {
+                        ticks: { color: isDark ? 'rgba(255,255,255,0.7)' : '#38342A', font: { size: 12, weight: '500' } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+    <!-- COPIAR DESDE ACÁ ↓ -->
+
+    <style>
+        .share-bar {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
         }
-      }
-    },
-    scales: {
-      x: { ticks: { color: labelColor, font: { family: 'JetBrains Mono', size: 11 } }, grid: { color: gridColor } },
-      y: {
-        min: 760, max: 860,
-        ticks: { color: labelColor, font: { family: 'JetBrains Mono', size: 11 }, callback: v => v + ' MMT' },
-        grid: { color: gridColor }
-      }
-    }
-  }
-});
 
-const legProd = document.createElement('div');
-legProd.style.cssText = 'display:flex;gap:20px;font-size:11px;color:'+labelColor+';margin-top:8px;font-family:JetBrains Mono,monospace;';
-legProd.innerHTML = '<span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;background:'+goldLine+';display:inline-block;border-radius:1px;"></span>Producción</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;background:'+redLine+';display:inline-block;border-radius:1px;border-top:2px dashed '+redLine+';"></span>Consumo</span>';
-document.getElementById('prodChart').parentNode.after(legProd);
+            .share-bar .share-label {
+                font-family: sans-serif;
+                font-size: 0.6rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: #888;
+                margin-bottom: 2px;
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+            }
 
-new Chart(document.getElementById('expChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Rusia','UE','Canadá','Australia','EE.UU.','Argentina','Ucrania','Kazajistán'],
-    datasets: [{
-      label: 'Exportaciones 2025/26 (miles TMM)',
-      data: [44500, 30500, 29000, 26500, 24500, 19500, 12500, 11000],
-      backgroundColor: [
-        goldLine, goldLine, goldLine, 'rgba(201,150,12,0.5)',
-        'rgba(201,150,12,0.5)', '#2A6130', '#A82922', 'rgba(201,150,12,0.4)'
-      ],
-      borderWidth: 0,
-      borderRadius: 2
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ctx.parsed.x.toLocaleString() + ' miles TMM' } }
-    },
-    scales: {
-      x: {
-        ticks: { color: labelColor, font: { family: 'JetBrains Mono', size: 11 }, callback: v => (v/1000).toFixed(0) + 'M' },
-        grid: { color: gridColor }
-      },
-      y: {
-        ticks: { color: isDark ? 'rgba(255,255,255,0.7)' : '#38342A', font: { size: 12, weight: '500' } },
-        grid: { display: false }
-      }
-    }
-  }
-});
-</script>
+            .share-bar a {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                transition: transform 0.2s,box-shadow 0.2s;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            }
+
+                .share-bar a:hover {
+                    transform: scale(1.12);
+                    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+                }
+
+                .share-bar a svg {
+                    width: 16px;
+                    height: 16px;
+                }
+
+            .share-bar .sh-x {
+                background: #000;
+            }
+
+            .share-bar .sh-wa {
+                background: #25D366;
+            }
+
+            .share-bar .sh-li {
+                background: #0A66C2;
+            }
+
+            .share-bar .sh-cp {
+                background: #555;
+                cursor: pointer;
+            }
+
+            .share-bar .tooltip {
+                position: absolute;
+                right: 52px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: #333;
+                color: #fff;
+                font-family: sans-serif;
+                font-size: 0.7rem;
+                padding: 4px 10px;
+                border-radius: 4px;
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.2s;
+            }
+
+            .share-bar a:hover .tooltip {
+                opacity: 1;
+            }
+
+        @media(max-width:600px) {
+            .share-bar {
+                bottom: 16px;
+                right: 16px;
+            }
+
+                .share-bar a {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                .share-bar .share-label {
+                    display: none;
+                }
+        }
+    </style>
+
+    <div class="share-bar">
+        <span class="share-label">Compartir</span>
+
+        <!-- X / Twitter -->
+        <a class="sh-x" href="#" onclick="window.open('https://x.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title),'_blank','width=550,height=420');return false;">
+            <span class="tooltip">Compartir en X</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#fff" /></svg>
+        </a>
+
+        <!-- WhatsApp -->
+        <a class="sh-wa" href="#" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.title+' — '+location.href),'_blank');return false;">
+            <span class="tooltip">Compartir en WhatsApp</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#fff" /></svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a class="sh-li" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;">
+            <span class="tooltip">Compartir en LinkedIn</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#fff" /></svg>
+        </a>
+
+        <!-- Copiar link -->
+        <a class="sh-cp" href="#" onclick="navigator.clipboard.writeText(location.href).then(()=>{this.querySelector('.tooltip').textContent='¡Copiado!';this.querySelector('.tooltip').style.opacity='1';setTimeout(()=>{this.querySelector('.tooltip').textContent='Copiar link';this.querySelector('.tooltip').style.opacity='0';},1500)});return false;">
+            <span class="tooltip">Copiar link</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" /></svg>
+        </a>
+    </div>
+
+    <!-- COPIAR HASTA ACÁ ↑ -->
+
 </body>
 </html>
