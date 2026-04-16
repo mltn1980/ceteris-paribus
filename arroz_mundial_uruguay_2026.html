@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arroz Mundial y Uruguay 2025/26 — USDA Abril 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Overpass:wght@300;400;600;700&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,4;0,6;0,7;1,4;1,6&family=Overpass:wght@300;400;600;700&family=Overpass+Mono:wght@400;600&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:      #F9F6F0;
@@ -19,10 +19,10 @@
   --rice-bg: #FDF6E0;
   --teal:    #0E6E6E;
   --teal-bg: rgba(14,110,110,0.07);
-  --red:     #8B2214;
-  --red-bg:  rgba(139,34,20,0.06);
-  --grn:     #2A6030;
-  --grn-bg:  rgba(42,96,48,0.07);
+  --red:     #C0392B;
+  --red-bg:  rgba(192,57,43,0.06);
+  --grn:     #27AE60;
+  --grn-bg:  rgba(39,174,96,0.07);
   --blue:    #1A3A6B;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -48,7 +48,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Overpass',sans-serif;fon
 }
 @media(max-width:800px){.hero-grid{grid-template-columns:1fr;padding:48px 24px 0;}}
 .hero-eyebrow{
-  font-family:'Overpass Mono',monospace;font-size:10px;letter-spacing:.26em;
+  font-family:'Overpass Mono',monospace;font-size:13px;letter-spacing:.20em;
   text-transform:uppercase;color:var(--rice-l);margin-bottom:20px;
   display:flex;align-items:center;gap:14px;
 }
@@ -71,12 +71,12 @@ body{background:var(--bg);color:var(--ink);font-family:'Overpass',sans-serif;fon
 }
 .hstat{padding:18px 0;border-bottom:1px solid rgba(181,151,42,.12);}
 .hstat:last-child{border-bottom:none;padding-bottom:32px;}
-.hstat-l{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--rice-l);margin-bottom:6px;}
-.hstat-v{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:#fff;line-height:1;}
-.hstat-u{font-size:11px;color:rgba(255,252,247,.4);margin-top:3px;}
+.hstat-l{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--rice-l);margin-bottom:6px;}
+.hstat-v{font-family:'DM Sans',sans-serif;font-size:42px;font-weight:700;color:#fff;line-height:1;}
+.hstat-u{font-size:13px;color:rgba(255,252,247,.4);margin-top:3px;}
 .hstat-b{
   display:inline-flex;align-items:center;gap:5px;
-  font-family:'Overpass Mono',monospace;font-size:9px;font-weight:600;
+  font-family:'Overpass Mono',monospace;font-size:11px;font-weight:600;
   padding:2px 9px;margin-top:6px;
 }
 .b-up{background:rgba(42,96,48,.4);color:#8FD4A0;}
@@ -95,9 +95,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Overpass',sans-serif;fon
   border-right:1px solid rgba(26,22,14,.1);
 }
 .ss:last-child{border-right:none;}
-.ss-l{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(26,22,14,.65);margin-bottom:6px;}
-.ss-v{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--ink);line-height:1;}
-.ss-u{font-size:11px;color:rgba(26,22,14,.55);margin-top:2px;}
+.ss-l{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(26,22,14,.65);margin-bottom:6px;}
+.ss-v{font-family:'DM Sans',sans-serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1;}
+.ss-u{font-size:13px;color:rgba(26,22,14,.55);margin-top:2px;}
 @media(max-width:800px){.stat-strip{grid-template-columns:1fr 1fr;}}
 @media(max-width:480px){.stat-strip{grid-template-columns:1fr;}}
 
@@ -108,15 +108,18 @@ body{background:var(--bg);color:var(--ink);font-family:'Overpass',sans-serif;fon
   overflow-x:auto;scrollbar-width:none;
 }
 .nav::-webkit-scrollbar{display:none;}
-.nav ul{max-width:1100px;margin:0 auto;padding:0 48px;display:flex;list-style:none;}
+.nav ul{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;list-style:none;}
+@media(min-width:700px){.nav ul{padding:0 48px;}}
 .nav a{
-  display:block;padding:12px 16px;
-  font-family:'Overpass Mono',monospace;font-size:10px;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
+  display:block;padding:13px 14px;
+  font-family:'Overpass Mono',monospace;font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,252,247,.5);text-decoration:none;white-space:nowrap;
   border-bottom:2px solid transparent;transition:color .15s,border-color .15s;
 }
+@media(min-width:700px){.nav a{padding:13px 18px;letter-spacing:.10em;}}
 .nav a:hover{color:var(--rice-l);border-bottom-color:var(--rice-l);}
+.nav a.active{color:var(--rice-l);border-bottom-color:var(--rice-l);background:rgba(181,151,42,.08);}
 
 /* ─── LAYOUT ─── */
 .wrap{max-width:1100px;margin:0 auto;padding:0 48px;}
@@ -131,13 +134,13 @@ section:last-of-type{border-bottom:none;}
   border-bottom:2px solid var(--rice);
 }
 .sh-num{
-  font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:700;
-  color:rgba(181,151,42,.18);line-height:.9;font-style:italic;
+  font-family:'DM Sans',sans-serif;font-size:56px;font-weight:700;
+  color:rgba(181,151,42,.18);line-height:.9;font-style:normal;
   padding-right:24px;margin-right:24px;
   border-right:2px solid var(--rice);
 }
 .sh-inner{padding-top:6px;}
-.sh-tag{font-family:'Overpass Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rice-d);margin-bottom:8px;}
+.sh-tag{font-family:'Overpass Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--rice-d);margin-bottom:8px;}
 .sh-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.8vw,34px);font-weight:700;color:var(--ink);line-height:1.1;}
 
 /* ─── GRIDS ─── */
@@ -165,24 +168,24 @@ h3:first-child{margin-top:0;}
 .kc.red::before{background:var(--red);}
 .kc.grn::before{background:var(--grn);}
 .kc.blue::before{background:var(--blue);}
-.kc-l{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--rice);margin-bottom:9px;line-height:1.4;}
+.kc-l{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--rice);margin-bottom:9px;line-height:1.4;}
 .kc.teal .kc-l{color:var(--teal);}
 .kc.red .kc-l{color:var(--red);}
 .kc.grn .kc-l{color:var(--grn);}
-.kc-v{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:var(--ink);line-height:1;}
-.kc-u{font-size:11px;color:var(--muted);margin-top:3px;}
-.kc-d{font-family:'Overpass Mono',monospace;font-size:11px;font-weight:600;margin-top:9px;}
+.kc-v{font-family:'DM Sans',sans-serif;font-size:42px;font-weight:700;color:var(--ink);line-height:1;}
+.kc-u{font-size:12px;color:var(--muted);margin-top:3px;}
+.kc-d{font-family:'Overpass Mono',monospace;font-size:12px;font-weight:600;margin-top:9px;}
 .dup{color:var(--grn);}
 .ddn{color:var(--red);}
 .dne{color:var(--rice-d);}
 
 /* ─── TABLES ─── */
-.dt{width:100%;border-collapse:collapse;font-size:14px;margin:18px 0;}
+.dt{width:100%;border-collapse:collapse;font-size:15px;margin:18px 0;}
 .dt thead tr{border-bottom:2px solid var(--rice);}
-.dt th{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--rice-d);padding:10px 12px;text-align:left;font-weight:600;background:var(--rice-bg);}
+.dt th{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rice-d);padding:10px 12px;text-align:left;font-weight:600;background:var(--rice-bg);}
 .dt td{padding:9px 12px;border-bottom:1px solid var(--rule);color:var(--ink2);font-weight:300;}
 .dt tr:hover td{background:rgba(181,151,42,.04);}
-.dt td.n{font-family:'Overpass Mono',monospace;font-size:12.5px;text-align:right;}
+.dt td.n{font-family:'Overpass Mono',monospace;font-size:13px;text-align:right;}
 .dt td.pos{color:var(--grn);font-weight:600;}
 .dt td.neg{color:var(--red);font-weight:600;}
 .dt td.b{font-weight:700;color:var(--ink);}
@@ -191,16 +194,16 @@ h3:first-child{margin-top:0;}
 .dt tr.tot td{background:var(--rice-bg);border-top:2px solid var(--rice);font-weight:700;color:var(--ink);}
 
 /* ─── BARS ─── */
-.bars{margin:16px 0;}
-.bar-r{display:grid;grid-template-columns:142px 1fr 100px;align-items:center;gap:12px;margin-bottom:8px;}
-.bar-l{font-family:'Overpass Mono',monospace;font-size:11px;color:var(--muted);text-align:right;}
-.bar-t{height:9px;background:var(--rule);border-radius:1px;overflow:hidden;}
-.bar-f{height:100%;border-radius:1px;background:var(--rice);}
+.bars{margin:12px 0;}
+.bar-r{display:grid;grid-template-columns:142px 1fr 160px;align-items:center;gap:10px;margin-bottom:2px;}
+.bar-l{font-family:'Overpass Mono',monospace;font-size:12px;color:var(--muted);text-align:right;}
+.bar-t{height:18px;background:rgba(181,151,42,.12);border-radius:2px;overflow:hidden;}
+.bar-f{height:100%;border-radius:2px;background:var(--rice);}
 .bar-f.g{background:var(--grn);}
 .bar-f.r{background:var(--red);}
 .bar-f.t{background:var(--teal);}
-.bar-f.d{background:rgba(181,151,42,.3);}
-.bar-v{font-family:'Overpass Mono',monospace;font-size:11px;color:var(--ink);}
+.bar-f.d{background:rgba(181,151,42,.45);}
+.bar-v{font-family:'Overpass Mono',monospace;font-size:12px;color:var(--ink);white-space:nowrap;}
 
 /* ─── PRICE TABLE VISUAL ─── */
 .price-vis{margin:18px 0;}
@@ -208,11 +211,11 @@ h3:first-child{margin-top:0;}
   display:grid;grid-template-columns:110px 1fr 80px 60px;
   align-items:center;gap:0;margin-bottom:1px;
 }
-.pv-n{font-family:'Overpass Mono',monospace;font-size:10.5px;color:var(--muted);padding:9px 12px;background:var(--rice-bg);border:1px solid var(--rule);}
+.pv-n{font-family:'Overpass Mono',monospace;font-size:12px;color:var(--muted);padding:9px 12px;background:var(--rice-bg);border:1px solid var(--rule);}
 .pv-bar-wrap{padding:9px 14px;background:var(--paper);border:1px solid var(--rule);border-left:none;display:flex;align-items:center;}
 .pv-bar{height:8px;border-radius:1px;}
 .pv-v{font-family:'Overpass Mono',monospace;font-size:12px;font-weight:600;padding:9px 12px;background:var(--paper);border:1px solid var(--rule);border-left:none;text-align:right;}
-.pv-d{font-family:'Overpass Mono',monospace;font-size:9.5px;padding:9px 10px;background:var(--paper);border:1px solid var(--rule);border-left:none;text-align:right;}
+.pv-d{font-family:'Overpass Mono',monospace;font-size:12px;padding:9px 10px;background:var(--paper);border:1px solid var(--rule);border-left:none;text-align:right;}
 
 /* ─── PANELS ─── */
 .panel{
@@ -222,75 +225,141 @@ h3:first-child{margin-top:0;}
 .panel.teal{background:var(--teal-bg);border-color:rgba(14,110,110,.18);border-left-color:var(--teal);}
 .panel.red{background:var(--red-bg);border-color:rgba(139,34,20,.18);border-left-color:var(--red);}
 .panel.grn{background:var(--grn-bg);border-color:rgba(42,96,48,.18);border-left-color:var(--grn);}
-.panel p{margin:0;font-size:14.5px;}
+.panel p{margin:0;font-size:15px;}
 
 /* ─── CALLOUT ─── */
-.callout{background:var(--ink);color:rgba(255,252,247,.9);padding:28px 36px;margin:28px 0;position:relative;}
+.callout{background:var(--ink);color:#FFFCF7;padding:28px 36px;margin:28px 0;position:relative;}
 .callout::before{
   content:'\201C';font-family:'Cormorant Garamond',serif;font-size:120px;
-  color:var(--rice-l);opacity:.2;position:absolute;top:-14px;left:16px;line-height:1;
+  color:var(--rice-l);opacity:.15;position:absolute;top:-14px;left:16px;line-height:1;
 }
-.callout p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;line-height:1.55;margin:0 0 12px;position:relative;z-index:1;}
-.callout cite{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--rice-l);font-style:normal;position:relative;z-index:1;}
+.callout p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;line-height:1.55;margin:0 0 12px;position:relative;z-index:1;color:#FFFCF7;}
+.callout cite{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rice-l);font-style:normal;position:relative;z-index:1;}
 
 /* ─── TIMELINE ─── */
 .tl{padding-left:28px;margin:22px 0;position:relative;}
 .tl::before{content:'';position:absolute;left:6px;top:10px;bottom:10px;width:1.5px;background:linear-gradient(to bottom,var(--rice),rgba(181,151,42,.05));}
 .tl-item{margin-bottom:24px;position:relative;}
 .tl-item::before{content:'';position:absolute;left:-24px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--rice);border:2px solid var(--bg);}
-.tl-tag{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--rice-d);margin-bottom:4px;}
+.tl-tag{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rice-d);margin-bottom:4px;}
 .tl-h{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px;}
-.tl-b{font-size:14px;color:var(--muted);line-height:1.75;}
+.tl-b{font-size:15px;color:var(--muted);line-height:1.75;}
 .tl-b strong{color:var(--ink2);font-weight:600;}
 
 /* ─── SUPPLY BOX ─── */
 .sue{background:var(--paper);border:1px solid var(--rule);overflow:hidden;}
-.sue-hd{background:var(--rice-bg);padding:10px 18px;font-family:'Overpass Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--rice-d);}
-.sue-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 18px;border-bottom:1px solid var(--rule);font-size:14px;}
+.sue-hd{background:var(--rice-bg);padding:10px 18px;font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rice-d);}
+.sue-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 18px;border-bottom:1px solid var(--rule);font-size:15px;}
 .sue-row:last-child{border-bottom:none;}
 .sue-row.bold{background:rgba(181,151,42,.05);}
 .sue-row.bold span{font-weight:700;color:var(--ink);}
 .sue-l{color:var(--ink2);font-weight:300;}
-.sue-v{font-family:'Overpass Mono',monospace;font-size:13px;color:var(--ink);}
+.sue-v{font-family:'Overpass Mono',monospace;font-size:14px;color:var(--ink);}
 .sue-v.pos{color:var(--grn);}
 .sue-v.neg{color:var(--red);}
 .sue-v.hl{color:var(--rice-d);font-weight:600;}
 
 /* ─── CONCLUSIONS ─── */
-.con{background:var(--paper);border:1px solid var(--rule);padding:26px;position:relative;overflow:hidden;}
-.con::after{content:attr(data-n);font-family:'Cormorant Garamond',serif;font-size:100px;font-style:italic;font-weight:700;color:rgba(181,151,42,.06);position:absolute;bottom:-14px;right:10px;line-height:1;pointer-events:none;}
-.con-tag{font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--rice-d);margin-bottom:8px;}
-.con-h{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.22;max-width:92%;}
-.con-b{font-size:14px;color:var(--muted);line-height:1.8;}
+.con{background:var(--paper);border:1px solid var(--rule);border-top:3px solid var(--rice);padding:28px;position:relative;overflow:hidden;transition:box-shadow .2s;}
+.con:hover{box-shadow:0 4px 24px rgba(181,151,42,.1);}
+.con::after{content:attr(data-n);font-family:'Cormorant Garamond',serif;font-size:100px;font-style:italic;font-weight:700;color:rgba(181,151,42,.05);position:absolute;bottom:-14px;right:10px;line-height:1;pointer-events:none;}
+.con.c-red{border-top-color:var(--red);}
+.con.c-grn{border-top-color:var(--grn);}
+.con.c-teal{border-top-color:var(--teal);}
+.con.c-blue{border-top-color:#4A7FBF;}
+.con-icon{font-size:28px;line-height:1;margin-bottom:10px;}
+.con-tag{font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rice-d);margin-bottom:6px;}
+.con.c-red .con-tag{color:var(--red);}
+.con.c-grn .con-tag{color:var(--grn);}
+.con.c-teal .con-tag{color:var(--teal);}
+.con.c-blue .con-tag{color:#4A7FBF;}
+.con-h{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);margin-bottom:12px;line-height:1.22;max-width:92%;}
+.con-b{font-size:15px;color:var(--muted);line-height:1.8;}
 .con-b strong{color:var(--ink2);font-weight:600;}
+.con-metric{display:inline-block;margin-top:14px;padding:9px 16px;background:var(--rice-bg);border:1px solid rgba(181,151,42,.2);font-family:'Overpass Mono',monospace;font-size:12px;color:var(--rice-d);font-weight:600;}
+.con.c-red .con-metric{background:var(--red-bg);border-color:rgba(139,34,20,.2);color:var(--red);}
+.con.c-grn .con-metric{background:var(--grn-bg);border-color:rgba(42,96,48,.2);color:var(--grn);}
+.con.c-teal .con-metric{background:var(--teal-bg);border-color:rgba(14,110,110,.2);color:var(--teal);}
+.con.c-blue .con-metric{background:rgba(74,127,191,.08);border-color:rgba(74,127,191,.2);color:#4A7FBF;}
 
-/* ─── DIV ─── */
-.div{display:flex;align-items:center;gap:12px;margin:26px 0;color:var(--muted);font-family:'Overpass Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;}
+/* ─── TICKER ─── */
+.ticker{
+  background:#F5C842;overflow:hidden;height:34px;
+  display:flex;align-items:center;
+  position:sticky;top:0;z-index:101;
+}
+.ticker-inner{display:flex;gap:0;animation:tick 35s linear infinite;white-space:nowrap;}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.ticker-item{
+  font-family:'Overpass Mono',monospace;font-size:11px;font-weight:600;
+  color:var(--ink);padding:0 28px;
+  border-right:1px solid rgba(26,22,14,0.15);
+  display:flex;align-items:center;gap:8px;height:34px;
+}
+.ticker-item .sep{opacity:.4;}
+.ticker-item .up{color:#0A5C2A;}
+.ticker-item .dn{color:#7A0A00;}
+.div{display:flex;align-items:center;gap:12px;margin:26px 0;color:var(--muted);font-family:'Overpass Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
 .div::before,.div::after{content:'';flex:1;height:1px;background:var(--rule);}
 
 /* ─── CHART ─── */
-.chart-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-family:'Overpass Mono',monospace;font-size:11px;color:var(--muted);}
+.chart-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-family:'Overpass Mono',monospace;font-size:12px;color:var(--muted);}
 .cleg{display:flex;align-items:center;gap:6px;}
 .cleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
 
 /* ─── FN ─── */
-.fn{font-size:11.5px;color:var(--muted);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);line-height:1.65;}
+.fn{font-size:13px;color:var(--muted);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);line-height:1.65;}
 .mt16{margin-top:16px;}.mt24{margin-top:24px;}.mt32{margin-top:32px;}
 
 /* ─── FOOTER ─── */
-footer{background:var(--ink);padding:28px 48px;}
-.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
-.fi-brand{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;font-style:italic;}
-.fi-meta{font-family:'Overpass Mono',monospace;font-size:10px;color:rgba(255,252,247,.35);text-align:right;line-height:2;}
+footer{background:var(--ink);padding:40px 48px;}
+.fi{max-width:1100px;margin:0 auto;}
+.fi-brand{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;font-style:italic;margin-bottom:28px;}
+.fi-meta{font-family:'Overpass Mono',monospace;font-size:12px;color:rgba(255,252,247,.35);text-align:right;line-height:2;}
+.fi-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px;}
+@media(max-width:700px){.fi-grid{grid-template-columns:1fr;}}
+.fi-block-title{
+  font-family:'Overpass Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rice-l);margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid rgba(181,151,42,.2);
+}
+.fi-block p{
+  font-family:'Overpass Mono',monospace;font-size:11.5px;
+  color:rgba(255,252,247,.45);line-height:1.9;margin:0;
+}
+.fi-block p strong{color:rgba(255,252,247,.7);font-weight:600;}
 </style>
 </head>
 <body>
+
+    <!-- TICKER -->
+    <div class="ticker">
+        <div class="ticker-inner">
+            <div class="ticker-item">🌾 ARROZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN 541,4 Mt <span class="sep up">−0,04%</span></div>
+            <div class="ticker-item">🇺🇾 URUGUAY FOB ABR. 2026 <span class="sep">·</span> <span class="up">$504/ton ▲ +$45 vs. marzo</span></div>
+            <div class="ticker-item">🇮🇳 INDIA 25,0 Mt <span class="up">▲ +15,4%</span> <span class="sep">·</span> LIDERA CON 40% DEL COMERCIO MUNDIAL</div>
+            <div class="ticker-item">🇺🇾 URUGUAY 7° EXPORTADOR MUNDIAL <span class="sep">·</span> 1,0 Mt <span class="sep">·</span> ESTABLE</div>
+            <div class="ticker-item">🇧🇷 BRASIL 1,4 Mt <span class="up">▲ +26,0%</span> <span class="sep">·</span> MAYOR SALTO DEL CICLO</div>
+            <div class="ticker-item">COMERCIO MUNDIAL 62,1 Mt <span class="dn">▼ −0,4 vs. estimación anterior</span></div>
+            <div class="ticker-item">🇹🇭 TAILANDIA FOB $382/ton <span class="dn">▼ −$1</span> <span class="sep">·</span> 🇻🇳 VIETNAM $367/ton <span class="up">▲ +$15</span> <span class="sep">·</span> 🇮🇳 INDIA $367/ton <span class="dn">▼ −$10</span></div>
+            <div class="ticker-item">🌍 EXISTENCIAS FINALES MUNDIALES 192,3 Mt <span class="up">▲ +0,8 vs. año anterior</span></div>
+            <!-- duplicate for seamless loop -->
+            <div class="ticker-item">🌾 ARROZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN 541,4 Mt <span class="sep up">−0,04%</span></div>
+            <div class="ticker-item">🇺🇾 URUGUAY FOB ABR. 2026 <span class="sep">·</span> <span class="up">$504/ton ▲ +$45 vs. marzo</span></div>
+            <div class="ticker-item">🇮🇳 INDIA 25,0 Mt <span class="up">▲ +15,4%</span> <span class="sep">·</span> LIDERA CON 40% DEL COMERCIO MUNDIAL</div>
+            <div class="ticker-item">🇺🇾 URUGUAY 7° EXPORTADOR MUNDIAL <span class="sep">·</span> 1,0 Mt <span class="sep">·</span> ESTABLE</div>
+            <div class="ticker-item">🇧🇷 BRASIL 1,4 Mt <span class="up">▲ +26,0%</span> <span class="sep">·</span> MAYOR SALTO DEL CICLO</div>
+            <div class="ticker-item">COMERCIO MUNDIAL 62,1 Mt <span class="dn">▼ −0,4 vs. estimación anterior</span></div>
+            <div class="ticker-item">🇹🇭 TAILANDIA FOB $382/ton <span class="dn">▼ −$1</span> <span class="sep">·</span> 🇻🇳 VIETNAM $367/ton <span class="up">▲ +$15</span> <span class="sep">·</span> 🇮🇳 INDIA $367/ton <span class="dn">▼ −$10</span></div>
+            <div class="ticker-item">🌍 EXISTENCIAS FINALES MUNDIALES 192,3 Mt <span class="up">▲ +0,8 vs. año anterior</span></div>
+        </div>
+    </div>
 
     <!-- HERO -->
     <header class="hero">
         <div class="hero-grid">
             <div>
-                <p class="hero-eyebrow">USDA · FAS/ERS · Grain WMT · WAP · Rice Outlook · Abril 2026</p>
+                <p class="hero-eyebrow">USDA · Rice Outlook · Abril 2026</p>
                 <h1>Arroz<br><em>2025/26</em></h1>
                 <p class="hero-sub">Uruguay — 7° exportador mundial · $504/ton FOB · cosecha demorada, precio récord</p>
             </div>
@@ -303,14 +372,14 @@ footer{background:var(--ink);padding:28px 48px;}
                 </div>
                 <div class="hstat">
                     <div class="hstat-l">Exportaciones Uruguay</div>
-                    <div class="hstat-v">1.0</div>
-                    <div class="hstat-u">MMT · estables interanual</div>
+                    <div class="hstat-v">1,0</div>
+                    <div class="hstat-u">Mt · estables interanual</div>
                     <span class="hstat-b b-na">→ 7° exportador mundial</span>
                 </div>
                 <div class="hstat">
                     <div class="hstat-l">Producción mundial 2025/26</div>
-                    <div class="hstat-v">541.4</div>
-                    <div class="hstat-u">MMT milled · −0.04%</div>
+                    <div class="hstat-v">541,4</div>
+                    <div class="hstat-u">Mt descascarado · −0,04%</div>
                     <span class="hstat-b b-na">→ Prácticamente sin cambios</span>
                 </div>
             </div>
@@ -319,28 +388,28 @@ footer{background:var(--ink);padding:28px 48px;}
         <div class="stat-strip">
             <div class="ss">
                 <div class="ss-l">India exportaciones</div>
-                <div class="ss-v">25,000</div>
-                <div class="ss-u">TMM · 1° mundial · +15%</div>
+                <div class="ss-v">25,0</div>
+                <div class="ss-u">Mt · 1° mundial · +15%</div>
             </div>
             <div class="ss">
                 <div class="ss-l">Vietnam exp.</div>
-                <div class="ss-v">7,900</div>
-                <div class="ss-u">TMM · 2° mundial · stable</div>
+                <div class="ss-v">7,9</div>
+                <div class="ss-u">Mt · 2° mundial · estable</div>
             </div>
             <div class="ss">
                 <div class="ss-l">Tailandia exp.</div>
-                <div class="ss-v">7,000</div>
-                <div class="ss-u">TMM · 3° mundial · −11%</div>
+                <div class="ss-v">7,0</div>
+                <div class="ss-u">Mt · 3° mundial · −11%</div>
             </div>
-            <div class="ss" style="background:rgba(26,22,14,.12);">
+            <div class="ss" style="background:rgba(26,2,14,.12);">
                 <div class="ss-l" style="color:rgba(255,252,247,.6);">🇺🇾 Uruguay exp.</div>
-                <div class="ss-v" style="color:#fff;">1,000</div>
-                <div class="ss-u" style="color:rgba(255,252,247,.4);">TMM · 7° mundial · $504/t</div>
+                <div class="ss-v" style="color:#fff;">1,0</div>
+                <div class="ss-u" style="color:rgba(255,252,247,.4);">Mt · 7° mundial · $504/t</div>
             </div>
             <div class="ss">
                 <div class="ss-l">Filipinas importa (mayor)</div>
-                <div class="ss-v">5,500</div>
-                <div class="ss-u">TMM · 1° importador</div>
+                <div class="ss-v">5,5</div>
+                <div class="ss-u">Mt · 1° importador</div>
             </div>
         </div>
     </header>
@@ -367,7 +436,7 @@ footer{background:var(--ink);padding:28px 48px;}
                 <div class="sh-num">01</div>
                 <div class="sh-inner">
                     <p class="sh-tag">Producción y consumo globales 2025/26</p>
-                    <h2 class="sh-title">Producción mundial virtualmente sin cambios: 541.4 MMT milled</h2>
+                    <h2 class="sh-title">Producción mundial virtualmente sin cambios: 541,4 Mt descascarado</h2>
                 </div>
             </div>
 
@@ -376,52 +445,52 @@ footer{background:var(--ink);padding:28px 48px;}
             <div class="g2">
                 <div>
                     <h3>Balance global: oferta amplia, comercio a la baja</h3>
-                    <p>La producción mundial de arroz milled se proyecta en <strong>541.4 MMT</strong> para 2025/26, prácticamente sin variación respecto a los 541.6 MMT del año anterior (−0.04%). El USDA señala que el aumento de producción en Tailandia (+0.3 MMT en la revisión de abril) fue suficiente para compensar caídas en Filipinas y Taiwán. India lidera ampliamente con <strong>152 MMT</strong> (+1.3%), seguida de Bangladesh (37.6 MMT) e Indonesia (33.6 MMT).</p>
-                    <p>El comercio mundial baja a <strong>62.1 MMT</strong> desde los 62.5 MMT del mes anterior, con reducciones en exportaciones de Pakistán (−300k TMM por mayor competencia de India) y EE.UU. (−100k TMM por embarques lentos), parcialmente compensadas por incrementos en Tailandia. China aumenta importaciones 100k TMM por compras anticipadas en el año.</p>
-                    <p>El consumo global baja levemente, liderado por reducciones en Medio Oriente y Asia Oriental. Las existencias finales mundiales se proyectan en <strong>192.3 MMT</strong>, levemente por encima de los 191.5 de 2024/25.</p>
+                    <p>La producción mundial de arroz descascarado se proyecta en <strong>541,4 Mt</strong> para 2025/26, prácticamente sin variación respecto a los 541,6 Mt del año anterior (−0,04%). El USDA señala que el aumento de producción en Tailandia (+0,3 Mt en la revisión de abril) fue suficiente para compensar caídas en Filipinas y Taiwán. India lidera ampliamente con <strong>152 Mt</strong> (+1,3%), seguida de Bangladesh (37,6 Mt) e Indonesia (33,6 Mt).</p>
+                    <p>El comercio mundial baja a <strong>62,1 Mt</strong> desde los 62,5 Mt del mes anterior, con reducciones en exportaciones de Pakistán (−300 mil t por mayor competencia de India) y EE.UU. (−100 mil t por embarques lentos), parcialmente compensadas por incrementos en Tailandia. China aumenta importaciones 100 mil t por compras anticipadas en el año.</p>
+                    <p>El consumo global baja levemente, liderado por reducciones en Medio Oriente y Asia Oriental. Las existencias finales mundiales se proyectan en <strong>192,3 Mt</strong>, levemente por encima de los 191,5 de 2024/25.</p>
                 </div>
                 <div>
                     <h3>Producción por región: Asia domina</h3>
                     <table class="dt">
                         <thead>
-                            <tr><th>País / Región</th><th class="n">2024/25</th><th class="n">2025/26 Mar</th><th class="n">2025/26 Abr</th><th class="n">Δ anual</th></tr>
+                            <tr><th>País / Región</th><th class="n">2023/24 (Mt)</th><th class="n">2024/25 (Mt)</th><th class="n">2025/26 Abr (Mt)</th><th class="n">Δ 3 años</th></tr>
                         </thead>
                         <tbody>
-                            <tr class="tot"><td>🌍 World Total</td><td class="n">541.6</td><td class="n">541.3</td><td class="n">541.4</td><td class="n">−0%</td></tr>
-                            <tr><td class="b">🇮🇳 India</td><td class="n">150.0</td><td class="n">152.0</td><td class="n">152.0</td><td class="n pos">+1.3%</td></tr>
-                            <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">36.6</td><td class="n">37.6</td><td class="n">37.6</td><td class="n pos">+2.9%</td></tr>
-                            <tr><td class="b">🇮🇩 Indonesia</td><td class="n">34.1</td><td class="n">33.6</td><td class="n">33.6</td><td class="n neg">−1.5%</td></tr>
-                            <tr><td class="b">🇻🇳 Vietnam</td><td class="n">26.8</td><td class="n">26.0</td><td class="n">26.0</td><td class="n neg">−2.8%</td></tr>
-                            <tr><td class="b">🇹🇭 Tailandia</td><td class="n">20.8</td><td class="n">20.4</td><td class="n">20.7</td><td class="n neg">−0.7%</td></tr>
-                            <tr><td class="b">🇲🇲 Myanmar</td><td class="n">11.9</td><td class="n">12.0</td><td class="n">12.0</td><td class="n pos">+0.8%</td></tr>
-                            <tr><td class="b">🇵🇭 Filipinas</td><td class="n">12.4</td><td class="n">12.3</td><td class="n">12.2</td><td class="n neg">−1.4%</td></tr>
-                            <tr><td class="b">🇧🇷 Brasil</td><td class="n">8.7</td><td class="n">7.6</td><td class="n">7.6</td><td class="n neg">−12.4%</td></tr>
-                            <tr class="uy"><td class="b">🇺🇾 Uruguay</td><td class="n">~1.2</td><td class="n">~1.1</td><td class="n">~1.1</td><td class="n">Menor (secano)</td></tr>
+                            <tr><td class="b">🇮🇳 India</td><td class="n">137,8</td><td class="n">150,0</td><td class="n">152,0</td><td class="n pos">+10,3%</td></tr>
+                            <tr><td class="b">🇨🇳 China</td><td class="n">144,6</td><td class="n">145,3</td><td class="n">146,3</td><td class="n pos">+1,2%</td></tr>
+                            <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">37,0</td><td class="n">36,6</td><td class="n">37,7</td><td class="n pos">+1,9%</td></tr>
+                            <tr><td class="b">🇮🇩 Indonesia</td><td class="n">33,0</td><td class="n">34,1</td><td class="n">33,6</td><td class="n pos">+1,8%</td></tr>
+                            <tr><td class="b">🇻🇳 Vietnam</td><td class="n">27,2</td><td class="n">26,8</td><td class="n">26,0</td><td class="n neg">−4,4%</td></tr>
+                            <tr><td class="b">🇹🇭 Tailandia</td><td class="n">20,0</td><td class="n">20,8</td><td class="n">20,7</td><td class="n pos">+3,5%</td></tr>
+                            <tr><td class="b">🇵🇭 Filipinas</td><td class="n">12,3</td><td class="n">12,4</td><td class="n">12,2</td><td class="n neg">−0,8%</td></tr>
+                            <tr><td class="b">🇧🇷 Brasil</td><td class="n">7,2</td><td class="n">8,7</td><td class="n">7,6</td><td class="n pos">+5,6%</td></tr>
+                            <tr><td class="b">🇺🇸 EE.UU.</td><td class="n">6,9</td><td class="n">7,1</td><td class="n">6,6</td><td class="n neg">−4,3%</td></tr>
+                            <tr class="tot"><td class="b">🌍 Total Mundial</td><td class="n">523,9</td><td class="n">541,6</td><td class="n">541,4</td><td class="n pos">+3,3%</td></tr>
                         </tbody>
                     </table>
-                    <p class="fn">Fuente: USDA WAP Abr. 2026, Tabla 09 Rice (milled). Uruguay no figura en la tabla de producción WAP pero sí en la tabla de exportaciones del Grain WMT. La producción uruguaya se infiere indirectamente del balance exportador y del stock.</p>
+                    <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Production, Consumption, and Stocks — Milled Production, April 2026, p. 20. Δ 3 años = variación 2023/24 → 2025/26 Abr.</p>
                 </div>
             </div>
 
-            <div class="div">Balance Oferta-Uso Mundial · Miles de MMT milled · Serie histórica</div>
+            <div class="div">Balance Oferta-Uso Mundial · Mt descascarado · Serie histórica</div>
             <div class="g3">
                 <div class="kc">
                     <div class="kc-l">Producción 2025/26</div>
-                    <div class="kc-v">541.4</div>
-                    <div class="kc-u">MMT · virtualmente sin cambios</div>
+                    <div class="kc-v">541,4</div>
+                    <div class="kc-u">Mt · virtualmente sin cambios</div>
                     <div class="kc-d dne">→ Estabilidad estructural</div>
                 </div>
                 <div class="kc teal">
                     <div class="kc-l">Comercio mundial</div>
-                    <div class="kc-v">62.1</div>
-                    <div class="kc-u">MMT · −0.4 vs. estimación anterior</div>
+                    <div class="kc-v">62,1</div>
+                    <div class="kc-u">Mt · −0,4 vs. estimación anterior</div>
                     <div class="kc-d ddn">▼ Pakistan y EE.UU. bajan</div>
                 </div>
                 <div class="kc grn">
                     <div class="kc-l">Stocks finales</div>
-                    <div class="kc-v">192.3</div>
-                    <div class="kc-u">MMT · +0.8 vs. año anterior</div>
-                    <div class="kc-d dup">▲ Iran, Pak, Tailandia, Japón</div>
+                    <div class="kc-v">192,3</div>
+                    <div class="kc-u">Mt · +0,8 vs. año anterior</div>
+                    <div class="kc-d dup">▲ Pakistán, Tailandia, Japón, Irán</div>
                 </div>
             </div>
         </div>
@@ -452,42 +521,42 @@ footer{background:var(--ink);padding:28px 48px;}
                     <div class="price-vis mt16">
                         <div class="pv-row">
                             <span class="pv-n">Pakistán</span>
-                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:65.8%;height:100%;background:rgba(181,151,42,.3);"></div></div>
+                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:65,8%;height:100%;background:rgba(181,1,42,.3);"></div></div>
                             <span class="pv-v" style="color:var(--grn);">$351</span>
                             <span class="pv-d" style="color:var(--grn);">−$2</span>
                         </div>
                         <div class="pv-row">
                             <span class="pv-n">India</span>
-                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:68.7%;height:100%;background:rgba(181,151,42,.3);"></div></div>
+                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:68,7%;height:100%;background:rgba(181,1,42,.3);"></div></div>
                             <span class="pv-v" style="color:var(--muted);">$367</span>
                             <span class="pv-d" style="color:var(--red);">−$10</span>
                         </div>
                         <div class="pv-row">
                             <span class="pv-n">Vietnam</span>
-                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:68.7%;height:100%;background:rgba(181,151,42,.3);"></div></div>
+                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:68,7%;height:100%;background:rgba(181,1,42,.3);"></div></div>
                             <span class="pv-v" style="color:var(--muted);">$367</span>
                             <span class="pv-d" style="color:var(--grn);">+$15</span>
                         </div>
                         <div class="pv-row">
                             <span class="pv-n">Tailandia</span>
-                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:71.5%;height:100%;background:rgba(181,151,42,.4);"></div></div>
+                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:71,5%;height:100%;background:rgba(181,1,42,.4);"></div></div>
                             <span class="pv-v" style="color:var(--muted);">$382</span>
                             <span class="pv-d" style="color:var(--red);">−$1</span>
                         </div>
                         <div class="pv-row" style="border:2px solid var(--rice);margin:3px 0;">
                             <span class="pv-n" style="background:var(--rice-bg);color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span>
-                            <div class="pv-bar-wrap" style="background:var(--rice-bg);"><div class="pv-bar" style="width:94.4%;height:100%;background:var(--rice);"></div></div>
+                            <div class="pv-bar-wrap" style="background:var(--rice-bg);"><div class="pv-bar" style="width:94,4%;height:100%;background:var(--rice);"></div></div>
                             <span class="pv-v" style="background:var(--rice-bg);color:var(--rice-d);font-weight:700;">$504</span>
                             <span class="pv-d" style="background:var(--rice-bg);color:var(--grn);font-weight:700;">+$45</span>
                         </div>
                         <div class="pv-row">
                             <span class="pv-n">EE.UU. (4%)</span>
-                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:100%;height:100%;background:rgba(26,58,107,.3);"></div></div>
+                            <div class="pv-bar-wrap"><div class="pv-bar" style="width:100%;height:100%;background:rgba(26,5,107,.3);"></div></div>
                             <span class="pv-v" style="color:var(--blue);">$534</span>
                             <span class="pv-d" style="color:var(--muted);">→ sin cambio</span>
                         </div>
                     </div>
-                    <p class="fn">Fuente: International Grains Council / USDA FAS Grain WMT Abr. 2026. Todos los precios son para 5% quebrado excepto Tailandia (100B) y EE.UU. (4%). El "FOB Feb. 2026" de Uruguay según el Rice Outlook fue $440/ton — el salto de $440 a $504 ocurrió entre febrero y abril.</p>
+                    <p class="fn">Fuente: IGC — <em>Grain Market Report</em>, April 2026; USDA FAS — <em>Grain: World Markets and Trade</em>, Table: Rice — International Prices, April 2026. Todos los precios son para 5% quebrado excepto Tailandia (100B) y EE.UU. (4%). El "FOB Feb. 2026" de Uruguay según el Rice Outlook fue $440/ton — el salto de $440 a $504 ocurrió entre febrero y abril.</p>
 
                     <div class="panel teal mt16">
                         <p>La prima de Uruguay sobre Vietnam ($504 vs. $367 = <strong>+$137/ton</strong>) es excepcionalmente alta. Históricamente, el diferencial es menor. La combinación de cosecha demorada, menor oferta exportable y demanda sostenida de Brasil y Perú genera esta prima que, una vez normalizada la cosecha, debería comprimirse hacia el segundo semestre 2026.</p>
@@ -496,7 +565,7 @@ footer{background:var(--ink);padding:28px 48px;}
             </div>
 
             <div class="callout mt32">
-                <p>"Since the March WASDE, U.S. quotes remained at $534/ton, while quotes from key competitor Uruguay shot up $45 to $504/ton on tightening exportable supplies with delayed harvest of a smaller crop. Western Hemisphere prices remain well above Asian prices."</p>
+                <p>"Desde el WASDE de marzo, las cotizaciones de EE.UU. se mantuvieron en $534/ton, mientras que las cotizaciones del competidor clave Uruguay subieron $45 hasta $504/ton por el ajuste en la oferta exportable ante una cosecha más pequeña y demorada. Los precios del hemisferio occidental siguen muy por encima de los precios asiáticos."</p>
                 <cite>USDA FAS — Grain: World Markets and Trade, Abril 2026</cite>
             </div>
         </div>
@@ -509,51 +578,56 @@ footer{background:var(--ink);padding:28px 48px;}
                 <div class="sh-num">03</div>
                 <div class="sh-inner">
                     <p class="sh-tag">Grandes exportadores 2025/26 · Miles de TM</p>
-                    <h2 class="sh-title">India lidera con 25 MMT — Uruguay es el 7° del mundo</h2>
+                    <h2 class="sh-title">India lidera con 25 Mt — Uruguay es el 7° del mundo</h2>
                 </div>
             </div>
 
             <div class="g2">
                 <div>
                     <h3>El ranking exportador global</h3>
-                    <p>India consolida su posición dominante con <strong>25 MMT exportadas</strong>, representando el 40% del comercio mundial de arroz. Su ventaja competitiva es doble: precio extremadamente bajo ($367/ton) y disponibilidad de oferta tras su récord de producción de 152 MMT y stocks en máximos. Vietnam y Tailandia completan el podio asiático.</p>
-                    <p>En el hemisferio occidental, Brasil y Uruguay son los exportadores de referencia. <strong>Brasil llega a 1.375 MMT</strong> (+26% interanual, uno de los mayores saltos del ciclo), aprovechando su tipo de cambio competitivo y buena cosecha en Rio Grande do Sul. <strong>Uruguay se mantiene estable en 1.0 MMT</strong>, siendo el mayor exportador del Mercosur históricamente y el único que cotiza en el rango premium del hemisferio.</p>
-                    <p>Paraguay (0.9 MMT) y Guyana (0.5 MMT) completan el bloque sudamericano junto a Argentina (0.4 MMT), que opera en un nicho diferente (variedades especiales para el mercado brasileño y regional).</p>
+                    <p>India consolida su posición dominante con <strong>25 Mt exportadas</strong>, representando el 40% del comercio mundial de arroz. Su ventaja competitiva es doble: precio extremadamente bajo ($367/ton) y disponibilidad de oferta tras su récord de producción de 152 Mt y stocks en máximos. Vietnam y Tailandia completan el podio asiático.</p>
+                    <p>En el hemisferio occidental, Brasil y Uruguay son los exportadores de referencia. <strong>Brasil llega a 1,4 Mt</strong> (+26% interanual, uno de los mayores saltos del ciclo), aprovechando su tipo de cambio competitivo y buena cosecha en RG do Sul. <strong>Uruguay se mantiene estable en 1,0 Mt</strong>, siendo el mayor exportador del Mercosur históricamente y el único que cotiza en el rango premium del hemisferio.</p>
+                    <p>Paraguay (0,9 Mt) y Guyana (0,5 Mt) completan el bloque sudamericano junto a Argentina (0,4 Mt), que opera en un nicho diferente (variedades especiales para el mercado brasileño y regional).</p>
                 </div>
                 <div>
-                    <h3>Cambios de exportaciones en la revisión de Abril</h3>
-                    <table class="dt">
-                        <thead>
-                            <tr><th>País</th><th class="n">Anterior</th><th class="n">Actual Abr.</th><th class="n">Cambio</th><th>Razón</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="b">Tailandia</td><td class="n">6,800</td><td class="n">7,000</td><td class="n pos">+200</td><td>Mayor cosecha estación principal</td></tr>
-                            <tr><td class="b">Pakistán</td><td class="n">4,800</td><td class="n">4,500</td><td class="n neg">−300</td><td>Fuerte competencia de India</td></tr>
-                            <tr><td class="b">EE.UU.</td><td class="n">2,775</td><td class="n">2,675</td><td class="n neg">−100</td><td>Embarques lentos de grano largo</td></tr>
-                            <tr><td class="b">China</td><td class="n">—</td><td class="n">+100 imp.</td><td class="n pos">+100</td><td>Compras anticipadas en inicio de año</td></tr>
-                            <tr class="uy"><td class="b">🇺🇾 Uruguay</td><td class="n">1,000</td><td class="n">1,000</td><td class="n hl">→ Sin cambio</td><td>Estable — cosecha demorada pero volumen sostenido</td></tr>
-                        </tbody>
-                    </table>
-                    <p class="fn">Fuente: USDA FAS — Grain WMT Abr. 2026, Tabla de cambios de comercio de arroz 2025/26.</p>
+                    <h3>Bloque regional en perspectiva</h3>
+                    <p>El bloque del Cono Sur exporta en conjunto unas <strong>3,7 Mt</strong>, lo que representa el 6% del comercio mundial. Uruguay es la referencia de calidad y precio premium de la región. Brasil creció fuertemente este ciclo, mientras Argentina y Paraguay retrocedieron.</p>
+                    <p>La dispersión de precios dentro del bloque es notable: Uruguay cotiza a $504/ton mientras el promedio asiático ronda los $367–382/ton. Esta prima refleja calidad varietal, integración con molinos y acceso a mercados exigentes como Brasil, Perú y Medio Oriente.</p>
                 </div>
             </div>
 
-            <div class="div">Top Exportadores Mundiales de Arroz 2025/26 · TY Enero/Diciembre · Miles de TM</div>
+            <h3 style="margin-top:32px;">Exportaciones 2025/26 vs. año anterior — Cono Sur + India (líder mundial)</h3>
+            <table class="dt" style="margin-top:12px;">
+                <thead>
+                    <tr><th style="width:12%">País</th><th class="n" style="width:10%">2024/25<br>(Mt)</th><th class="n" style="width:10%">2025/26 Abr.<br>(Mt)</th><th class="n" style="width:9%">Δ vs.<br>año ant.</th><th style="width:59%">Contexto</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="b">🇮🇳 India</td><td class="n">21,7</td><td class="n">25,0</td><td class="n pos">+15,4%</td><td>Líder mundial · precio más bajo del mercado · riesgo estructural para la región</td></tr>
+                    <tr><td class="b">🇧🇷 Brasil</td><td class="n">1,1</td><td class="n">1,4</td><td class="n pos">+26,0%</td><td>Mayor salto del ciclo · tipo de cambio competitivo · buena cosecha en RG do Sul</td></tr>
+                    <tr class="uy"><td class="b">🇺🇾 Uruguay</td><td class="n">1,0</td><td class="n">1,0</td><td class="n pos hl">+1,3%</td><td>Estable a pesar de la sequía · precio récord $504/ton · 7° exportador mundial</td></tr>
+                    <tr><td class="b">🇵🇾 Paraguay</td><td class="n">0,9</td><td class="n">0,9</td><td class="n neg">−5,1%</td><td>Leve caída · competencia regional creciente</td></tr>
+                    <tr><td class="b">🇦🇷 Argentina</td><td class="n">0,5</td><td class="n">0,4</td><td class="n neg">−13,4%</td><td>Retroceso · opera en nicho de variedades especiales para Brasil y región</td></tr>
+                </tbody>
+            </table>
+            <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Exports, April 2026, p. 19. TY = Trade Year Jan/Dec. Valores redondeados a 1 decimal en Mt.</p>
+
+            <div class="div">Top Exportadores Mundiales de Arroz 2025/26 · TY Enero/Diciembre · Mt</div>
             <div class="bars">
-                <div class="bar-r"><span class="bar-l">🇮🇳 India</span><div class="bar-t"><div class="bar-f" style="width:100%"></div></div><span class="bar-v">25,000 → +15% ▲</span></div>
-                <div class="bar-r"><span class="bar-l">🇻🇳 Vietnam</span><div class="bar-t"><div class="bar-f d" style="width:31.6%"></div></div><span class="bar-v">7,900 → estable</span></div>
-                <div class="bar-r"><span class="bar-l">🇹🇭 Tailandia</span><div class="bar-t"><div class="bar-f d" style="width:28%"></div></div><span class="bar-v">7,000 → −11% ▼</span></div>
-                <div class="bar-r"><span class="bar-l">🇵🇰 Pakistán</span><div class="bar-t"><div class="bar-f d" style="width:18%"></div></div><span class="bar-v">4,500 → −0.6% ▼</span></div>
-                <div class="bar-r"><span class="bar-l">🇰🇭 Camboya</span><div class="bar-t"><div class="bar-f d" style="width:15.6%"></div></div><span class="bar-v">3,900 → +3.3%</span></div>
-                <div class="bar-r"><span class="bar-l">🇲🇲 Myanmar</span><div class="bar-t"><div class="bar-f d" style="width:10.4%"></div></div><span class="bar-v">2,600 → +1.1%</span></div>
-                <div class="bar-r"><span class="bar-l">🇺🇸 EE.UU.</span><div class="bar-t"><div class="bar-f d" style="width:10.7%"></div></div><span class="bar-v">2,675 → −0.4% ▼</span></div>
-                <div class="bar-r"><span class="bar-l">🇧🇷 Brasil</span><div class="bar-t"><div class="bar-f d" style="width:5.5%"></div></div><span class="bar-v">1,375 → +26% ▲</span></div>
-                <div class="bar-r"><span class="bar-l" style="color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f" style="width:4%"></div></div><span class="bar-v" style="color:var(--rice-d);font-weight:700;">1,000 → estable · 7° mundial</span></div>
-                <div class="bar-r"><span class="bar-l">🇵🇾 Paraguay</span><div class="bar-t"><div class="bar-f d" style="width:3.6%"></div></div><span class="bar-v">900 → −5% ▼</span></div>
-                <div class="bar-r"><span class="bar-l">🇬🇾 Guyana</span><div class="bar-t"><div class="bar-f d" style="width:2%"></div></div><span class="bar-v">500</span></div>
-                <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:1.6%"></div></div><span class="bar-v">400</span></div>
+                <div class="bar-r"><span class="bar-l">🇮🇳 India</span><div class="bar-t"><div class="bar-f" style="width:100%"></div></div><span class="bar-v">25,0 Mt · <span style="color:var(--grn)">+15,4% ▲</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇻🇳 Vietnam</span><div class="bar-t"><div class="bar-f d" style="width:31.6%"></div></div><span class="bar-v">7,9 Mt · <span style="color:var(--red)">−2,0% ▼</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇹🇭 Tailandia</span><div class="bar-t"><div class="bar-f d" style="width:28%"></div></div><span class="bar-v">7,0 Mt · <span style="color:var(--red)">−10,9% ▼</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇵🇰 Pakistán</span><div class="bar-t"><div class="bar-f d" style="width:18%"></div></div><span class="bar-v">4,5 Mt · <span style="color:var(--red)">−0,6% ▼</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇰🇭 Camboya</span><div class="bar-t"><div class="bar-f d" style="width:15.6%"></div></div><span class="bar-v">3,9 Mt · <span style="color:var(--grn)">+3,3% ▲</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇺🇸 EE.UU.</span><div class="bar-t"><div class="bar-f d" style="width:10.7%"></div></div><span class="bar-v">2,7 Mt · <span style="color:var(--red)">−0,4% ▼</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇲🇲 Myanmar</span><div class="bar-t"><div class="bar-f d" style="width:10.4%"></div></div><span class="bar-v">2,6 Mt · <span style="color:var(--grn)">+1,1% ▲</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇨🇳 China</span><div class="bar-t"><div class="bar-f d" style="width:6.8%"></div></div><span class="bar-v">1,7 Mt · <span style="color:var(--red)">−1,4% ▼</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇧🇷 Brasil</span><div class="bar-t"><div class="bar-f d" style="width:5.5%"></div></div><span class="bar-v">1,4 Mt · <span style="color:var(--grn)">+26,0% ▲</span></span></div>
+                <div class="bar-r"><span class="bar-l" style="color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f" style="width:4%"></div></div><span class="bar-v" style="color:var(--rice-d);font-weight:700;">1,0 Mt · <span style="color:var(--grn)">+1,3%</span> · 7° mundial</span></div>
+                <div class="bar-r"><span class="bar-l">🇵🇾 Paraguay</span><div class="bar-t"><div class="bar-f d" style="width:3.6%"></div></div><span class="bar-v">0,9 Mt · <span style="color:var(--red)">−5,1% ▼</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇬🇾 Guyana</span><div class="bar-t"><div class="bar-f d" style="width:2%"></div></div><span class="bar-v">0,5 Mt · <span style="color:var(--grn)">+3,9% ▲</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:1.6%"></div></div><span class="bar-v">0,4 Mt · <span style="color:var(--red)">−13,4% ▼</span></span></div>
             </div>
-            <p class="fn">Fuente: USDA FAS — Grain: World Markets and Trade, Tabla World Rice Trade TY Exports, Abril 2026. TY = Trade Year Enero/Diciembre. Uruguay exporta aprox. 2.5× lo que Argentina.</p>
+            <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Exports, April 2026, p. 19. TY = Trade Year Jan/Dec. Variaciones calculadas vs. 2024/25.</p>
         </div>
     </section>
 
@@ -571,30 +645,30 @@ footer{background:var(--ink);padding:28px 48px;}
             <div class="g2">
                 <div>
                     <h3>Los grandes compradores</h3>
-                    <p>Filipinas encabeza las importaciones mundiales con <strong>5.5 MMT</strong>, seguida de Vietnam (3.9 MMT en importaciones — el país es tanto exportador como importador de variedades específicas) y China (3.2 MMT, +100k TM por compras anticipadas). El patrón de importaciones en Asia está dominado por países que tienen déficit entre producción y consumo interno o que necesitan variedades específicas que no producen localmente.</p>
+                    <p>Filipinas encabeza las importaciones mundiales con <strong>5,5 Mt</strong>, seguida de Vietnam (3,9 Mt en importaciones — el país es tanto exportador como importador de variedades específicas) y China (3,2 Mt, +100 mil t por compras anticipadas). El patrón de importaciones en Asia está dominado por países que tienen déficit entre producción y consumo interno o que necesitan variedades específicas que no producen localmente.</p>
                     <p>Para Uruguay, los destinos más relevantes son <strong>Brasil</strong> (su mayor mercado histórico, aunque en este ciclo las importaciones brasileñas son de solo 900k TM dado su elevada producción propia), <strong>Perú</strong> y <strong>países de África Occidental</strong> donde el arroz uruguayo accede con ventaja de calidad y timing.</p>
                     <p>La dinámica del mercado importador 2025/26 refleja la caída de precios asiáticos: con arroz indio a $367/ton, muchos importadores que antes preferían el hemisferio occidental ahora pueden abastecer necesidades básicas con origen asiático más barato, concentrando la demanda del hemisferio en mercados de mayor poder adquisitivo o compradores que priorizan calidad.</p>
                 </div>
                 <div>
-                    <h3>Top importadores 2025/26 · Miles de TM</h3>
+                    <h3>Top importadores 2025/26 · Mt</h3>
                     <table class="dt">
                         <thead>
-                            <tr><th>Importador</th><th class="n">2024/25</th><th class="n">2025/26 (F)</th><th class="n">Δ</th></tr>
+                            <tr><th>Importador</th><th class="n">2024/25 (Mt)</th><th class="n">2025/26 Abr (Mt)</th><th class="n">Δ</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td class="b">🇵🇭 Filipinas</td><td class="n">3,640</td><td class="n pos">5,500</td><td class="n pos">+51%</td></tr>
-                            <tr><td class="b">🇻🇳 Vietnam (imp.)</td><td class="n">3,525</td><td class="n">3,900</td><td class="n pos">+11%</td></tr>
-                            <tr><td class="b">🇨🇳 China</td><td class="n">3,102</td><td class="n">3,200</td><td class="n pos">+3%</td></tr>
-                            <tr><td class="b">🇳🇬 Nigeria</td><td class="n">2,775</td><td class="n">3,000</td><td class="n pos">+8%</td></tr>
-                            <tr><td class="b">🇮🇶 Iraq</td><td class="n">2,181</td><td class="n">2,150</td><td class="n neg">−1.4%</td></tr>
-                            <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">2,010</td><td class="n">1,500</td><td class="n neg">−25%</td></tr>
-                            <tr><td class="b">🇸🇳 Senegal</td><td class="n">1,475</td><td class="n">1,500</td><td class="n">+1.7%</td></tr>
-                            <tr><td class="b">🇲🇾 Malasia</td><td class="n">1,495</td><td class="n">1,700</td><td class="n pos">+14%</td></tr>
-                            <tr><td class="b">🇧🇷 Brasil</td><td class="n">931</td><td class="n">900</td><td class="n neg">−3% · destino UY</td></tr>
-                            <tr><td class="b">🇺🇦 Otros África Occ.</td><td class="n">—</td><td class="n">~3,000+</td><td class="n">Crecimiento</td></tr>
+                            <tr><td class="b">🇵🇭 Filipinas</td><td class="n">3,6</td><td class="n">5,5</td><td class="n pos">+51,4%</td></tr>
+                            <tr><td class="b">🇻🇳 Vietnam (imp.)</td><td class="n">3,5</td><td class="n">3,9</td><td class="n pos">+10,6%</td></tr>
+                            <tr><td class="b">🇨🇳 China</td><td class="n">3,1</td><td class="n">3,2</td><td class="n pos">+3,2%</td></tr>
+                            <tr><td class="b">🇳🇬 Nigeria</td><td class="n">2,8</td><td class="n">3,0</td><td class="n pos">+8,1%</td></tr>
+                            <tr><td class="b">🇮🇶 Iraq</td><td class="n">2,2</td><td class="n">2,2</td><td class="n neg">−1,4%</td></tr>
+                            <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">2,0</td><td class="n">1,5</td><td class="n neg">−25,4%</td></tr>
+                            <tr><td class="b">🇸🇳 Senegal</td><td class="n">1,5</td><td class="n">1,5</td><td class="n">+1,7%</td></tr>
+                            <tr><td class="b">🇲🇾 Malasia</td><td class="n">1,5</td><td class="n">1,7</td><td class="n pos">+13,7%</td></tr>
+                            <tr><td class="b">🇧🇷 Brasil</td><td class="n">0,9</td><td class="n">0,9</td><td class="n neg">−3,3%</td></tr>
+                            <tr class="tot"><td class="b">🌍 Total Mundial</td><td class="n">59,6</td><td class="n">62,1</td><td class="n pos">+4,2%</td></tr>
                         </tbody>
                     </table>
-                    <p class="fn">Fuente: USDA FAS — Grain WMT Abr. 2026, World Rice TY Imports. La reducción de importaciones de Bangladesh refleja su producción récord 2025/26. Brasil importa principalmente de Uruguay y Argentina para completar su demanda interna.</p>
+                    <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Imports, April 2026, p. 19. La reducción de importaciones de Bangladesh refleja su producción récord 2025/26. Brasil importa principalmente de Uruguay y Argentina para completar su demanda interna.</p>
                 </div>
             </div>
         </div>
@@ -616,8 +690,8 @@ footer{background:var(--ink);padding:28px 48px;}
             <div class="g4">
                 <div class="kc teal">
                     <div class="kc-l">Exportaciones 2025/26</div>
-                    <div class="kc-v">1.0</div>
-                    <div class="kc-u">MMT · estables</div>
+                    <div class="kc-v">1,0</div>
+                    <div class="kc-u">Mt · estables</div>
                     <div class="kc-d dne">→ vs. 987k TM en 2024/25</div>
                 </div>
                 <div class="kc" style="border-top-color:var(--rice);">
@@ -655,15 +729,15 @@ footer{background:var(--ink);padding:28px 48px;}
 
                     <div class="sue mt16">
                         <div class="sue-hd">Uruguay Arroz — Balance estimado 2025/26</div>
-                        <div class="sue-row"><span class="sue-l">Producción (milled)</span><span class="sue-v hl">~1.1–1.2 MMT</span></div>
+                        <div class="sue-row"><span class="sue-l">Producción (descascarado)</span><span class="sue-v hl">~1,1–1,2 Mt</span></div>
                         <div class="sue-row"><span class="sue-l">Stocks iniciales</span><span class="sue-v">~100k TM</span></div>
-                        <div class="sue-row bold"><span class="sue-l">Oferta total aprox.</span><span class="sue-v">~1.2–1.3 MMT</span></div>
-                        <div class="sue-row"><span class="sue-l">Exportaciones</span><span class="sue-v neg">1,000k TM</span></div>
+                        <div class="sue-row bold"><span class="sue-l">Oferta total aprox.</span><span class="sue-v">~1,2–1,3 Mt</span></div>
+                        <div class="sue-row"><span class="sue-l">Exportaciones</span><span class="sue-v neg">1,0k TM</span></div>
                         <div class="sue-row"><span class="sue-l">Consumo doméstico</span><span class="sue-v">~120k TM</span></div>
-                        <div class="sue-row bold"><span class="sue-l">Stocks finales (est.)</span><span class="sue-v">~80–100k TM</span></div>
+                        <div class="sue-row bold"><span class="sue-l">Stocks finales (est.)</span><span class="sue-v">~0,08–0,10 Mt</span></div>
                         <div class="sue-row"><span class="sue-l">Valor exp. a $504/ton (est.)</span><span class="sue-v pos">~USD 504M</span></div>
                     </div>
-                    <p class="fn">Balance estimado basado en datos USDA Grain WMT (exportaciones) y proporciones históricas de producción/consumo uruguayo. Uruguay produce alrededor del 85% de su arroz para exportación.</p>
+                    <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade, April 2026. Balance estimado en base a exportaciones reportadas y proporciones históricas de producción/consumo de Uruguay. Uruguay produce alrededor del 85% de su arroz para exportación.</p>
                 </div>
             </div>
         </div>
@@ -722,7 +796,7 @@ footer{background:var(--ink);padding:28px 48px;}
                 <div class="sh-num">07</div>
                 <div class="sh-inner">
                     <p class="sh-tag">Comercio exterior Uruguay · Serie histórica</p>
-                    <h2 class="sh-title">Serie de exportaciones: consistencia en 1 MMT — la estabilidad que contrasta con soja</h2>
+                    <h2 class="sh-title">Serie de exportaciones: consistencia en 1 Mt — la estabilidad que contrasta con soja</h2>
                 </div>
             </div>
 
@@ -741,27 +815,27 @@ footer{background:var(--ink);padding:28px 48px;}
                         </thead>
                         <tbody>
                             <tr><td class="b">2021/22</td><td class="n">982</td><td class="n">—</td><td>Año normal</td></tr>
-                            <tr><td class="b">2022/23</td><td class="n">991</td><td class="n pos">+0.9%</td><td>Ligero aumento</td></tr>
-                            <tr><td class="b">2023/24</td><td class="n">745</td><td class="n neg">−24.8%</td><td>Año ajustado por producción baja</td></tr>
-                            <tr><td class="b">2024/25</td><td class="n">987</td><td class="n pos">+32.5%</td><td>Recuperación — buena cosecha</td></tr>
-                            <tr class="uy"><td class="b">2025/26 (F)</td><td class="n hl">1,000</td><td class="n pos">+1.3%</td><td>⭐ Estable · $504/ton · 7° mundial</td></tr>
+                            <tr><td class="b">2022/23</td><td class="n">991</td><td class="n pos">+0,9%</td><td>Ligero aumento</td></tr>
+                            <tr><td class="b">2023/24</td><td class="n">745</td><td class="n neg">−24,8%</td><td>Año ajustado por producción baja</td></tr>
+                            <tr><td class="b">2024/25</td><td class="n">987</td><td class="n pos">+32,5%</td><td>Recuperación — buena cosecha</td></tr>
+                            <tr class="uy"><td class="b">2025/26 (F)</td><td class="n hl">1.000</td><td class="n pos">+1,3%</td><td>⭐ Estable · $504/ton · 7° mundial</td></tr>
                         </tbody>
                     </table>
-                    <p class="fn">Fuente: USDA FAS — Grain: World Markets and Trade, World Rice Trade TY Exports, Abril 2026. El año 2023/24 fue inusualmente bajo y 2024/25 recuperó el nivel histórico. En 2025/26, a pesar de la cosecha demorada por la sequía en otras zonas, el volumen se mantiene en 1 MMT — la consistencia del sistema de riego.</p>
+                    <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Exports, April 2026. El año 2023/24 fue inusualmente bajo y 2024/25 recuperó el nivel histórico. En 2025/26, a pesar de la cosecha demorada por la sequía en otras zonas, el volumen se mantiene en 1 Mt — la consistencia del sistema de riego.</p>
 
                     <div class="panel teal mt16">
-                        <p>Uruguay exporta aproximadamente <strong>2.5 veces más arroz que Argentina</strong> y es el mayor exportador del MERCOSUR. En la categoría de países con <1 millón de habitantes que se destacan en exportaciones arroceras, Uruguay no tiene equivalente mundial — su escala de producción relativa a su población es excepcional.</p>
+                        <p>Uruguay exporta aproximadamente <strong>2,5 veces más arroz que Argentina</strong> y es el mayor exportador del MERCOSUR. En la categoría de países con <1 millón de habitantes que se destacan en exportaciones arroceras, Uruguay no tiene equivalente mundial — su escala de producción relativa a su población es excepcional.</p>
                     </div>
                 </div>
             </div>
 
             <div class="div">Uruguay vs. Región · Exportaciones arroz 2025/26 · Miles de TM</div>
             <div class="bars">
-                <div class="bar-r"><span class="bar-l">🇧🇷 Brasil</span><div class="bar-t"><div class="bar-f d" style="width:100%"></div></div><span class="bar-v">1,375 TMM ▲+26%</span></div>
-                <div class="bar-r"><span class="bar-l" style="color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f" style="width:72.7%"></div></div><span class="bar-v" style="color:var(--rice-d);font-weight:700;">1,000 TMM · 7° mundial</span></div>
-                <div class="bar-r"><span class="bar-l">🇵🇾 Paraguay</span><div class="bar-t"><div class="bar-f d" style="width:65.5%"></div></div><span class="bar-v">900 TMM ▼−5%</span></div>
-                <div class="bar-r"><span class="bar-l">🇬🇾 Guyana</span><div class="bar-t"><div class="bar-f d" style="width:36.4%"></div></div><span class="bar-v">500 TMM</span></div>
-                <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:29.1%"></div></div><span class="bar-v">400 TMM</span></div>
+                <div class="bar-r"><span class="bar-l">🇧🇷 Brasil</span><div class="bar-t"><div class="bar-f d" style="width:100%"></div></div><span class="bar-v">1,3 Mt <span style="color:var(--grn)">▲+26%</span></span></div>
+                <div class="bar-r"><span class="bar-l" style="color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f" style="width:72,7%"></div></div><span class="bar-v" style="color:var(--rice-d);font-weight:700;">1,0 Mt · 7° mundial</span></div>
+                <div class="bar-r"><span class="bar-l">🇵🇾 Paraguay</span><div class="bar-t"><div class="bar-f d" style="width:65,5%"></div></div><span class="bar-v">900 Mt <span style="color:var(--red)">▼−5%</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇬🇾 Guyana</span><div class="bar-t"><div class="bar-f d" style="width:36,4%"></div></div><span class="bar-v">500 Mt</span></div>
+                <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:29,1%"></div></div><span class="bar-v">400 Mt</span></div>
             </div>
         </div>
     </section>
@@ -783,12 +857,12 @@ footer{background:var(--ink);padding:28px 48px;}
                     <p>La perspectiva de mediano plazo para el arroz uruguayo es moderadamente favorable aunque con presiones competitivas crecientes. El sector puede esperar:</p>
                     <p><strong>Producción:</strong> con condiciones climáticas normales (y El Niño esperado trae mayor humedad al este del país), la cosecha 2026/27 debería recuperar o superar el nivel 2025/26. La infraestructura de riego es independiente del fenómeno El Niño/La Niña.</p>
                     <p><strong>Precios:</strong> la prima de $504/ton es probablemente transitoria. A medida que el arroz cosechado en mayo-junio llegue al mercado y se normalice la oferta exportable, los precios se moverán hacia $440–470/ton, que sería el rango "normal" con India a $367. El diferencial de calidad y origen del arroz uruguayo se puede sostener entre $100–$130/ton sobre India, pero no $140 indefinidamente.</p>
-                    <p><strong>Competencia india:</strong> el gran riesgo estructural es que India, con 152 MMT de producción y stocks en máximos, tiene una capacidad exportadora enorme. Si India sigue relajando restricciones (actualmente exporta 25 MMT), podría presionar aún más los precios mundiales. Uruguay está protegido por sus compradores de calidad y por la demanda regional (Brasil, Perú), pero el contexto global de precios bajos del arroz asiático es una presión permanente.</p>
+                    <p><strong>Competencia india:</strong> el gran riesgo estructural es que India, con 152 Mt de producción y stocks en máximos, tiene una capacidad exportadora enorme. Si India sigue relajando restricciones (actualmente exporta 25 Mt), podría presionar aún más los precios mundiales. Uruguay está protegido por sus compradores de calidad y por la demanda regional (Brasil, Perú), pero el contexto global de precios bajos del arroz asiático es una presión permanente.</p>
                 </div>
                 <div>
                     <h3>El mercado global del arroz en perspectiva</h3>
-                    <p>El arroz es el cereal más consumido per cápita en Asia y tiene una demanda en crecimiento en África. La producción mundial (541 MMT) está creciendo, pero el comercio mundial (62 MMT) solo representa el 11% de la producción — la mayoría del arroz se consume donde se produce. Esto hace al mercado más estable que el trigo o el maíz, pero también menos líquido.</p>
-                    <p>El USDA proyecta el comercio mundial de arroz en <strong>62.1 MMT</strong> para 2025/26, con India consolidando su liderazgo dominante. La expansión de India como exportadora es la transformación estructural más importante del mercado arrocero de la última década: pasó de ser casi irrelevante como exportador a representar el 40% del comercio mundial.</p>
+                    <p>El arroz es el cereal más consumido per cápita en Asia y tiene una demanda en crecimiento en África. La producción mundial (541 Mt) está creciendo, pero el comercio mundial (62 Mt) solo representa el 11% de la producción — la mayoría del arroz se consume donde se produce. Esto hace al mercado más estable que el trigo o el maíz, pero también menos líquido.</p>
+                    <p>El USDA proyecta el comercio mundial de arroz en <strong>62,1 Mt</strong> para 2025/26, con India consolidando su liderazgo dominante. La expansión de India como exportadora es la transformación estructural más importante del mercado arrocero de la última década: pasó de ser casi irrelevante como exportador a representar el 40% del comercio mundial.</p>
                     <p>Para Uruguay, el camino de largo plazo pasa por la diferenciación: mercados premium, nichos de calidad específica, y el valor de ser el principal origen del hemisferio occidental con disponibilidad contrastacional respecto a los ciclos asiáticos.</p>
 
                     <div class="panel grn mt16">
@@ -812,34 +886,46 @@ footer{background:var(--ink);padding:28px 48px;}
 
             <div class="g2">
                 <div class="con" data-n="1">
+                    <div class="con-icon">🌦️</div>
                     <p class="con-tag">La paradoja climática</p>
                     <p class="con-h">La sequía que destruyó la soja elevó el precio del arroz</p>
                     <p class="con-b">La misma sequía de 80 días que devastó la soja y el maíz generó el movimiento más notable del mercado arrocero uruguayo en años: <strong>+$45/ton en un mes</strong>. El mecanismo es indirecto — cosecha demorada, menor oferta exportable inmediata — pero el efecto es real. En 2025/26, la adversidad climática de un sector creó una prima para otro. Esta paradoja ilustra la importancia de la diversificación productiva como mecanismo de cobertura natural.</p>
+                    <span class="con-metric">↑ +$45/ton en abril · precio récord $504/ton FOB</span>
                 </div>
-                <div class="con" data-n="2">
+                <div class="con c-teal" data-n="2">
+                    <div class="con-icon">💧</div>
                     <p class="con-tag">El escudo del riego</p>
                     <p class="con-h">El sistema de riego es el seguro de riesgo más valioso del agro uruguayo</p>
                     <p class="con-b">Mientras los cultivos de secano colapsaban por déficit hídrico, los arrozales bajo inundación continuaron su ciclo sin perturbaciones significativas. <strong>La infraestructura de represas y canales del este del Uruguay vale más en un año de sequía que cualquier otro activo agrícola.</strong> Esta conclusión debería impulsar la política de inversión en irrigación para granos de secano: si el área irrigada pasa de 60k a 300k ha para 2030, la resiliencia del sistema se transformaría.</p>
+                    <span class="con-metric">60.000 ha irrigadas actuales · potencial: 300.000 ha al 2030</span>
                 </div>
-                <div class="con" data-n="3">
+                <div class="con c-grn" data-n="3">
+                    <div class="con-icon">🏆</div>
                     <p class="con-tag">Posición competitiva</p>
                     <p class="con-h">7° exportador mundial — el más eficiente per cápita de América</p>
-                    <p class="con-b">Uruguay exporta 1 MMT de arroz con 3.5 millones de habitantes. Argentina, con 10 veces más población y territorio, exporta 0.4 MMT. Esta productividad relativa es notable y refleja décadas de inversión en infraestructura de riego, genética varietal, y acuerdos comerciales regionales. <strong>La posición de Uruguay en el arroz es estructural y difícil de replicar.</strong> La integración vertical con la industria molinera es parte de esta fortaleza.</p>
+                    <p class="con-b">Uruguay exporta 1 Mt de arroz con 3,5 millones de habitantes. Argentina, con 10 veces más población y territorio, exporta 0,4 Mt. Esta productividad relativa es notable y refleja décadas de inversión en infraestructura de riego, genética varietal, y acuerdos comerciales regionales. <strong>La posición de Uruguay en el arroz es estructural y difícil de replicar.</strong> La integración vertical con la industria molinera es parte de esta fortaleza.</p>
+                    <span class="con-metric">1 Mt exportadas · 2,5× más que Argentina · 7° mundial</span>
                 </div>
-                <div class="con" data-n="4">
+                <div class="con c-red" data-n="4">
+                    <div class="con-icon">⚠️</div>
                     <p class="con-tag">El riesgo India</p>
-                    <p class="con-h">India con 25 MMT de exportaciones y $367/ton es la mayor amenaza al precio del arroz uruguayo</p>
-                    <p class="con-b">La expansión exportadora de India es estructural, no cíclica. Con 152 MMT de producción y stocks en máximos, India puede mantener exportaciones masivas indefinidamente. A $367/ton, su arroz accede a mercados que históricamente compraban a Uruguay. <strong>La prima de precios uruguaya ($504 vs. $367 = +$137/ton) solo se sostiene si los compradores de calidad la validan.</strong> El trabajo de posicionamiento en mercados premium es hoy más urgente que nunca.</p>
+                    <p class="con-h">India con 25 Mt de exportaciones y $367/ton es la mayor amenaza al precio del arroz uruguayo</p>
+                    <p class="con-b">La expansión exportadora de India es estructural, no cíclica. Con 152 Mt de producción y stocks en máximos, India puede mantener exportaciones masivas indefinidamente. A $367/ton, su arroz accede a mercados que históricamente compraban a Uruguay. <strong>La prima de precios uruguaya ($504 vs. $367 = +$137/ton) solo se sostiene si los compradores de calidad la validan.</strong> El trabajo de posicionamiento en mercados premium es hoy más urgente que nunca.</p>
+                    <span class="con-metric">Brecha: $504 UY vs. $367 India · diferencial +$137/ton en riesgo</span>
                 </div>
-                <div class="con" data-n="5">
+                <div class="con c-blue" data-n="5">
+                    <div class="con-icon">📅</div>
                     <p class="con-tag">El timing es un activo</p>
                     <p class="con-h">Cosecha de marzo-mayo del hemisferio sur: disponibilidad cuando Asia está fuera de temporada</p>
                     <p class="con-b">El calendario de Uruguay (cosecha marzo-mayo) es contrastacional respecto a las cosechas principales del Sudeste Asiático. Esta ventaja de timing tiene valor económico medible — los compradores pagan más cuando el mercado tiene menos oferta disponible. <strong>Uruguay debería trabajar activamente para que este timing sea comunicado y valorado por sus compradores</strong>, especialmente en mercados donde el arroz de reserva estratégica o la disponibilidad permanente tienen prima.</p>
+                    <span class="con-metric">Cosecha mar–may · ventana de oferta exclusiva en hemisferio sur</span>
                 </div>
-                <div class="con" data-n="6">
+                <div class="con c-grn" data-n="6">
+                    <div class="con-icon">⚓</div>
                     <p class="con-tag">La estabilidad como activo diferencial</p>
                     <p class="con-h">En un año catastrófico para la agricultura uruguaya, el arroz fue el ancla</p>
-                    <p class="con-b">Soja −53% (Post FAS), maíz −38%, exportaciones de maíz a cero. En ese contexto, <strong>el arroz mantuvo 1 MMT de exportaciones, elevó su precio y generó divisas record por unidad exportada.</strong> Este comportamiento anticíclico del arroz es quizás el argumento más poderoso para la continuidad e incluso expansión del sector. Uruguay necesita más cultivos que se comporten como el arroz: con riego, con integración vertical, con diferenciación de calidad y con resiliencia climática incorporada en el sistema productivo.</p>
+                    <p class="con-b">Soja −53% (Post FAS), maíz −38%, exportaciones de maíz a cero. En ese contexto, <strong>el arroz mantuvo 1 Mt de exportaciones, elevó su precio y generó divisas récord por unidad exportada.</strong> Este comportamiento anticíclico del arroz es quizás el argumento más poderoso para la continuidad e incluso expansión del sector. Uruguay necesita más cultivos que se comporten como el arroz: con riego, con integración vertical, con diferenciación de calidad y con resiliencia climática incorporada en el sistema productivo.</p>
+                    <span class="con-metric">Soja −53% · Maíz −38% · Arroz: volumen estable + precio récord</span>
                 </div>
             </div>
         </div>
@@ -849,10 +935,40 @@ footer{background:var(--ink);padding:28px 48px;}
     <footer>
         <div class="fi">
             <div class="fi-brand">Arroz Mundial y Uruguay 2025/26 · USDA Abril 2026</div>
-            <div class="fi-meta">
-                Grain: World Markets and Trade (USDA FAS, Abr. 2026) · WASDE-584<br>
-                World Agricultural Production WAP 04-26 (USDA FAS/IPAD, 9 Abr. 2026)<br>
-                Rice Outlook Feb. 2026 (USDA ERS, RCS-26B) · Precios IGC/International Grains Council
+            <div class="fi-grid">
+                <div class="fi-block">
+                    <div class="fi-block-title">Fuentes utilizadas</div>
+                    <p>
+                        <strong>Grain: World Markets and Trade</strong> — USDA FAS, Abril 2026.<br>
+                        Informe mensual de oferta, demanda y comercio de granos a nivel mundial. Incluye tablas de exportaciones e importaciones de arroz por país.<br><br>
+                        <strong>WASDE-584</strong> — World Agricultural Supply and Demand Estimates, USDA, Abril 2026.<br>
+                        Estimaciones mensuales de oferta y demanda agrícola mundial publicadas por el USDA.<br><br>
+                        <strong>World Agricultural Production (WAP 04-26)</strong> — USDA FAS/IPAD, 9 Abr. 2026.<br>
+                        Reporte mensual de producción agrícola mundial. Tabla 09 Rice utilizada para datos de producción por país.<br><br>
+                        <strong>Rice Outlook (RCS-26B)</strong> — USDA ERS, Feb. 2026.<br>
+                        Análisis de situación y perspectivas del mercado arrocero de EE.UU. y mundial, publicado por el Economic Research Service.<br><br>
+                        <strong>IGC — International Grains Council</strong><br>
+                        Precios FOB de referencia para arroz y granos. Organismo intergubernamental con sede en Londres.
+                    </p>
+                </div>
+                <div class="fi-block">
+                    <div class="fi-block-title">Nomenclatura y abreviaturas</div>
+                    <p>
+                        <strong>Mt</strong> — Millones de toneladas métricas (Million Tons).<br>
+                        <strong>mil t</strong> — Miles de toneladas métricas.<br>
+                        <strong>FOB</strong> — Free On Board. Precio de exportación en puerto de origen, sin flete ni seguro.<br>
+                        <strong>Descascarado</strong> — Arroz milled: arroz con cáscara removida, listo para consumo. Base de medición estándar del USDA.<br>
+                        <strong>TY</strong> — Trade Year (año comercial). Para arroz: julio–junio en la mayoría de los países.<br>
+                        <strong>MY</strong> — Marketing Year (año de comercialización). Varía por país y cultivo.<br>
+                        <strong>FAS</strong> — Foreign Agricultural Service. Rama del USDA responsable de inteligencia y comercio agrícola internacional.<br>
+                        <strong>ERS</strong> — Economic Research Service. Rama analítica del USDA.<br>
+                        <strong>IPAD</strong> — International Production Assessment Division. División del USDA que elabora estimaciones de producción global.<br>
+                        <strong>WASDE</strong> — World Agricultural Supply and Demand Estimates. Informe mensual clave del USDA.<br>
+                        <strong>WAP</strong> — World Agricultural Production. Reporte mensual de producción global del USDA FAS.<br>
+                        <strong>IGC</strong> — International Grains Council (Consejo Internacional de Cereales).<br>
+                        <strong>CIF</strong> — Cost, Insurance and Freight. Precio que incluye costo, seguro y flete hasta puerto de destino.
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
@@ -872,7 +988,7 @@ footer{background:var(--ink);padding:28px 48px;}
 
             .share-bar .share-label {
                 font-family: sans-serif;
-                font-size: 0.6rem;
+                font-size: 0.75rem;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
@@ -929,7 +1045,7 @@ footer{background:var(--ink);padding:28px 48px;}
                 background: #333;
                 color: #fff;
                 font-family: sans-serif;
-                font-size: 0.7rem;
+                font-size: 0.8rem;
                 padding: 4px 10px;
                 border-radius: 4px;
                 white-space: nowrap;
@@ -989,5 +1105,33 @@ footer{background:var(--ink);padding:28px 48px;}
 
     <!-- COPIAR HASTA ACÁ ↑ -->
 
+    <script>
+        (function () {
+            const nav = document.querySelector('.nav');
+            // Reset nav scroll to start on load
+            if (nav) nav.scrollLeft = 0;
+
+            const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+            const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(a => a.classList.remove('active'));
+                        const active = document.querySelector('.nav a[href="#' + entry.target.id + '"]');
+                        if (active) {
+                            active.classList.add('active');
+                            active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '-20% 0px -70% 0px',
+                threshold: 0
+            });
+
+            sections.forEach(s => observer.observe(s));
+        })();
+    </script>
 </body>
 </html>
