@@ -3,6 +3,7 @@ const https = require("https");
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO; // ej: "mltn1980/ceterisparibus-uy"
 const FILE_PATH = "data/novillo.json";
+exports.schedule = "@daily";
 
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
