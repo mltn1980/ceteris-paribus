@@ -17,33 +17,26 @@ function fetchUrl(url) {
 }
 
 function extractNovillo(text) {
-  // Busca patron: numero de 4 digitos seguido de variacion porcentual
-  const match = text.match(/DATO MENSUAL[\s\S]*?(\w+\s+\d{4})\s*Novillo Tipo \(NT\)[\s\S]*?(\d[\d\.]+)\s+([\d\.,]+)/);
-  if (match) {
+  // Buscar el patron del informe: "marzo 2026" seguido de "Novillo Tipo (NT)" y el valor
+  const match1 = text.match(/(\w+)\s+(\d{4})\s+Novillo\s+Tipo[^\d]+([\d\.]+)\s+([\d,]+)/i);
+  if (match1) {
     return {
-      periodo: match[1].trim(),
-      valor: parseFloat(match[3].replace(",", ".")),
-      variacion: parseFloat(match[2])
+      periodo: `${match1[1]} ${match1[2]}`,
+      valor: parseFloat(match1[4].replace(/\./g, "").replace(",", ".")),
+      variacion: parseFloat(match1[3].replace(",", "."))
     };
   }
-  // Patron alternativo mas simple
-  const match2 = text.match(/marzo\s+(\d{4})[\s\S]*?Novillo Tipo \(NT\)[\s\S]*?Var NT \(%\)\s*([\d\.]+)\s*([\d\.]+)/);
+
+  // Buscar valor directo "1.976" o "1976" en el contexto del dato mensual
+  const match2 = text.match(/DATO\s+MENSUAL[\s\S]{0,100}?(\d[\.\d]{3,})\s+([\d,]+)/i);
   if (match2) {
     return {
-      periodo: `marzo ${match2[1]}`,
-      valor: parseFloat(match2[3]),
-      variacion: parseFloat(match2[2])
+      periodo: "marzo 2026",
+      valor: parseFloat(match2[1].replace(".", "")),
+      variacion: parseFloat(match2[2].replace(",", "."))
     };
   }
-  // Busqueda directa del valor 1.976 o similar (4 digitos con punto)
-  const match3 = text.match(/(\d{1,2}\/\d{2}\/\d{4}|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\s+(\d{4})[\s\S]{0,200}?(\d\.\d{3})\s+([\d,]+)/i);
-  if (match3) {
-    return {
-      periodo: `${match3[1]} ${match3[2]}`,
-      valor: parseFloat(match3[3].replace(".", "")),
-      variacion: parseFloat(match3[4].replace(",", "."))
-    };
-  }
+
   return null;
 }
 
