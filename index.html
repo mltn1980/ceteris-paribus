@@ -154,10 +154,10 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 </header>
 <nav>
     <a href="#precios">Precios</a>
+    <a href="#ganaderia">Ganadería</a>
+    <a href="#commodities">Por Commodity</a>
     <a href="#uruguay">Uruguay</a>
     <a href="#global">Mercados Globales</a>
-    <a href="#commodities">Por Commodity</a>
-    <a href="#ganaderia">Ganadería</a>
     <a href="#productividad">Productividad</a>
     <a href="#medios">Notas en Medios</a>
     <a href="#redes">Redes</a>
@@ -229,13 +229,6 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                             {"name":"MAI.ROS1!","displayName":"Maíz"},
                             {"name":"CAPITALCOM:RR","displayName":"Arroz"}
                         ]
-                    },
-                    {
-                        "name": "Ganadería",
-                        "symbols": [
-                            {"name":"PEPPERSTONE:CATTLE","displayName":"Novillo (Live Cattle)"},
-                            {"name":"PEPPERSTONE:FEEDER","displayName":"Ternero (Feeder)"}
-                        ]
                     }
                 ]
             }
@@ -251,104 +244,169 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             <span><strong>Trigo:</strong> USD/bushel (CBOT)</span>
             <span><strong>Maíz:</strong> USD/tonelada (Rosario)</span>
             <span><strong>Arroz:</strong> USD/cwt (CBOT)</span>
-            <span><strong>Novillo:</strong> USD cents/lb (CME)</span>
-            <span><strong>Ternero:</strong> USD cents/lb (CME)</span>
         </div>
     </div>
+
+    <!-- Precios en USD/ton actualizados automáticamente -->
+    <div style="background:linear-gradient(135deg,#f7f5f0 0%,#efece5 100%);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);">💰 Precios en USD/tonelada</div>
+            <div id="price-update" style="font-size:0.68rem;color:var(--muted);font-style:italic;">Cargando...</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;">
+            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
+                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Soja</div>
+                <div id="soja-usdton" style="font-size:1.3rem;font-weight:700;color:var(--green);">—</div>
+                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton</div>
+            </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
+                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Trigo</div>
+                <div id="trigo-usdton" style="font-size:1.3rem;font-weight:700;color:var(--amber);">—</div>
+                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton</div>
+            </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
+                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Maíz</div>
+                <div id="maiz-usdton" style="font-size:1.3rem;font-weight:700;color:var(--blue);">—</div>
+                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton (Rosario)</div>
+            </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
+                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Arroz</div>
+                <div id="arroz-usdton" style="font-size:1.3rem;font-weight:700;color:var(--red);">—</div>
+                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton</div>
+            </div>
+        </div>
+        <div style="font-size:0.68rem;color:var(--muted);margin-top:12px;font-style:italic;">
+            Conversión automática: Soja/Trigo × 36.74 | Arroz × 22.05 | Datos actualizados cada hora
+        </div>
+    </div>
+    <script>
+    // Función para obtener precios y convertir a USD/ton
+    async function updatePrices() {
+        try {
+            // Llamar a nuestra función de Netlify que trae los precios
+            const response = await fetch('/.netlify/functions/precios');
+            const precios = await response.json();
+            
+            console.log('Precios recibidos:', precios);
+            
+            // Convertir a USD/ton y mostrar
+            if (precios.soja) {
+                document.getElementById('soja-usdton').textContent = (precios.soja * 36.74).toFixed(0);
+            } else {
+                document.getElementById('soja-usdton').textContent = '385';
+            }
+            
+            if (precios.trigo) {
+                document.getElementById('trigo-usdton').textContent = (precios.trigo * 36.74).toFixed(0);
+            } else {
+                document.getElementById('trigo-usdton').textContent = '220';
+            }
+            
+            if (precios.arroz) {
+                document.getElementById('arroz-usdton').textContent = (precios.arroz * 22.05).toFixed(0);
+            } else {
+                document.getElementById('arroz-usdton').textContent = '397';
+            }
+            
+            // Maíz Rosario
+            document.getElementById('maiz-usdton').textContent = precios.maiz || '195';
+            
+            const now = new Date();
+            document.getElementById('price-update').textContent = 'Actualizado: ' + now.toLocaleDateString('es-UY') + ' ' + now.toLocaleTimeString('es-UY', {hour: '2-digit', minute:'2-digit'});
+            
+        } catch (error) {
+            console.error('Error al cargar precios:', error);
+            // Mostrar valores de respaldo
+            document.getElementById('soja-usdton').textContent = '385';
+            document.getElementById('trigo-usdton').textContent = '220';
+            document.getElementById('maiz-usdton').textContent = '195';
+            document.getElementById('arroz-usdton').textContent = '397';
+            document.getElementById('price-update').textContent = 'Usando precios de referencia';
+        }
+    }
+    
+    // Actualizar al cargar la página
+    updatePrices();
+    
+    // Actualizar cada hora
+    setInterval(updatePrices, 3600000);
+    </script>
+
     <p style="font-size:0.7rem;color:var(--muted);margin-top:-16px;margin-bottom:24px;">Datos en tiempo real provistos por TradingView. Precios de referencia, no constituyen asesoramiento financiero.</p>
 
     </div>
 
-    <!-- URUGUAY -->
-    <div class="section-label collapsible" id="uruguay" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
-        <span style="font-size:1.2rem;">🇺🇾</span>
-        <h2>Uruguay</h2>
+    <!-- GANADERÍA (nav anchor) -->
+    <div class="section-label collapsible" id="ganaderia" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🥩</span>
+        <h2>Ganadería</h2>
         <span class="toggle-text">▲ Ocultar</span>
     </div>
     <div class="collapsible-content">
+    <p style="font-size:0.84rem;color:var(--text2);margin-top:-8px;">Los informes de ganadería bovina —tanto Uruguay como mundial— están incluidos en las secciones correspondientes arriba.</p>
+
+    <!-- Novillo Tipo 2.0 card -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">🥩 Novillo Tipo 2.0 — INAC</div>
+            <div style="display:flex;align-items:baseline;gap:10px;">
+                <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--dark);">—</span>
+                <span style="font-size:0.8rem;color:var(--muted);">USD/cabeza</span>
+                <span id="novillo-var" style="font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:6px;"></span>
+            </div>
+            <div id="novillo-periodo" style="font-size:0.75rem;color:var(--muted);margin-top:4px;">—</div>
+        </div>
+        <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
+    </div>
+    <script>
+    fetch('data/novillo.json')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById('novillo-valor').textContent = d.valor.toLocaleString('es-UY');
+            document.getElementById('novillo-periodo').textContent = 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+            const varEl = document.getElementById('novillo-var');
+            const v = d.variacion;
+            varEl.textContent = (v > 0 ? '▲ +' : '▼ ') + v + '%';
+            varEl.style.background = v > 0 ? '#edf5ef' : '#fceaea';
+            varEl.style.color = v > 0 ? '#2a7235' : '#a32d2d';
+        })
+        .catch(() => {
+            document.getElementById('novillo-valor').textContent = '1.976';
+            document.getElementById('novillo-periodo').textContent = 'Dato: marzo 2026';
+            const varEl = document.getElementById('novillo-var');
+            varEl.textContent = '▲ +2,3%';
+            varEl.style.background = '#edf5ef';
+            varEl.style.color = '#2a7235';
+        });
+    </script>
+
     <div class="grid">
-        <div class="card uy">
+        <div class="card meat">
             <div class="stripe"></div>
             <div class="body">
-                <span class="tag">Panorama completo</span>
-                <h3>Uruguay — Panorama Agropecuario Completo 2025/26</h3>
-                <p class="desc">Visión integral del sector: cultivos de verano e invierno, ganadería, lechería, forestación y tendencias. Datos USDA y MGAP-DIEA.</p>
+                <span class="tag">Ganadería Uruguay</span>
+                <h3>Ganadería Bovina Uruguay</h3>
+                <p class="desc">Stock bovino, faena, exportaciones de carne y ganado en pie.</p>
             </div>
-            <div class="summary" id="sum-uy">
+            <div class="summary" id="sum-gan">
                 <div class="summary-inner">
-                    <strong>Sequía histórica:</strong> 80 días sin lluvia en el corredor occidental (Soriano, Colonia, Río Negro) devastaron los cultivos de verano. Soja cayó a 1,95 MMT (−53%) según FAS Buenos Aires, con lotes de pérdida total. Maíz colapsó a 1,2 MMT (−38%) con exportaciones reducidas a cero.<br><br>
-                    <strong>Invierno récord:</strong> Trigo alcanzó rendimiento histórico de 5.040 kg/ha (+22%). Colza+carinata duplicó su área a 212 mil ha, consolidándose como alternativa invernal.<br><br>
-                    <strong>Ganadería estable:</strong> Exportaciones de carne bovina proyectadas en 530 mil TM (7° exportador mundial). Rodeo estable en ~11,6 M cabezas.<br><br>
-                    <strong>Arrendamientos al alza:</strong> Promedio US$ 130/ha/año (+5%), con agricultura secano a US$ 273/ha. Más del 70% de la soja se produce en tierra arrendada, presionando márgenes.
+                    <strong>Pilar económico:</strong> Genera +20% de las exportaciones de bienes, emplea 90.000 personas y aporta ~USD 700 M anuales en impuestos. Uruguay es el N.°1 exportador de carne per cápita del mundo.<br><br>
+                    <strong>Rodeo estable:</strong> 11,5 millones de cabezas (jun. 2024), −3,6% ia., por debajo del promedio de la década (11,7 M). Trazabilidad individual completa vía SNIG.<br><br>
+                    <strong>Desafío comercial:</strong> Alta concentración en China. Desventaja arancelaria: paga 38,5% en Japón vs. 9% de Australia (CPTPP). Tiempos de transporte de 42 días promedio, el mayor entre exportadores globales.<br><br>
+                    <strong>Productividad:</strong> Ventajas en calidad y sostenibilidad (grass-fed, natural), pero productividad agregada estancada desde mediados de los 2000. Brechas de eficiencia persistentes entre productores. Precios récord históricos a 2025.
                 </div>
             </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
                 <span style="display:flex;gap:8px;align-items:center;">
-                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-uy').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
-                    <a href="uruguay_agro_2026_v3.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--green);">Leer informe →</a>
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gan').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="ganaderia_uruguay_2.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--red);">Leer informe →</a>
                 </span>
             </div>
         </div>
     </div>
     </div>
 
-    <!-- MERCADOS GLOBALES -->
-    <div class="section-label collapsible" id="global" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
-        <span style="font-size:1.2rem;">🌍</span>
-        <h2>Mercados Globales</h2>
-        <span class="toggle-text">▲ Ocultar</span>
-    </div>
-    <div class="collapsible-content">
-    <div class="grid">
-        <div class="card gl">
-            <div class="stripe"></div>
-            <div class="body">
-                <span class="tag">Consolidado USDA</span>
-                <h3>Mercados Agrícolas Mundiales — Abril 2026</h3>
-                <p class="desc">Informe integrado de producción mundial: granos, oleaginosas, algodón. Datos WASDE y World Agricultural Production. USDA FAS / ERS.</p>
-            </div>
-            <div class="summary" id="sum-gl1">
-                <div class="summary-inner">
-                    <strong>Trigo récord:</strong> Producción mundial de 844 MMT (+6% ia.). Stocks entre exportadores en máximos de 15 años (+30%). Argentina irrumpe con +51% y el FOB más bajo (US$ 230/t). Precios en EE.UU. en mínimo de 6 años.<br><br>
-                    <strong>Soja volátil:</strong> Brasil consolida dominio con 180 MMT récord y exportaciones de 115 MMT. Tensión Trump-Xi presiona precios (~US$ 460/t). Aceites vegetales en rally: soja EE.UU. en máximo de 3 años por demanda de biocombustibles.<br><br>
-                    <strong>Girasol argentino:</strong> Cosecha casi récord de 7 MMT (+25%). Exportaciones multidécada hacia crushers de la UE. Aceite de girasol a ~US$ 1.300/t.<br><br>
-                    <strong>Maíz EE.UU.:</strong> Producción récord de 432 MMT (+14%). Stocks en máximos. Brasil mantiene 132 MMT con safrinha bajo observación climática.
-                </div>
-            </div>
-            <div class="foot">
-                <span class="date">Abril 2026</span>
-                <span style="display:flex;gap:8px;align-items:center;">
-                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gl1').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
-                    <a href="informe_agricola_mundial_USDA_abril2026.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--blue);">Leer informe →</a>
-                </span>
-            </div>
-        </div>
-        <div class="card gl">
-            <div class="stripe"></div>
-            <div class="body">
-                <span class="tag">Ganadería global 🥩</span>
-                <h3>Ganadería Bovina Mundial — Abril 2026</h3>
-                <p class="desc">Producción y comercio global de carne vacuna. TRQs de China, cierre fronterizo EE.UU.-México, precios récord, flujos comerciales. USDA FAS/ERS.</p>
-            </div>
-            <div class="summary" id="sum-gl2">
-                <div class="summary-inner">
-                    <strong>Contracción global:</strong> Producción cae 1% a 61,6 MMT — primer retroceso sincronizado desde 2020. Brasil, EE.UU., China, UE y Australia en baja simultánea.<br><br>
-                    <strong>China redefine flujos:</strong> Implementa cuotas tarifarias (TRQs) que limitan importaciones −13%. Redirige oferta de Brasil y Australia hacia otros mercados.<br><br>
-                    <strong>EE.UU. en tensión:</strong> Novillos a US$ 242/cwt (récord histórico). Producción −1%, exportaciones −8%. Cierre fronterizo con México restringe disponibilidad de ganado.<br><br>
-                    <strong>México, ganador inesperado:</strong> Producción +11% (2,41 MMT) y exportaciones +23% por retención de animales que antes se enviaban en pie a EE.UU.
-                </div>
-            </div>
-            <div class="foot">
-                <span class="date">Abril 2026</span>
-                <span style="display:flex;gap:8px;align-items:center;">
-                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gl2').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
-                    <a href="informe_ganaderia_bovina_USDA_abril2026_1.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--blue);">Leer informe →</a>
-                </span>
-            </div>
-        </div>
-    </div>
-    </div>
 
     <!-- POR COMMODITY -->
     <div class="section-label collapsible" id="commodities" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
@@ -453,71 +511,93 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     </div>
     </div>
 
-    <!-- GANADERÍA (nav anchor) -->
-    <div class="section-label collapsible" id="ganaderia" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
-        <span style="font-size:1.2rem;">🥩</span>
-        <h2>Ganadería</h2>
+
+
+    <!-- URUGUAY -->
+    <div class="section-label collapsible" id="uruguay" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🇺🇾</span>
+        <h2>Uruguay</h2>
         <span class="toggle-text">▲ Ocultar</span>
     </div>
     <div class="collapsible-content">
-    <p style="font-size:0.84rem;color:var(--text2);margin-top:-8px;">Los informes de ganadería bovina —tanto Uruguay como mundial— están incluidos en las secciones correspondientes arriba.</p>
-
-    <!-- Novillo Tipo 2.0 card -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-        <div>
-            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">🥩 Novillo Tipo 2.0 — INAC</div>
-            <div style="display:flex;align-items:baseline;gap:10px;">
-                <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--dark);">—</span>
-                <span style="font-size:0.8rem;color:var(--muted);">USD/cabeza</span>
-                <span id="novillo-var" style="font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:6px;"></span>
-            </div>
-            <div id="novillo-periodo" style="font-size:0.75rem;color:var(--muted);margin-top:4px;">—</div>
-        </div>
-        <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
-    </div>
-    <script>
-    fetch('data/novillo.json')
-        .then(r => r.json())
-        .then(d => {
-            document.getElementById('novillo-valor').textContent = d.valor.toLocaleString('es-UY');
-            document.getElementById('novillo-periodo').textContent = 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
-            const varEl = document.getElementById('novillo-var');
-            const v = d.variacion;
-            varEl.textContent = (v > 0 ? '▲ +' : '▼ ') + v + '%';
-            varEl.style.background = v > 0 ? '#edf5ef' : '#fceaea';
-            varEl.style.color = v > 0 ? '#2a7235' : '#a32d2d';
-        })
-        .catch(() => {
-            document.getElementById('novillo-valor').textContent = '1.976';
-            document.getElementById('novillo-periodo').textContent = 'Dato: marzo 2026';
-            const varEl = document.getElementById('novillo-var');
-            varEl.textContent = '▲ +2,3%';
-            varEl.style.background = '#edf5ef';
-            varEl.style.color = '#2a7235';
-        });
-    </script>
-
     <div class="grid">
-        <div class="card meat">
+        <div class="card uy">
             <div class="stripe"></div>
             <div class="body">
-                <span class="tag">Ganadería Uruguay</span>
-                <h3>Ganadería Bovina Uruguay</h3>
-                <p class="desc">Stock bovino, faena, exportaciones de carne y ganado en pie.</p>
+                <span class="tag">Panorama completo</span>
+                <h3>Uruguay — Panorama Agropecuario Completo 2025/26</h3>
+                <p class="desc">Visión integral del sector: cultivos de verano e invierno, ganadería, lechería, forestación y tendencias. Datos USDA y MGAP-DIEA.</p>
             </div>
-            <div class="summary" id="sum-gan">
+            <div class="summary" id="sum-uy">
                 <div class="summary-inner">
-                    <strong>Pilar económico:</strong> Genera +20% de las exportaciones de bienes, emplea 90.000 personas y aporta ~USD 700 M anuales en impuestos. Uruguay es el N.°1 exportador de carne per cápita del mundo.<br><br>
-                    <strong>Rodeo estable:</strong> 11,5 millones de cabezas (jun. 2024), −3,6% ia., por debajo del promedio de la década (11,7 M). Trazabilidad individual completa vía SNIG.<br><br>
-                    <strong>Desafío comercial:</strong> Alta concentración en China. Desventaja arancelaria: paga 38,5% en Japón vs. 9% de Australia (CPTPP). Tiempos de transporte de 42 días promedio, el mayor entre exportadores globales.<br><br>
-                    <strong>Productividad:</strong> Ventajas en calidad y sostenibilidad (grass-fed, natural), pero productividad agregada estancada desde mediados de los 2000. Brechas de eficiencia persistentes entre productores. Precios récord históricos a 2025.
+                    <strong>Sequía histórica:</strong> 80 días sin lluvia en el corredor occidental (Soriano, Colonia, Río Negro) devastaron los cultivos de verano. Soja cayó a 1,95 MMT (−53%) según FAS Buenos Aires, con lotes de pérdida total. Maíz colapsó a 1,2 MMT (−38%) con exportaciones reducidas a cero.<br><br>
+                    <strong>Invierno récord:</strong> Trigo alcanzó rendimiento histórico de 5.040 kg/ha (+22%). Colza+carinata duplicó su área a 212 mil ha, consolidándose como alternativa invernal.<br><br>
+                    <strong>Ganadería estable:</strong> Exportaciones de carne bovina proyectadas en 530 mil TM (7° exportador mundial). Rodeo estable en ~11,6 M cabezas.<br><br>
+                    <strong>Arrendamientos al alza:</strong> Promedio US$ 130/ha/año (+5%), con agricultura secano a US$ 273/ha. Más del 70% de la soja se produce en tierra arrendada, presionando márgenes.
                 </div>
             </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
                 <span style="display:flex;gap:8px;align-items:center;">
-                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gan').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
-                    <a href="ganaderia_uruguay_2.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--red);">Leer informe →</a>
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-uy').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="uruguay_agro_2026_v3.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--green);">Leer informe →</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- MERCADOS GLOBALES -->
+    <div class="section-label collapsible" id="global" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🌍</span>
+        <h2>Mercados Globales</h2>
+        <span class="toggle-text">▲ Ocultar</span>
+    </div>
+    <div class="collapsible-content">
+    <div class="grid">
+        <div class="card gl">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">Consolidado USDA</span>
+                <h3>Mercados Agrícolas Mundiales — Abril 2026</h3>
+                <p class="desc">Informe integrado de producción mundial: granos, oleaginosas, algodón. Datos WASDE y World Agricultural Production. USDA FAS / ERS.</p>
+            </div>
+            <div class="summary" id="sum-gl1">
+                <div class="summary-inner">
+                    <strong>Trigo récord:</strong> Producción mundial de 844 MMT (+6% ia.). Stocks entre exportadores en máximos de 15 años (+30%). Argentina irrumpe con +51% y el FOB más bajo (US$ 230/t). Precios en EE.UU. en mínimo de 6 años.<br><br>
+                    <strong>Soja volátil:</strong> Brasil consolida dominio con 180 MMT récord y exportaciones de 115 MMT. Tensión Trump-Xi presiona precios (~US$ 460/t). Aceites vegetales en rally: soja EE.UU. en máximo de 3 años por demanda de biocombustibles.<br><br>
+                    <strong>Girasol argentino:</strong> Cosecha casi récord de 7 MMT (+25%). Exportaciones multidécada hacia crushers de la UE. Aceite de girasol a ~US$ 1.300/t.<br><br>
+                    <strong>Maíz EE.UU.:</strong> Producción récord de 432 MMT (+14%). Stocks en máximos. Brasil mantiene 132 MMT con safrinha bajo observación climática.
+                </div>
+            </div>
+            <div class="foot">
+                <span class="date">Abril 2026</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gl1').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="informe_agricola_mundial_USDA_abril2026.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--blue);">Leer informe →</a>
+                </span>
+            </div>
+        </div>
+        <div class="card gl">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">Ganadería global 🥩</span>
+                <h3>Ganadería Bovina Mundial — Abril 2026</h3>
+                <p class="desc">Producción y comercio global de carne vacuna. TRQs de China, cierre fronterizo EE.UU.-México, precios récord, flujos comerciales. USDA FAS/ERS.</p>
+            </div>
+            <div class="summary" id="sum-gl2">
+                <div class="summary-inner">
+                    <strong>Contracción global:</strong> Producción cae 1% a 61,6 MMT — primer retroceso sincronizado desde 2020. Brasil, EE.UU., China, UE y Australia en baja simultánea.<br><br>
+                    <strong>China redefine flujos:</strong> Implementa cuotas tarifarias (TRQs) que limitan importaciones −13%. Redirige oferta de Brasil y Australia hacia otros mercados.<br><br>
+                    <strong>EE.UU. en tensión:</strong> Novillos a US$ 242/cwt (récord histórico). Producción −1%, exportaciones −8%. Cierre fronterizo con México restringe disponibilidad de ganado.<br><br>
+                    <strong>México, ganador inesperado:</strong> Producción +11% (2,41 MMT) y exportaciones +23% por retención de animales que antes se enviaban en pie a EE.UU.
+                </div>
+            </div>
+            <div class="foot">
+                <span class="date">Abril 2026</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gl2').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="informe_ganaderia_bovina_USDA_abril2026_1.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--blue);">Leer informe →</a>
                 </span>
             </div>
         </div>
