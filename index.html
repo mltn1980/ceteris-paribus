@@ -179,13 +179,14 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
             {
                 "symbols": [
+                    {"proName":"FX_IDC:USDUYU","title":"USD/UYU"},
+                    {"proName":"FX_IDC:USDARS","title":"USD/ARS"},
+                    {"proName":"FX_IDC:USDBRL","title":"USD/BRL"},
+                    {"proName":"FX:EURUSD","title":"EUR/USD"},
+                    {"proName":"THINKMARKETS:USDINDEX","title":"DXY"},
                     {"proName":"SOY.CME1!","title":"Soja"},
                     {"proName":"PEPPERSTONE:WHEAT","title":"Trigo"},
-                    {"proName":"MAI.ROS1!","title":"Maíz"},
-                    {"proName":"PEPPERSTONE:CATTLE","title":"Novillo"},
-                    {"proName":"FX_IDC:USDUYU","title":"USD/UYU"},
-                    {"proName":"FX:EURUSD","title":"EUR/USD"},
-                    {"proName":"THINKMARKETS:USDINDEX","title":"Índice Dólar"}
+                    {"proName":"MAI.ROS1!","title":"Maíz"}
                 ],
                 "showSymbolLogo": true,
                 "isTransparent": false,
@@ -226,8 +227,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                         "symbols": [
                             {"name":"SOY.CME1!","displayName":"Soja"},
                             {"name":"PEPPERSTONE:WHEAT","displayName":"Trigo"},
-                            {"name":"MAI.ROS1!","displayName":"Maíz"},
-                            {"name":"CAPITALCOM:RR","displayName":"Arroz"}
+                            {"name":"MAI.ROS1!","displayName":"Maíz"}
                         ]
                     }
                 ]
@@ -237,100 +237,14 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:0.75rem;color:var(--text2);">
         <div style="font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px;">Unidades de cotización</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 20px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 20px;">
             <span><strong>Monedas:</strong> tipo de cambio directo</span>
             <span><strong>DXY:</strong> índice (puntos)</span>
-            <span><strong>Soja:</strong> USD/bushel (CBOT)</span>
-            <span><strong>Trigo:</strong> USD/bushel (CBOT)</span>
+            <span><strong>Soja:</strong> USD/ton (MATBA ROFEX)</span>
+            <span><strong>Trigo:</strong> centavos USD/bushel (CBOT)</span>
             <span><strong>Maíz:</strong> USD/tonelada (Rosario)</span>
-            <span><strong>Arroz:</strong> USD/cwt (CBOT)</span>
         </div>
     </div>
-
-    <!-- Precios en USD/ton actualizados automáticamente -->
-    <div style="background:linear-gradient(135deg,#f7f5f0 0%,#efece5 100%);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:24px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-            <div style="font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);">💰 Precios en USD/tonelada</div>
-            <div id="price-update" style="font-size:0.68rem;color:var(--muted);font-style:italic;">Cargando...</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;">
-            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
-                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Soja</div>
-                <div id="soja-usdton" style="font-size:1.3rem;font-weight:700;color:var(--green);">—</div>
-                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton</div>
-            </div>
-            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
-                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Trigo</div>
-                <div id="trigo-usdton" style="font-size:1.3rem;font-weight:700;color:var(--amber);">—</div>
-                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton</div>
-            </div>
-            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
-                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Maíz</div>
-                <div id="maiz-usdton" style="font-size:1.3rem;font-weight:700;color:var(--blue);">—</div>
-                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton (Rosario)</div>
-            </div>
-            <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:12px;">
-                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:4px;">Arroz</div>
-                <div id="arroz-usdton" style="font-size:1.3rem;font-weight:700;color:var(--red);">—</div>
-                <div style="font-size:0.68rem;color:var(--muted);margin-top:2px;">USD/ton</div>
-            </div>
-        </div>
-        <div style="font-size:0.68rem;color:var(--muted);margin-top:12px;font-style:italic;">
-            Conversión automática: Soja/Trigo × 36.74 | Arroz × 22.05 | Datos actualizados cada hora
-        </div>
-    </div>
-    <script>
-    // Función para obtener precios y convertir a USD/ton
-    async function updatePrices() {
-        try {
-            // Llamar a nuestra función de Netlify que trae los precios
-            const response = await fetch('/.netlify/functions/precios');
-            const precios = await response.json();
-            
-            console.log('Precios recibidos:', precios);
-            
-            // Convertir a USD/ton y mostrar
-            if (precios.soja) {
-                document.getElementById('soja-usdton').textContent = (precios.soja * 36.74).toFixed(0);
-            } else {
-                document.getElementById('soja-usdton').textContent = '385';
-            }
-            
-            if (precios.trigo) {
-                document.getElementById('trigo-usdton').textContent = (precios.trigo * 36.74).toFixed(0);
-            } else {
-                document.getElementById('trigo-usdton').textContent = '220';
-            }
-            
-            if (precios.arroz) {
-                document.getElementById('arroz-usdton').textContent = (precios.arroz * 22.05).toFixed(0);
-            } else {
-                document.getElementById('arroz-usdton').textContent = '397';
-            }
-            
-            // Maíz Rosario
-            document.getElementById('maiz-usdton').textContent = precios.maiz || '195';
-            
-            const now = new Date();
-            document.getElementById('price-update').textContent = 'Actualizado: ' + now.toLocaleDateString('es-UY') + ' ' + now.toLocaleTimeString('es-UY', {hour: '2-digit', minute:'2-digit'});
-            
-        } catch (error) {
-            console.error('Error al cargar precios:', error);
-            // Mostrar valores de respaldo
-            document.getElementById('soja-usdton').textContent = '385';
-            document.getElementById('trigo-usdton').textContent = '220';
-            document.getElementById('maiz-usdton').textContent = '195';
-            document.getElementById('arroz-usdton').textContent = '397';
-            document.getElementById('price-update').textContent = 'Usando precios de referencia';
-        }
-    }
-    
-    // Actualizar al cargar la página
-    updatePrices();
-    
-    // Actualizar cada hora
-    setInterval(updatePrices, 3600000);
-    </script>
 
     <p style="font-size:0.7rem;color:var(--muted);margin-top:-16px;margin-bottom:24px;">Datos en tiempo real provistos por TradingView. Precios de referencia, no constituyen asesoramiento financiero.</p>
 
@@ -346,22 +260,45 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <p style="font-size:0.84rem;color:var(--text2);margin-top:-8px;">Los informes de ganadería bovina —tanto Uruguay como mundial— están incluidos en las secciones correspondientes arriba.</p>
 
     <!-- Novillo Tipo 2.0 card -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-        <div>
-            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">🥩 Novillo Tipo 2.0 — INAC</div>
-            <div style="display:flex;align-items:baseline;gap:10px;">
-                <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--dark);">—</span>
-                <span style="font-size:0.8rem;color:var(--muted);">USD/cabeza</span>
-                <span id="novillo-var" style="font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:6px;"></span>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:16px;">
+            <div>
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">🥩 Novillo Tipo 2.0 — INAC</div>
+                <div style="display:flex;align-items:baseline;gap:10px;">
+                    <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--dark);">—</span>
+                    <span style="font-size:0.8rem;color:var(--muted);">USD/cabeza</span>
+                    <span id="novillo-var" style="font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:6px;"></span>
+                </div>
+                <div id="novillo-periodo" style="font-size:0.75rem;color:var(--muted);margin-top:4px;">—</div>
             </div>
-            <div id="novillo-periodo" style="font-size:0.75rem;color:var(--muted);margin-top:4px;">—</div>
+            <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
         </div>
-        <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
+        <!-- Desglose VH y VAI -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding-top:16px;border-top:1px solid var(--border);">
+            <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Hacienda (VH)</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                    <span id="novillo-vh" style="font-size:1.3rem;font-weight:700;color:var(--dark);">—</span>
+                    <span style="font-size:0.7rem;color:var(--muted);">USD</span>
+                    <span id="novillo-vh-var" style="font-size:0.7rem;font-weight:600;"></span>
+                </div>
+                <div id="novillo-vh-pct" style="font-size:0.68rem;color:var(--muted);margin-top:2px;">—</div>
+            </div>
+            <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Agregado Industrial (VAI)</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                    <span id="novillo-vai" style="font-size:1.3rem;font-weight:700;color:var(--dark);">—</span>
+                    <span style="font-size:0.7rem;color:var(--muted);">USD</span>
+                </div>
+                <div id="novillo-vai-pct" style="font-size:0.68rem;color:var(--muted);margin-top:2px;">—</div>
+            </div>
+        </div>
     </div>
     <script>
     fetch('data/novillo.json')
         .then(r => r.json())
         .then(d => {
+            // Novillo Tipo principal
             document.getElementById('novillo-valor').textContent = d.valor.toLocaleString('es-UY');
             document.getElementById('novillo-periodo').textContent = 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
             const varEl = document.getElementById('novillo-var');
@@ -369,14 +306,35 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             varEl.textContent = (v > 0 ? '▲ +' : '▼ ') + v + '%';
             varEl.style.background = v > 0 ? '#edf5ef' : '#fceaea';
             varEl.style.color = v > 0 ? '#2a7235' : '#a32d2d';
+            
+            // Valor Hacienda (VH)
+            document.getElementById('novillo-vh').textContent = d.vh.toLocaleString('es-UY');
+            const vhVarEl = document.getElementById('novillo-vh-var');
+            const vhV = d.vh_variacion;
+            vhVarEl.textContent = (vhV > 0 ? '▲ +' : '▼ ') + vhV + '%';
+            vhVarEl.style.color = vhV > 0 ? '#2a7235' : '#a32d2d';
+            document.getElementById('novillo-vh-pct').textContent = d.vh_participacion + '% del total';
+            
+            // Valor Agregado Industrial (VAI)
+            document.getElementById('novillo-vai').textContent = d.vai.toLocaleString('es-UY');
+            document.getElementById('novillo-vai-pct').textContent = d.vai_participacion + '% del total';
         })
         .catch(() => {
+            // Fallback con datos de marzo 2026
             document.getElementById('novillo-valor').textContent = '1.976';
             document.getElementById('novillo-periodo').textContent = 'Dato: marzo 2026';
             const varEl = document.getElementById('novillo-var');
             varEl.textContent = '▲ +2,3%';
             varEl.style.background = '#edf5ef';
             varEl.style.color = '#2a7235';
+            
+            document.getElementById('novillo-vh').textContent = '1.608';
+            document.getElementById('novillo-vh-var').textContent = '▲ +0,4%';
+            document.getElementById('novillo-vh-var').style.color = '#2a7235';
+            document.getElementById('novillo-vh-pct').textContent = '81% del total';
+            
+            document.getElementById('novillo-vai').textContent = '368';
+            document.getElementById('novillo-vai-pct').textContent = '19% del total';
         });
     </script>
 
