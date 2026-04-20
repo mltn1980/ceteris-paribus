@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[functions]
+  directory = "netlify/functions"
+
+[[plugins]]
+  package = "@netlify/plugin-scheduled-functions"
+
+[scheduled_functions]
+  [scheduled_functions.novillo]
+    schedule = "0 8 1 * *"

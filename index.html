@@ -179,17 +179,16 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
             {
                 "symbols": [
-                    {"proName":"CBOT:ZS1!","title":"Soja"},
-                    {"proName":"CBOT:ZW1!","title":"Trigo"},
-                    {"proName":"CBOT:ZC1!","title":"Maíz"},
-                    {"proName":"CBOT:ZR1!","title":"Arroz"},
-                    {"proName":"CME:LE1!","title":"Novillo"},
+                    {"proName":"SOY.CME1!","title":"Soja"},
+                    {"proName":"PEPPERSTONE:WHEAT","title":"Trigo"},
+                    {"proName":"MAI.ROS1!","title":"Maíz"},
+                    {"proName":"PEPPERSTONE:CATTLE","title":"Novillo"},
                     {"proName":"FX_IDC:USDUYU","title":"USD/UYU"},
-                    {"proName":"NYMEX:CL1!","title":"Petróleo WTI"},
-                    {"proName":"FX:EURUSD","title":"EUR/USD"}
+                    {"proName":"FX:EURUSD","title":"EUR/USD"},
+                    {"proName":"THINKMARKETS:USDINDEX","title":"Índice Dólar"}
                 ],
                 "showSymbolLogo": true,
-                "isTransparent": true,
+                "isTransparent": false,
                 "displayMode": "adaptive",
                 "colorTheme": "light",
                 "locale": "es"
@@ -198,105 +197,62 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         </div>
     </div>
 
-    <!-- Market overview -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:420px;">
-            <div class="tradingview-widget-container" style="height:100%;width:100%;">
-                <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                {
-                    "colorTheme": "light",
-                    "dateRange": "1M",
-                    "showChart": true,
-                    "locale": "es",
-                    "width": "100%",
-                    "height": "100%",
-                    "largeChartUrl": "",
-                    "isTransparent": true,
-                    "showSymbolLogo": true,
-                    "showFloatingTooltip": true,
-                    "plotLineColorGrowing": "rgba(42,114,53,1)",
-                    "plotLineColorFalling": "rgba(140,48,48,1)",
-                    "gridLineColor": "rgba(240,240,230,1)",
-                    "scaleFontColor": "rgba(120,120,110,1)",
-                    "belowLineFillColorGrowing": "rgba(42,114,53,0.06)",
-                    "belowLineFillColorFalling": "rgba(140,48,48,0.06)",
-                    "belowLineFillColorGrowingBottom": "rgba(42,114,53,0)",
-                    "belowLineFillColorFallingBottom": "rgba(140,48,48,0)",
-                    "symbolActiveColor": "rgba(42,114,53,0.08)",
-                    "tabs": [
-                        {
-                            "title": "Granos & Oleaginosas",
-                            "symbols": [
-                                {"s":"CBOT:ZS1!","d":"Soja"},
-                                {"s":"CBOT:ZW1!","d":"Trigo"},
-                                {"s":"CBOT:ZC1!","d":"Maíz"},
-                                {"s":"CBOT:ZR1!","d":"Arroz"},
-                                {"s":"CBOT:ZM1!","d":"Harina de Soja"},
-                                {"s":"CBOT:ZL1!","d":"Aceite de Soja"}
-                            ]
-                        },
-                        {
-                            "title": "Ganadería & Energía",
-                            "symbols": [
-                                {"s":"CME:LE1!","d":"Novillo (Live Cattle)"},
-                                {"s":"CME:GF1!","d":"Ternero (Feeder)"},
-                                {"s":"NYMEX:CL1!","d":"Petróleo WTI"},
-                                {"s":"NYMEX:NG1!","d":"Gas Natural"}
-                            ]
-                        }
-                    ]
-                }
-                </script>
-            </div>
+    <!-- Watchlist unificada -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:520px;margin-bottom:24px;">
+        <div class="tradingview-widget-container" style="height:100%;width:100%;">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+            {
+                "title": "Precios de Referencia",
+                "width": "100%",
+                "height": "100%",
+                "locale": "es",
+                "showSymbolLogo": true,
+                "isTransparent": false,
+                "colorTheme": "light",
+                "symbolsGroups": [
+                    {
+                        "name": "Monedas",
+                        "symbols": [
+                            {"name":"FX_IDC:USDUYU","displayName":"Dólar / Peso UY"},
+                            {"name":"FX_IDC:USDARS","displayName":"Dólar / Peso AR"},
+                            {"name":"FX_IDC:USDBRL","displayName":"Dólar / Real BR"},
+                            {"name":"FX:EURUSD","displayName":"Euro / Dólar"},
+                            {"name":"THINKMARKETS:USDINDEX","displayName":"Índice Dólar (DXY)"}
+                        ]
+                    },
+                    {
+                        "name": "Granos",
+                        "symbols": [
+                            {"name":"SOY.CME1!","displayName":"Soja"},
+                            {"name":"PEPPERSTONE:WHEAT","displayName":"Trigo"},
+                            {"name":"MAI.ROS1!","displayName":"Maíz"},
+                            {"name":"CAPITALCOM:RR","displayName":"Arroz"}
+                        ]
+                    },
+                    {
+                        "name": "Ganadería",
+                        "symbols": [
+                            {"name":"PEPPERSTONE:CATTLE","displayName":"Novillo (Live Cattle)"},
+                            {"name":"PEPPERSTONE:FEEDER","displayName":"Ternero (Feeder)"}
+                        ]
+                    }
+                ]
+            }
+            </script>
         </div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:420px;">
-            <div class="tradingview-widget-container" style="height:100%;width:100%;">
-                <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                {
-                    "colorTheme": "light",
-                    "dateRange": "1M",
-                    "showChart": true,
-                    "locale": "es",
-                    "width": "100%",
-                    "height": "100%",
-                    "largeChartUrl": "",
-                    "isTransparent": true,
-                    "showSymbolLogo": true,
-                    "showFloatingTooltip": true,
-                    "plotLineColorGrowing": "rgba(42,114,53,1)",
-                    "plotLineColorFalling": "rgba(140,48,48,1)",
-                    "gridLineColor": "rgba(240,240,230,1)",
-                    "scaleFontColor": "rgba(120,120,110,1)",
-                    "belowLineFillColorGrowing": "rgba(42,114,53,0.06)",
-                    "belowLineFillColorFalling": "rgba(140,48,48,0.06)",
-                    "belowLineFillColorGrowingBottom": "rgba(42,114,53,0)",
-                    "belowLineFillColorFallingBottom": "rgba(140,48,48,0)",
-                    "symbolActiveColor": "rgba(42,114,53,0.08)",
-                    "tabs": [
-                        {
-                            "title": "Monedas",
-                            "symbols": [
-                                {"s":"FX_IDC:USDUYU","d":"Dólar / Peso UY"},
-                                {"s":"FX_IDC:USDARS","d":"Dólar / Peso AR"},
-                                {"s":"FX_IDC:USDBRL","d":"Dólar / Real BR"},
-                                {"s":"FX:EURUSD","d":"Euro / Dólar"},
-                                {"s":"TVC:DXY","d":"Índice Dólar (DXY)"}
-                            ]
-                        },
-                        {
-                            "title": "Índices",
-                            "symbols": [
-                                {"s":"SP:SPX","d":"S&P 500"},
-                                {"s":"TVC:IXIC","d":"Nasdaq"},
-                                {"s":"MERVAL:IMV","d":"Merval Argentina"}
-                            ]
-                        }
-                    ]
-                }
-                </script>
-            </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:0.75rem;color:var(--text2);">
+        <div style="font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px;">Unidades de cotización</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 20px;">
+            <span><strong>Monedas:</strong> tipo de cambio directo</span>
+            <span><strong>DXY:</strong> índice (puntos)</span>
+            <span><strong>Soja:</strong> USD/bushel (CBOT)</span>
+            <span><strong>Trigo:</strong> USD/bushel (CBOT)</span>
+            <span><strong>Maíz:</strong> USD/tonelada (Rosario)</span>
+            <span><strong>Arroz:</strong> USD/cwt (CBOT)</span>
+            <span><strong>Novillo:</strong> USD cents/lb (CME)</span>
+            <span><strong>Ternero:</strong> USD cents/lb (CME)</span>
         </div>
     </div>
     <p style="font-size:0.7rem;color:var(--muted);margin-top:-16px;margin-bottom:24px;">Datos en tiempo real provistos por TradingView. Precios de referencia, no constituyen asesoramiento financiero.</p>
@@ -505,6 +461,42 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     </div>
     <div class="collapsible-content">
     <p style="font-size:0.84rem;color:var(--text2);margin-top:-8px;">Los informes de ganadería bovina —tanto Uruguay como mundial— están incluidos en las secciones correspondientes arriba.</p>
+
+    <!-- Novillo Tipo 2.0 card -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">🥩 Novillo Tipo 2.0 — INAC</div>
+            <div style="display:flex;align-items:baseline;gap:10px;">
+                <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--dark);">—</span>
+                <span style="font-size:0.8rem;color:var(--muted);">USD/cabeza</span>
+                <span id="novillo-var" style="font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:6px;"></span>
+            </div>
+            <div id="novillo-periodo" style="font-size:0.75rem;color:var(--muted);margin-top:4px;">—</div>
+        </div>
+        <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
+    </div>
+    <script>
+    fetch('data/novillo.json')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById('novillo-valor').textContent = d.valor.toLocaleString('es-UY');
+            document.getElementById('novillo-periodo').textContent = 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+            const varEl = document.getElementById('novillo-var');
+            const v = d.variacion;
+            varEl.textContent = (v > 0 ? '▲ +' : '▼ ') + v + '%';
+            varEl.style.background = v > 0 ? '#edf5ef' : '#fceaea';
+            varEl.style.color = v > 0 ? '#2a7235' : '#a32d2d';
+        })
+        .catch(() => {
+            document.getElementById('novillo-valor').textContent = '1.976';
+            document.getElementById('novillo-periodo').textContent = 'Dato: marzo 2026';
+            const varEl = document.getElementById('novillo-var');
+            varEl.textContent = '▲ +2,3%';
+            varEl.style.background = '#edf5ef';
+            varEl.style.color = '#2a7235';
+        });
+    </script>
+
     <div class="grid">
         <div class="card meat">
             <div class="stripe"></div>
