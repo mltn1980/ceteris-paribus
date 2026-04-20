@@ -2,7 +2,10 @@
   "periodo": "marzo 2026",
   "valor": 1976,
   "variacion": 2.3,
-  "fuente": "INAC",
-  "url": "https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20",
-  "actualizado": "2026-04-15T00:00:00.000Z"
+  "vh": 1608,
+  "vh_variacion": 0.4,
+  "vh_participacion": 81,
+  "vai": 368,
+  "vai_participacion": 19,
+  "actualizado": "2026-04-15"
 }
