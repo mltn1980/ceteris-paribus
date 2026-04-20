@@ -257,41 +257,49 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <span class="toggle-text">▲ Ocultar</span>
     </div>
     <div class="collapsible-content">
-    <p style="font-size:0.84rem;color:var(--text2);margin-top:-8px;">Los informes de ganadería bovina —tanto Uruguay como mundial— están incluidos en las secciones correspondientes arriba.</p>
 
     <!-- Novillo Tipo 2.0 card -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:16px;">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">🥩 Novillo Tipo 2.0 — INAC</div>
+        
+        <!-- Valores horizontales -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:12px;">
+            <!-- Novillo Tipo -->
             <div>
-                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">🥩 Novillo Tipo 2.0 — INAC</div>
-                <div style="display:flex;align-items:baseline;gap:10px;">
-                    <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.8rem;color:var(--muted);">USD/cabeza</span>
-                    <span id="novillo-var" style="font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:6px;"></span>
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Novillo Tipo</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                    <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
+                    <span style="font-size:0.7rem;color:var(--muted);">USD/cab</span>
+                    <span id="novillo-var" style="font-size:0.75rem;font-weight:600;padding:2px 6px;border-radius:4px;"></span>
                 </div>
-                <div id="novillo-periodo" style="font-size:0.75rem;color:var(--muted);margin-top:4px;">—</div>
             </div>
-            <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
-        </div>
-        <!-- Desglose VH y VAI -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding-top:16px;border-top:1px solid var(--border);">
-            <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+            
+            <!-- Valor Hacienda -->
+            <div>
                 <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Hacienda (VH)</div>
                 <div style="display:flex;align-items:baseline;gap:8px;">
-                    <span id="novillo-vh" style="font-size:1.3rem;font-weight:700;color:var(--dark);">—</span>
+                    <span id="novillo-vh" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
                     <span style="font-size:0.7rem;color:var(--muted);">USD</span>
-                    <span id="novillo-vh-var" style="font-size:0.7rem;font-weight:600;"></span>
+                    <span id="novillo-vh-var" style="font-size:0.75rem;font-weight:600;"></span>
                 </div>
-                <div id="novillo-vh-pct" style="font-size:0.68rem;color:var(--muted);margin-top:2px;">—</div>
+                <div id="novillo-vh-pct" style="font-size:0.65rem;color:var(--muted);margin-top:2px;">—</div>
             </div>
-            <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Agregado Industrial (VAI)</div>
+            
+            <!-- VAI -->
+            <div>
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Agregado (VAI)</div>
                 <div style="display:flex;align-items:baseline;gap:8px;">
-                    <span id="novillo-vai" style="font-size:1.3rem;font-weight:700;color:var(--dark);">—</span>
+                    <span id="novillo-vai" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
                     <span style="font-size:0.7rem;color:var(--muted);">USD</span>
                 </div>
-                <div id="novillo-vai-pct" style="font-size:0.68rem;color:var(--muted);margin-top:2px;">—</div>
+                <div id="novillo-vai-pct" style="font-size:0.65rem;color:var(--muted);margin-top:2px;">—</div>
             </div>
+        </div>
+        
+        <!-- Footer con periodo y link -->
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);">
+            <div id="novillo-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
+            <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
         </div>
     </div>
     <script>
@@ -335,6 +343,76 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             
             document.getElementById('novillo-vai').textContent = '368';
             document.getElementById('novillo-vai-pct').textContent = '19% del total';
+        });
+    </script>
+
+    <!-- Faena Semanal Bovinos card -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📊 Faena Semanal Bovinos — INAC</div>
+        
+        <!-- Total semanal -->
+        <div style="margin-bottom:16px;">
+            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Total Semanal</div>
+            <div style="display:flex;align-items:baseline;gap:8px;">
+                <span id="faena-total" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
+                <span style="font-size:0.7rem;color:var(--muted);">cabezas</span>
+            </div>
+        </div>
+        
+        <!-- Desglose por categoría (3 columnas) -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px;">
+            <div>
+                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:2px;">Novillo</div>
+                <div style="display:flex;align-items:baseline;gap:6px;">
+                    <span id="faena-novillo" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
+                    <span id="faena-novillo-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:2px;">Vaca</div>
+                <div style="display:flex;align-items:baseline;gap:6px;">
+                    <span id="faena-vaca" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
+                    <span id="faena-vaca-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:2px;">Vaquillona</div>
+                <div style="display:flex;align-items:baseline;gap:6px;">
+                    <span id="faena-vaquillona" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
+                    <span id="faena-vaquillona-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);">
+            <div id="faena-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
+            <a href="https://www.inac.uy/innovaportal/v/21478/10/innova.front/faena" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
+        </div>
+    </div>
+    <script>
+    fetch('data/faena.json')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById('faena-total').textContent = d.total.toLocaleString('es-UY');
+            document.getElementById('faena-novillo').textContent = d.novillo.toLocaleString('es-UY');
+            document.getElementById('faena-novillo-pct').textContent = d.novillo_pct + '%';
+            document.getElementById('faena-vaca').textContent = d.vaca.toLocaleString('es-UY');
+            document.getElementById('faena-vaca-pct').textContent = d.vaca_pct + '%';
+            document.getElementById('faena-vaquillona').textContent = d.vaquillona.toLocaleString('es-UY');
+            document.getElementById('faena-vaquillona-pct').textContent = d.vaquillona_pct + '%';
+            document.getElementById('faena-periodo').textContent = 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+        })
+        .catch(() => {
+            // Fallback con datos del PDF subido
+            document.getElementById('faena-total').textContent = '28.945';
+            document.getElementById('faena-novillo').textContent = '12.940';
+            document.getElementById('faena-novillo-pct').textContent = '45%';
+            document.getElementById('faena-vaca').textContent = '10.450';
+            document.getElementById('faena-vaca-pct').textContent = '36%';
+            document.getElementById('faena-vaquillona').textContent = '4.963';
+            document.getElementById('faena-vaquillona-pct').textContent = '17%';
+            document.getElementById('faena-periodo').textContent = 'Semana: 12-18 abril 2026';
         });
     </script>
 
