@@ -51,6 +51,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
         }
 
         nav a.active{color:#fff;}
+        nav a.active[href="#precios"]{background:#c8963e;}
         nav a.active[href="#uruguay"]{background:var(--green);}
         nav a.active[href="#global"]{background:var(--blue);}
         nav a.active[href="#commodities"]{background:var(--amber);}
@@ -59,9 +60,27 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
         nav a.active[href="#economia"]{background:#1a6b5a;}
         nav a.active[href="#medios"]{background:var(--blue);}
         nav a.active[href="#redes"]{background:var(--dark);}
-        nav a.active[href="#contacto"]{background:var(--dark);}
  main{max-width:1000px;margin:0 auto;padding:40px 24px 72px;}
 .section-label{display:flex;align-items:center;gap:10px;margin:40px 0 18px;padding-bottom:8px;border-bottom:2px solid var(--border);}
+.section-label.collapsible{cursor:pointer;user-select:none;}
+.section-label.collapsible:hover{opacity:0.8;}
+.section-label .toggle-text{
+  margin-left:auto;font-size:0.68rem;font-weight:700;
+  color:#ff6b00;background:#fff3e6;
+  padding:4px 12px;border-radius:6px;
+  letter-spacing:0.03em;transition:all 0.2s;
+  font-family:'IBM Plex Mono',monospace;
+}
+.section-label.collapsible:hover .toggle-text{background:#ffe8cc;}
+.section-label.collapsed .chevron{transform:rotate(-90deg);}
+.collapsible-content{
+  max-height:2000px;overflow:hidden;
+  transition:max-height 0.4s ease, opacity 0.3s ease;
+  opacity:1;
+}
+.collapsible-content.collapsed{
+  max-height:0;opacity:0;margin-bottom:0;
+}
 .section-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .section-label h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;}
 .section-label span.count{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:500;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:4px;}
@@ -76,6 +95,19 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
 .card .foot{padding:12px 20px;border-top:1px solid var(--surface2);display:flex;justify-content:space-between;align-items:center;}
 .card .foot .date{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);}
 .card .foot .cta{font-size:0.78rem;font-weight:600;display:flex;align-items:center;gap:4px;}
+.card .summary{
+  max-height:0;overflow:hidden;transition:max-height 0.4s ease;
+  border-top:0 solid var(--surface2);
+}
+.card .summary.open{max-height:600px;border-top-width:1px;}
+.card .summary-inner{padding:16px 20px;font-size:0.8rem;color:var(--text2);line-height:1.7;}
+.card .summary-inner strong{color:var(--text);}
+.card .foot .btn-resumen{
+  font-size:0.72rem;font-weight:600;padding:4px 12px;
+  border-radius:6px;border:1px solid var(--border);background:var(--surface2);
+  color:var(--text2);cursor:pointer;transition:all 0.15s;font-family:inherit;
+}
+.card .foot .btn-resumen:hover{background:var(--border);color:var(--text);}
 .card.uy .stripe{background:linear-gradient(90deg,var(--green),#5a8c3c);}
 .card.uy .tag{background:var(--green-l);color:var(--green);}
 .card.uy .cta{color:var(--green);}
@@ -91,12 +123,27 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
 .card.prod .stripe{background:linear-gradient(90deg,var(--purple),#7b6aad);}
 .card.prod .tag{background:var(--purple-l);color:var(--purple);}
 .card.prod .cta{color:var(--purple);}
+.card.m-fr .stripe{background:linear-gradient(90deg,#2a7235,#3d9948);}
+.card.m-fr .tag{background:#edf5ef;color:#2a7235;}
+.card.m-fr .cta{color:#2a7235;}
+.card.m-pe .stripe{background:linear-gradient(90deg,#c96a1a,#e88a30);}
+.card.m-pe .tag{background:#fdf2e6;color:#c96a1a;}
+.card.m-pe .cta{color:#c96a1a;}
+.card.m-tec .stripe{background:linear-gradient(90deg,#7a5c2e,#a07a3c);}
+.card.m-tec .tag{background:#f5f0e5;color:#7a5c2e;}
+.card.m-tec .cta{color:#7a5c2e;}
+.card.m-ep .stripe{background:linear-gradient(90deg,#1b4f8a,#2a6db5);}
+.card.m-ep .tag{background:#e8f0fa;color:#1b4f8a;}
+.card.m-ep .cta{color:#1b4f8a;}
 .about{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-top:48px;}
 .about h2{font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:10px;}
 .about p{font-size:0.86rem;color:var(--text2);max-width:700px;margin-bottom:6px;}
 .about .sources{font-size:0.75rem;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--surface2);line-height:1.8;}
 footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;max-width:1000px;margin:0 auto;}
 @media(max-width:680px){.grid{grid-template-columns:1fr;}}
+@media(max-width:768px){
+  div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
+}
 </style>
 </head>
 <body>
@@ -106,6 +153,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
   <p class="sub">Análisis consolidados de commodities, economía y mercados agrícolas. Con foco en Uruguay y la región.</p>
 </header>
 <nav>
+    <a href="#precios">Precios</a>
     <a href="#uruguay">Uruguay</a>
     <a href="#global">Mercados Globales</a>
     <a href="#commodities">Por Commodity</a>
@@ -113,168 +161,419 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <a href="#productividad">Productividad</a>
     <a href="#medios">Notas en Medios</a>
     <a href="#redes">Redes</a>
-    <a href="#contacto">Contacto</a>
 </nav>
 <main>
 
-    <!-- URUGUAY -->
-    <div class="section-label" id="uruguay">
-        <div class="dot" style="background:var(--green);"></div>
-        <h2>Uruguay</h2>
+    <!-- PRECIOS & MERCADOS -->
+    <div class="section-label collapsible" id="precios" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">💹</span>
+        <h2>Precios &amp; Mercados</h2>
+        <span class="toggle-text">▲ Ocultar</span>
     </div>
+    <div class="collapsible-content">
+
+    <!-- Ticker tape -->
+    <div style="margin-bottom:16px;">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+                "symbols": [
+                    {"proName":"CBOT:ZS1!","title":"Soja"},
+                    {"proName":"CBOT:ZW1!","title":"Trigo"},
+                    {"proName":"CBOT:ZC1!","title":"Maíz"},
+                    {"proName":"CBOT:ZR1!","title":"Arroz"},
+                    {"proName":"CME:LE1!","title":"Novillo"},
+                    {"proName":"FX_IDC:USDUYU","title":"USD/UYU"},
+                    {"proName":"NYMEX:CL1!","title":"Petróleo WTI"},
+                    {"proName":"FX:EURUSD","title":"EUR/USD"}
+                ],
+                "showSymbolLogo": true,
+                "isTransparent": true,
+                "displayMode": "adaptive",
+                "colorTheme": "light",
+                "locale": "es"
+            }
+            </script>
+        </div>
+    </div>
+
+    <!-- Market overview -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:420px;">
+            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                {
+                    "colorTheme": "light",
+                    "dateRange": "1M",
+                    "showChart": true,
+                    "locale": "es",
+                    "width": "100%",
+                    "height": "100%",
+                    "largeChartUrl": "",
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "showFloatingTooltip": true,
+                    "plotLineColorGrowing": "rgba(42,114,53,1)",
+                    "plotLineColorFalling": "rgba(140,48,48,1)",
+                    "gridLineColor": "rgba(240,240,230,1)",
+                    "scaleFontColor": "rgba(120,120,110,1)",
+                    "belowLineFillColorGrowing": "rgba(42,114,53,0.06)",
+                    "belowLineFillColorFalling": "rgba(140,48,48,0.06)",
+                    "belowLineFillColorGrowingBottom": "rgba(42,114,53,0)",
+                    "belowLineFillColorFallingBottom": "rgba(140,48,48,0)",
+                    "symbolActiveColor": "rgba(42,114,53,0.08)",
+                    "tabs": [
+                        {
+                            "title": "Granos & Oleaginosas",
+                            "symbols": [
+                                {"s":"CBOT:ZS1!","d":"Soja"},
+                                {"s":"CBOT:ZW1!","d":"Trigo"},
+                                {"s":"CBOT:ZC1!","d":"Maíz"},
+                                {"s":"CBOT:ZR1!","d":"Arroz"},
+                                {"s":"CBOT:ZM1!","d":"Harina de Soja"},
+                                {"s":"CBOT:ZL1!","d":"Aceite de Soja"}
+                            ]
+                        },
+                        {
+                            "title": "Ganadería & Energía",
+                            "symbols": [
+                                {"s":"CME:LE1!","d":"Novillo (Live Cattle)"},
+                                {"s":"CME:GF1!","d":"Ternero (Feeder)"},
+                                {"s":"NYMEX:CL1!","d":"Petróleo WTI"},
+                                {"s":"NYMEX:NG1!","d":"Gas Natural"}
+                            ]
+                        }
+                    ]
+                }
+                </script>
+            </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:420px;">
+            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                {
+                    "colorTheme": "light",
+                    "dateRange": "1M",
+                    "showChart": true,
+                    "locale": "es",
+                    "width": "100%",
+                    "height": "100%",
+                    "largeChartUrl": "",
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "showFloatingTooltip": true,
+                    "plotLineColorGrowing": "rgba(42,114,53,1)",
+                    "plotLineColorFalling": "rgba(140,48,48,1)",
+                    "gridLineColor": "rgba(240,240,230,1)",
+                    "scaleFontColor": "rgba(120,120,110,1)",
+                    "belowLineFillColorGrowing": "rgba(42,114,53,0.06)",
+                    "belowLineFillColorFalling": "rgba(140,48,48,0.06)",
+                    "belowLineFillColorGrowingBottom": "rgba(42,114,53,0)",
+                    "belowLineFillColorFallingBottom": "rgba(140,48,48,0)",
+                    "symbolActiveColor": "rgba(42,114,53,0.08)",
+                    "tabs": [
+                        {
+                            "title": "Monedas",
+                            "symbols": [
+                                {"s":"FX_IDC:USDUYU","d":"Dólar / Peso UY"},
+                                {"s":"FX_IDC:USDARS","d":"Dólar / Peso AR"},
+                                {"s":"FX_IDC:USDBRL","d":"Dólar / Real BR"},
+                                {"s":"FX:EURUSD","d":"Euro / Dólar"},
+                                {"s":"TVC:DXY","d":"Índice Dólar (DXY)"}
+                            ]
+                        },
+                        {
+                            "title": "Índices",
+                            "symbols": [
+                                {"s":"SP:SPX","d":"S&P 500"},
+                                {"s":"TVC:IXIC","d":"Nasdaq"},
+                                {"s":"MERVAL:IMV","d":"Merval Argentina"}
+                            ]
+                        }
+                    ]
+                }
+                </script>
+            </div>
+        </div>
+    </div>
+    <p style="font-size:0.7rem;color:var(--muted);margin-top:-16px;margin-bottom:24px;">Datos en tiempo real provistos por TradingView. Precios de referencia, no constituyen asesoramiento financiero.</p>
+
+    </div>
+
+    <!-- URUGUAY -->
+    <div class="section-label collapsible" id="uruguay" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🇺🇾</span>
+        <h2>Uruguay</h2>
+        <span class="toggle-text">▲ Ocultar</span>
+    </div>
+    <div class="collapsible-content">
     <div class="grid">
-        <a href="uruguay_agro_2026_v3.html" class="card uy" target="_blank" rel="noopener noreferrer">
+        <div class="card uy">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Panorama completo</span>
                 <h3>Uruguay — Panorama Agropecuario Completo 2025/26</h3>
                 <p class="desc">Visión integral del sector: cultivos de verano e invierno, ganadería, lechería, forestación y tendencias. Datos USDA y MGAP-DIEA.</p>
             </div>
+            <div class="summary" id="sum-uy">
+                <div class="summary-inner">
+                    <strong>Sequía histórica:</strong> 80 días sin lluvia en el corredor occidental (Soriano, Colonia, Río Negro) devastaron los cultivos de verano. Soja cayó a 1,95 MMT (−53%) según FAS Buenos Aires, con lotes de pérdida total. Maíz colapsó a 1,2 MMT (−38%) con exportaciones reducidas a cero.<br><br>
+                    <strong>Invierno récord:</strong> Trigo alcanzó rendimiento histórico de 5.040 kg/ha (+22%). Colza+carinata duplicó su área a 212 mil ha, consolidándose como alternativa invernal.<br><br>
+                    <strong>Ganadería estable:</strong> Exportaciones de carne bovina proyectadas en 530 mil TM (7° exportador mundial). Rodeo estable en ~11,6 M cabezas.<br><br>
+                    <strong>Arrendamientos al alza:</strong> Promedio US$ 130/ha/año (+5%), con agricultura secano a US$ 273/ha. Más del 70% de la soja se produce en tierra arrendada, presionando márgenes.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-uy').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="uruguay_agro_2026_v3.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--green);">Leer informe →</a>
+                </span>
             </div>
-        </a>
+        </div>
+    </div>
     </div>
 
     <!-- MERCADOS GLOBALES -->
-    <div class="section-label" id="global">
-        <div class="dot" style="background:var(--blue);"></div>
+    <div class="section-label collapsible" id="global" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🌍</span>
         <h2>Mercados Globales</h2>
+        <span class="toggle-text">▲ Ocultar</span>
     </div>
+    <div class="collapsible-content">
     <div class="grid">
-        <a href="informe_agricola_mundial_USDA_abril2026.html" class="card gl" target="_blank" rel="noopener noreferrer">
+        <div class="card gl">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Consolidado USDA</span>
                 <h3>Mercados Agrícolas Mundiales — Abril 2026</h3>
                 <p class="desc">Informe integrado de producción mundial: granos, oleaginosas, algodón. Datos WASDE y World Agricultural Production. USDA FAS / ERS.</p>
             </div>
+            <div class="summary" id="sum-gl1">
+                <div class="summary-inner">
+                    <strong>Trigo récord:</strong> Producción mundial de 844 MMT (+6% ia.). Stocks entre exportadores en máximos de 15 años (+30%). Argentina irrumpe con +51% y el FOB más bajo (US$ 230/t). Precios en EE.UU. en mínimo de 6 años.<br><br>
+                    <strong>Soja volátil:</strong> Brasil consolida dominio con 180 MMT récord y exportaciones de 115 MMT. Tensión Trump-Xi presiona precios (~US$ 460/t). Aceites vegetales en rally: soja EE.UU. en máximo de 3 años por demanda de biocombustibles.<br><br>
+                    <strong>Girasol argentino:</strong> Cosecha casi récord de 7 MMT (+25%). Exportaciones multidécada hacia crushers de la UE. Aceite de girasol a ~US$ 1.300/t.<br><br>
+                    <strong>Maíz EE.UU.:</strong> Producción récord de 432 MMT (+14%). Stocks en máximos. Brasil mantiene 132 MMT con safrinha bajo observación climática.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gl1').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="informe_agricola_mundial_USDA_abril2026.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--blue);">Leer informe →</a>
+                </span>
             </div>
-        </a>
-        <a href="informe_ganaderia_bovina_USDA_abril2026_1.html" class="card gl" target="_blank" rel="noopener noreferrer">
+        </div>
+        <div class="card gl">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Ganadería global 🥩</span>
                 <h3>Ganadería Bovina Mundial — Abril 2026</h3>
                 <p class="desc">Producción y comercio global de carne vacuna. TRQs de China, cierre fronterizo EE.UU.-México, precios récord, flujos comerciales. USDA FAS/ERS.</p>
             </div>
+            <div class="summary" id="sum-gl2">
+                <div class="summary-inner">
+                    <strong>Contracción global:</strong> Producción cae 1% a 61,6 MMT — primer retroceso sincronizado desde 2020. Brasil, EE.UU., China, UE y Australia en baja simultánea.<br><br>
+                    <strong>China redefine flujos:</strong> Implementa cuotas tarifarias (TRQs) que limitan importaciones −13%. Redirige oferta de Brasil y Australia hacia otros mercados.<br><br>
+                    <strong>EE.UU. en tensión:</strong> Novillos a US$ 242/cwt (récord histórico). Producción −1%, exportaciones −8%. Cierre fronterizo con México restringe disponibilidad de ganado.<br><br>
+                    <strong>México, ganador inesperado:</strong> Producción +11% (2,41 MMT) y exportaciones +23% por retención de animales que antes se enviaban en pie a EE.UU.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gl2').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="informe_ganaderia_bovina_USDA_abril2026_1.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--blue);">Leer informe →</a>
+                </span>
             </div>
-        </a>
+        </div>
+    </div>
     </div>
 
     <!-- POR COMMODITY -->
-    <div class="section-label" id="commodities">
-        <div class="dot" style="background:var(--amber);"></div>
+    <div class="section-label collapsible" id="commodities" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">📊</span>
         <h2>Por Commodity</h2>
+        <span class="toggle-text">▲ Ocultar</span>
     </div>
+    <div class="collapsible-content">
     <div class="grid">
-        <a href="informe_trigo_USDA_consolidated_abr2026_2.html" class="card comm" target="_blank" rel="noopener noreferrer">
+        <div class="card comm">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Trigo 🌾</span>
                 <h3>Mercado Mundial del Trigo</h3>
                 <p class="desc">Ciclo 2025/26: mayor excedente exportable histórico. Producción récord, stocks en máximos, precios FOB internacionales y principales flujos comerciales.</p>
             </div>
+            <div class="summary" id="sum-trigo">
+                <div class="summary-inner">
+                    <strong>Producción récord:</strong> 844 MMT (+6% ia.), con crecimiento simultáneo en UE (+20%), Argentina (+51%), Rusia (+11%) y Canadá (+11%). Producción supera consumo en ~24 MMT.<br><br>
+                    <strong>Stocks desbordados:</strong> Existencias entre exportadores suben 30% al máximo desde 2009/10. EE.UU. acumula stocks por 4° año consecutivo, planea recortar siembra 3%.<br><br>
+                    <strong>Precios bajo presión:</strong> Farm price EE.UU. en US$ 5,00/bu (mínimo de 6 años). Argentina lidera con FOB más bajo a US$ 230/t, ganando mercados en el Sudeste Asiático. Rusia reimplementó derechos de exportación.<br><br>
+                    <strong>Comercio:</strong> 2° mayor nivel histórico (221,6 MMT). Rusia exporta 44,5 MMT (+1 MMT este mes). India mantiene restricciones pero analiza exportaciones limitadas.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-trigo').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="informe_trigo_USDA_consolidated_abr2026_2.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--amber);">Leer informe →</a>
+                </span>
             </div>
-        </a>
-        <a href="soja_USDA_abril2026.html" class="card comm" target="_blank" rel="noopener noreferrer">
+        </div>
+        <div class="card comm">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Soja 🫘</span>
                 <h3>Mercado Mundial de la Soja</h3>
                 <p class="desc">Brasil consolida dominio exportador (115 MMT). Tensión EE.UU.-China, precios FOB, rally de aceites vegetales. USDA FAS Oilseeds WMT.</p>
             </div>
+            <div class="summary" id="sum-soja">
+                <div class="summary-inner">
+                    <strong>Producción:</strong> 427 MMT, 2° año consecutivo en niveles históricos. Brasil récord con 180 MMT (+4,3%), EE.UU. baja a 116 MMT (−3%), Argentina en 48 MMT.<br><br>
+                    <strong>Geopolítica:</strong> Aplazamiento de cumbre Trump-Xi deprimió precios. Exportaciones de EE.UU. recortadas en 952 mil MT por competencia sudamericana. Brasil exporta 115 MMT (récord).<br><br>
+                    <strong>Aceites en rally:</strong> Aceite de soja EE.UU. en máximos desde 2023 por estándares EPA de biocombustibles (RVO). Aceite de palma cotiza con descuento vs. soja, invirtiendo relación histórica.<br><br>
+                    <strong>Precio:</strong> Farm price EE.UU. US$ 10,30/bu (+10¢). FOB ~US$ 460/t en todos los orígenes. Argentina procesa el mayor volumen como harina y aceite.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-soja').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="soja_USDA_abril2026.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--amber);">Leer informe →</a>
+                </span>
             </div>
-        </a>
-        <a href="maiz_mundial_uruguay_2026.html" class="card comm" target="_blank" rel="noopener noreferrer">
+        </div>
+        <div class="card comm">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Maíz 🌽</span>
                 <h3>Mercado Mundial del Maíz</h3>
                 <p class="desc">Análisis del mercado global del maíz con foco en Uruguay, producción, comercio y precios internacionales.</p>
             </div>
+            <div class="summary" id="sum-maiz">
+                <div class="summary-inner">
+                    <strong>Producción global:</strong> 1.301 MMT (+5,7% ia.). EE.UU. récord con 432 MMT (+14,3%). China sube a 301 MMT. Brasil mantiene 132 MMT con riesgo en la safrinha por siembra tardía.<br><br>
+                    <strong>Uruguay devastado:</strong> Producción cae a 1,2 MMT (−38%). Rendimiento baja a 4,80 t/ha (−36% ia.). Exportaciones eliminadas a cero (eran 300 mil MT). Sequía forzó reconversión a silo y pastoreo.<br><br>
+                    <strong>Precios estables:</strong> FOB Argentina US$ 209/t (más competitivo), EE.UU. US$ 217/t, Brasil US$ 225/t, Ucrania US$ 227/t. Farm price EE.UU. US$ 4,15/bu.<br><br>
+                    <strong>Comercio:</strong> India emerge como exportador con 1 MMT (+350 mil). Sudáfrica cosecha casi récord por La Niña. Turquía aumenta importaciones a 4,3 MMT.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-maiz').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="maiz_mundial_uruguay_2026.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--amber);">Leer informe →</a>
+                </span>
             </div>
-        </a>
-        <a href="arroz_mundial_uruguay_2026.html" class="card comm" target="_blank" rel="noopener noreferrer">
+        </div>
+        <div class="card comm">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Arroz 🌾</span>
                 <h3>Mercado Mundial del Arroz</h3>
-                <p class="desc">
-                    Análisis del mercado global del arroz con foco en Uruguay: producción, comercio internacional, precios y tendencias 2025/26.
-                </p>
+                <p class="desc">Análisis del mercado global del arroz con foco en Uruguay: producción, comercio internacional, precios y tendencias 2025/26.</p>
+            </div>
+            <div class="summary" id="sum-arroz">
+                <div class="summary-inner">
+                    <strong>Producción:</strong> 541,4 MMT (base milled), estable vs. récord 2024/25. India y China concentran el 55% de la producción mundial. Stocks globales en ~191 MMT.<br><br>
+                    <strong>Comercio récord:</strong> 62,8 MMT proyectadas para 2026, máximo histórico. Pakistán pierde cuota (−300 mil MT) por competencia de India y precios menores.<br><br>
+                    <strong>Precios divergentes:</strong> Hemisferio occidental con premium de 40-50% sobre Asia. Uruguay sube US$ 45 a US$ 504/t por oferta ajustada y cosecha demorada. EE.UU. estable en US$ 534/t. Pakistán el más barato a US$ 351/t.<br><br>
+                    <strong>Uruguay:</strong> Exportaciones estables en 1 MMT. Precios FOB los más altos de la región, impulsados por sequía que demoró cosecha y ajustó oferta exportable.
+                </div>
             </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-arroz').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="arroz_mundial_uruguay_2026.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--amber);">Leer informe →</a>
+                </span>
             </div>
-        </a>
+        </div>
+    </div>
     </div>
 
     <!-- GANADERÍA (nav anchor) -->
-    <div class="section-label" id="ganaderia">
-        <div class="dot" style="background:var(--green);"></div>
+    <div class="section-label collapsible" id="ganaderia" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🥩</span>
         <h2>Ganadería</h2>
+        <span class="toggle-text">▲ Ocultar</span>
     </div>
+    <div class="collapsible-content">
     <p style="font-size:0.84rem;color:var(--text2);margin-top:-8px;">Los informes de ganadería bovina —tanto Uruguay como mundial— están incluidos en las secciones correspondientes arriba.</p>
     <div class="grid">
-        <a href="ganaderia_uruguay_2.html" class="card meat" target="_blank" rel="noopener noreferrer">
+        <div class="card meat">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Ganadería Uruguay</span>
                 <h3>Ganadería Bovina Uruguay</h3>
                 <p class="desc">Stock bovino, faena, exportaciones de carne y ganado en pie.</p>
             </div>
+            <div class="summary" id="sum-gan">
+                <div class="summary-inner">
+                    <strong>Pilar económico:</strong> Genera +20% de las exportaciones de bienes, emplea 90.000 personas y aporta ~USD 700 M anuales en impuestos. Uruguay es el N.°1 exportador de carne per cápita del mundo.<br><br>
+                    <strong>Rodeo estable:</strong> 11,5 millones de cabezas (jun. 2024), −3,6% ia., por debajo del promedio de la década (11,7 M). Trazabilidad individual completa vía SNIG.<br><br>
+                    <strong>Desafío comercial:</strong> Alta concentración en China. Desventaja arancelaria: paga 38,5% en Japón vs. 9% de Australia (CPTPP). Tiempos de transporte de 42 días promedio, el mayor entre exportadores globales.<br><br>
+                    <strong>Productividad:</strong> Ventajas en calidad y sostenibilidad (grass-fed, natural), pero productividad agregada estancada desde mediados de los 2000. Brechas de eficiencia persistentes entre productores. Precios récord históricos a 2025.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-gan').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="ganaderia_uruguay_2.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--red);">Leer informe →</a>
+                </span>
             </div>
-        </a>
+        </div>
+    </div>
     </div>
 
     <!-- PRODUCTIVIDAD -->
-    <div class="section-label" id="productividad">
-        <div class="dot" style="background:var(--purple);"></div>
+    <div class="section-label collapsible" id="productividad" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">📈</span>
         <h2>Productividad &amp; Análisis</h2>
+        <span class="toggle-text">▲ Ocultar</span>
     </div>
+    <div class="collapsible-content">
     <div class="grid">
-        <a href="informe_tfp_agricola_internacional.html" class="card prod" target="_blank" rel="noopener noreferrer">
+        <div class="card prod">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Productividad TFP</span>
                 <h3>Productividad Agrícola Total Internacional</h3>
                 <p class="desc">Análisis de productividad total de factores (TFP) agrícola a nivel mundial. Datos USDA-ERS AgTFPInt2023. Tendencias de eficiencia y crecimiento por región.</p>
             </div>
+            <div class="summary" id="sum-tfp">
+                <div class="summary-inner">
+                    <strong>Tendencia global:</strong> Producción agrícola mundial creció +325% desde 1961 con insumos +125%. TFP mundial en 106,2 (base 2015=100). Tres fases: estancamiento (1961–80), aceleración (1980–2015), desaceleración post-2015.<br><br>
+                    <strong>Por región (TFP 2023):</strong> Asia lidera con 111,1 (China motor), Europa 107,7 (eficiencia con reducción de insumos), América del Norte 104,6, LAC 103,8, África Subsahariana 101,8 (crecimiento extensivo). Países de bajo ingreso en 92,8 — único grupo bajo el nivel base.<br><br>
+                    <strong>Uruguay: caída preocupante:</strong> TFP cayó de 123,9 en 2000 a 83,2 en 2023 (−32,9%). Era líder regional, hoy está por debajo del nivel base. Ningún otro país grande de LAC registró una contracción de esta magnitud. En contraste, Brasil subió de 60 a 112 y Chile de 67 a 124.<br><br>
+                    <strong>Paradoja uruguaya:</strong> País con instituciones sólidas, base tecnológica y sector exportador activo perdió más de un tercio de su eficiencia agrícola relativa en dos décadas. La pregunta crítica sigue abierta.
+                </div>
+            </div>
             <div class="foot">
                 <span class="date">Abril 2026</span>
-                <span class="cta">Leer informe →</span>
+                <span style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn-resumen" onclick="event.stopPropagation();document.getElementById('sum-tfp').classList.toggle('open');this.textContent=this.textContent==='Ver resumen'?'Cerrar resumen':'Ver resumen';">Ver resumen</button>
+                    <a href="informe_tfp_agricola_internacional.html" target="_blank" rel="noopener noreferrer" class="cta" style="text-decoration:none;color:var(--purple);">Leer informe →</a>
+                </span>
             </div>
-        </a>
+        </div>
+    </div>
     </div>
     <!-- NOTAS EN MEDIOS -->
-    <div class="section-label" id="medios">
-        <div class="dot" style="background:var(--blue);"></div>
+    <div class="section-label collapsible" id="medios" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">📰</span>
         <h2>Notas en Medios</h2>
+        <span class="toggle-text">▲ Ocultar</span>
     </div>
-
+    <div class="collapsible-content">
     <div class="grid">
-        <a href="https://x.com/federacionrural/status/2044229726676336953?s=20" target="_blank" rel="noopener noreferrer" class="card gl">
+        <a href="https://x.com/federacionrural/status/2044229726676336953?s=20" target="_blank" rel="noopener noreferrer" class="card m-fr">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Federación Rural</span>
@@ -286,7 +585,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                 <span class="cta">Leer nota →</span>
             </div>
         </a>
-        <a href="https://soundcloud.com/milton-ramallo/2026-03-04-10-33?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener noreferrer" class="card gl">
+        <a href="https://soundcloud.com/milton-ramallo/2026-03-04-10-33?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener noreferrer" class="card m-pe">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Punto de Equilibrio</span>
@@ -299,7 +598,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             </div>
         </a>
 
-        <a href="https://todoelcampo.com.uy/economia-uruguaya-la-casa-en-orden-o-en-desorden/" target="_blank" rel="noopener noreferrer" class="card gl">
+        <a href="https://todoelcampo.com.uy/economia-uruguaya-la-casa-en-orden-o-en-desorden/" target="_blank" rel="noopener noreferrer" class="card m-tec">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">TodoElCampo</span>
@@ -311,7 +610,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                 <span class="cta">Leer nota →</span>
             </div>
         </a>
-        <a href="https://rurales.elpais.com.uy/mercados/federacion-rural-no-quiere-un-valor-del-dolar-a-gusto-propio" target="_blank" rel="noopener noreferrer" class="card gl">
+        <a href="https://rurales.elpais.com.uy/mercados/federacion-rural-no-quiere-un-valor-del-dolar-a-gusto-propio" target="_blank" rel="noopener noreferrer" class="card m-ep">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">Rurales El País</span>
@@ -323,7 +622,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                 <span class="cta">Leer nota →</span>
             </div>
         </a>
-        <a href="https://todoelcampo.com.uy/ec-ramallo-los-costos-lesionan-la-rentabilidad/" target="_blank" rel="noopener noreferrer" class="card gl">
+        <a href="https://todoelcampo.com.uy/ec-ramallo-los-costos-lesionan-la-rentabilidad/" target="_blank" rel="noopener noreferrer" class="card m-tec">
             <div class="stripe"></div>
             <div class="body">
                 <span class="tag">TodoElCampo</span>
@@ -335,13 +634,28 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                 <span class="cta">Leer nota →</span>
             </div>
         </a>
+        <a href="https://www.elpais.com.uy/economia-y-mercado/milton-ramallo-asesor-de-la-federacion-rural-2025-sera-un-buen-ano-para-el-agro-pero-con-incertidumbre" target="_blank" rel="noopener noreferrer" class="card m-ep">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">El País</span>
+                <h3>Milton Ramallo, asesor de la Federación Rural: 2025 será un buen año para el agro, pero con incertidumbre</h3>
+                <p class="desc">El asesor de la Federación Rural del Uruguay explicó que el endeudamiento de las empresas agropecuarias lleva tres ejercicios al alza, para mantener las unidades en actividad.</p>
+            </div>
+            <div class="foot">
+                <span class="date">Febrero 2025</span>
+                <span class="cta">Leer nota →</span>
+            </div>
+        </a>
         <!-- acá podés seguir agregando otras notas -->
     </div>
-    <!-- ======== REDES ======== -->
-    <div class="section-label" id="redes">
-        <div class="dot" style="background:var(--dark);"></div>
-        <h2>Redes &amp; Contacto</h2>
     </div>
+    <!-- ======== REDES ======== -->
+    <div class="section-label collapsible" id="redes" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🔗</span>
+        <h2>Redes &amp; Contacto</h2>
+        <span class="toggle-text">▲ Ocultar</span>
+    </div>
+    <div class="collapsible-content">
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 48px;">
         <a href="https://x.com/mltn1980" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#000;color:#fff;border-radius:8px;text-decoration:none;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Mono',monospace;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#fff"/></svg>
@@ -364,21 +678,13 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             Email
         </a>
     </div>
+    <p style="font-size:0.82rem;color:var(--text2);margin-top:-36px;margin-bottom:48px;">Consultas o propuestas comerciales: <a href="mailto:contacto@ceterisparibus-uy.com" style="color:var(--text);font-weight:600;">contacto@ceterisparibus-uy.com</a> · Montevideo, Uruguay 🇺🇾</p>
+    </div>
     <!-- SOBRE -->
     <div class="about">
         <h2>Sobre ceterisparibus-uy</h2>
         <p>Esta plataforma reúne informes y análisis consolidados sobre mercados agrícolas, commodities y economía, con especial foco en Uruguay y la región. Los reportes se elaboran a partir de fuentes oficiales, sintetizando datos complejos en formatos claros y accesibles.</p>
         <p>El objetivo es democratizar el acceso a información agropecuaria de calidad para productores, analistas, inversores y tomadores de decisiones.</p>
-    </div>
-    <!-- CONTACTO -->
-    <div class="section-label" id="contacto">
-        <div class="dot" style="background:var(--dark);"></div>
-        <h2>Contacto</h2>
-    </div>
-    <div class="about">
-        <p>Para consultas, colaboraciones o propuestas comerciales:</p>
-        <p><strong>Email:</strong> contacto@ceterisparibus-uy.com</p>
-        <p>Montevideo, Uruguay 🇺🇾</p>
     </div>
 </main>
 <footer>
@@ -404,15 +710,25 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     });
 
     window.addEventListener("scroll", () => {
-        if (clickedId) return; // no pisar el click
+        if (clickedId) return;
 
         let current = "";
         const atBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 50);
 
         if (atBottom) {
-            // Si llegó al fondo, activar la última sección del nav
-            const lastLink = navLinks[navLinks.length - 1];
-            current = lastLink.getAttribute("href").replace("#","");
+            // Al fondo: buscar la sección cuyo título esté más cerca del centro de pantalla
+            let bestDist = Infinity;
+            const viewCenter = window.scrollY + window.innerHeight / 2;
+            sections.forEach(section => {
+                const id = section.getAttribute("id");
+                const hasLink = document.querySelector('nav a[href="#'+id+'"]');
+                if (!hasLink) return;
+                const dist = Math.abs(section.offsetTop - viewCenter);
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    current = id;
+                }
+            });
         } else {
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;

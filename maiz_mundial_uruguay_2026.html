@@ -40,7 +40,7 @@ body {
 .ticker {
   background:var(--corn);
   overflow:hidden;
-  height:34px;
+  height:40px;
   display:flex;
   align-items:center;
   position:sticky;
@@ -59,13 +59,15 @@ body {
 }
 .ticker-item {
   font-family:'IBM Plex Mono',monospace;
-  font-size:11px;font-weight:600;
+  font-size:13px;font-weight:600;
   color:#0A0D0A;
   padding:0 32px;
   border-right:1px solid rgba(0,0,0,0.15);
-  display:flex;align-items:center;gap:8px;height:34px;
+  display:flex;align-items:center;gap:8px;height:40px;
 }
 .ticker-item .sep { opacity:.4; }
+.ticker-up { color:#1a6b2a; font-weight:700; }
+.ticker-dn { color:#8b1a1a; font-weight:700; }
 
 /* ─── HERO ─── */
 .hero {
@@ -94,7 +96,7 @@ body {
 @media(max-width:700px){ .hero-top{grid-template-columns:1fr;} }
 .hero-tag {
   font-family:'IBM Plex Mono',monospace;
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  font-size:13px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--corn);margin-bottom:16px;
   display:flex;align-items:center;gap:10px;
 }
@@ -120,7 +122,7 @@ body {
 .hk:last-child{border-bottom:none;}
 .hk-l {
   font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--corn);margin-bottom:5px;
 }
 .hk-v {
@@ -129,7 +131,7 @@ body {
 }
 .hk-d {
   font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;font-weight:600;margin-top:4px;
+  font-size:12px;font-weight:600;margin-top:4px;
 }
 .dup{color:var(--green);}
 .ddn{color:var(--red);}
@@ -150,10 +152,10 @@ body {
   border-right:1px solid var(--edge2);
   border-bottom:1px solid var(--edge2);
 }
-.ss-l{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--corn);margin-bottom:7px;}
+.ss-l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--corn);margin-bottom:7px;}
 .ss-v{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--white);line-height:1;}
-.ss-u{font-size:11px;color:var(--txt2);margin-top:3px;}
-.ss-d{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;margin-top:6px;}
+.ss-u{font-size:13px;color:var(--txt2);margin-top:3px;}
+.ss-d{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;margin-top:6px;}
 @media(max-width:800px){ .stat-strip{grid-template-columns:1fr 1fr;} }
 @media(max-width:480px){ .stat-strip{grid-template-columns:1fr;} }
 
@@ -161,21 +163,22 @@ body {
 .nav {
   background:var(--bg2);
   border-bottom:1px solid var(--edge2);
-  position:sticky;top:0;z-index:100;
+  position:sticky;top:40px;z-index:100;
   overflow-x:auto;scrollbar-width:none;
 }
 .nav::-webkit-scrollbar{display:none;}
 .nav ul{max-width:1100px;margin:0 auto;padding:0 48px;display:flex;list-style:none;}
 .nav a {
-  display:block;padding:13px 16px;
+  display:block;padding:14px 18px;
   font-family:'IBM Plex Mono',monospace;
-  font-size:10px;font-weight:600;
+  font-size:13px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;
   color:var(--txt2);text-decoration:none;white-space:nowrap;
   border-bottom:2px solid transparent;
-  transition:color .15s,border-color .15s;
+  transition:color .2s,border-color .2s;
 }
 .nav a:hover{color:var(--corn);border-bottom-color:var(--corn);}
+.nav a.active{color:var(--corn);border-bottom-color:var(--corn);}
 
 /* ─── LAYOUT ─── */
 .wrap{max-width:1100px;margin:0 auto;padding:0 48px;}
@@ -200,7 +203,7 @@ section:last-of-type{border-bottom:none;}
 .sh-inner { padding-top:8px; }
 .sh-tag {
   font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--corn);margin-bottom:8px;
 }
 .sh-title {
@@ -254,7 +257,7 @@ h3:first-child{margin-top:0;}
 .kc.grn::before{background:var(--green);}
 .kc-l{
   font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--corn);margin-bottom:9px;
 }
 .kc.red .kc-l{color:var(--red);}
@@ -263,8 +266,8 @@ h3:first-child{margin-top:0;}
   font-family:'Bebas Neue',sans-serif;
   font-size:44px;color:var(--white);line-height:1;
 }
-.kc-u{font-size:12px;color:var(--txt2);margin-top:3px;}
-.kc-d{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;margin-top:9px;}
+.kc-u{font-size:13px;color:var(--txt2);margin-top:3px;}
+.kc-d{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;margin-top:9px;}
 
 /* ─── PANELS ─── */
 .panel{
@@ -275,7 +278,7 @@ h3:first-child{margin-top:0;}
 }
 .panel.red{background:var(--red-bg);border-color:rgba(255,90,90,.15);border-left-color:var(--red);}
 .panel.grn{background:var(--grn-bg);border-color:rgba(76,201,122,.15);border-left-color:var(--green);}
-.panel p{margin:0;font-size:14.5px;}
+.panel p{margin:0;font-size:15px;}
 
 /* ─── ALERT ─── */
 .alrt{
@@ -285,30 +288,30 @@ h3:first-child{margin-top:0;}
 }
 .alrt-h{
   font-family:'IBM Plex Mono',monospace;
-  font-size:11px;font-weight:600;letter-spacing:.1em;
+  font-size:13px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--red);
   margin-bottom:10px;
   display:flex;align-items:center;gap:8px;
 }
 .alrt-h::before{content:'⚠';}
-.alrt p{margin:0;font-size:14.5px;}
+.alrt p{margin:0;font-size:15px;}
 
 /* ─── TABLES ─── */
 .dt{width:100%;border-collapse:collapse;margin:18px 0;}
 .dt thead{border-bottom:1px solid var(--corn);}
 .dt th{
   font-family:'IBM Plex Mono',monospace;
-  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--corn);padding:10px 12px;text-align:left;
   background:var(--corn-bg);
 }
 .dt td{
-  padding:9px 12px;font-size:14.5px;
+  padding:9px 12px;font-size:15px;
   border-bottom:1px solid var(--edge);
   color:var(--txt2);font-weight:300;
 }
 .dt tr:hover td{background:rgba(245,200,66,0.03);}
-.dt td.n{font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;}
+.dt td.n{font-family:'IBM Plex Mono',monospace;font-size:14px;text-align:right;}
 .dt td.pos{color:var(--green);font-weight:600;}
 .dt td.neg{color:var(--red);font-weight:600;}
 .dt td.b{font-weight:600;color:var(--txt);font-size:15px;}
@@ -327,32 +330,32 @@ h3:first-child{margin-top:0;}
   display:grid;grid-template-columns:148px 1fr 95px;
   align-items:center;gap:12px;margin-bottom:8px;
 }
-.bar-l{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt2);text-align:right;}
+.bar-l{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--txt2);text-align:right;}
 .bar-t{height:9px;background:var(--bg3);border-radius:1px;overflow:hidden;}
 .bar-f{height:100%;border-radius:1px;background:var(--corn);}
 .bar-f.g{background:var(--green);}
 .bar-f.r{background:var(--red);}
 .bar-f.d{background:rgba(245,200,66,.28);}
-.bar-v{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt);}
+.bar-v{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--txt);}
 
 /* ─── PRICE TABLE ─── */
 .price-row{
-  display:grid;grid-template-columns:130px 1fr 75px 60px;
-  align-items:center;gap:12px;
+  display:grid;grid-template-columns:160px 80px 90px 1fr;
+  align-items:center;gap:16px;
   padding:10px 0;border-bottom:1px solid var(--edge);
 }
 .price-row:last-child{border-bottom:none;}
-.pr-n{font-size:13.5px;font-weight:600;color:var(--txt);}
+.pr-n{font-size:15px;font-weight:600;color:var(--txt);}
 .pr-bar{height:8px;background:var(--bg3);border-radius:1px;overflow:hidden;}
 .pr-bar-f{height:100%;border-radius:1px;}
-.pr-v{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;font-weight:600;}
-.pr-d{font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:right;}
+.pr-v{font-family:'IBM Plex Mono',monospace;font-size:14px;text-align:right;font-weight:600;}
+.pr-d{font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:right;}
 
 /* ─── DIVIDER ─── */
 .div{
   display:flex;align-items:center;gap:12px;margin:26px 0;
   font-family:'IBM Plex Mono',monospace;
-  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--txt3);
 }
 .div::before,.div::after{content:'';flex:1;height:1px;background:var(--edge);}
@@ -361,7 +364,7 @@ h3:first-child{margin-top:0;}
 .chart-wrap{position:relative;width:100%;}
 .chart-legend{
   display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;
-  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt2);
+  font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--txt2);
 }
 .cleg{display:flex;align-items:center;gap:6px;}
 .cleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
@@ -378,47 +381,158 @@ h3:first-child{margin-top:0;}
 }
 .bq cite{
   font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--corn);font-style:normal;
 }
 
-/* ─── CONCLUSIONS ─── */
-.con{
-  background:var(--bg2);border:1px solid var(--edge);
-  padding:26px;position:relative;overflow:hidden;
+/* ─── CONCLUSIONS REDESIGN ─── */
+.conclusions-section {
+  background: linear-gradient(180deg, var(--bg) 0%, rgba(245,200,66,0.04) 50%, var(--bg) 100%);
+  border-top: 1px solid var(--edge2);
+  border-bottom: none !important;
 }
-.con::after{
-  content:attr(data-n);
-  font-family:'Bebas Neue',sans-serif;font-size:100px;
-  color:rgba(245,200,66,0.05);
-  position:absolute;bottom:-14px;right:12px;
-  line-height:1;pointer-events:none;
+.conclusions-intro {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 52px;
 }
-.con-tag{
-  font-family:'IBM Plex Mono',monospace;font-size:9.5px;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--corn);margin-bottom:10px;
+.conclusions-intro p {
+  font-size: 17px;
+  font-style: italic;
+  color: var(--txt2);
+  line-height: 1.7;
 }
-.con-h{
-  font-family:'Bebas Neue',sans-serif;font-size:21px;
-  letter-spacing:.03em;color:var(--white);
-  margin-bottom:12px;line-height:1.2;max-width:96%;
+.con-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
 }
-.con-b{font-size:14px;color:var(--txt2);line-height:1.8;}
-.con-b strong{color:var(--txt);font-weight:600;}
+.con-grid-last {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+@media(max-width:800px){ .con-grid{ grid-template-columns:1fr; } }
+.con2 {
+  background: var(--bg2);
+  border: 1px solid var(--edge);
+  border-top: 3px solid var(--corn);
+  padding: 32px 28px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.con2:hover {
+  border-top-color: var(--corn);
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.2), 0 8px 32px rgba(0,0,0,0.3);
+}
+.con2.full {
+  border-top-color: var(--corn2);
+  background: rgba(245,200,66,0.06);
+}
+.con2-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  color: rgba(245,200,66,0.12);
+  line-height: 1;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  pointer-events: none;
+  user-select: none;
+}
+.con2-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--corn);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.con2-tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--corn);
+  flex-shrink: 0;
+}
+.con2-h {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: .03em;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1.2;
+  max-width: 92%;
+}
+.con2.full .con2-h {
+  font-size: 28px;
+}
+.con2-b {
+  font-size: 14.5px;
+  color: var(--txt2);
+  line-height: 1.8;
+}
+.con2-b strong {
+  color: var(--txt);
+  font-weight: 600;
+}
+.con2-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 16px;
+}
+.con2-divider::before, .con2-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--edge2);
+}
+.con2-divider span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--corn);
+  white-space: nowrap;
+}
+
 
 /* ─── FN ─── */
-.fn{font-size:11.5px;color:var(--txt3);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--edge);line-height:1.65;}
+.fn{font-size:13px;color:var(--txt3);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--edge);line-height:1.65;}
 .mt16{margin-top:16px;}.mt24{margin-top:24px;}.mt32{margin-top:32px;}
 
 /* ─── FOOTER ─── */
-footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px;}
+footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:40px 48px;}
 .fi{
   max-width:1100px;margin:0 auto;
+  display:flex;flex-direction:column;gap:28px;
+}
+.fi-top{
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
 }
 .fi-brand{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em;color:var(--white);}
-.fi-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--txt3);text-align:right;line-height:2;}
+.fi-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  border-top:1px solid var(--edge);padding-top:24px;
+}
+@media(max-width:700px){.fi-grid{grid-template-columns:1fr;}}
+.fi-block-title{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--corn);margin-bottom:12px;
+}
+.fi-block p{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;color:var(--txt3);line-height:1.9;margin:0;
+}
+.fi-block p strong{color:var(--txt2);font-weight:600;}
 </style>
 </head>
 <body>
@@ -426,20 +540,20 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
     <!-- TICKER -->
     <div class="ticker">
         <div class="ticker-inner">
-            <div class="ticker-item">🌽 MAÍZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN RÉCORD 1,301 MMT <span class="sep">+5.7%</span></div>
-            <div class="ticker-item">🇺🇸 EE.UU. 432.3 MMT <span class="sep">+14.3%</span></div>
-            <div class="ticker-item">🇧🇷 BRASIL 132 MMT <span class="sep">−2.9%</span></div>
-            <div class="ticker-item">🇦🇷 ARGENTINA 52 MMT <span class="sep">+4%</span></div>
-            <div class="ticker-item">🇺🇾 URUGUAY 1.2 MMT <span class="sep">−38%</span></div>
+            <div class="ticker-item">🌽 MAÍZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN RÉCORD 1,301 MMT <span class="ticker-up">+5.7%</span></div>
+            <div class="ticker-item">🇺🇸 EE.UU. 432.3 MMT <span class="ticker-up">+14.3%</span></div>
+            <div class="ticker-item">🇧🇷 BRASIL 132 MMT <span class="ticker-dn">−2.9%</span></div>
+            <div class="ticker-item">🇦🇷 ARGENTINA 52 MMT <span class="ticker-up">+4%</span></div>
+            <div class="ticker-item">🇺🇾 URUGUAY 1.2 MMT <span class="ticker-dn">−38%</span></div>
             <div class="ticker-item">FOB ARG US$209/T <span class="sep">·</span> FOB BRA US$225/T <span class="sep">·</span> FOB EE.UU. US$217/T</div>
-            <div class="ticker-item">🇺🇾 EXPORTACIONES UY 2025/26 = CERO <span class="sep">·</span> REVERTIDO DESDE 300K TMM</div>
-            <div class="ticker-item">🌽 MAÍZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN RÉCORD 1,301 MMT <span class="sep">+5.7%</span></div>
-            <div class="ticker-item">🇺🇸 EE.UU. 432.3 MMT <span class="sep">+14.3%</span></div>
-            <div class="ticker-item">🇧🇷 BRASIL 132 MMT <span class="sep">−2.9%</span></div>
-            <div class="ticker-item">🇦🇷 ARGENTINA 52 MMT <span class="sep">+4%</span></div>
-            <div class="ticker-item">🇺🇾 URUGUAY 1.2 MMT <span class="sep">−38%</span></div>
+            <div class="ticker-item">🇺🇾 EXPORTACIONES UY 2025/26 = CERO <span class="sep">·</span> REVERTIDO DESDE 300K TM</div>
+            <div class="ticker-item">🌽 MAÍZ MUNDIAL 2025/26 <span class="sep">·</span> PRODUCCIÓN RÉCORD 1,301 MMT <span class="ticker-up">+5.7%</span></div>
+            <div class="ticker-item">🇺🇸 EE.UU. 432.3 MMT <span class="ticker-up">+14.3%</span></div>
+            <div class="ticker-item">🇧🇷 BRASIL 132 MMT <span class="ticker-dn">−2.9%</span></div>
+            <div class="ticker-item">🇦🇷 ARGENTINA 52 MMT <span class="ticker-up">+4%</span></div>
+            <div class="ticker-item">🇺🇾 URUGUAY 1.2 MMT <span class="ticker-dn">−38%</span></div>
             <div class="ticker-item">FOB ARG US$209/T <span class="sep">·</span> FOB BRA US$225/T <span class="sep">·</span> FOB EE.UU. US$217/T</div>
-            <div class="ticker-item">🇺🇾 EXPORTACIONES UY 2025/26 = CERO <span class="sep">·</span> REVERTIDO DESDE 300K TMM</div>
+            <div class="ticker-item">🇺🇾 EXPORTACIONES UY 2025/26 = CERO <span class="sep">·</span> REVERTIDO DESDE 300K TM</div>
         </div>
     </div>
 
@@ -447,7 +561,7 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
     <header class="hero">
         <div class="hero-top">
             <div>
-                <p class="hero-tag">USDA · FAS/ERS · Informes Abril 2026 · WASDE-584</p>
+                <p class="hero-tag">USDA · Informes Abril 2026</p>
                 <h1>MAÍZ<br><span>2025/26</span></h1>
                 <p class="hero-sub">Mercado mundial en récord histórico — Uruguay en mínimos por sequía</p>
             </div>
@@ -455,19 +569,19 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 <div class="hk">
                     <div class="hk-l">Producción mundial</div>
                     <div class="hk-v">1,301</div>
-                    <p style="font-size:11px;color:var(--txt2);margin:2px 0 4px;">MMT · Récord absoluto</p>
+                    <p style="font-size:13px;color:var(--txt2);margin:2px 0 4px;">MMT · Récord absoluto</p>
                     <div class="hk-d dup">▲ +5.7% vs. 2024/25</div>
                 </div>
                 <div class="hk">
                     <div class="hk-l">Uruguay 2025/26</div>
                     <div class="hk-v">1.2</div>
-                    <p style="font-size:11px;color:var(--txt2);margin:2px 0 4px;">MMT · Sequía severa</p>
+                    <p style="font-size:13px;color:var(--txt2);margin:2px 0 4px;">MMT · Sequía severa</p>
                     <div class="hk-d ddn">▼ −38% · Exportaciones: 0</div>
                 </div>
                 <div class="hk">
                     <div class="hk-l">FOB Argentina (7 abr)</div>
                     <div class="hk-v">$209</div>
-                    <p style="font-size:11px;color:var(--txt2);margin:2px 0 4px;">US$/ton · Origen más barato</p>
+                    <p style="font-size:13px;color:var(--txt2);margin:2px 0 4px;">US$/ton · Origen más barato</p>
                     <div class="hk-d ddn">▼ −5% vs. abr 2025</div>
                 </div>
             </div>
@@ -555,34 +669,33 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 </div>
             </div>
 
-            <div class="div">Producción de maíz por país · Miles de TM · USDA WAP Abril 2026</div>
+            <div class="div">Producción de maíz por país · Miles de Ton. · USDA WAP Abril 2026</div>
 
             <table class="dt">
                 <thead>
                     <tr>
                         <th>País / Región</th>
-                        <th class="n">Área Cosechada (Mha)</th>
-                        <th class="n">Rendimiento (t/ha)</th>
+                        <th class="n">Área Cos. (Mil has)</th>
+                        <th class="n">Rend. (ton/ha)</th>
                         <th class="n">2023/24</th>
                         <th class="n">2024/25</th>
-                        <th class="n">2025/26 Mar</th>
                         <th class="n">2025/26 Abr</th>
                         <th class="n">Δ anual</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tot"><td>🌍 World Total</td><td class="n">211.95</td><td class="n">6.14</td><td class="n">1,231.1</td><td class="n">1,231.4</td><td class="n">1,297.4</td><td class="n">1,301.1</td><td class="n pos">+5.7%</td></tr>
-                    <tr><td class="b">🇺🇸 EE.UU.</td><td class="n">36.93</td><td class="n">11.71</td><td class="n">389.7</td><td class="n">378.3</td><td class="n">432.3</td><td class="n">432.3</td><td class="n pos">+14.3%</td></tr>
-                    <tr><td class="b">🇨🇳 China</td><td class="n">44.96</td><td class="n">6.70</td><td class="n">288.8</td><td class="n">294.9</td><td class="n">301.2</td><td class="n">301.2</td><td class="n pos">+2.1%</td></tr>
-                    <tr><td class="b">🇧🇷 Brasil</td><td class="n">22.80</td><td class="n">5.79</td><td class="n">119.0</td><td class="n">136.0</td><td class="n">132.0</td><td class="n">132.0</td><td class="n neg">−2.9%</td></tr>
-                    <tr><td class="b">🇦🇷 Argentina</td><td class="n">7.50</td><td class="n">6.93</td><td class="n">51.6</td><td class="n">50.0</td><td class="n">52.0</td><td class="n">52.0</td><td class="n pos">+4.0%</td></tr>
-                    <tr><td class="b">🇺🇦 Ucrania</td><td class="n">4.37</td><td class="n">7.03</td><td class="n">32.5</td><td class="n">26.8</td><td class="n">30.7</td><td class="n">30.7</td><td class="n pos">+14.6%</td></tr>
-                    <tr><td class="b">🇮🇳 India</td><td class="n">13.00</td><td class="n">3.55</td><td class="n">37.7</td><td class="n">42.3</td><td class="n">43.0</td><td class="n">46.2</td><td class="n pos">+9.3%</td></tr>
-                    <tr><td class="b">🇲🇽 México</td><td class="n">6.70</td><td class="n">3.84</td><td class="n">23.6</td><td class="n">23.1</td><td class="n">25.7</td><td class="n">25.7</td><td class="n pos">+11.3%</td></tr>
-                    <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">8.19</td><td class="n">6.94</td><td class="n">62.0</td><td class="n">59.6</td><td class="n">57.0</td><td class="n">56.8</td><td class="n neg">−4.7%</td></tr>
-                    <tr><td class="b">🇿🇦 Sudáfrica</td><td class="n">3.08</td><td class="n">5.63</td><td class="n">13.4</td><td class="n">17.3</td><td class="n">16.5</td><td class="n">17.3</td><td class="n pos">+0.2%</td></tr>
-                    <tr><td class="b">🇮🇩 Indonesia</td><td class="n">3.55</td><td class="n">3.75</td><td class="n">12.7</td><td class="n">13.1</td><td class="n">13.0</td><td class="n">13.3</td><td class="n pos">+1.5%</td></tr>
-                    <tr class="hl"><td class="b">🇺🇾 Uruguay</td><td class="n">0.25</td><td class="n neg">4.80</td><td class="n">0.8</td><td class="n">1.95</td><td class="n">1.80</td><td class="n neg">1.20</td><td class="n neg">−38.5%</td></tr>
+                    <tr class="tot"><td>🌍 World Total</td><td class="n">211.95</td><td class="n">6.14</td><td class="n">1,231.1</td><td class="n">1,231.4</td><td class="n">1,301.1</td><td class="n pos">+5.7%</td></tr>
+                    <tr><td class="b">🇺🇸 EE.UU.</td><td class="n">36.93</td><td class="n">11.71</td><td class="n">389.7</td><td class="n">378.3</td><td class="n">432.3</td><td class="n pos">+14.3%</td></tr>
+                    <tr><td class="b">🇨🇳 China</td><td class="n">44.96</td><td class="n">6.70</td><td class="n">288.8</td><td class="n">294.9</td><td class="n">301.2</td><td class="n pos">+2.1%</td></tr>
+                    <tr><td class="b">🇧🇷 Brasil</td><td class="n">22.80</td><td class="n">5.79</td><td class="n">119.0</td><td class="n">136.0</td><td class="n">132.0</td><td class="n neg">−2.9%</td></tr>
+                    <tr><td class="b">🇦🇷 Argentina</td><td class="n">7.50</td><td class="n">6.93</td><td class="n">51.6</td><td class="n">50.0</td><td class="n">52.0</td><td class="n pos">+4.0%</td></tr>
+                    <tr><td class="b">🇺🇦 Ucrania</td><td class="n">4.37</td><td class="n">7.03</td><td class="n">32.5</td><td class="n">26.8</td><td class="n">30.7</td><td class="n pos">+14.6%</td></tr>
+                    <tr><td class="b">🇮🇳 India</td><td class="n">13.00</td><td class="n">3.55</td><td class="n">37.7</td><td class="n">42.3</td><td class="n">46.2</td><td class="n pos">+9.3%</td></tr>
+                    <tr><td class="b">🇲🇽 México</td><td class="n">6.70</td><td class="n">3.84</td><td class="n">23.6</td><td class="n">23.1</td><td class="n">25.7</td><td class="n pos">+11.3%</td></tr>
+                    <tr><td class="b">🇪🇺 Unión Europea</td><td class="n">8.19</td><td class="n">6.94</td><td class="n">62.0</td><td class="n">59.6</td><td class="n">56.8</td><td class="n neg">−4.7%</td></tr>
+                    <tr><td class="b">🇿🇦 Sudáfrica</td><td class="n">3.08</td><td class="n">5.63</td><td class="n">13.4</td><td class="n">17.3</td><td class="n">17.3</td><td class="n pos">+0.2%</td></tr>
+                    <tr><td class="b">🇮🇩 Indonesia</td><td class="n">3.55</td><td class="n">3.75</td><td class="n">12.7</td><td class="n">13.1</td><td class="n">13.3</td><td class="n pos">+1.5%</td></tr>
+                    <tr class="hl"><td class="b">🇺🇾 Uruguay</td><td class="n">0.25</td><td class="n neg">4.80</td><td class="n">0.8</td><td class="n">1.95</td><td class="n neg">1.20</td><td class="n neg">−38.5%</td></tr>
                 </tbody>
             </table>
             <p class="fn">Fuente: USDA FAS — World Agricultural Production, Tabla 04, Abril 2026. Columnas Mar/Abr muestran revisiones del WASDE-584 vs. mes anterior. Uruguay sufre el mayor recorte porcentual de todos los países incluidos en la tabla.</p>
@@ -610,7 +723,7 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 <div>
                     <h3>Balance oferta-uso EE.UU.</h3>
                     <div style="background:var(--bg2);border:1px solid var(--edge);padding:0;overflow:hidden;">
-                        <div style="background:var(--bg3);padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--corn);">EE.UU. MAÍZ 2025/26 (MMT)</div>
+                        <div style="background:var(--bg3);padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--corn);">EE.UU. MAÍZ 2025/26 (MMT)</div>
                         <div style="padding:2px 0;">
                             <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Stocks iniciales</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;">39.4</span></div>
                             <div style="display:flex;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--edge);font-size:14px;"><span style="color:var(--txt2);">Producción</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);">432.3</span></div>
@@ -675,48 +788,51 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 </div>
             </div>
 
-            <div class="g2">
-                <div>
-                    <h3>Estructura de precios FOB</h3>
-                    <div class="mt16">
-                        <div class="price-row">
-                            <span class="pr-n">🇦🇷 Argentina</span>
-                            <div class="pr-bar"><div class="pr-bar-f" style="width:96%;height:100%;background:var(--green);"></div></div>
-                            <span class="pr-v" style="color:var(--green);">$209</span>
-                            <span class="pr-d dup">+$1 vs. mar</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="pr-n">🇺🇸 EE.UU. (3YC)</span>
-                            <div class="pr-bar"><div class="pr-bar-f" style="width:100%;height:100%;background:var(--corn);"></div></div>
-                            <span class="pr-v" style="color:var(--corn);">$217</span>
-                            <span class="pr-d ddn">−$4 vs. mar</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="pr-n">🇺🇦 Ucrania</span>
-                            <div class="pr-bar"><div class="pr-bar-f" style="width:104%;height:100%;background:rgba(245,200,66,.45);"></div></div>
-                            <span class="pr-v">$227</span>
-                            <span class="pr-d dup">+$2 vs. mar</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="pr-n">🇧🇷 Brasil</span>
-                            <div class="pr-bar"><div class="pr-bar-f" style="width:108%;height:100%;background:rgba(245,200,66,.3);"></div></div>
-                            <span class="pr-v">$225</span>
-                            <span class="pr-d ddn">−$4 vs. mar</span>
-                        </div>
-                    </div>
-                    <p class="fn">Fuente: International Grains Council / USDA FAS Grain WMT Abr. 2026. Argentina Up River; EE.UU. Gulf No.3 Yellow Corn; Ucrania Black Sea; Brasil Paranaguá.</p>
-                </div>
+            <!-- TEXTO ARRIBA: dos columnas full width -->
+            <div class="g2" style="margin-bottom:32px;">
                 <div>
                     <h3>Análisis de la estructura de precios</h3>
                     <p>Argentina mantiene la posición más competitiva con <strong>$209/ton</strong>, seguida de cerca por EE.UU. ($217/ton, −$4 en el mes tras el récord de stocks NASS). La diferencia de $8/ton entre Argentina y EE.UU. es relativamente pequeña en términos históricos, pero en un mercado con excedentes significativos es suficiente para que los compradores asiáticos y europeos prefieran el origen sudamericano.</p>
                     <p>Brasil cotiza $225/ton, por encima de EE.UU. Esto refleja los costos de logística del interior brasileño hacia los puertos y la apreciación relativa del real. Ucrania a $227/ton sigue siendo competitiva para sus mercados naturales (Europa, Medio Oriente) dada la proximidad geográfica que reduce el flete.</p>
+                </div>
+                <div>
+                    <h3>Contexto de precios</h3>
                     <p>Los precios globales permanecen bajo presión por la abundante oferta mundial. El rally de +$1 en Argentina refleja "fuerte demanda exportadora compensando levemente la presión de cosecha". Los compradores están bien abastecidos y negocian con ventaja.</p>
-
                     <div class="panel mt16">
                         <p>Comparando precios actuales vs. abril 2025: Argentina −5% ($209 vs. $219), Brasil +1% ($225 vs. $223), EE.UU. +1.4% ($217 vs. $214). El maíz se negocia en niveles similares o levemente inferiores al año anterior a pesar del récord de producción, lo que confirma que la demanda está creciendo para absorber la oferta adicional.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- GRÁFICO ABAJO: full width -->
+            <h3>Estructura de precios FOB</h3>
+            <div class="mt16">
+                <div class="price-row">
+                    <span class="pr-n">🇦🇷 Argentina</span>
+                    <span class="pr-v" style="color:var(--green);">$209</span>
+                    <span class="pr-d dup">+$1 vs. mar</span>
+                    <div class="pr-bar"><div class="pr-bar-f" style="width:96%;height:100%;background:var(--green);"></div></div>
+                </div>
+                <div class="price-row">
+                    <span class="pr-n">🇺🇸 EE.UU. (3YC)</span>
+                    <span class="pr-v" style="color:var(--corn);">$217</span>
+                    <span class="pr-d ddn">−$4 vs. mar</span>
+                    <div class="pr-bar"><div class="pr-bar-f" style="width:100%;height:100%;background:var(--corn);"></div></div>
+                </div>
+                <div class="price-row">
+                    <span class="pr-n">🇺🇦 Ucrania</span>
+                    <span class="pr-v">$227</span>
+                    <span class="pr-d dup">+$2 vs. mar</span>
+                    <div class="pr-bar"><div class="pr-bar-f" style="width:104%;height:100%;background:rgba(245,200,66,.45);"></div></div>
+                </div>
+                <div class="price-row">
+                    <span class="pr-n">🇧🇷 Brasil</span>
+                    <span class="pr-v">$225</span>
+                    <span class="pr-d ddn">−$4 vs. mar</span>
+                    <div class="pr-bar"><div class="pr-bar-f" style="width:108%;height:100%;background:rgba(245,200,66,.3);"></div></div>
+                </div>
+            </div>
+            <p class="fn">Fuente: International Grains Council / USDA FAS Grain WMT Abr. 2026. Argentina Up River; EE.UU. Gulf No.3 Yellow Corn; Ucrania Black Sea; Brasil Paranaguá.</p>
         </div>
     </section>
 
@@ -741,7 +857,7 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 <div>
                     <h3>Cambios clave revisión Marzo→Abril 2026</h3>
                     <div class="bars mt16">
-                        <p style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--corn);margin-bottom:12px;">Revisiones de exportación (000 TM)</p>
+                        <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--corn);margin-bottom:12px;">Revisiones de exportación (000 TM)</p>
                         <div class="bar-r"><span class="bar-l">India exp.</span><div class="bar-t"><div class="bar-f g" style="width:35%"></div></div><span class="bar-v" style="color:var(--green);">+350k</span></div>
                         <div class="bar-r"><span class="bar-l">Rusia exp.</span><div class="bar-t"><div class="bar-f g" style="width:30%"></div></div><span class="bar-v" style="color:var(--green);">+300k</span></div>
                         <div class="bar-r"><span class="bar-l">Sudáfrica exp.</span><div class="bar-t"><div class="bar-f g" style="width:20%"></div></div><span class="bar-v" style="color:var(--green);">+200k</span></div>
@@ -775,7 +891,7 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 </div>
             </div>
 
-            <p class="lede">En un año en que el mundo produce maíz en cantidades récord, Uruguay vive la situación opuesta: producción mínima, rendimientos históricamentw bajos, y exportaciones eliminadas por primera vez en años. La causa es única: la sequía de 80 días entre enero y marzo de 2026.</p>
+            <p class="lede">En un año en que el mundo produce maíz en cantidades récord, Uruguay vive la situación opuesta: producción mínima, rendimientos históricamente bajos, y exportaciones eliminadas por primera vez en años. La causa es única: la sequía de 80 días entre enero y marzo de 2026.</p>
 
             <div class="g4">
                 <div class="kc red">
@@ -917,7 +1033,7 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
     </section>
 
     <!-- ═══ 09 CONCLUSIONES ═══ -->
-    <section id="conclusiones" style="border-bottom:none;">
+    <section id="conclusiones" class="conclusions-section">
         <div class="wrap">
             <div class="sh">
                 <div class="sh-num">09</div>
@@ -927,44 +1043,104 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                 </div>
             </div>
 
-            <div class="g2">
-                <div class="con" data-n="1">
-                    <p class="con-tag">Récord mundial vs. colapso local</p>
-                    <p class="con-h">El mayor contraste del año: 1,301 MMT en el mundo, 1.2 MMT en Uruguay</p>
-                    <p class="con-b">El mercado global de maíz 2025/26 alcanza su máximo histórico mientras Uruguay registra su peor producción reciente. <strong>La distancia entre ambas realidades ilustra cómo la variabilidad climática sub-regional puede generar situaciones opuestas en el mismo ciclo.</strong> A 500 km del corredor occidental uruguayo, Brasil y Argentina tienen cosechas normales o superiores al promedio.</p>
+            <div class="conclusions-intro">
+                <p>Un año de contrastes extremos: récord histórico mundial y colapso local en Uruguay. Estas son las cinco claves para entender lo que pasó y lo que viene.</p>
+            </div>
+
+            <!-- FILA 1: ideas 1 y 2 -->
+            <div class="con-grid">
+                <div class="con2">
+                    <span class="con2-num">1</span>
+                    <p class="con2-tag">Récord mundial vs. colapso local</p>
+                    <p class="con2-h">El mayor contraste del año: 1,301 MMT en el mundo, 1.2 MMT en Uruguay</p>
+                    <p class="con2-b">El mercado global de maíz 2025/26 alcanza su máximo histórico mientras Uruguay registra su peor producción reciente. <strong>La distancia entre ambas realidades ilustra cómo la variabilidad climática sub-regional puede generar situaciones opuestas en el mismo ciclo.</strong> A 500 km del corredor occidental uruguayo, Brasil y Argentina tienen cosechas normales o superiores al promedio.</p>
                 </div>
-                <div class="con" data-n="2">
-                    <p class="con-tag">El timing es todo</p>
-                    <p class="con-h">80 días sin lluvia en enero-marzo coincidieron exactamente con floración y llenado</p>
-                    <p class="con-b">La sequía de 2026 no fue necesariamente la más larga históricamente, pero ocurrió en el momento exactamente más crítico del ciclo del maíz. <strong>En agricultura, el momento del déficit hídrico es tan determinante como su magnitud.</strong> Un déficit en el estadio vegetativo hubiera tenido impacto moderado; en floración-llenado fue devastador. El USDA fue directo: parte del cultivo "probablemente no sea cosechada para grano."</p>
-                </div>
-                <div class="con" data-n="3">
-                    <p class="con-tag">Exportaciones a cero</p>
-                    <p class="con-h">De 300k TM proyectadas a cero — el ajuste más drástico en la tabla de cambios del USDA</p>
-                    <p class="con-b">La eliminación total de las exportaciones de maíz uruguayo en la revisión de abril 2026 es el indicador más contundente del daño. <strong>No es solo una reducción — es una eliminación completa del saldo exportable.</strong> Toda la producción disponible (1.2 MMT) será absorbida por el mercado doméstico (ganadería, avicultura, porcicultura), que igual enfrentará mayor costo de alimentación por la reducción de oferta local.</p>
-                </div>
-                <div class="con" data-n="4">
-                    <p class="con-tag">El silaje como válvula</p>
-                    <p class="con-h">Los lotes sin condiciones para cosechar grano se convierten en silaje o pastoreo — amortiguando el impacto en ganadería</p>
-                    <p class="con-b">Una parte del daño del maíz tiene un destino alternativo con valor económico: el silaje producido de los lotes afectados sirve para reducir costos de suplementación invernal del ganado. <strong>Esta conversión involuntaria de maíz grano a silaje actúa como colchón para el sector pecuario</strong>, que en un año de menor disponibilidad de forraje necesita más reservas. No compensa la pérdida de exportaciones pero atenúa el impacto sobre la cadena cárnica.</p>
-                </div>
-                <div class="con" data-n="5">
-                    <p class="con-tag">Perspectiva 2026/27</p>
-                    <p class="con-h">El Niño favorece el rebote — pero los precios mundiales bajos complican la decisión de siembra</p>
-                    <p class="con-b">Las condiciones estructurales para un rebote productivo en 2026/27 existen: El Niño esperado, área disponible, tecnología, semillas. Pero <strong>la combinación de precios mundiales del maíz en mínimos de varios años + productores con pérdidas acumuladas + 70% del área en tierra arrendada hace que la decisión de siembra sea económicamente difícil.</strong> El productor que perdió dinero en 2025/26 tiene menos capital propio para financiar la siguiente campaña, justo cuando los precios no justifican el riesgo asumido.</p>
+                <div class="con2">
+                    <span class="con2-num">2</span>
+                    <p class="con2-tag">El timing es todo</p>
+                    <p class="con2-h">80 días sin lluvia coincidieron exactamente con floración y llenado de grano</p>
+                    <p class="con2-b">La sequía de 2026 no fue necesariamente la más larga históricamente, pero ocurrió en el momento exactamente más crítico del ciclo del maíz. <strong>En agricultura, el momento del déficit hídrico es tan determinante como su magnitud.</strong> Un déficit en el estadio vegetativo hubiera tenido impacto moderado; en floración-llenado fue devastador.</p>
                 </div>
             </div>
+
+            <!-- FILA 2: ideas 3 y 4 -->
+            <div class="con-grid">
+                <div class="con2">
+                    <span class="con2-num">3</span>
+                    <p class="con2-tag">Exportaciones a cero</p>
+                    <p class="con2-h">De 300k TM proyectadas a cero — el ajuste más drástico en la tabla de cambios del USDA</p>
+                    <p class="con2-b">La eliminación total de las exportaciones de maíz uruguayo en la revisión de abril 2026 es el indicador más contundente del daño. <strong>No es solo una reducción — es una eliminación completa del saldo exportable.</strong> Toda la producción disponible (1.2 MMT) será absorbida por el mercado doméstico: ganadería, avicultura, porcicultura.</p>
+                </div>
+                <div class="con2">
+                    <span class="con2-num">4</span>
+                    <p class="con2-tag">El silaje como válvula</p>
+                    <p class="con2-h">Los lotes afectados se reconvierten en silaje — amortiguando el impacto sobre la ganadería</p>
+                    <p class="con2-b">Una parte del daño tiene un destino alternativo con valor económico: el silaje producido de los lotes afectados reduce costos de suplementación invernal del ganado. <strong>Esta conversión involuntaria de maíz grano a silaje actúa como colchón para el sector pecuario.</strong> No compensa la pérdida de exportaciones pero atenúa el impacto sobre la cadena cárnica.</p>
+                </div>
+            </div>
+
+            <div class="con2-divider"><span>La clave del próximo ciclo</span></div>
+
+            <!-- FILA 3: idea 5 full width -->
+            <div class="con-grid-last">
+                <div class="con2 full">
+                    <span class="con2-num">5</span>
+                    <p class="con2-tag">Perspectiva 2026/27</p>
+                    <p class="con2-h">El Niño favorece el rebote — pero los precios mundiales bajos complican la decisión de siembra</p>
+                    <p class="con2-b">Las condiciones estructurales para un rebote productivo en 2026/27 existen: El Niño esperado, área disponible, tecnología, semillas. Pero <strong>la combinación de precios mundiales del maíz en mínimos de varios años + productores con pérdidas acumuladas + 70% del área en tierra arrendada hace que la decisión de siembra sea económicamente difícil.</strong> El productor que perdió dinero en 2025/26 tiene menos capital propio para financiar la siguiente campaña, justo cuando los precios no justifican el riesgo asumido.</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
         <div class="fi">
-            <div class="fi-brand">MAÍZ 2025/26 · USDA + MGAP-DIEA</div>
-            <div class="fi-meta">
-                World Agricultural Production WAP 04-26 (USDA FAS/IPAD, 9 Abr. 2026) · WASDE-584<br>
-                Grain: World Markets and Trade (USDA FAS, Abr. 2026)<br>
-                MGAP-DIEA · Encuesta Agrícola Primavera-verano 2025/26 · 23 Ene. 2026
+            <div class="fi-top">
+                <div class="fi-brand">MAÍZ 2025/26 · USDA + MGAP-DIEA</div>
+            </div>
+            <div class="fi-grid">
+
+                <!-- FUENTES -->
+                <div class="fi-block">
+                    <p class="fi-block-title">Fuentes utilizadas</p>
+                    <p>
+                        <strong>USDA FAS/IPAD — World Agricultural Production (WAP 04-26)</strong><br>
+                        Circular Series WAP 04-26 · Publicado 9 de abril de 2026<br>
+                        Refleja estimaciones oficiales del WASDE-584<br>
+                        <br>
+                        <strong>USDA FAS — Grain: World Markets and Trade (WMT)</strong><br>
+                        Edición abril 2026 · Datos de comercio, exportaciones e importaciones<br>
+                        y precios FOB internacionales al 7 de abril de 2026<br>
+                        <br>
+                        <strong>MGAP-DIEA — Encuesta Agrícola Primavera-verano 2025/26</strong><br>
+                        Publicada el 23 de enero de 2026<br>
+                        Intención de siembra cultivos de verano Uruguay 2025/26
+                    </p>
+                </div>
+
+                <!-- NOMENCLATURA -->
+                <div class="fi-block">
+                    <p class="fi-block-title">Nomenclatura y abreviaturas</p>
+                    <p>
+                        <strong>MMT</strong> · Millones de toneladas métricas<br>
+                        <strong>Mil has / Mha</strong> · Miles de hectáreas / Millones de hectáreas<br>
+                        <strong>t/ha · ton/ha</strong> · Toneladas por hectárea (rendimiento)<br>
+                        <strong>TM</strong> · Toneladas métricas<br>
+                        <strong>FOB</strong> · Free On Board — precio en puerto de origen<br>
+                        <strong>MY / Zafra</strong> · Marketing Year — año comercial del cultivo<br>
+                        <strong>F</strong> · Forecast — proyección o estimación<br>
+                        <strong>Prel.</strong> · Preliminar<br>
+                        <strong>WAP</strong> · World Agricultural Production (reporte USDA)<br>
+                        <strong>WMT</strong> · World Markets and Trade (reporte USDA)<br>
+                        <strong>WASDE</strong> · World Agricultural Supply and Demand Estimates<br>
+                        <strong>DIEA</strong> · Dirección de Estadísticas Agropecuarias (MGAP Uruguay)<br>
+                        <strong>FAS</strong> · Foreign Agricultural Service (USDA)<br>
+                        <strong>IPAD</strong> · International Production Assessment Division (USDA)
+                    </p>
+                </div>
+
             </div>
         </div>
     </footer>
@@ -1011,10 +1187,10 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
                             tooltip: { callbacks: { label: c => c.dataset.label + ': ' + c.parsed.y.toFixed(0) + ' MMT' } }
                         },
                         scales: {
-                            x: { ticks: { color: tick, font: { family: 'IBM Plex Mono', size: 10 } }, grid: { color: grid } },
+                            x: { ticks: { color: tick, font: { family: 'IBM Plex Mono', size: 12 } }, grid: { color: grid } },
                             y: {
                                 min: 1100, max: 1350,
-                                ticks: { color: tick, font: { family: 'IBM Plex Mono', size: 10 }, callback: v => v + 'M' },
+                                ticks: { color: tick, font: { family: 'IBM Plex Mono', size: 12 }, callback: v => v + 'M' },
                                 grid: { color: grid }
                             }
                         }
@@ -1161,6 +1337,58 @@ footer{background:var(--bg2);border-top:1px solid var(--edge2);padding:28px 48px
     </div>
 
     <!-- COPIAR HASTA ACÁ ↑ -->
+
+    <script>
+        (function () {
+            const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+            const sections = Array.from(navLinks).map(link => {
+                const id = link.getAttribute('href').slice(1);
+                return document.getElementById(id);
+            }).filter(Boolean);
+
+            const tickerHeight = document.querySelector('.ticker') ? document.querySelector('.ticker').offsetHeight : 40;
+            const navHeight = document.querySelector('.nav') ? document.querySelector('.nav').offsetHeight : 45;
+            const offset = tickerHeight + navHeight + 20;
+
+            function onScroll() {
+                let current = sections[0];
+                sections.forEach(section => {
+                    if (window.scrollY >= section.offsetTop - offset) {
+                        current = section;
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current.id) {
+                        link.classList.add('active');
+                        // scroll nav item into view if needed
+                        link.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+    </script>
+
+    <style>
+        * { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+    </style>
+
+    <script>
+        // Clic derecho deshabilitado
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+
+        // Bloqueo de atajos de teclado
+        document.addEventListener('keydown', function(e) {
+            const key = e.key.toLowerCase();
+            if ((e.ctrlKey || e.metaKey) && ['c','a','u','s','p'].includes(key)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 
 </body>
 </html>

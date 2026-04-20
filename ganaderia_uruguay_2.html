@@ -885,12 +885,13 @@
   .timeline {
     position: relative;
     margin: 2rem 0;
+    padding-left: 2rem;
   }
 
   .timeline::before {
     content: '';
     position: absolute;
-    left: 3.5rem;
+    left: 0.4rem;
     top: 0;
     bottom: 0;
     width: 1px;
@@ -899,23 +900,25 @@
 
   .timeline-item {
     display: grid;
-    grid-template-columns: 7rem 1fr;
+    grid-template-columns: 6rem 1fr;
     gap: 1.5rem;
     padding: 1.2rem 0;
+    align-items: start;
     position: relative;
   }
 
   .timeline-item::before {
     content: '';
     position: absolute;
-    left: 3.1rem;
-    top: 1.6rem;
+    left: -1.65rem;
+    top: 1.55rem;
     width: 9px;
     height: 9px;
     background: var(--verde-claro);
     border-radius: 50%;
     border: 2px solid var(--blanco);
     box-shadow: 0 0 0 1px var(--verde-medio);
+    z-index: 1;
   }
 
   .timeline-año {
@@ -924,8 +927,7 @@
     font-weight: 500;
     color: var(--tierra);
     padding-top: 0.1rem;
-    text-align: right;
-    padding-right: 1rem;
+    text-align: left;
   }
 
   .timeline-texto {
@@ -954,6 +956,265 @@
         <div class="nav-dot" data-section="perspectivas" title="Perspectivas"></div>
         <div class="nav-dot" data-section="fuentes" title="Fuentes"></div>
     </nav>
+
+    <!-- TICKER -->
+    <div class="ticker-bar">
+        <span class="ticker-label">DATOS CLAVE</span>
+        <div class="ticker-track">
+            <div class="ticker-content">
+                <span class="ticker-item"><span class="ticker-hi">11,5M</span> cabezas stock bovino 2024</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">+20%</span> de las exportaciones de bienes</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">90.000</span> empleos directos</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 700M</span> aporte impositivo anual</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">134 kg</span> exportación per cápita — N.º 1 mundial</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">+237%</span> crecimiento en valor 2004–2023</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 2.097M</span> exportaciones 2024</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">76</span> mercados destino</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">78%</span> de la producción se exporta</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 13.272/t</span> precio carne enfriada — máximo entre competidores sept. 2025</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">2,75M</span> cabezas faenadas — récord histórico 2021/22</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">47%</span> concentración en China (2023)</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">5,3×</span> brecha p90/p10 productividad predial</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">42 días</span> tiempo de transporte promedio — mayor entre exportadores globales</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 79–184M</span> ingreso incremental proyectado por adhesión al CPTPP en 2033</span>
+                <span class="ticker-sep">◆</span>
+                <!-- duplicado para loop continuo -->
+                <span class="ticker-item"><span class="ticker-hi">11,5M</span> cabezas stock bovino 2024</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">+20%</span> de las exportaciones de bienes</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">90.000</span> empleos directos</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 700M</span> aporte impositivo anual</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">134 kg</span> exportación per cápita — N.º 1 mundial</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">+237%</span> crecimiento en valor 2004–2023</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 2.097M</span> exportaciones 2024</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">76</span> mercados destino</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">78%</span> de la producción se exporta</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 13.272/t</span> precio carne enfriada — máximo entre competidores sept. 2025</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">2,75M</span> cabezas faenadas — récord histórico 2021/22</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">47%</span> concentración en China (2023)</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">5,3×</span> brecha p90/p10 productividad predial</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">42 días</span> tiempo de transporte promedio — mayor entre exportadores globales</span>
+                <span class="ticker-sep">◆</span>
+                <span class="ticker-item"><span class="ticker-hi">USD 79–184M</span> ingreso incremental proyectado por adhesión al CPTPP en 2033</span>
+                <span class="ticker-sep">◆</span>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ticker-bar {
+            position: relative;
+            z-index: 50;
+            background: var(--verde-campo);
+            border-bottom: 1px solid rgba(138,181,90,0.25);
+            display: flex;
+            align-items: center;
+            height: 2.4rem;
+            overflow: hidden;
+        }
+        .ticker-label {
+            flex-shrink: 0;
+            padding: 0 1.2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            color: var(--verde-campo);
+            background: var(--tierra-claro);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .ticker-track {
+            flex: 1;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            mask-image: linear-gradient(90deg, transparent 0%, black 3%, black 97%, transparent 100%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 3%, black 97%, transparent 100%);
+        }
+        .ticker-content {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            white-space: nowrap;
+            animation: ticker-scroll 80s linear infinite;
+            will-change: transform;
+        }
+        .ticker-content:hover {
+            animation-play-state: paused;
+        }
+        .ticker-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.04em;
+            padding: 0 0.5rem;
+        }
+        .ticker-hi {
+            color: var(--tierra-claro);
+            font-weight: 700;
+            font-size: 0.72rem;
+        }
+        .ticker-sep {
+            color: rgba(138,181,90,0.35);
+            font-size: 0.5rem;
+            padding: 0 0.8rem;
+        }
+        @keyframes ticker-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+
+    <!-- MENÚ HORIZONTAL STICKY -->
+    <nav class="nav-sticky" id="navSticky">
+        <div class="nav-sticky-inner">
+            <a class="nav-sticky-item" data-section="resumen" href="#resumen">Resumen</a>
+            <a class="nav-sticky-item" data-section="internacional" href="#internacional">Internacional</a>
+            <a class="nav-sticky-item" data-section="produccion" href="#produccion">Producción</a>
+            <a class="nav-sticky-item" data-section="productividad" href="#productividad">Productividad</a>
+            <a class="nav-sticky-item" data-section="precios" href="#precios">Precios</a>
+            <a class="nav-sticky-item" data-section="exportaciones" href="#exportaciones">Exportaciones</a>
+            <a class="nav-sticky-item" data-section="perspectivas" href="#perspectivas">Perspectivas</a>
+            <a class="nav-sticky-item" data-section="fuentes" href="#fuentes">Fuentes</a>
+        </div>
+    </nav>
+    <style>
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: rgba(26, 26, 22, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(138,181,90,0.15);
+            transition: box-shadow 0.3s;
+        }
+        .nav-sticky.scrolled {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+        }
+        .nav-sticky-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-sticky-inner::-webkit-scrollbar { display: none; }
+        .nav-sticky-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            text-decoration: none;
+            padding: 1rem 1.2rem;
+            white-space: nowrap;
+            position: relative;
+            transition: color 0.25s;
+            cursor: pointer;
+        }
+        .nav-sticky-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1.2rem;
+            right: 1.2rem;
+            height: 2px;
+            background: var(--tierra-claro);
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+            transform-origin: left;
+        }
+        .nav-sticky-item:hover {
+            color: rgba(255,255,255,0.75);
+        }
+        .nav-sticky-item.active {
+            color: var(--tierra-claro);
+        }
+        .nav-sticky-item.active::after {
+            transform: scaleX(1);
+        }
+        @media (max-width: 900px) {
+            .nav-sticky-inner { padding: 0 1rem; gap: 0; }
+            .nav-sticky-item { padding: 0.9rem 0.7rem; font-size: 0.6rem; }
+        }
+    </style>
+    <script>
+        (function() {
+            const navEl = document.getElementById('navSticky');
+            const items = navEl.querySelectorAll('.nav-sticky-item');
+            const sectionIds = ['resumen','internacional','produccion','productividad','precios','exportaciones','perspectivas','fuentes'];
+
+            // Scroll suave al hacer click
+            items.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.dataset.section);
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Highlight sección activa + sombra al hacer scroll
+            function onScroll() {
+                // Sombra
+                if (window.scrollY > 10) navEl.classList.add('scrolled');
+                else navEl.classList.remove('scrolled');
+
+                // Sección activa: la más alta que ya pasó el tope de la ventana
+                let current = sectionIds[0];
+                sectionIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && el.getBoundingClientRect().top <= 80) current = id;
+                });
+
+                items.forEach(item => {
+                    item.classList.toggle('active', item.dataset.section === current);
+                });
+
+                // Auto-scroll del nav para que el ítem activo quede visible
+                const activeItem = navEl.querySelector('.nav-sticky-item.active');
+                if (activeItem) {
+                    activeItem.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+    </script>
 
     <!-- HERO -->
     <header class="hero" id="hero">
@@ -1017,7 +1278,7 @@
                     <div class="indicador-card">
                         <div class="ind-valor">+10%</div>
                         <div class="ind-label">Impacto en el PBI</div>
-                        <div class="ind-nota">Incluyendo encadenamientos productivos</div>
+                        <div class="ind-nota">Incluyendo encadenamientos productivos (≠ 20% exportaciones de bienes)</div>
                     </div>
                     <div class="indicador-card">
                         <div class="ind-valor">134 kg</div>
@@ -1163,8 +1424,8 @@
                             </div>
                             <div class="barra-row">
                                 <span class="barra-label">Terneros/as</span>
-                                <div class="barra-track"><div class="barra-fill" style="width:0" data-width="23%"></div></div>
-                                <span class="barra-valor">23%</span>
+                                <div class="barra-track"><div class="barra-fill" style="width:0" data-width="22%"></div></div>
+                                <span class="barra-valor">22%</span>
                             </div>
                             <div class="barra-row">
                                 <span class="barra-label">Novillos</span>
@@ -1421,7 +1682,7 @@
                         <div class="ind-nota">496.000 t a 46 mercados</div>
                     </div>
                     <div class="indicador-card">
-                        <div class="ind-valor">84%</div>
+                        <div class="ind-valor">78%</div>
                         <div class="ind-label">Producción exportada</div>
                         <div class="ind-nota">Del total de toneladas peso embarque</div>
                     </div>
@@ -1535,11 +1796,10 @@
                     </div>
                     <div class="hallazgo-item">
                         <div class="hallazgo-n">5</div>
-                        <div class="hallazgo-titulo">Asimetría negativa en transmisión de precios</div>
-                    </div>
-                    <div class="hallazgo-item">
-                        <div class="hallazgo-n" style="opacity:0"></div>
-                        <div class="hallazgo-texto">Las caídas de precios se transmiten más rápido que las subidas (NARDL, R²=97,6%). Equilibrio solo a los 10 meses. Sugiere condiciones de mercado favorables a la industria frigorífica.</div>
+                        <div class="hallazgo-texto">
+                            <span class="hallazgo-titulo">Asimetría negativa en transmisión de precios</span>
+                            Las caídas de precios se transmiten más rápido que las subidas (NARDL, R²=97,6%). Equilibrio solo a los 10 meses. Sugiere condiciones de mercado favorables a la industria frigorífica.
+                        </div>
                     </div>
                     <div class="hallazgo-item">
                         <div class="hallazgo-n">6</div>
@@ -1617,7 +1877,7 @@
                     <div class="fuente-item"><span class="fuente-num">06</span><span>Rostán, F. et al. (2024). <em>Asimetrías en la transmisión de precios de la cadena cárnica.</em> Anuario OPYPA 2024, INIA.</span></div>
                     <div class="fuente-item"><span class="fuente-num">07</span><span>Dávila, L. et al. (2022). <em>Acuerdo Transpacífico: impacto económico para la cadena de carne bovina.</em> Anuario OPYPA 2022.</span></div>
                     <div class="fuente-item"><span class="fuente-num">08</span><span>Dávila, L. et al. (2021). <em>Índice de tiempos de transporte: cadena cárnica bovina uruguaya.</em> Anuario OPYPA 2021.</span></div>
-                    <div class="fuente-item"><span class="fuente-num">09</span><span>Aguirre, E. y Durán, V. <em>Evolución y variabilidad de los pesos de faena vacuna en Uruguay.</em> OPYPA-MGAP.</span></div>
+                    <div class="fuente-item"><span class="fuente-num">09</span><span>Aguirre, E. y Durán, V. (2020). <em>Evolución y variabilidad de los pesos de faena vacuna en Uruguay.</em> OPYPA-MGAP.</span></div>
                     <div class="fuente-item"><span class="fuente-num">10</span><span>Aguirre, E. (2019). <em>Productividad ganadera de los establecimientos de carne bovina del CGA 2011.</em> Anuario OPYPA 2019.</span></div>
                     <div class="fuente-item"><span class="fuente-num">11</span><span>Mila, F. (2019). <em>Análisis de los impuestos en la ganadería.</em> Anuario OPYPA 2019.</span></div>
                     <div class="fuente-item"><span class="fuente-num">12</span><span>Bervejillo, J. (2021 y 2020). <em>Comportamiento del sector de la carne vacuna.</em> Anuario OPYPA 2021 y 2020, MGAP.</span></div>
@@ -1627,6 +1887,50 @@
                     <div class="fuente-item"><span class="fuente-num">16</span><span>Uruguay XXI (2024). <em>Sector Ganadero en Uruguay.</em> Informe Ganadero, junio 2024.</span></div>
                     <div class="fuente-item"><span class="fuente-num">17</span><span>INAC (2025). <em>Anuario Estadístico 2024.</em> Instituto Nacional de Carnes, abril 2025.</span></div>
                     <div class="fuente-item"><span class="fuente-num">18</span><span>USDA. <em>Livestock and Poultry: World Markets and Trade.</em> Varios años.</span></div>
+                </div>
+
+                <!-- ── PANEL: FUENTES POR SECCIÓN ── -->
+                <div class="fade-in" style="margin-top:4rem">
+                    <h2 class="sub" style="margin-top:0; margin-bottom:1.5rem">Fuentes utilizadas por sección</h2>
+                    <div style="display:flex; flex-direction:column; gap:0; border:1px solid rgba(45,80,22,0.15); border-radius:2px; overflow:hidden;">
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr; border-bottom:1px solid rgba(45,80,22,0.1);">
+                            <div style="padding:1rem 1.5rem; background:var(--verde-campo); font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; color:var(--verde-claro); text-transform:uppercase; font-weight:500;">Sección</div>
+                            <div style="padding:1rem 1.5rem; background:var(--verde-campo); font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; color:rgba(255,255,255,0.6); text-transform:uppercase; font-weight:500;">Fuentes principales</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr; border-bottom:1px solid rgba(45,80,22,0.08);">
+                            <div style="padding:1rem 1.5rem; background:rgba(45,80,22,0.04); font-family:'Source Serif 4',serif; font-weight:600; font-size:0.88rem; color:var(--verde-campo);">Resumen Ejecutivo</div>
+                            <div style="padding:1rem 1.5rem; font-size:0.85rem; color:var(--grafito); line-height:1.6;">CERES (2024) [15] · Uruguay XXI (2024) [16] · INAC (2025) [17] · Gorga &amp; Piegas (2025) [01] · MGAP-DICOSE</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr; border-bottom:1px solid rgba(45,80,22,0.08);">
+                            <div style="padding:1rem 1.5rem; background:rgba(45,80,22,0.04); font-family:'Source Serif 4',serif; font-weight:600; font-size:0.88rem; color:var(--verde-campo);">Contexto Internacional</div>
+                            <div style="padding:1rem 1.5rem; font-size:0.85rem; color:var(--grafito); line-height:1.6;">USDA [18] · FAO (Índice precios 2025) · OCDE-FAO Agricultural Outlook 2025 · Gorga &amp; Piegas (2025) [01] · Dávila et al. (2022) [07] · Dávila et al. (2021) [08]</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr; border-bottom:1px solid rgba(45,80,22,0.08);">
+                            <div style="padding:1rem 1.5rem; background:rgba(45,80,22,0.04); font-family:'Source Serif 4',serif; font-weight:600; font-size:0.88rem; color:var(--verde-campo);">Producción Nacional</div>
+                            <div style="padding:1rem 1.5rem; font-size:0.85rem; color:var(--grafito); line-height:1.6;">MGAP-DICOSE (SNIG 2024) · Gorga &amp; Piegas (2024–2025) [01][02] · Gorga &amp; Mila (2022–2023) [03][04] · INAC (2025) [17] · Aguirre &amp; Durán (2020) [09] · Bervejillo et al. (2021) [13]</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr; border-bottom:1px solid rgba(45,80,22,0.08);">
+                            <div style="padding:1rem 1.5rem; background:rgba(45,80,22,0.04); font-family:'Source Serif 4',serif; font-weight:600; font-size:0.88rem; color:var(--verde-campo);">Productividad y Heterogeneidad</div>
+                            <div style="padding:1rem 1.5rem; font-size:0.85rem; color:var(--grafito); line-height:1.6;">Aguirre (2019) [10] · CGA 2011 (MGAP) · SNIG · Frache (2024) [05] · Román et al. (2022) [14]</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr; border-bottom:1px solid rgba(45,80,22,0.08);">
+                            <div style="padding:1rem 1.5rem; background:rgba(45,80,22,0.04); font-family:'Source Serif 4',serif; font-weight:600; font-size:0.88rem; color:var(--verde-campo);">Precios y Asimetrías</div>
+                            <div style="padding:1rem 1.5rem; font-size:0.85rem; color:var(--grafito); line-height:1.6;">Rostán et al. (2024) [06] · INAC (series mensuales 2007–2024) · Bervejillo (2020, 2021) [12] · Mila (2019) [11]</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:12rem 1fr;">
+                            <div style="padding:1rem 1.5rem; background:rgba(45,80,22,0.04); font-family:'Source Serif 4',serif; font-weight:600; font-size:0.88rem; color:var(--verde-campo);">Exportaciones</div>
+                            <div style="padding:1rem 1.5rem; font-size:0.85rem; color:var(--grafito); line-height:1.6;">INAC (2025) [17] · Uruguay XXI (2024) [16] · CERES (2024) [15] · Gorga &amp; Piegas (2025) [01] · Dávila et al. (2022) [07] · Dávila et al. (2021) [08] · BCU · USDA [18]</div>
+                        </div>
+
+                    </div>
+                    <p style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:var(--piedra); margin-top:0.75rem; letter-spacing:0.05em;">Los números entre corchetes [N] corresponden a la numeración de la bibliografía completa arriba.</p>
                 </div>
             </div>
         </section>
@@ -1710,6 +2014,34 @@
                 const el = document.getElementById(id);
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
             });
+        });
+    </script>
+
+    <!-- ── PROTECCIÓN DE CONTENIDO ── -->
+    <style>
+        /* 1. Bloquea selección de texto en todo el documento */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <script>
+        // 2. Clic derecho deshabilitado
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 3. Atajos de teclado bloqueados
+        document.addEventListener('keydown', function(e) {
+            const key = e.key.toLowerCase();
+            const ctrl = e.ctrlKey || e.metaKey;
+            if (!ctrl) return;
+            // Ctrl/Cmd + C (copiar), A (seleccionar todo), U (ver fuente), S (guardar), P (imprimir)
+            if (['c', 'a', 'u', 's', 'p'].includes(key)) {
+                e.preventDefault();
+            }
         });
     </script>
     <!-- COPIAR DESDE ACÁ ↓ -->

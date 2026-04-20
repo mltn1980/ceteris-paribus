@@ -282,7 +282,13 @@ h3:first-child{margin-top:0;}
 .con.c-teal .con-metric{background:var(--teal-bg);border-color:rgba(14,110,110,.2);color:var(--teal);}
 .con.c-blue .con-metric{background:rgba(74,127,191,.08);border-color:rgba(74,127,191,.2);color:#4A7FBF;}
 
-/* ─── TICKER ─── */
+/* ─── COPY PROTECTION ─── */
+body{
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 .ticker{
   background:#F5C842;overflow:hidden;height:34px;
   display:flex;align-items:center;
@@ -450,10 +456,10 @@ footer{background:var(--ink);padding:40px 48px;}
                     <p>El consumo global baja levemente, liderado por reducciones en Medio Oriente y Asia Oriental. Las existencias finales mundiales se proyectan en <strong>192,3 Mt</strong>, levemente por encima de los 191,5 de 2024/25.</p>
                 </div>
                 <div>
-                    <h3>Producción por región: Asia domina</h3>
+                    <h3>Producción por región: Asia domina · Mill. ton. (Mt)</h3>
                     <table class="dt">
                         <thead>
-                            <tr><th>País / Región</th><th class="n">2023/24 (Mt)</th><th class="n">2024/25 (Mt)</th><th class="n">2025/26 Abr (Mt)</th><th class="n">Δ 3 años</th></tr>
+                            <tr><th>País / Región</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 Abr</th><th class="n">Δ 3 años</th></tr>
                         </thead>
                         <tbody>
                             <tr><td class="b">🇮🇳 India</td><td class="n">137,8</td><td class="n">150,0</td><td class="n">152,0</td><td class="n pos">+10,3%</td></tr>
@@ -517,7 +523,7 @@ footer{background:var(--ink);padding:40px 48px;}
                     <p>En el bloque asiático, Tailandia baja $1 a $382/ton por depreciación cambiaria y menor demanda. Vietnam sube $15 a $367/ton con fuerte demanda de África y Sudeste Asiático. India baja $10 a $367/ton con oferta abundante. Pakistán baja $2 a $351/ton — el precio más competitivo del mundo.</p>
                 </div>
                 <div>
-                    <h3>Cotizaciones FOB · 7 de Abril de 2026 (US$/ton)</h3>
+                    <h3>Cotizaciones FOB · 7 Abril 2026 · US$/tonelada</h3>
                     <div class="price-vis mt16">
                         <div class="pv-row">
                             <span class="pv-n">Pakistán</span>
@@ -577,7 +583,7 @@ footer{background:var(--ink);padding:40px 48px;}
             <div class="sh">
                 <div class="sh-num">03</div>
                 <div class="sh-inner">
-                    <p class="sh-tag">Grandes exportadores 2025/26 · Miles de TM</p>
+                    <p class="sh-tag">Grandes exportadores 2025/26 · Mill. ton. (Mt)</p>
                     <h2 class="sh-title">India lidera con 25 Mt — Uruguay es el 7° del mundo</h2>
                 </div>
             </div>
@@ -596,10 +602,10 @@ footer{background:var(--ink);padding:40px 48px;}
                 </div>
             </div>
 
-            <h3 style="margin-top:32px;">Exportaciones 2025/26 vs. año anterior — Cono Sur + India (líder mundial)</h3>
+            <h3 style="margin-top:32px;">Exportaciones 2025/26 vs. año anterior · Mill. ton. (Mt) — Cono Sur + India</h3>
             <table class="dt" style="margin-top:12px;">
                 <thead>
-                    <tr><th style="width:12%">País</th><th class="n" style="width:10%">2024/25<br>(Mt)</th><th class="n" style="width:10%">2025/26 Abr.<br>(Mt)</th><th class="n" style="width:9%">Δ vs.<br>año ant.</th><th style="width:59%">Contexto</th></tr>
+                    <tr><th style="width:12%">País</th><th class="n" style="width:10%">2024/25</th><th class="n" style="width:10%">2025/26 Abr.</th><th class="n" style="width:9%">Δ vs.<br>año ant.</th><th style="width:59%">Contexto</th></tr>
                 </thead>
                 <tbody>
                     <tr><td class="b">🇮🇳 India</td><td class="n">21,7</td><td class="n">25,0</td><td class="n pos">+15,4%</td><td>Líder mundial · precio más bajo del mercado · riesgo estructural para la región</td></tr>
@@ -611,7 +617,7 @@ footer{background:var(--ink);padding:40px 48px;}
             </table>
             <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Exports, April 2026, p. 19. TY = Trade Year Jan/Dec. Valores redondeados a 1 decimal en Mt.</p>
 
-            <div class="div">Top Exportadores Mundiales de Arroz 2025/26 · TY Enero/Diciembre · Mt</div>
+            <div class="div">Top Exportadores Mundiales de Arroz 2025/26 · TY Enero/Diciembre · Mill. ton. (Mt)</div>
             <div class="bars">
                 <div class="bar-r"><span class="bar-l">🇮🇳 India</span><div class="bar-t"><div class="bar-f" style="width:100%"></div></div><span class="bar-v">25,0 Mt · <span style="color:var(--grn)">+15,4% ▲</span></span></div>
                 <div class="bar-r"><span class="bar-l">🇻🇳 Vietnam</span><div class="bar-t"><div class="bar-f d" style="width:31.6%"></div></div><span class="bar-v">7,9 Mt · <span style="color:var(--red)">−2,0% ▼</span></span></div>
@@ -642,35 +648,30 @@ footer{background:var(--ink);padding:40px 48px;}
                 </div>
             </div>
 
-            <div class="g2">
-                <div>
-                    <h3>Los grandes compradores</h3>
-                    <p>Filipinas encabeza las importaciones mundiales con <strong>5,5 Mt</strong>, seguida de Vietnam (3,9 Mt en importaciones — el país es tanto exportador como importador de variedades específicas) y China (3,2 Mt, +100 mil t por compras anticipadas). El patrón de importaciones en Asia está dominado por países que tienen déficit entre producción y consumo interno o que necesitan variedades específicas que no producen localmente.</p>
-                    <p>Para Uruguay, los destinos más relevantes son <strong>Brasil</strong> (su mayor mercado histórico, aunque en este ciclo las importaciones brasileñas son de solo 900k TM dado su elevada producción propia), <strong>Perú</strong> y <strong>países de África Occidental</strong> donde el arroz uruguayo accede con ventaja de calidad y timing.</p>
-                    <p>La dinámica del mercado importador 2025/26 refleja la caída de precios asiáticos: con arroz indio a $367/ton, muchos importadores que antes preferían el hemisferio occidental ahora pueden abastecer necesidades básicas con origen asiático más barato, concentrando la demanda del hemisferio en mercados de mayor poder adquisitivo o compradores que priorizan calidad.</p>
-                </div>
-                <div>
-                    <h3>Top importadores 2025/26 · Mt</h3>
-                    <table class="dt">
-                        <thead>
-                            <tr><th>Importador</th><th class="n">2024/25 (Mt)</th><th class="n">2025/26 Abr (Mt)</th><th class="n">Δ</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="b">🇵🇭 Filipinas</td><td class="n">3,6</td><td class="n">5,5</td><td class="n pos">+51,4%</td></tr>
-                            <tr><td class="b">🇻🇳 Vietnam (imp.)</td><td class="n">3,5</td><td class="n">3,9</td><td class="n pos">+10,6%</td></tr>
-                            <tr><td class="b">🇨🇳 China</td><td class="n">3,1</td><td class="n">3,2</td><td class="n pos">+3,2%</td></tr>
-                            <tr><td class="b">🇳🇬 Nigeria</td><td class="n">2,8</td><td class="n">3,0</td><td class="n pos">+8,1%</td></tr>
-                            <tr><td class="b">🇮🇶 Iraq</td><td class="n">2,2</td><td class="n">2,2</td><td class="n neg">−1,4%</td></tr>
-                            <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">2,0</td><td class="n">1,5</td><td class="n neg">−25,4%</td></tr>
-                            <tr><td class="b">🇸🇳 Senegal</td><td class="n">1,5</td><td class="n">1,5</td><td class="n">+1,7%</td></tr>
-                            <tr><td class="b">🇲🇾 Malasia</td><td class="n">1,5</td><td class="n">1,7</td><td class="n pos">+13,7%</td></tr>
-                            <tr><td class="b">🇧🇷 Brasil</td><td class="n">0,9</td><td class="n">0,9</td><td class="n neg">−3,3%</td></tr>
-                            <tr class="tot"><td class="b">🌍 Total Mundial</td><td class="n">59,6</td><td class="n">62,1</td><td class="n pos">+4,2%</td></tr>
-                        </tbody>
-                    </table>
-                    <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Imports, April 2026, p. 19. La reducción de importaciones de Bangladesh refleja su producción récord 2025/26. Brasil importa principalmente de Uruguay y Argentina para completar su demanda interna.</p>
-                </div>
-            </div>
+            <h3>Los grandes compradores</h3>
+            <p>Filipinas encabeza las importaciones mundiales con <strong>5,5 Mt</strong>, seguida de Vietnam (3,9 Mt en importaciones — el país es tanto exportador como importador de variedades específicas) y China (3,2 Mt, +100 mil t por compras anticipadas). El patrón de importaciones en Asia está dominado por países que tienen déficit entre producción y consumo interno o que necesitan variedades específicas que no producen localmente.</p>
+            <p>Para Uruguay, los destinos más relevantes son <strong>Brasil</strong> (su mayor mercado histórico, aunque en este ciclo las importaciones brasileñas son de solo 0,9 Mt dado su elevada producción propia), <strong>Perú</strong> y <strong>países de África Occidental</strong> donde el arroz uruguayo accede con ventaja de calidad y timing.</p>
+            <p>La dinámica del mercado importador 2025/26 refleja la caída de precios asiáticos: con arroz indio a $367/ton, muchos importadores que antes preferían el hemisferio occidental ahora pueden abastecer necesidades básicas con origen asiático más barato, concentrando la demanda del hemisferio en mercados de mayor poder adquisitivo o compradores que priorizan calidad.</p>
+
+            <h3 style="margin-top:32px;">Top importadores · Mill. ton. (Mt)</h3>
+            <table class="dt" style="margin-top:12px;">
+                <thead>
+                    <tr><th>Importador</th><th class="n">2021/22</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 Abr</th><th class="n">Δ anual</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="b">🇵🇭 Filipinas</td><td class="n">3,8</td><td class="n">3,9</td><td class="n">5,5</td><td class="n">3,6</td><td class="n">5,5</td><td class="n pos">+51,4%</td></tr>
+                    <tr><td class="b">🇻🇳 Vietnam (imp.)</td><td class="n">2,8</td><td class="n">3,5</td><td class="n">3,7</td><td class="n">3,5</td><td class="n">3,9</td><td class="n pos">+10,6%</td></tr>
+                    <tr><td class="b">🇨🇳 China</td><td class="n">6,2</td><td class="n">2,6</td><td class="n">1,6</td><td class="n">3,1</td><td class="n">3,2</td><td class="n pos">+3,2%</td></tr>
+                    <tr><td class="b">🇳🇬 Nigeria</td><td class="n">2,4</td><td class="n">2,0</td><td class="n">2,7</td><td class="n">2,8</td><td class="n">3,0</td><td class="n pos">+8,1%</td></tr>
+                    <tr><td class="b">🇮🇶 Iraq</td><td class="n">2,1</td><td class="n">1,8</td><td class="n">2,1</td><td class="n">2,2</td><td class="n">2,2</td><td class="n neg">−1,4%</td></tr>
+                    <tr><td class="b">🇧🇩 Bangladesh</td><td class="n">0,9</td><td class="n">0,4</td><td class="n">0,2</td><td class="n">2,0</td><td class="n">1,5</td><td class="n neg">−25,4%</td></tr>
+                    <tr><td class="b">🇸🇳 Senegal</td><td class="n">1,5</td><td class="n">1,3</td><td class="n">1,4</td><td class="n">1,5</td><td class="n">1,5</td><td class="n">+1,7%</td></tr>
+                    <tr><td class="b">🇲🇾 Malasia</td><td class="n">1,2</td><td class="n">1,4</td><td class="n">1,7</td><td class="n">1,5</td><td class="n">1,7</td><td class="n pos">+13,7%</td></tr>
+                    <tr><td class="b">🇧🇷 Brasil</td><td class="n">0,8</td><td class="n">1,0</td><td class="n">1,0</td><td class="n">0,9</td><td class="n">0,9</td><td class="n neg">−3,3%</td></tr>
+                    <tr class="tot"><td class="b">🌍 Total Mundial</td><td class="n">57,0</td><td class="n">54,0</td><td class="n">60,1</td><td class="n">59,6</td><td class="n">62,1</td><td class="n pos">+4,2%</td></tr>
+                </tbody>
+            </table>
+            <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Imports, April 2026, p. 19. TY = Trade Year Jan/Dec. La reducción de importaciones de Bangladesh refleja su producción récord 2025/26. Brasil importa principalmente de Uruguay y Argentina para completar su demanda interna.</p>
         </div>
     </section>
 
@@ -729,12 +730,12 @@ footer{background:var(--ink);padding:40px 48px;}
 
                     <div class="sue mt16">
                         <div class="sue-hd">Uruguay Arroz — Balance estimado 2025/26</div>
-                        <div class="sue-row"><span class="sue-l">Producción (descascarado)</span><span class="sue-v hl">~1,1–1,2 Mt</span></div>
-                        <div class="sue-row"><span class="sue-l">Stocks iniciales</span><span class="sue-v">~100k TM</span></div>
-                        <div class="sue-row bold"><span class="sue-l">Oferta total aprox.</span><span class="sue-v">~1,2–1,3 Mt</span></div>
-                        <div class="sue-row"><span class="sue-l">Exportaciones</span><span class="sue-v neg">1,0k TM</span></div>
-                        <div class="sue-row"><span class="sue-l">Consumo doméstico</span><span class="sue-v">~120k TM</span></div>
-                        <div class="sue-row bold"><span class="sue-l">Stocks finales (est.)</span><span class="sue-v">~0,08–0,10 Mt</span></div>
+                        <div class="sue-row"><span class="sue-l">Producción (descascarado)</span><span class="sue-v hl">~1,1 Mt</span></div>
+                        <div class="sue-row"><span class="sue-l">Stocks iniciales</span><span class="sue-v">~0,10 Mt</span></div>
+                        <div class="sue-row bold"><span class="sue-l">Oferta total aprox.</span><span class="sue-v">~1,2 Mt</span></div>
+                        <div class="sue-row"><span class="sue-l">Exportaciones</span><span class="sue-v neg">1,0 Mt</span></div>
+                        <div class="sue-row"><span class="sue-l">Consumo doméstico</span><span class="sue-v">~0,12 Mt</span></div>
+                        <div class="sue-row bold"><span class="sue-l">Stocks finales (est.)</span><span class="sue-v">~0,08 Mt</span></div>
                         <div class="sue-row"><span class="sue-l">Valor exp. a $504/ton (est.)</span><span class="sue-v pos">~USD 504M</span></div>
                     </div>
                     <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade, April 2026. Balance estimado en base a exportaciones reportadas y proporciones históricas de producción/consumo de Uruguay. Uruguay produce alrededor del 85% de su arroz para exportación.</p>
@@ -800,42 +801,56 @@ footer{background:var(--ink);padding:40px 48px;}
                 </div>
             </div>
 
-            <div class="g2">
-                <div>
-                    <h3>Consistencia exportadora — la mayor fortaleza del sector</h3>
-                    <p>La serie histórica de exportaciones arroceras uruguayas muestra una característica sobresaliente: <strong>consistencia</strong>. Mientras la soja puede caer un 50% en un año catastrófico, el arroz oscila en un rango mucho más estrecho. Incluso en 2023/24 — año de producción reducida — las exportaciones se mantuvieron en 745k TM, solo un 25% por debajo del nivel máximo.</p>
-                    <p>Esta consistencia tiene valor financiero real para el país: el arroz es una fuente de divisas con menor volatilidad que los cultivos de secano. En años malos para soja y maíz, el arroz estabiliza la balanza comercial agrícola.</p>
-                    <p>Los destinos históricos de exportación incluyen a <strong>Brasil</strong> como principal, seguido de <strong>Perú, Irán, Costa Rica</strong> y mercados africanos. El mercado regional (MERCOSUR+Andinos) absorbe más del 50% de las exportaciones uruguayas de arroz, con Brasil siendo el ancla principal.</p>
-                </div>
-                <div>
-                    <h3>Serie exportaciones Uruguay · TY Ene/Dic · Miles de TM</h3>
-                    <table class="dt">
-                        <thead>
-                            <tr><th>Año (TY)</th><th class="n">Exportaciones (k TM)</th><th class="n">Δ</th><th>Contexto</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="b">2021/22</td><td class="n">982</td><td class="n">—</td><td>Año normal</td></tr>
-                            <tr><td class="b">2022/23</td><td class="n">991</td><td class="n pos">+0,9%</td><td>Ligero aumento</td></tr>
-                            <tr><td class="b">2023/24</td><td class="n">745</td><td class="n neg">−24,8%</td><td>Año ajustado por producción baja</td></tr>
-                            <tr><td class="b">2024/25</td><td class="n">987</td><td class="n pos">+32,5%</td><td>Recuperación — buena cosecha</td></tr>
-                            <tr class="uy"><td class="b">2025/26 (F)</td><td class="n hl">1.000</td><td class="n pos">+1,3%</td><td>⭐ Estable · $504/ton · 7° mundial</td></tr>
-                        </tbody>
-                    </table>
-                    <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Exports, April 2026. El año 2023/24 fue inusualmente bajo y 2024/25 recuperó el nivel histórico. En 2025/26, a pesar de la cosecha demorada por la sequía en otras zonas, el volumen se mantiene en 1 Mt — la consistencia del sistema de riego.</p>
+            <h3>Consistencia exportadora — la mayor fortaleza del sector</h3>
+            <p>La serie histórica de exportaciones arroceras uruguayas muestra una característica sobresaliente: <strong>consistencia</strong>. Mientras la soja puede caer un 50% en un año catastrófico, el arroz oscila en un rango mucho más estrecho. Incluso en 2023/24 — año de producción reducida — las exportaciones se mantuvieron en 745 mil t, solo un 25% por debajo del nivel máximo.</p>
+            <p>Esta consistencia tiene valor financiero real para el país: el arroz es una fuente de divisas con menor volatilidad que los cultivos de secano. En años malos para soja y maíz, el arroz estabiliza la balanza comercial agrícola.</p>
+            <p>Los destinos históricos de exportación incluyen a <strong>Brasil</strong> como principal, seguido de <strong>Perú, Irán, Costa Rica</strong> y mercados africanos. El mercado regional (MERCOSUR+Andinos) absorbe más del 50% de las exportaciones uruguayas de arroz, con Brasil siendo el ancla principal.</p>
 
-                    <div class="panel teal mt16">
-                        <p>Uruguay exporta aproximadamente <strong>2,5 veces más arroz que Argentina</strong> y es el mayor exportador del MERCOSUR. En la categoría de países con <1 millón de habitantes que se destacan en exportaciones arroceras, Uruguay no tiene equivalente mundial — su escala de producción relativa a su población es excepcional.</p>
-                    </div>
-                </div>
+            <div class="panel teal" style="margin-top:20px;">
+                <p>Uruguay exporta aproximadamente <strong>2,5 veces más arroz que Argentina</strong> y es el mayor exportador del MERCOSUR. En la categoría de países con <1 millón de habitantes que se destacan en exportaciones arroceras, Uruguay no tiene equivalente mundial — su escala de producción relativa a su población es excepcional.</p>
             </div>
 
-            <div class="div">Uruguay vs. Región · Exportaciones arroz 2025/26 · Miles de TM</div>
+            <h3 style="margin-top:32px;">Serie exportaciones Uruguay · TY Ene/Dic · Miles de ton. (mil t)</h3>
+            <table class="dt" style="margin-top:12px;">
+                <thead>
+                    <tr><th>Uruguay · TY Ene/Dic</th><th class="n">2021/22</th><th class="n">2022/23</th><th class="n">2023/24</th><th class="n">2024/25</th><th class="n">2025/26 (F)</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="b">Exportaciones (mil t)</td>
+                        <td class="n">982</td>
+                        <td class="n">991</td>
+                        <td class="n neg">745</td>
+                        <td class="n">987</td>
+                        <td class="n hl">1.000</td>
+                    </tr>
+                    <tr>
+                        <td class="b">Δ vs. año anterior</td>
+                        <td class="n">—</td>
+                        <td class="n pos">+0,9%</td>
+                        <td class="n neg">−24,8%</td>
+                        <td class="n pos">+32,5%</td>
+                        <td class="n pos">+1,3%</td>
+                    </tr>
+                    <tr class="uy">
+                        <td class="b">Contexto</td>
+                        <td>Año normal</td>
+                        <td>Ligero aumento</td>
+                        <td>Producción baja</td>
+                        <td>Recuperación</td>
+                        <td>⭐ Estable · $504/ton</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="fn">Fuente: USDA FAS — <em>Grain: World Markets and Trade</em>, Table: World Rice Trade — TY Exports, April 2026, p. 19. El año 2023/24 fue inusualmente bajo y 2024/25 recuperó el nivel histórico. En 2025/26, a pesar de la cosecha demorada, el volumen se mantiene en 1 Mt — la consistencia del sistema de riego.</p>
+
+            <div class="div">Uruguay vs. Región · Exportaciones arroz 2025/26 · Mill. ton. (Mt)</div>
             <div class="bars">
                 <div class="bar-r"><span class="bar-l">🇧🇷 Brasil</span><div class="bar-t"><div class="bar-f d" style="width:100%"></div></div><span class="bar-v">1,3 Mt <span style="color:var(--grn)">▲+26%</span></span></div>
-                <div class="bar-r"><span class="bar-l" style="color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f" style="width:72,7%"></div></div><span class="bar-v" style="color:var(--rice-d);font-weight:700;">1,0 Mt · 7° mundial</span></div>
-                <div class="bar-r"><span class="bar-l">🇵🇾 Paraguay</span><div class="bar-t"><div class="bar-f d" style="width:65,5%"></div></div><span class="bar-v">900 Mt <span style="color:var(--red)">▼−5%</span></span></div>
-                <div class="bar-r"><span class="bar-l">🇬🇾 Guyana</span><div class="bar-t"><div class="bar-f d" style="width:36,4%"></div></div><span class="bar-v">500 Mt</span></div>
-                <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:29,1%"></div></div><span class="bar-v">400 Mt</span></div>
+                <div class="bar-r"><span class="bar-l" style="color:var(--rice-d);font-weight:700;">🇺🇾 Uruguay</span><div class="bar-t"><div class="bar-f" style="width:72.7%"></div></div><span class="bar-v" style="color:var(--rice-d);font-weight:700;">1,0 Mt · 7° mundial</span></div>
+                <div class="bar-r"><span class="bar-l">🇵🇾 Paraguay</span><div class="bar-t"><div class="bar-f d" style="width:65.5%"></div></div><span class="bar-v">0,9 Mt <span style="color:var(--red)">▼−5%</span></span></div>
+                <div class="bar-r"><span class="bar-l">🇬🇾 Guyana</span><div class="bar-t"><div class="bar-f d" style="width:36.4%"></div></div><span class="bar-v">0,5 Mt</span></div>
+                <div class="bar-r"><span class="bar-l">🇦🇷 Argentina</span><div class="bar-t"><div class="bar-f d" style="width:29.1%"></div></div><span class="bar-v">0,4 Mt</span></div>
             </div>
         </div>
     </section>
@@ -1132,6 +1147,24 @@ footer{background:var(--ink);padding:40px 48px;}
 
             sections.forEach(s => observer.observe(s));
         })();
+    </script>
+
+    <script>
+        // ─── COPY PROTECTION ───
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (
+                (e.ctrlKey || e.metaKey) && (
+                    e.key === 'c' || e.key === 'C' ||
+                    e.key === 'a' || e.key === 'A' ||
+                    e.key === 'u' || e.key === 'U' ||
+                    e.key === 's' || e.key === 'S' ||
+                    e.key === 'p' || e.key === 'P'
+                )
+            ) { e.preventDefault(); }
+        });
     </script>
 </body>
 </html>
