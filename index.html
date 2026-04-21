@@ -301,6 +301,11 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             <div id="novillo-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
             <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
         </div>
+        
+        <!-- Contexto RHE integrado -->
+        <div id="novillo-rhe-context" style="padding-top:12px;margin-top:12px;border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted);line-height:1.5;">
+            <!-- Se llena dinámicamente -->
+        </div>
     </div>
     <script>
     fetch('data/novillo.json')
@@ -344,39 +349,49 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             document.getElementById('novillo-vai').textContent = '368';
             document.getElementById('novillo-vai-pct').textContent = '19% del total';
         });
+    
+    // Cargar contexto RHE
+    fetch('data/rhe.json')
+        .then(r => r.json())
+        .then(rhe => {
+            const rheNovPct = (rhe.rhe_novillo * 100).toFixed(1);
+            const context = `<strong>Contexto de mercado:</strong> El productor recibe ${rheNovPct}% del precio de exportación (RHE ${rheNovPct}%). Precio export: USD ${rhe.precio_export.toFixed(2)}/kg · Novillo: USD ${rhe.precio_novillo.toFixed(2)}/kg · Semana ${rhe.periodo}.`;
+            document.getElementById('novillo-rhe-context').innerHTML = context;
+        })
+        .catch(() => {
+            // Fallback sin contexto RHE
+        });
     </script>
 
     <!-- Faena Semanal Bovinos card -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
-        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📊 Faena Semanal Bovinos — INAC</div>
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📊 Faena Acumulada 2026 — INAC</div>
         
-        <!-- Total semanal -->
-        <div style="margin-bottom:16px;">
-            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Total Semanal</div>
-            <div style="display:flex;align-items:baseline;gap:8px;">
-                <span id="faena-total" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                <span style="font-size:0.7rem;color:var(--muted);">cabezas</span>
-            </div>
-        </div>
-        
-        <!-- Desglose por categoría (3 columnas) -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px;">
+        <!-- Total semanal + categorías -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;">
             <div>
-                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:2px;">Novillo</div>
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Total Acumulado</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                    <span id="faena-total" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
+                    <span style="font-size:0.7rem;color:var(--muted);">cabezas</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:4px;">Novillo</div>
                 <div style="display:flex;align-items:baseline;gap:6px;">
                     <span id="faena-novillo" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
                     <span id="faena-novillo-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
                 </div>
             </div>
             <div>
-                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:2px;">Vaca</div>
+                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:4px;">Vaca</div>
                 <div style="display:flex;align-items:baseline;gap:6px;">
                     <span id="faena-vaca" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
                     <span id="faena-vaca-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
                 </div>
             </div>
             <div>
-                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:2px;">Vaquillona</div>
+                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:4px;">Vaquillona</div>
                 <div style="display:flex;align-items:baseline;gap:6px;">
                     <span id="faena-vaquillona" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
                     <span id="faena-vaquillona-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
@@ -384,8 +399,16 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             </div>
         </div>
         
+        <!-- Top 5 Frigoríficos -->
+        <div style="padding-top:16px;border-top:1px solid var(--border);">
+            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:10px;">Top 5 Frigoríficos</div>
+            <div id="frigo-ranking" style="display:grid;gap:6px;">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+        
         <!-- Footer -->
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);margin-top:12px;">
             <div id="faena-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
             <a href="https://www.inac.uy/innovaportal/v/21478/10/innova.front/faena" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
         </div>
@@ -394,6 +417,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     fetch('data/faena.json')
         .then(r => r.json())
         .then(d => {
+            // Total y categorías
             document.getElementById('faena-total').textContent = d.total.toLocaleString('es-UY');
             document.getElementById('faena-novillo').textContent = d.novillo.toLocaleString('es-UY');
             document.getElementById('faena-novillo-pct').textContent = d.novillo_pct + '%';
@@ -401,18 +425,149 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             document.getElementById('faena-vaca-pct').textContent = d.vaca_pct + '%';
             document.getElementById('faena-vaquillona').textContent = d.vaquillona.toLocaleString('es-UY');
             document.getElementById('faena-vaquillona-pct').textContent = d.vaquillona_pct + '%';
-            document.getElementById('faena-periodo').textContent = 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+            document.getElementById('faena-periodo').textContent = 'Período: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+            
+            // Ranking frigoríficos
+            const ranking = document.getElementById('frigo-ranking');
+            d.frigorificos.forEach((f, i) => {
+                const bar = document.createElement('div');
+                bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
+                
+                const label = document.createElement('div');
+                label.style.cssText = 'font-size:0.7rem;font-weight:600;color:var(--text);min-width:120px;';
+                label.textContent = (i + 1) + '. ' + f.nombre;
+                
+                const barContainer = document.createElement('div');
+                barContainer.style.cssText = 'flex:1;background:var(--surface2);border-radius:4px;height:20px;position:relative;overflow:hidden;';
+                
+                const barFill = document.createElement('div');
+                barFill.style.cssText = 'background:var(--red);height:100%;border-radius:4px;transition:width 0.3s;width:' + f.porcentaje + '%';
+                
+                const pct = document.createElement('div');
+                pct.style.cssText = 'font-size:0.68rem;font-weight:600;color:var(--muted);min-width:40px;text-align:right;';
+                pct.textContent = f.porcentaje.toFixed(1) + '%';
+                
+                barContainer.appendChild(barFill);
+                bar.appendChild(label);
+                bar.appendChild(barContainer);
+                bar.appendChild(pct);
+                ranking.appendChild(bar);
+            });
         })
         .catch(() => {
-            // Fallback con datos del PDF subido
-            document.getElementById('faena-total').textContent = '28.945';
-            document.getElementById('faena-novillo').textContent = '12.940';
-            document.getElementById('faena-novillo-pct').textContent = '45%';
-            document.getElementById('faena-vaca').textContent = '10.450';
+            // Fallback con datos acumulados 2026
+            document.getElementById('faena-total').textContent = '600.487';
+            document.getElementById('faena-novillo').textContent = '281.610';
+            document.getElementById('faena-novillo-pct').textContent = '47%';
+            document.getElementById('faena-vaca').textContent = '213.851';
             document.getElementById('faena-vaca-pct').textContent = '36%';
-            document.getElementById('faena-vaquillona').textContent = '4.963';
-            document.getElementById('faena-vaquillona-pct').textContent = '17%';
-            document.getElementById('faena-periodo').textContent = 'Semana: 12-18 abril 2026';
+            document.getElementById('faena-vaquillona').textContent = '94.829';
+            document.getElementById('faena-vaquillona-pct').textContent = '16%';
+            document.getElementById('faena-periodo').textContent = 'Período: Enero - Abril 2026';
+            
+            // Ranking fallback
+            const frigosFallback = [
+                {nombre: 'Tacuarembó', porcentaje: 15.2},
+                {nombre: 'Las Piedras', porcentaje: 10.5},
+                {nombre: 'San Jacinto', porcentaje: 9.0},
+                {nombre: 'Ontilcor', porcentaje: 8.7},
+                {nombre: 'Breeders Packers', porcentaje: 7.5},
+                {nombre: 'Otros', porcentaje: 49.1}
+            ];
+            
+            const ranking = document.getElementById('frigo-ranking');
+            frigosFallback.forEach((f, i) => {
+                const bar = document.createElement('div');
+                bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
+                
+                const label = document.createElement('div');
+                label.style.cssText = 'font-size:0.7rem;font-weight:600;color:var(--text);min-width:120px;';
+                label.textContent = (i + 1) + '. ' + f.nombre;
+                
+                const barContainer = document.createElement('div');
+                barContainer.style.cssText = 'flex:1;background:var(--surface2);border-radius:4px;height:20px;position:relative;overflow:hidden;';
+                
+                const barFill = document.createElement('div');
+                barFill.style.cssText = 'background:var(--red);height:100%;border-radius:4px;width:' + f.porcentaje + '%';
+                
+                const pct = document.createElement('div');
+                pct.style.cssText = 'font-size:0.68rem;font-weight:600;color:var(--muted);min-width:40px;text-align:right;';
+                pct.textContent = f.porcentaje.toFixed(1) + '%';
+                
+                barContainer.appendChild(barFill);
+                bar.appendChild(label);
+                bar.appendChild(barContainer);
+                bar.appendChild(pct);
+                ranking.appendChild(bar);
+            });
+        });
+    </script>
+
+    <!-- RHE Card -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📈 Relación Hacienda/Exportación (RHE) — INAC</div>
+        
+        <!-- RHE Novillo y Vaca -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px;">
+            <div>
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:6px;">RHE Novillo</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                    <span id="rhe-novillo-pct" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
+                    <span style="font-size:0.7rem;color:var(--muted);">del precio export</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:6px;">RHE Vaca</div>
+                <div style="display:flex;align-items:baseline;gap:8px;">
+                    <span id="rhe-vaca-pct" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
+                    <span style="font-size:0.7rem;color:var(--muted);">del precio export</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Precios -->
+        <div style="padding-top:16px;border-top:1px solid var(--border);">
+            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:10px;">Precios (USD/kg)</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;">
+                <div>
+                    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Export</div>
+                    <div id="rhe-precio-export" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</div>
+                </div>
+                <div>
+                    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Novillo</div>
+                    <div id="rhe-precio-novillo" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</div>
+                </div>
+                <div>
+                    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Vaca</div>
+                    <div id="rhe-precio-vaca" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);margin-top:12px;">
+            <div id="rhe-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
+            <a href="https://www.inac.uy/innovaportal/v/3448/10/innova.front/relacion-hacienda-exportacion" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver serie histórica →</a>
+        </div>
+    </div>
+    <script>
+    fetch('data/rhe.json')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById('rhe-novillo-pct').textContent = (d.rhe_novillo * 100).toFixed(1) + '%';
+            document.getElementById('rhe-vaca-pct').textContent = (d.rhe_vaca * 100).toFixed(1) + '%';
+            document.getElementById('rhe-precio-export').textContent = d.precio_export.toFixed(2);
+            document.getElementById('rhe-precio-novillo').textContent = d.precio_novillo.toFixed(2);
+            document.getElementById('rhe-precio-vaca').textContent = d.precio_vaca.toFixed(2);
+            document.getElementById('rhe-periodo').textContent = 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+        })
+        .catch(() => {
+            document.getElementById('rhe-novillo-pct').textContent = '95.7%';
+            document.getElementById('rhe-vaca-pct').textContent = '85.9%';
+            document.getElementById('rhe-precio-export').textContent = '5.77';
+            document.getElementById('rhe-precio-novillo').textContent = '5.52';
+            document.getElementById('rhe-precio-vaca').textContent = '4.96';
+            document.getElementById('rhe-periodo').textContent = 'Semana: 5-11 abril 2026';
         });
     </script>
 

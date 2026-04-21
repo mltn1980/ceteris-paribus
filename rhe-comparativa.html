@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparativa Histórica RHE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { 
+            font-size: 1.5rem; 
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+        .subtitle {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .comparison-grid {
+            display: grid;
+            gap: 16px;
+        }
+        .comparison-row {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid transparent;
+        }
+        .comparison-row.actual {
+            border-left-color: #c41e3a;
+            background: #fff5f5;
+        }
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .row-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .row-period {
+            font-size: 0.75rem;
+            color: #666;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .metric {
+            text-align: center;
+        }
+        .metric-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .metric-diff {
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+        .positive { color: #2a7235; }
+        .negative { color: #c41e3a; }
+        .neutral { color: #666; }
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Comparativa Histórica RHE</h1>
+        <div class="subtitle">Relación Hacienda/Exportación · Análisis INAC</div>
+        
+        <div class="comparison-grid" id="comparison">
+            <!-- Se llena dinámicamente -->
+        </div>
+    </div>
+    
+    <script>
+    fetch('data/rhe-comparativa.json')
+        .then(r => r.json())
+        .then(data => {
+            const container = document.getElementById('comparison');
+            
+            // Actual
+            container.innerHTML += createRow(
+                'Actual',
+                data.actual.fecha,
+                data.actual.rhe_novillo,
+                data.actual.rhe_vaca,
+                null,
+                true
+            );
+            
+            // Promedio último año
+            const diffUltimoAñoNov = ((data.actual.rhe_novillo - data.promedio_ultimo_año.rhe_novillo) * 100).toFixed(1);
+            const diffUltimoAñoVaca = ((data.actual.rhe_vaca - data.promedio_ultimo_año.rhe_vaca) * 100).toFixed(1);
+            container.innerHTML += createRow(
+                'Promedio Último Año',
+                data.promedio_ultimo_año.periodo,
+                data.promedio_ultimo_año.rhe_novillo,
+                data.promedio_ultimo_año.rhe_vaca,
+                {nov: diffUltimoAñoNov, vaca: diffUltimoAñoVaca},
+                false
+            );
+            
+            // Año anterior
+            const diffAñoAntNov = ((data.actual.rhe_novillo - data.año_anterior.rhe_novillo) * 100).toFixed(1);
+            const diffAñoAntVaca = ((data.actual.rhe_vaca - data.año_anterior.rhe_vaca) * 100).toFixed(1);
+            container.innerHTML += createRow(
+                'Mismo Período 2025',
+                data.año_anterior.periodo,
+                data.año_anterior.rhe_novillo,
+                data.año_anterior.rhe_vaca,
+                {nov: diffAñoAntNov, vaca: diffAñoAntVaca},
+                false
+            );
+            
+            // Promedio histórico
+            const diffHistNov = ((data.actual.rhe_novillo - data.promedio_historico.rhe_novillo) * 100).toFixed(1);
+            const diffHistVaca = ((data.actual.rhe_vaca - data.promedio_historico.rhe_vaca) * 100).toFixed(1);
+            container.innerHTML += createRow(
+                'Promedio Histórico',
+                data.promedio_historico.periodo,
+                data.promedio_historico.rhe_novillo,
+                data.promedio_historico.rhe_vaca,
+                {nov: diffHistNov, vaca: diffHistVaca},
+                false
+            );
+        });
+    
+    function createRow(title, period, rheNov, rheVaca, diff, isActual) {
+        const diffNovHTML = diff ? 
+            `<div class="metric-diff ${diff.nov >= 0 ? 'positive' : 'negative'}">
+                ${diff.nov >= 0 ? '▲' : '▼'} ${Math.abs(diff.nov)}pp vs actual
+            </div>` : '';
+        
+        const diffVacaHTML = diff ? 
+            `<div class="metric-diff ${diff.vaca >= 0 ? 'positive' : 'negative'}">
+                ${diff.vaca >= 0 ? '▲' : '▼'} ${Math.abs(diff.vaca)}pp vs actual
+            </div>` : '';
+        
+        return `
+            <div class="comparison-row ${isActual ? 'actual' : ''}">
+                <div class="row-header">
+                    <div class="row-title">${title}</div>
+                    <div class="row-period">${period}</div>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-label">RHE Novillo</div>
+                        <div class="metric-value">${(rheNov * 100).toFixed(1)}%</div>
+                        ${diffNovHTML}
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">RHE Vaca</div>
+                        <div class="metric-value">${(rheVaca * 100).toFixed(1)}%</div>
+                        ${diffVacaHTML}
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Diferencial</div>
+                        <div class="metric-value">${((rheNov - rheVaca) * 100).toFixed(1)}pp</div>
+                        <div class="metric-diff neutral">Nov - Vaca</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    </script>
+</body>
+</html>
