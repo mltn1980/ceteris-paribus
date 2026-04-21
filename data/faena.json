@@ -1,13 +1,46 @@
 {
-  "periodo": "12-18 abril 2026",
-  "total": 28945,
-  "novillo": 12940,
-  "novillo_pct": 45,
-  "vaca": 10450,
+  "periodo": "Enero - Abril 2026",
+  "total": 600487,
+  "novillo": 281610,
+  "novillo_pct": 47,
+  "vaca": 213851,
   "vaca_pct": 36,
-  "vaquillona": 4963,
-  "vaquillona_pct": 17,
-  "toros": 514,
-  "terneros": 78,
-  "actualizado": "2026-04-18"
+  "vaquillona": 94829,
+  "vaquillona_pct": 16,
+  "toros": 8651,
+  "terneros": 1546,
+  "variacion": -17.1,
+  "actualizado": "2026-04-18",
+  "frigorificos": [
+    {
+      "nombre": "Tacuarembó",
+      "cabezas": 91205,
+      "porcentaje": 15.2
+    },
+    {
+      "nombre": "Las Piedras",
+      "cabezas": 62881,
+      "porcentaje": 10.5
+    },
+    {
+      "nombre": "San Jacinto",
+      "cabezas": 54297,
+      "porcentaje": 9.0
+    },
+    {
+      "nombre": "Ontilcor",
+      "cabezas": 52432,
+      "porcentaje": 8.7
+    },
+    {
+      "nombre": "Breeders Packers",
+      "cabezas": 45234,
+      "porcentaje": 7.5
+    },
+    {
+      "nombre": "Otros",
+      "cabezas": 294438,
+      "porcentaje": 49.1
+    }
+  ]
 }
