@@ -1,0 +1,22 @@
+{
+  "actual": {
+    "rhe_novillo": 0.957,
+    "rhe_vaca": 0.859,
+    "fecha": "2026-04-05"
+  },
+  "promedio_historico": {
+    "rhe_novillo": 0.936,
+    "rhe_vaca": 0.847,
+    "periodo": "2005-2026"
+  },
+  "promedio_ultimo_a\u00f1o": {
+    "rhe_novillo": 0.999,
+    "rhe_vaca": 0.933,
+    "periodo": "\u00daltimas 52 semanas"
+  },
+  "a\u00f1o_anterior": {
+    "rhe_novillo": 0.965,
+    "rhe_vaca": 0.901,
+    "periodo": "Abril 2025"
+  }
+}

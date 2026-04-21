@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard RHE - INAC</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.5.0/dist/Recharts.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        #root {
+            width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, ResponsiveContainer } = Recharts;
+
+        // Placeholder para datos - se cargarán desde el archivo JSON
+        const datos = {
+            valores_actuales: {
+                novillo: 0.9565,
+                vaca: 0.859,
+                fecha_inicio: "2026-04-05",
+                fecha_fin: "2026-04-11"
+            },
+            promedios_historicos: {
+                novillo: 0.9356,
+                vaca: 0.847
+            },
+            serie_temporal: {
+                fechas: [],
+                rhe_novillo: [],
+                rhe_vaca: []
+            },
+            estadisticas: {
+                total_semanas: 1110,
+                año_inicio: 2005,
+                año_fin: 2026
+            }
+        };
+
+        // Cargar datos del JSON
+        fetch('data/rhe.json')
+            .then(response => response.json())
+            .then(data => {
+                Object.assign(datos, data);
+                // Re-renderizar con datos actualizados
+                ReactDOM.render(<RHEDashboard />, document.getElementById('root'));
+            })
+            .catch(error => {
+                console.log('Usando datos de ejemplo');
+            });
+
+        function RHEDashboard() {
+            const [selectedCategory, setSelectedCategory] = useState('novillo');
+            const [showComparison, setShowComparison] = useState(true);
+            
+            // Preparar datos para el gráfico
+            const chartData = datos.serie_temporal.fechas.map((fecha, idx) => ({
+                fecha: fecha,
+                year: new Date(fecha).getFullYear(),
+                novillo: datos.serie_temporal.rhe_novillo[idx],
+                vaca: datos.serie_temporal.rhe_vaca[idx],
+                promedio_novillo: datos.promedios_historicos.novillo,
+                promedio_vaca: datos.promedios_historicos.vaca
+            }));
+            
+            const formatoPorcentaje = (valor) => `${(valor * 100).toFixed(1)}%`;
+            
+            const calcularDiferencia = (actual, promedio) => {
+                const diff = ((actual - promedio) / promedio) * 100;
+                return diff.toFixed(1);
+            };
+            
+            const diffNovillo = calcularDiferencia(datos.valores_actuales.novillo, datos.promedios_historicos.novillo);
+            const diffVaca = calcularDiferencia(datos.valores_actuales.vaca, datos.promedios_historicos.vaca);
+
+            return (
+                <div style={{
+                    fontFamily: '"IBM Plex Sans", sans-serif',
+                    background: 'linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #0d1821 100%)',
+                    minHeight: '100vh',
+                    color: '#e8e6e1',
+                    padding: '48px 24px'
+                }}>
+                    {/* Header */}
+                    <div style={{
+                        maxWidth: '1200px',
+                        margin: '0 auto 48px',
+                        textAlign: 'center'
+                    }}>
+                        <div style={{
+                            display: 'inline-block',
+                            background: 'linear-gradient(135deg, #2a7235 0%, #3d9948 100%)',
+                            padding: '2px 16px',
+                            borderRadius: '6px',
+                            marginBottom: '16px',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            letterSpacing: '2px',
+                            textTransform: 'uppercase',
+                            color: '#f7f5f0'
+                        }}>
+                            INAC — Serie Histórica
+                        </div>
+                        
+                        <h1 style={{
+                            fontFamily: '"DM Serif Display", serif',
+                            fontSize: 'clamp(2rem, 5vw, 3.8rem)',
+                            fontWeight: '800',
+                            lineHeight: '1.1',
+                            marginBottom: '16px',
+                            background: 'linear-gradient(135deg, #edf5ef 0%, #8cc499 50%, #f7f5f0 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            fontStyle: 'italic'
+                        }}>
+                            Relación Hacienda/Exportación
+                        </h1>
+                        
+                        <p style={{
+                            fontSize: '16px',
+                            color: '#a09d95',
+                            maxWidth: '600px',
+                            margin: '0 auto',
+                            lineHeight: '1.6'
+                        }}>
+                            Análisis comparativo de valores actuales versus promedio histórico desde 2005
+                        </p>
+                    </div>
+
+                    {/* Main Content */}
+                    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                        
+                        {/* Cards de Valores Actuales */}
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                            gap: '24px',
+                            marginBottom: '32px'
+                        }}>
+                            
+                            {/* Novillo */}
+                            <div style={{
+                                background: 'linear-gradient(135deg, #1e2a38 0%, #253447 100%)',
+                                border: '2px solid rgba(42, 114, 53, 0.4)',
+                                borderRadius: '16px',
+                                padding: '28px',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+                            }}>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '-40px',
+                                    right: '-40px',
+                                    width: '140px',
+                                    height: '140px',
+                                    background: 'radial-gradient(circle, rgba(42,114,53,0.2) 0%, transparent 70%)',
+                                    borderRadius: '50%'
+                                }}/>
+                                
+                                <div style={{
+                                    fontSize: '16px',
+                                    fontWeight: '700',
+                                    letterSpacing: '1.5px',
+                                    textTransform: 'uppercase',
+                                    color: '#8cc499',
+                                    marginBottom: '8px',
+                                    fontFamily: '"IBM Plex Mono", monospace'
+                                }}>
+                                    🐂 RHE Novillo
+                                </div>
+                                
+                                <div style={{
+                                    fontSize: '12px',
+                                    color: '#8b8985',
+                                    marginBottom: '12px'
+                                }}>
+                                    Semana del {new Date(datos.valores_actuales.fecha_inicio).toLocaleDateString('es-UY', { day: 'numeric', month: 'short' })} al {new Date(datos.valores_actuales.fecha_fin).toLocaleDateString('es-UY', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                </div>
+                                
+                                <div style={{
+                                    fontFamily: '"DM Serif Display", serif',
+                                    fontSize: 'clamp(2.8rem, 6vw, 4.2rem)',
+                                    fontWeight: '900',
+                                    lineHeight: '1',
+                                    marginBottom: '8px',
+                                    color: '#edf5ef',
+                                    fontStyle: 'italic'
+                                }}>
+                                    {formatoPorcentaje(datos.valores_actuales.novillo)}
+                                </div>
+                                
+                                <div style={{
+                                    fontSize: '13px',
+                                    color: '#8b8985',
+                                    marginBottom: '16px'
+                                }}>
+                                    del precio de exportación
+                                </div>
+                                
+                                <div style={{
+                                    paddingTop: '16px',
+                                    borderTop: '1px solid rgba(42,114,53,0.3)',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div>
+                                        <div style={{ fontSize: '13px', color: '#6b6962', marginBottom: '4px' }}>
+                                            Promedio histórico
+                                        </div>
+                                        <div style={{ fontSize: '20px', fontWeight: '700', color: '#a09d95' }}>
+                                            {formatoPorcentaje(datos.promedios_historicos.novillo)}
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{
+                                        background: parseFloat(diffNovillo) >= 0 ? 'rgba(42,114,53,0.25)' : 'rgba(140,48,48,0.25)',
+                                        color: parseFloat(diffNovillo) >= 0 ? '#8cc499' : '#e89b9b',
+                                        padding: '6px 12px',
+                                        borderRadius: '8px',
+                                        fontSize: '14px',
+                                        fontWeight: '700',
+                                        fontFamily: '"IBM Plex Mono", monospace'
+                                    }}>
+                                        {parseFloat(diffNovillo) >= 0 ? '+' : ''}{diffNovillo}%
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Vaca */}
+                            <div style={{
+                                background: 'linear-gradient(135deg, #2a1e1e 0%, #3a2828 100%)',
+                                border: '2px solid rgba(140, 48, 48, 0.4)',
+                                borderRadius: '16px',
+                                padding: '28px',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+                            }}>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '-40px',
+                                    right: '-40px',
+                                    width: '140px',
+                                    height: '140px',
+                                    background: 'radial-gradient(circle, rgba(140,48,48,0.2) 0%, transparent 70%)',
+                                    borderRadius: '50%'
+                                }}/>
+                                
+                                <div style={{
+                                    fontSize: '16px',
+                                    fontWeight: '700',
+                                    letterSpacing: '1.5px',
+                                    textTransform: 'uppercase',
+                                    color: '#e89b9b',
+                                    marginBottom: '8px',
+                                    fontFamily: '"IBM Plex Mono", monospace'
+                                }}>
+                                    🐄 RHE Vaca
+                                </div>
+                                
+                                <div style={{
+                                    fontSize: '12px',
+                                    color: '#8b8985',
+                                    marginBottom: '12px'
+                                }}>
+                                    Semana del {new Date(datos.valores_actuales.fecha_inicio).toLocaleDateString('es-UY', { day: 'numeric', month: 'short' })} al {new Date(datos.valores_actuales.fecha_fin).toLocaleDateString('es-UY', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                </div>
+                                
+                                <div style={{
+                                    fontFamily: '"DM Serif Display", serif',
+                                    fontSize: 'clamp(2.8rem, 6vw, 4.2rem)',
+                                    fontWeight: '900',
+                                    lineHeight: '1',
+                                    marginBottom: '8px',
+                                    color: '#f9ecec',
+                                    fontStyle: 'italic'
+                                }}>
+                                    {formatoPorcentaje(datos.valores_actuales.vaca)}
+                                </div>
+                                
+                                <div style={{
+                                    fontSize: '13px',
+                                    color: '#8b8985',
+                                    marginBottom: '16px'
+                                }}>
+                                    del precio de exportación
+                                </div>
+                                
+                                <div style={{
+                                    paddingTop: '16px',
+                                    borderTop: '1px solid rgba(140,48,48,0.3)',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div>
+                                        <div style={{ fontSize: '13px', color: '#6b6962', marginBottom: '4px' }}>
+                                            Promedio histórico
+                                        </div>
+                                        <div style={{ fontSize: '20px', fontWeight: '700', color: '#a09d95' }}>
+                                            {formatoPorcentaje(datos.promedios_historicos.vaca)}
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{
+                                        background: parseFloat(diffVaca) >= 0 ? 'rgba(42,114,53,0.25)' : 'rgba(140,48,48,0.25)',
+                                        color: parseFloat(diffVaca) >= 0 ? '#8cc499' : '#e89b9b',
+                                        padding: '6px 12px',
+                                        borderRadius: '8px',
+                                        fontSize: '14px',
+                                        fontWeight: '700',
+                                        fontFamily: '"IBM Plex Mono", monospace'
+                                    }}>
+                                        {parseFloat(diffVaca) >= 0 ? '+' : ''}{diffVaca}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Gráfico */}
+                        <div style={{
+                            background: 'linear-gradient(135deg, #1a2332 0%, #1e2a38 100%)',
+                            border: '2px solid rgba(42,114,53,0.3)',
+                            borderRadius: '16px',
+                            padding: '32px',
+                            marginBottom: '32px',
+                            boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+                        }}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: '24px',
+                                flexWrap: 'wrap',
+                                gap: '16px'
+                            }}>
+                                <h2 style={{
+                                    fontSize: '24px',
+                                    fontWeight: '700',
+                                    color: '#edf5ef'
+                                }}>
+                                    Serie Histórica 2005-2026
+                                </h2>
+                                
+                                <label style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    color: '#a09d95'
+                                }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={showComparison}
+                                        onChange={(e) => setShowComparison(e.target.checked)}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                    Mostrar promedio histórico
+                                </label>
+                            </div>
+                            
+                            {/* Pestañas */}
+                            <div style={{
+                                display: 'flex',
+                                gap: '8px',
+                                marginBottom: '24px',
+                                borderBottom: '2px solid rgba(42,114,53,0.2)'
+                            }}>
+                                <button
+                                    onClick={() => setSelectedCategory('novillo')}
+                                    style={{
+                                        flex: 1,
+                                        padding: '12px 24px',
+                                        background: selectedCategory === 'novillo' ? 'rgba(42,114,53,0.2)' : 'transparent',
+                                        border: 'none',
+                                        borderBottom: selectedCategory === 'novillo' ? '3px solid #8cc499' : '3px solid transparent',
+                                        color: selectedCategory === 'novillo' ? '#8cc499' : '#8b8985',
+                                        fontSize: '15px',
+                                        fontWeight: '700',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.5px'
+                                    }}
+                                >
+                                    🐂 Novillo
+                                </button>
+                                <button
+                                    onClick={() => setSelectedCategory('vaca')}
+                                    style={{
+                                        flex: 1,
+                                        padding: '12px 24px',
+                                        background: selectedCategory === 'vaca' ? 'rgba(140,48,48,0.2)' : 'transparent',
+                                        border: 'none',
+                                        borderBottom: selectedCategory === 'vaca' ? '3px solid #e89b9b' : '3px solid transparent',
+                                        color: selectedCategory === 'vaca' ? '#e89b9b' : '#8b8985',
+                                        fontSize: '15px',
+                                        fontWeight: '700',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.5px'
+                                    }}
+                                >
+                                    🐄 Vaca
+                                </button>
+                            </div>
+                            
+                            <ResponsiveContainer width="100%" height={400}>
+                                <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(42,114,53,0.15)" />
+                                    <XAxis 
+                                        dataKey="year" 
+                                        stroke="#6b6962"
+                                        tick={{ fill: '#8b8985', fontSize: 11 }}
+                                        interval="preserveStartEnd"
+                                        tickFormatter={(value) => value.toString()}
+                                    />
+                                    <YAxis 
+                                        stroke="#6b6962"
+                                        tick={{ fill: '#8b8985', fontSize: 11 }}
+                                        tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
+                                        domain={[
+                                            (dataMin) => Math.max(0, dataMin - 0.05),
+                                            (dataMax) => dataMax + 0.02
+                                        ]}
+                                    />
+                                    <Tooltip 
+                                        contentStyle={{
+                                            background: '#0f1419',
+                                            border: '1px solid rgba(42,114,53,0.4)',
+                                            borderRadius: '8px',
+                                            color: '#e8e6e1'
+                                        }}
+                                        labelFormatter={(value, data) => {
+                                            if (data && data.length > 0 && data[0].payload) {
+                                                return `Semana: ${data[0].payload.fecha}`;
+                                            }
+                                            return `Año: ${value}`;
+                                        }}
+                                        formatter={(value, name) => {
+                                            const names = {
+                                                'novillo': 'RHE Novillo',
+                                                'vaca': 'RHE Vaca'
+                                            };
+                                            return [formatoPorcentaje(value), names[name] || name];
+                                        }}
+                                    />
+                                    <Legend 
+                                        wrapperStyle={{ 
+                                            paddingTop: '20px'
+                                        }}
+                                    />
+                                    
+                                    <Line 
+                                        type="monotone" 
+                                        dataKey="novillo" 
+                                        stroke="#8cc499" 
+                                        strokeWidth={selectedCategory === 'novillo' ? 2 : 1}
+                                        strokeOpacity={selectedCategory === 'novillo' ? 1 : 0.15}
+                                        dot={false}
+                                        name="RHE Novillo"
+                                    />
+                                    
+                                    <Line 
+                                        type="monotone" 
+                                        dataKey="vaca" 
+                                        stroke="#e89b9b" 
+                                        strokeWidth={selectedCategory === 'vaca' ? 2 : 1}
+                                        strokeOpacity={selectedCategory === 'vaca' ? 1 : 0.15}
+                                        dot={false}
+                                        name="RHE Vaca"
+                                    />
+                                    
+                                    {showComparison && selectedCategory === 'novillo' && (
+                                        <ReferenceLine 
+                                            y={datos.promedios_historicos.novillo} 
+                                            stroke="#2a7235" 
+                                            strokeDasharray="5 5"
+                                            strokeWidth={2}
+                                            label={{ 
+                                                value: 'Promedio histórico', 
+                                                fill: '#2a7235',
+                                                fontSize: 12,
+                                                position: 'insideTopRight'
+                                            }}
+                                        />
+                                    )}
+                                    
+                                    {showComparison && selectedCategory === 'vaca' && (
+                                        <ReferenceLine 
+                                            y={datos.promedios_historicos.vaca} 
+                                            stroke="#8c3030" 
+                                            strokeDasharray="5 5"
+                                            strokeWidth={2}
+                                            label={{ 
+                                                value: 'Promedio histórico', 
+                                                fill: '#8c3030',
+                                                fontSize: 12,
+                                                position: 'insideBottomRight'
+                                            }}
+                                        />
+                                    )}
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+
+                        {/* Footer con info */}
+                        <div style={{
+                            background: 'rgba(42,114,53,0.1)',
+                            border: '1px solid rgba(42,114,53,0.3)',
+                            borderRadius: '12px',
+                            padding: '20px 24px',
+                            fontSize: '13px',
+                            color: '#8b8985',
+                            lineHeight: '1.6'
+                        }}>
+                            <div style={{ fontWeight: '600', color: '#8cc499', marginBottom: '8px' }}>
+                                📊 Semana del {new Date(datos.valores_actuales.fecha_inicio).toLocaleDateString('es-UY', { day: 'numeric', month: 'long' })} al {new Date(datos.valores_actuales.fecha_fin).toLocaleDateString('es-UY', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </div>
+                            <div>
+                                Serie histórica completa desde 2005 hasta 2026 ({datos.estadisticas.total_semanas} semanas). 
+                                El promedio histórico representa más de 20 años de datos del mercado ganadero uruguayo.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<RHEDashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>

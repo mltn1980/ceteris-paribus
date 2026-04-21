@@ -52,6 +52,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
 
         nav a.active{color:#fff;}
         nav a.active[href="#precios"]{background:#c8963e;}
+        nav a.active[href="#clima"]{background:#1b5e85;}
         nav a.active[href="#uruguay"]{background:var(--green);}
         nav a.active[href="#global"]{background:var(--blue);}
         nav a.active[href="#commodities"]{background:var(--amber);}
@@ -102,6 +103,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
 .card .summary.open{max-height:600px;border-top-width:1px;}
 .card .summary-inner{padding:16px 20px;font-size:0.8rem;color:var(--text2);line-height:1.7;}
 .card .summary-inner strong{color:var(--text);}
+.hidden{display:none;}
 .card .foot .btn-resumen{
   font-size:0.72rem;font-weight:600;padding:4px 12px;
   border-radius:6px;border:1px solid var(--border);background:var(--surface2);
@@ -144,6 +146,13 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 @media(max-width:768px){
   div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
 }
+/* Protección contra copia */
+body{
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 </style>
 </head>
 <body>
@@ -154,6 +163,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 </header>
 <nav>
     <a href="#precios">Precios</a>
+    <a href="#clima">Monitor Clima</a>
     <a href="#ganaderia">Ganadería</a>
     <a href="#commodities">Por Commodity</a>
     <a href="#uruguay">Uruguay</a>
@@ -162,6 +172,14 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <a href="#medios">Notas en Medios</a>
     <a href="#redes">Redes</a>
 </nav>
+<div style="max-width:1000px;margin:0 auto;padding:16px 24px 0;">
+    <button id="toggleAll" onclick="toggleAllSections()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.1);" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+        <span id="toggleText">Colapsar todo</span>
+    </button>
+</div>
 <main>
 
     <!-- PRECIOS & MERCADOS -->
@@ -198,43 +216,217 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         </div>
     </div>
 
-    <!-- Watchlist unificada -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:520px;margin-bottom:24px;">
+    <!-- Watchlist unificada con pestañas -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px;">
+        <!-- Pestañas -->
+        <div style="display:flex;border-bottom:1px solid var(--border);background:var(--surface2);">
+            <button class="grain-tab active" data-grain="usduyu" style="flex:1;padding:12px 16px;border:none;background:transparent;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;color:var(--text2);">
+                Dólar / Peso UY
+            </button>
+            <button class="grain-tab" data-grain="soja" style="flex:1;padding:12px 16px;border:none;background:transparent;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;color:var(--text2);">
+                Soja
+            </button>
+            <button class="grain-tab" data-grain="trigo" style="flex:1;padding:12px 16px;border:none;background:transparent;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;color:var(--text2);">
+                Trigo
+            </button>
+            <button class="grain-tab" data-grain="maiz" style="flex:1;padding:12px 16px;border:none;background:transparent;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;color:var(--text2);">
+                Maíz
+            </button>
+        </div>
+        
+        <!-- Contenido Dólar / Peso UY -->
+        <div class="grain-content" data-grain="usduyu" style="height:480px;">
+            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+                {
+                    "symbols": [["FX_IDC:USDUYU|12M"]],
+                    "chartOnly": false,
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "es",
+                    "colorTheme": "light",
+                    "autosize": true,
+                    "showVolume": false,
+                    "showMA": false,
+                    "hideDateRanges": false,
+                    "hideMarketStatus": false,
+                    "hideSymbolLogo": false,
+                    "scalePosition": "right",
+                    "scaleMode": "Normal",
+                    "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+                    "fontSize": "10",
+                    "noTimeScale": false,
+                    "valuesTracking": "1",
+                    "changeMode": "price-and-percent",
+                    "chartType": "area",
+                    "lineWidth": 2,
+                    "lineType": 0,
+                    "dateRanges": ["12m|1D"]
+                }
+                </script>
+            </div>
+        </div>
+    
+    <!-- Contenido Soja -->
+    <div class="grain-content" data-grain="soja" style="height:480px;display:none;">
         <div class="tradingview-widget-container" style="height:100%;width:100%;">
-            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+            <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
             {
-                "title": "Precios de Referencia",
+                "symbols": [["SOY.CME1!|12M"]],
+                "chartOnly": false,
                 "width": "100%",
                 "height": "100%",
                 "locale": "es",
-                "showSymbolLogo": true,
-                "isTransparent": false,
                 "colorTheme": "light",
-                "symbolsGroups": [
-                    {
-                        "name": "Monedas",
-                        "symbols": [
-                            {"name":"FX_IDC:USDUYU","displayName":"Dólar / Peso UY"},
-                            {"name":"FX_IDC:USDARS","displayName":"Dólar / Peso AR"},
-                            {"name":"FX_IDC:USDBRL","displayName":"Dólar / Real BR"},
-                            {"name":"FX:EURUSD","displayName":"Euro / Dólar"},
-                            {"name":"THINKMARKETS:USDINDEX","displayName":"Índice Dólar (DXY)"}
-                        ]
-                    },
-                    {
-                        "name": "Granos",
-                        "symbols": [
-                            {"name":"SOY.CME1!","displayName":"Soja"},
-                            {"name":"PEPPERSTONE:WHEAT","displayName":"Trigo"},
-                            {"name":"MAI.ROS1!","displayName":"Maíz"}
-                        ]
-                    }
-                ]
+                "autosize": true,
+                "showVolume": true,
+                "showMA": false,
+                "hideDateRanges": false,
+                "hideMarketStatus": false,
+                "hideSymbolLogo": false,
+                "scalePosition": "right",
+                "scaleMode": "Normal",
+                "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+                "fontSize": "10",
+                "noTimeScale": false,
+                "valuesTracking": "1",
+                "changeMode": "price-and-percent",
+                "chartType": "area",
+                "lineWidth": 2,
+                "lineType": 0,
+                "dateRanges": ["12m|1D"]
             }
             </script>
         </div>
     </div>
+    
+    <!-- Botones específicos por pestaña -->
+    <div class="grain-button" data-grain="soja" style="padding:16px 20px;border-top:1px solid var(--border);display:none;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button onclick="window.open('https://es.tradingview.com/symbols/MATBAROFEX-SOY.CME1!/contracts/', 'ContratosSoja', 'width=1000,height=700,scrollbars=yes,resizable=yes')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Ver contratos Soja ROFEX
+            </button>
+            <button onclick="window.open('https://es.tradingview.com/symbols/MATBAROFEX-SOY.CME1!/seasonals/', 'EstacionalidadSoja', 'width=1000,height=700,scrollbars=yes,resizable=yes')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Ver estacionalidad Soja
+            </button>
+        </div>
+    </div>
+    
+    <!-- Contenido Trigo -->
+    <div class="grain-content" data-grain="trigo" style="height:480px;display:none;">
+        <div class="tradingview-widget-container" style="height:100%;width:100%;">
+            <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+            {
+                "symbols": [["CAPITALCOM:WHEAT|12M"]],
+                "chartOnly": false,
+                "width": "100%",
+                "height": "100%",
+                "locale": "es",
+                "colorTheme": "light",
+                "autosize": true,
+                "showVolume": true,
+                "showMA": false,
+                "hideDateRanges": false,
+                "hideMarketStatus": false,
+                "hideSymbolLogo": false,
+                "scalePosition": "right",
+                "scaleMode": "Normal",
+                "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+                "fontSize": "10",
+                "noTimeScale": false,
+                "valuesTracking": "1",
+                "changeMode": "price-and-percent",
+                "chartType": "area",
+                "lineWidth": 2,
+                "lineType": 0,
+                "dateRanges": ["12m|1D"]
+            }
+            </script>
+        </div>
+    </div>
+    
+    <!-- Botones específicos por pestaña -->
+    <div class="grain-button" data-grain="trigo" style="padding:16px 20px;border-top:1px solid var(--border);display:none;">
+        <button onclick="window.open('https://es.tradingview.com/symbols/WHEAT/seasonals/', 'EstacionalidadTrigo', 'width=1000,height=700,scrollbars=yes,resizable=yes')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Ver estacionalidad Trigo
+        </button>
+    </div>
+    
+    <!-- Contenido Maíz -->
+    <div class="grain-content" data-grain="maiz" style="height:480px;display:none;">
+        <div class="tradingview-widget-container" style="height:100%;width:100%;">
+            <div class="tradingview-widget-container__widget" style="height:100%;width:100%;"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+            {
+                "symbols": [["MAI.ROS1!|12M"]],
+                "chartOnly": false,
+                "width": "100%",
+                "height": "100%",
+                "locale": "es",
+                "colorTheme": "light",
+                "autosize": true,
+                "showVolume": true,
+                "showMA": false,
+                "hideDateRanges": false,
+                "hideMarketStatus": false,
+                "hideSymbolLogo": false,
+                "scalePosition": "right",
+                "scaleMode": "Normal",
+                "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+                "fontSize": "10",
+                "noTimeScale": false,
+                "valuesTracking": "1",
+                "changeMode": "price-and-percent",
+                "chartType": "area",
+                "lineWidth": 2,
+                "lineType": 0,
+                "dateRanges": ["12m|1D"]
+            }
+            </script>
+        </div>
+    </div>
+    
+    <!-- Botones específicos por pestaña -->
+    <div class="grain-button" data-grain="maiz" style="padding:16px 20px;border-top:1px solid var(--border);display:none;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button onclick="window.open('https://es.tradingview.com/symbols/MATBAROFEX-MAI.ROS1!/contracts/', 'ContratosMaiz', 'width=1000,height=700,scrollbars=yes,resizable=yes')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--amber);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Ver contratos Maíz ROFEX
+            </button>
+            <button onclick="window.open('https://es.tradingview.com/symbols/MATBAROFEX-MAI.ROS1!/seasonals/', 'EstacionalidadMaiz', 'width=1000,height=700,scrollbars=yes,resizable=yes')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--amber);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Ver estacionalidad Maíz
+            </button>
+        </div>
+    </div>
+</div>
+    
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:0.75rem;color:var(--text2);">
         <div style="font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px;">Unidades de cotización</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 20px;">
@@ -250,6 +442,236 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 
     </div>
 
+    <!-- MONITOR CLIMÁTICO -->
+    <div class="section-label collapsible" id="clima" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🌦️</span>
+        <h2>Monitor Climático — ENSO &amp; Uruguay</h2>
+        <span class="toggle-text">▲ Ocultar</span>
+    </div>
+    <div class="collapsible-content">
+    
+    <div style="font-size:0.82rem;color:var(--text2);margin-bottom:20px;line-height:1.6;">
+        Última actualización: <strong style="color:var(--text);">21 de abril de 2026</strong> · 
+        Fuentes: <a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">IRI/Columbia</a>, 
+        <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">NOAA</a>, 
+        <a href="https://www.inumet.gub.uy/clima/tendencias-climaticas" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">INUMET</a>
+    </div>
+
+    <!-- Métricas principales -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:24px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:8px;">Fase ENSO actual</div>
+            <div style="font-size:2rem;font-weight:700;color:var(--text);margin-bottom:4px;">Neutral</div>
+            <div style="font-size:0.82rem;color:var(--text2);">Transición desde La Niña</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:8px;">Índice Niño 3.4</div>
+            <div style="font-size:2rem;font-weight:700;color:var(--text);margin-bottom:4px;">-0.2°C</div>
+            <div style="font-size:0.82rem;color:var(--text2);">Semana al 11 feb 2026</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:8px;">Perspectiva 6 meses</div>
+            <div style="font-size:2rem;font-weight:700;color:var(--amber);margin-bottom:4px;">El Niño</div>
+            <div style="font-size:0.82rem;color:var(--text2);">58-61% probabilidad</div>
+        </div>
+    </div>
+
+    <!-- Glosario de términos -->
+    <div style="background:var(--blue-l);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;" onclick="this.parentElement.querySelector('.glosario-content').classList.toggle('hidden');this.querySelector('.glosario-toggle').textContent=this.parentElement.querySelector('.glosario-content').classList.contains('hidden')?'▼ Mostrar':'▲ Ocultar';">
+            <h3 style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--text);margin:0;">📖 ¿Qué significan estos términos?</h3>
+            <span class="glosario-toggle" style="font-size:0.82rem;color:var(--text2);font-weight:600;">▼ Mostrar</span>
+        </div>
+        
+        <div class="glosario-content hidden" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+            <div style="display:grid;gap:14px;">
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">🌊 ENSO (El Niño-Southern Oscillation)</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Es un fenómeno climático que ocurre en el Océano Pacífico cada 2-7 años. Tiene tres fases: <strong>El Niño</strong> (aguas más cálidas = más lluvias en Uruguay), <strong>La Niña</strong> (aguas más frías = menos lluvias, más sequía), y <strong>Neutral</strong> (condiciones normales).</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">🌡️ Índice Niño 3.4</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Mide la temperatura del agua en una zona específica del Pacífico. <strong>Valores negativos (-)</strong> indican La Niña, <strong>valores positivos (+)</strong> indican El Niño, y <strong>cercanos a cero</strong> son condiciones neutrales. Es el termómetro que nos dice en qué fase estamos.</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">☀️ El Niño</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Fase cálida del ENSO. Para Uruguay significa: <strong>más lluvias de lo normal</strong>, temperaturas más altas, bueno para agricultura (soja, maíz, pasturas), pero riesgo de excesos de agua en algunas zonas.</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">❄️ La Niña</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Fase fría del ENSO. Para Uruguay significa: <strong>menos lluvias de lo normal</strong>, riesgo de sequía, menor disponibilidad de agua para cultivos y pasturas, puede afectar negativamente la producción agrícola.</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">⚖️ ENSO-neutral</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Condiciones normales, sin El Niño ni La Niña activos. Las lluvias y temperaturas están dentro de los promedios históricos. Es el estado de "transición" entre una fase y otra.</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">📊 Probabilidad (porcentajes)</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Indica qué tan seguro está el pronóstico. Ejemplo: <strong>"El Niño 60%"</strong> significa que hay 60% de chance de que ocurra. Mientras más alto el %, más probable. Los modelos climáticos nunca dan certeza 100%, siempre trabajan con probabilidades.</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">📅 Trimestres (FMA, MAM, AMJ...)</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">Los pronósticos climáticos trabajan en períodos de 3 meses. <strong>FMA</strong> = Feb-Mar-Abr, <strong>MAM</strong> = Mar-Abr-May, <strong>AMJ</strong> = Abr-May-Jun, y así sucesivamente. Esto ayuda a planificar siembras, cosechas y manejo de hacienda con anticipación.</div>
+                </div>
+                
+                <div>
+                    <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">🎯 Tendencias INUMET (normal, superior, inferior)</div>
+                    <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;"><strong>Normal:</strong> dentro del promedio histórico. <strong>Superior a lo normal:</strong> más lluvias o más calor que el promedio. <strong>Inferior a lo normal:</strong> menos lluvias o más frío. Estas tendencias se calculan comparando con los últimos 30 años de datos.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evolución ENSO -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:18px;color:var(--text);">Evolución ENSO — Próximos 9 meses</h3>
+        
+        <div style="position:relative;padding-left:32px;margin-top:16px;">
+            <div style="position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border);"></div>
+            
+            <!-- Feb-Mar-Abr -->
+            <div style="position:relative;margin-bottom:20px;">
+                <div style="position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--border);"></div>
+                <div style="font-size:0.88rem;font-weight:600;margin-bottom:6px;color:var(--text);">Feb-Mar-Abr 2026</div>
+                <div style="font-size:0.82rem;color:var(--text2);margin-bottom:4px;">
+                    <span style="display:inline-block;padding:4px 10px;border-radius:6px;background:var(--blue-l);color:var(--blue);font-size:0.75rem;font-weight:600;">ENSO-neutral</span> dominante
+                </div>
+                <div style="font-size:0.78rem;color:var(--text2);">96% neutral | 4% La Niña | 0% El Niño</div>
+            </div>
+            
+            <!-- Abr-May-Jun (CURRENT) -->
+            <div style="position:relative;margin-bottom:20px;">
+                <div style="position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--blue);border:2px solid var(--blue);"></div>
+                <div style="font-size:0.88rem;font-weight:600;margin-bottom:6px;color:var(--text);">Abr-May-Jun 2026 <span style="font-size:0.75rem;color:var(--blue);font-weight:700;">(ACTUAL)</span></div>
+                <div style="font-size:0.82rem;color:var(--text2);margin-bottom:4px;">
+                    <span style="display:inline-block;padding:4px 10px;border-radius:6px;background:var(--blue-l);color:var(--blue);font-size:0.75rem;font-weight:600;">ENSO-neutral</span> aún probable, señales de cambio
+                </div>
+                <div style="font-size:0.78rem;color:var(--text2);">65% neutral | 35% El Niño | 0% La Niña</div>
+            </div>
+            
+            <!-- May-Jun-Jul -->
+            <div style="position:relative;margin-bottom:20px;">
+                <div style="position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--border);"></div>
+                <div style="font-size:0.88rem;font-weight:600;margin-bottom:6px;color:var(--text);">May-Jun-Jul 2026</div>
+                <div style="font-size:0.82rem;color:var(--text2);margin-bottom:4px;">
+                    <span style="display:inline-block;padding:4px 10px;border-radius:6px;background:var(--amber-l);color:var(--amber);font-size:0.75rem;font-weight:600;">El Niño</span> se vuelve más probable
+                </div>
+                <div style="font-size:0.78rem;color:var(--text2);">58% El Niño | 41% neutral | 1% La Niña</div>
+            </div>
+            
+            <!-- Jun-Jul-Ago -->
+            <div style="position:relative;margin-bottom:20px;">
+                <div style="position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--border);"></div>
+                <div style="font-size:0.88rem;font-weight:600;margin-bottom:6px;color:var(--text);">Jun-Jul-Ago 2026</div>
+                <div style="font-size:0.82rem;color:var(--text2);margin-bottom:4px;">
+                    <span style="display:inline-block;padding:4px 10px;border-radius:6px;background:var(--amber-l);color:var(--amber);font-size:0.75rem;font-weight:600;">El Niño</span> consolidándose
+                </div>
+                <div style="font-size:0.78rem;color:var(--text2);">58% El Niño | 39% neutral | 3% La Niña</div>
+            </div>
+            
+            <!-- Oct-Nov-Dic -->
+            <div style="position:relative;margin-bottom:0;">
+                <div style="position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--border);"></div>
+                <div style="font-size:0.88rem;font-weight:600;margin-bottom:6px;color:var(--text);">Oct-Nov-Dic 2026</div>
+                <div style="font-size:0.82rem;color:var(--text2);margin-bottom:4px;">
+                    <span style="display:inline-block;padding:4px 10px;border-radius:6px;background:var(--amber-l);color:var(--amber);font-size:0.75rem;font-weight:600;">El Niño</span> establecido
+                </div>
+                <div style="font-size:0.78rem;color:var(--text2);">60% El Niño | 30% neutral | 10% La Niña</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Perspectiva Uruguay -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:18px;color:var(--text);">Perspectiva climática Uruguay (INUMET)</h3>
+        
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left;font-weight:700;color:var(--text2);padding:10px 8px;border-bottom:1px solid var(--border);">Trimestre</th>
+                        <th style="text-align:left;font-weight:700;color:var(--text2);padding:10px 8px;border-bottom:1px solid var(--border);">Precipitaciones</th>
+                        <th style="text-align:left;font-weight:700;color:var(--text2);padding:10px 8px;border-bottom:1px solid var(--border);">Temperaturas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:12px 8px;border-bottom:1px solid var(--surface2);"><strong style="color:var(--text);">Abr-May-Jun 2026</strong></td>
+                        <td style="padding:12px 8px;border-bottom:1px solid var(--surface2);color:var(--text2);">Normal a por debajo de normal (norte)</td>
+                        <td style="padding:12px 8px;border-bottom:1px solid var(--surface2);color:var(--text2);">Normal a por encima de normal</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:12px 8px;color:var(--text2);">Jul-Ago-Set 2026</td>
+                        <td style="padding:12px 8px;color:var(--text2);">Normal a por encima (transición El Niño)</td>
+                        <td style="padding:12px 8px;color:var(--text2);">Normal a por encima de normal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;">
+            <div style="padding:16px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);">
+                <div style="font-size:0.88rem;font-weight:700;margin-bottom:8px;color:var(--text);">Norte del país</div>
+                <div style="font-size:0.82rem;color:var(--text2);line-height:1.5;">⚠️ Precipitaciones por debajo de normal o normal (40% cada categoría)</div>
+            </div>
+            <div style="padding:16px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);">
+                <div style="font-size:0.88rem;font-weight:700;margin-bottom:8px;color:var(--text);">Centro y sur</div>
+                <div style="font-size:0.82rem;color:var(--text2);line-height:1.5;">✓ Condiciones de climatología (sin sesgos significativos)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impacto agricultura -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:18px;color:var(--text);">Impacto esperado en agricultura uruguaya</h3>
+        
+        <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface2);border-radius:8px;">
+                <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">⚠️</span>
+                <div style="font-size:0.82rem;line-height:1.7;">
+                    <strong style="color:var(--text);">Otoño 2026 (ahora):</strong> <span style="color:var(--text2);">Menor actividad agrícola por efectos rezagados de sequía 2022-23. Riesgo de déficit hídrico en el norte del país afectando cultivos de verano.</span>
+                </div>
+            </div>
+            
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface2);border-radius:8px;">
+                <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">✅</span>
+                <div style="font-size:0.82rem;line-height:1.7;">
+                    <strong style="color:var(--text);">Invierno-primavera 2026:</strong> <span style="color:var(--text2);">Transición a El Niño traería mayores precipitaciones. Beneficioso para cultivos de invierno (trigo, cebada) y siembra de cultivos de verano.</span>
+                </div>
+            </div>
+            
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface2);border-radius:8px;">
+                <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">💧</span>
+                <div style="font-size:0.82rem;line-height:1.7;">
+                    <strong style="color:var(--text);">Verano 2026-27:</strong> <span style="color:var(--text2);">El Niño establecido favorece lluvias por encima de lo normal. Bueno para soja, maíz y sorgo, aunque riesgo de excesos en algunas zonas.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fuentes y notas -->
+    <div style="background:var(--blue-l);border:1px solid var(--border);border-radius:10px;padding:18px 20px;font-size:0.82rem;line-height:1.8;">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px;font-size:0.88rem;">📊 Fuentes de información</div>
+        <div style="color:var(--text2);">
+            <strong>ENSO:</strong> <a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">IRI/Columbia University</a> (19 feb 2026), 
+            <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">NOAA CPC</a> (12 feb 2026)<br>
+            <strong>Uruguay:</strong> <a href="https://www.inumet.gub.uy/clima/tendencias-climaticas" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">INUMET</a> Tendencias Climáticas Trimestrales<br>
+            <strong>Próxima actualización ENSO:</strong> ~19 de mayo de 2026
+        </div>
+    </div>
+
+    <div style="background:var(--amber-l);border-left:3px solid var(--amber);padding:16px 18px;border-radius:6px;font-size:0.82rem;margin-top:12px;margin-bottom:24px;line-height:1.7;">
+        <strong style="color:var(--text);">⚠️ Nota:</strong> <span style="color:var(--text2);">Las proyecciones de largo plazo (más de 3 meses) cruzan la "barrera de predictibilidad de primavera boreal" y deben interpretarse con mayor incertidumbre. Las probabilidades se basan en modelos climáticos múltiples y pueden variar con actualizaciones mensuales.</span>
+    </div>
+
+    </div>
+
     <!-- GANADERÍA (nav anchor) -->
     <div class="section-label collapsible" id="ganaderia" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
         <span style="font-size:1.2rem;">🥩</span>
@@ -260,50 +682,50 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 
     <!-- Novillo Tipo 2.0 card -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
-        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">🥩 Novillo Tipo 2.0 — INAC</div>
+        <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:12px;">🥩 Novillo Tipo 2.0 — INAC</div>
         
         <!-- Valores horizontales -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:12px;">
             <!-- Novillo Tipo -->
             <div>
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Novillo Tipo</div>
+                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);margin-bottom:4px;">Novillo Tipo</div>
                 <div style="display:flex;align-items:baseline;gap:8px;">
                     <span id="novillo-valor" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.7rem;color:var(--muted);">USD/cab</span>
-                    <span id="novillo-var" style="font-size:0.75rem;font-weight:600;padding:2px 6px;border-radius:4px;"></span>
+                    <span style="font-size:0.78rem;color:var(--text2);">USD/cab</span>
+                    <span id="novillo-var" style="font-size:0.78rem;font-weight:600;padding:2px 6px;border-radius:4px;"></span>
                 </div>
             </div>
             
             <!-- Valor Hacienda -->
             <div>
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Hacienda (VH)</div>
+                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);margin-bottom:4px;">Valor Hacienda (VH)</div>
                 <div style="display:flex;align-items:baseline;gap:8px;">
                     <span id="novillo-vh" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.7rem;color:var(--muted);">USD</span>
-                    <span id="novillo-vh-var" style="font-size:0.75rem;font-weight:600;"></span>
+                    <span style="font-size:0.78rem;color:var(--text2);">USD</span>
+                    <span id="novillo-vh-var" style="font-size:0.78rem;font-weight:600;"></span>
                 </div>
-                <div id="novillo-vh-pct" style="font-size:0.65rem;color:var(--muted);margin-top:2px;">—</div>
+                <div id="novillo-vh-pct" style="font-size:0.75rem;color:var(--text2);margin-top:2px;">—</div>
             </div>
             
             <!-- VAI -->
             <div>
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Valor Agregado (VAI)</div>
+                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);margin-bottom:4px;">Valor Agregado (VAI)</div>
                 <div style="display:flex;align-items:baseline;gap:8px;">
                     <span id="novillo-vai" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.7rem;color:var(--muted);">USD</span>
+                    <span style="font-size:0.78rem;color:var(--text2);">USD</span>
                 </div>
-                <div id="novillo-vai-pct" style="font-size:0.65rem;color:var(--muted);margin-top:2px;">—</div>
+                <div id="novillo-vai-pct" style="font-size:0.75rem;color:var(--text2);margin-top:2px;">—</div>
             </div>
         </div>
         
         <!-- Footer con periodo y link -->
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);">
-            <div id="novillo-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
-            <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
+            <div id="novillo-periodo" style="font-size:0.78rem;color:var(--text2);">—</div>
+            <a href="https://www.inac.uy/innovaportal/v/21477/10/innova.front/novillo-tipo-20" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
         </div>
         
         <!-- Contexto RHE integrado -->
-        <div id="novillo-rhe-context" style="padding-top:12px;margin-top:12px;border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted);line-height:1.5;">
+        <div id="novillo-rhe-context" style="padding-top:12px;margin-top:12px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--text2);line-height:1.5;">
             <!-- Se llena dinámicamente -->
         </div>
     </div>
@@ -365,43 +787,43 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 
     <!-- Faena Semanal Bovinos card -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
-        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📊 Faena Acumulada 2026 — INAC</div>
+        <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:12px;">📊 Faena Acumulada 2026 — INAC</div>
         
         <!-- Total semanal + categorías -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;">
             <div>
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px;">Total Acumulado</div>
+                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);margin-bottom:4px;">Total Acumulado</div>
                 <div style="display:flex;align-items:baseline;gap:8px;">
                     <span id="faena-total" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.7rem;color:var(--muted);">cabezas</span>
+                    <span style="font-size:0.78rem;color:var(--text2);">cabezas</span>
                 </div>
             </div>
             <div>
-                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:4px;">Novillo</div>
+                <div style="font-size:0.75rem;font-weight:600;color:var(--text2);margin-bottom:4px;">Novillo</div>
                 <div style="display:flex;align-items:baseline;gap:6px;">
                     <span id="faena-novillo" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
-                    <span id="faena-novillo-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
+                    <span id="faena-novillo-pct" style="font-size:0.75rem;color:var(--text2);">—</span>
                 </div>
             </div>
             <div>
-                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:4px;">Vaca</div>
+                <div style="font-size:0.75rem;font-weight:600;color:var(--text2);margin-bottom:4px;">Vaca</div>
                 <div style="display:flex;align-items:baseline;gap:6px;">
                     <span id="faena-vaca" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
-                    <span id="faena-vaca-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
+                    <span id="faena-vaca-pct" style="font-size:0.75rem;color:var(--text2);">—</span>
                 </div>
             </div>
             <div>
-                <div style="font-size:0.65rem;font-weight:600;color:var(--muted);margin-bottom:4px;">Vaquillona</div>
+                <div style="font-size:0.75rem;font-weight:600;color:var(--text2);margin-bottom:4px;">Vaquillona</div>
                 <div style="display:flex;align-items:baseline;gap:6px;">
                     <span id="faena-vaquillona" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</span>
-                    <span id="faena-vaquillona-pct" style="font-size:0.65rem;color:var(--muted);">—</span>
+                    <span id="faena-vaquillona-pct" style="font-size:0.75rem;color:var(--text2);">—</span>
                 </div>
             </div>
         </div>
         
         <!-- Top 5 Frigoríficos -->
         <div style="padding-top:16px;border-top:1px solid var(--border);">
-            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:10px;">Top 5 Frigoríficos</div>
+            <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);margin-bottom:10px;">Top 5 Frigoríficos</div>
             <div id="frigo-ranking" style="display:grid;gap:6px;">
                 <!-- Se llena dinámicamente -->
             </div>
@@ -409,8 +831,8 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         
         <!-- Footer -->
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);margin-top:12px;">
-            <div id="faena-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
-            <a href="https://www.inac.uy/innovaportal/v/21478/10/innova.front/faena" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
+            <div id="faena-periodo" style="font-size:0.78rem;color:var(--text2);">—</div>
+            <a href="https://www.inac.uy/innovaportal/v/21478/10/innova.front/faena" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;font-weight:600;color:var(--red);text-decoration:none;">Ver informe INAC →</a>
         </div>
     </div>
     <script>
@@ -434,7 +856,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                 bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
                 
                 const label = document.createElement('div');
-                label.style.cssText = 'font-size:0.7rem;font-weight:600;color:var(--text);min-width:120px;';
+                label.style.cssText = 'font-size:0.78rem;font-weight:600;color:var(--text);min-width:120px;';
                 label.textContent = (i + 1) + '. ' + f.nombre;
                 
                 const barContainer = document.createElement('div');
@@ -444,7 +866,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                 barFill.style.cssText = 'background:var(--red);height:100%;border-radius:4px;transition:width 0.3s;width:' + f.porcentaje + '%';
                 
                 const pct = document.createElement('div');
-                pct.style.cssText = 'font-size:0.68rem;font-weight:600;color:var(--muted);min-width:40px;text-align:right;';
+                pct.style.cssText = 'font-size:0.75rem;font-weight:600;color:var(--text2);min-width:40px;text-align:right;';
                 pct.textContent = f.porcentaje.toFixed(1) + '%';
                 
                 barContainer.appendChild(barFill);
@@ -503,73 +925,15 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         });
     </script>
 
-    <!-- RHE Card -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
-        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📈 Relación Hacienda/Exportación (RHE) — INAC</div>
-        
-        <!-- RHE Novillo y Vaca -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px;">
-            <div>
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:6px;">RHE Novillo</div>
-                <div style="display:flex;align-items:baseline;gap:8px;">
-                    <span id="rhe-novillo-pct" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.7rem;color:var(--muted);">del precio export</span>
-                </div>
-            </div>
-            <div>
-                <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:6px;">RHE Vaca</div>
-                <div style="display:flex;align-items:baseline;gap:8px;">
-                    <span id="rhe-vaca-pct" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
-                    <span style="font-size:0.7rem;color:var(--muted);">del precio export</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Precios -->
-        <div style="padding-top:16px;border-top:1px solid var(--border);">
-            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:10px;">Precios (USD/kg)</div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;">
-                <div>
-                    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Export</div>
-                    <div id="rhe-precio-export" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</div>
-                </div>
-                <div>
-                    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Novillo</div>
-                    <div id="rhe-precio-novillo" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</div>
-                </div>
-                <div>
-                    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Vaca</div>
-                    <div id="rhe-precio-vaca" style="font-size:1.1rem;font-weight:700;color:var(--dark);">—</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);margin-top:12px;">
-            <div id="rhe-periodo" style="font-size:0.72rem;color:var(--muted);">—</div>
-            <a href="https://www.inac.uy/innovaportal/v/3448/10/innova.front/relacion-hacienda-exportacion" target="_blank" rel="noopener noreferrer" style="font-size:0.72rem;font-weight:600;color:var(--red);text-decoration:none;">Ver serie histórica →</a>
-        </div>
+    <!-- RHE Dashboard Embebido -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:20px;">
+        <iframe 
+            src="rhe-dashboard.html" 
+            style="width:100%;height:900px;border:none;display:block;"
+            title="Dashboard RHE - Relación Hacienda/Exportación"
+            loading="lazy"
+        ></iframe>
     </div>
-    <script>
-    fetch('data/rhe.json')
-        .then(r => r.json())
-        .then(d => {
-            document.getElementById('rhe-novillo-pct').textContent = (d.rhe_novillo * 100).toFixed(1) + '%';
-            document.getElementById('rhe-vaca-pct').textContent = (d.rhe_vaca * 100).toFixed(1) + '%';
-            document.getElementById('rhe-precio-export').textContent = d.precio_export.toFixed(2);
-            document.getElementById('rhe-precio-novillo').textContent = d.precio_novillo.toFixed(2);
-            document.getElementById('rhe-precio-vaca').textContent = d.precio_vaca.toFixed(2);
-            document.getElementById('rhe-periodo').textContent = 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
-        })
-        .catch(() => {
-            document.getElementById('rhe-novillo-pct').textContent = '95.7%';
-            document.getElementById('rhe-vaca-pct').textContent = '85.9%';
-            document.getElementById('rhe-precio-export').textContent = '5.77';
-            document.getElementById('rhe-precio-novillo').textContent = '5.52';
-            document.getElementById('rhe-precio-vaca').textContent = '4.96';
-            document.getElementById('rhe-periodo').textContent = 'Semana: 5-11 abril 2026';
-        });
-    </script>
 
     <div class="grid">
         <div class="card meat">
@@ -956,6 +1320,24 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 <!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a68ce16539eb4039834b5be25208c526"}'></script><!-- End Cloudflare Web Analytics -->
 <script>
+    // Protección contra copia
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('copy', e => e.preventDefault());
+    document.addEventListener('cut', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.onkeydown = function(e) {
+        // Bloquear Ctrl+C, Ctrl+X, Ctrl+A, Ctrl+U, F12, Ctrl+Shift+I
+        if(e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'a' || e.key === 'u' || e.key === 's')) {
+            e.preventDefault();
+            return false;
+        }
+        if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
+            e.preventDefault();
+            return false;
+        }
+    };
+</script>
+<script>
     const sections = document.querySelectorAll("main .section-label");
     const navLinks = document.querySelectorAll("nav a");
     let clickedId = null;
@@ -1008,6 +1390,87 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             }
         });
     });
+</script>
+<script>
+    // Funcionalidad de pestañas para granos
+    document.querySelectorAll('.grain-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const grain = this.getAttribute('data-grain');
+            
+            // Remover active de todos los tabs
+            document.querySelectorAll('.grain-tab').forEach(t => {
+                t.classList.remove('active');
+                t.style.borderBottomColor = 'transparent';
+                t.style.color = 'var(--text2)';
+                t.style.background = 'transparent';
+            });
+            
+            // Activar tab clickeado
+            this.classList.add('active');
+            this.style.borderBottomColor = 'var(--amber)';
+            this.style.color = 'var(--text)';
+            this.style.background = 'var(--surface)';
+            
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.grain-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Ocultar todos los botones
+            document.querySelectorAll('.grain-button').forEach(btn => {
+                btn.style.display = 'none';
+            });
+            
+            // Mostrar contenido seleccionado
+            document.querySelector(`.grain-content[data-grain="${grain}"]`).style.display = 'block';
+            
+            // Mostrar botón correspondiente si existe
+            const grainButton = document.querySelector(`.grain-button[data-grain="${grain}"]`);
+            if (grainButton) {
+                grainButton.style.display = 'block';
+            }
+        });
+    });
+    
+    // Activar el tab "General" por defecto
+    document.querySelector('.grain-tab.active').style.borderBottomColor = 'var(--amber)';
+    document.querySelector('.grain-tab.active').style.color = 'var(--text)';
+    document.querySelector('.grain-tab.active').style.background = 'var(--surface)';
+    
+    // Función para colapsar/expandir todas las secciones
+    function toggleAllSections() {
+        const collapsibleSections = document.querySelectorAll('.section-label.collapsible');
+        const collapsibleContents = document.querySelectorAll('.collapsible-content');
+        const toggleBtn = document.getElementById('toggleAll');
+        const toggleText = document.getElementById('toggleText');
+        
+        // Verificar si hay alguna sección expandida
+        const anyExpanded = Array.from(collapsibleSections).some(section => !section.classList.contains('collapsed'));
+        
+        if (anyExpanded) {
+            // Colapsar todas
+            collapsibleSections.forEach(section => {
+                section.classList.add('collapsed');
+                const toggleTextEl = section.querySelector('.toggle-text');
+                if (toggleTextEl) toggleTextEl.textContent = '▼ Mostrar';
+            });
+            collapsibleContents.forEach(content => {
+                content.classList.add('collapsed');
+            });
+            toggleText.textContent = 'Expandir todo';
+        } else {
+            // Expandir todas
+            collapsibleSections.forEach(section => {
+                section.classList.remove('collapsed');
+                const toggleTextEl = section.querySelector('.toggle-text');
+                if (toggleTextEl) toggleTextEl.textContent = '▲ Ocultar';
+            });
+            collapsibleContents.forEach(content => {
+                content.classList.remove('collapsed');
+            });
+            toggleText.textContent = 'Colapsar todo';
+        }
+    }
 </script>
  </body>
 </html>
