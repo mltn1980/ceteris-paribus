@@ -1,0 +1,1370 @@
+[
+  {
+    "fecha": "2023-01-01",
+    "precio_export": 4.049,
+    "precio_novillo": 3.628,
+    "precio_vaca": 3.133,
+    "rhe_novillo": 0.896,
+    "rhe_vaca": 0.774
+  },
+  {
+    "fecha": "2023-01-08",
+    "precio_export": 3.955,
+    "precio_novillo": 3.614,
+    "precio_vaca": 3.095,
+    "rhe_novillo": 0.914,
+    "rhe_vaca": 0.782
+  },
+  {
+    "fecha": "2023-01-15",
+    "precio_export": 4.027,
+    "precio_novillo": 3.639,
+    "precio_vaca": 3.125,
+    "rhe_novillo": 0.904,
+    "rhe_vaca": 0.776
+  },
+  {
+    "fecha": "2023-01-22",
+    "precio_export": 4.066,
+    "precio_novillo": 3.667,
+    "precio_vaca": 3.153,
+    "rhe_novillo": 0.902,
+    "rhe_vaca": 0.775
+  },
+  {
+    "fecha": "2023-01-29",
+    "precio_export": 4.14,
+    "precio_novillo": 3.762,
+    "precio_vaca": 3.17,
+    "rhe_novillo": 0.909,
+    "rhe_vaca": 0.766
+  },
+  {
+    "fecha": "2023-02-05",
+    "precio_export": 4.332,
+    "precio_novillo": 3.803,
+    "precio_vaca": 3.182,
+    "rhe_novillo": 0.878,
+    "rhe_vaca": 0.735
+  },
+  {
+    "fecha": "2023-02-12",
+    "precio_export": 4.279,
+    "precio_novillo": 3.831,
+    "precio_vaca": 3.209,
+    "rhe_novillo": 0.895,
+    "rhe_vaca": 0.75
+  },
+  {
+    "fecha": "2023-02-19",
+    "precio_export": 4.483,
+    "precio_novillo": 3.856,
+    "precio_vaca": 3.27,
+    "rhe_novillo": 0.86,
+    "rhe_vaca": 0.729
+  },
+  {
+    "fecha": "2023-02-26",
+    "precio_export": 4.401,
+    "precio_novillo": 3.915,
+    "precio_vaca": 3.375,
+    "rhe_novillo": 0.889,
+    "rhe_vaca": 0.767
+  },
+  {
+    "fecha": "2023-03-05",
+    "precio_export": 4.445,
+    "precio_novillo": 4.008,
+    "precio_vaca": 3.504,
+    "rhe_novillo": 0.902,
+    "rhe_vaca": 0.788
+  },
+  {
+    "fecha": "2023-03-12",
+    "precio_export": 4.344,
+    "precio_novillo": 4.102,
+    "precio_vaca": 3.61,
+    "rhe_novillo": 0.944,
+    "rhe_vaca": 0.831
+  },
+  {
+    "fecha": "2023-03-19",
+    "precio_export": 4.414,
+    "precio_novillo": 4.182,
+    "precio_vaca": 3.696,
+    "rhe_novillo": 0.947,
+    "rhe_vaca": 0.837
+  },
+  {
+    "fecha": "2023-03-26",
+    "precio_export": 4.512,
+    "precio_novillo": 4.199,
+    "precio_vaca": 3.751,
+    "rhe_novillo": 0.931,
+    "rhe_vaca": 0.832
+  },
+  {
+    "fecha": "2023-04-02",
+    "precio_export": 4.505,
+    "precio_novillo": 4.212,
+    "precio_vaca": 3.779,
+    "rhe_novillo": 0.935,
+    "rhe_vaca": 0.839
+  },
+  {
+    "fecha": "2023-04-09",
+    "precio_export": 4.418,
+    "precio_novillo": 4.235,
+    "precio_vaca": 3.818,
+    "rhe_novillo": 0.959,
+    "rhe_vaca": 0.864
+  },
+  {
+    "fecha": "2023-04-16",
+    "precio_export": 4.382,
+    "precio_novillo": 4.345,
+    "precio_vaca": 3.883,
+    "rhe_novillo": 0.992,
+    "rhe_vaca": 0.886
+  },
+  {
+    "fecha": "2023-04-23",
+    "precio_export": 4.404,
+    "precio_novillo": 4.39,
+    "precio_vaca": 3.913,
+    "rhe_novillo": 0.997,
+    "rhe_vaca": 0.889
+  },
+  {
+    "fecha": "2023-04-30",
+    "precio_export": 4.439,
+    "precio_novillo": 4.429,
+    "precio_vaca": 3.921,
+    "rhe_novillo": 0.998,
+    "rhe_vaca": 0.883
+  },
+  {
+    "fecha": "2023-05-07",
+    "precio_export": 4.609,
+    "precio_novillo": 4.429,
+    "precio_vaca": 3.892,
+    "rhe_novillo": 0.961,
+    "rhe_vaca": 0.845
+  },
+  {
+    "fecha": "2023-05-14",
+    "precio_export": 4.654,
+    "precio_novillo": 4.41,
+    "precio_vaca": 3.863,
+    "rhe_novillo": 0.948,
+    "rhe_vaca": 0.83
+  },
+  {
+    "fecha": "2023-05-21",
+    "precio_export": 4.705,
+    "precio_novillo": 4.369,
+    "precio_vaca": 3.833,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.815
+  },
+  {
+    "fecha": "2023-05-28",
+    "precio_export": 4.662,
+    "precio_novillo": 4.331,
+    "precio_vaca": 3.803,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.816
+  },
+  {
+    "fecha": "2023-06-04",
+    "precio_export": 4.601,
+    "precio_novillo": 4.276,
+    "precio_vaca": 3.774,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.82
+  },
+  {
+    "fecha": "2023-06-11",
+    "precio_export": 4.452,
+    "precio_novillo": 4.235,
+    "precio_vaca": 3.755,
+    "rhe_novillo": 0.951,
+    "rhe_vaca": 0.843
+  },
+  {
+    "fecha": "2023-06-18",
+    "precio_export": 4.441,
+    "precio_novillo": 4.175,
+    "precio_vaca": 3.727,
+    "rhe_novillo": 0.94,
+    "rhe_vaca": 0.839
+  },
+  {
+    "fecha": "2023-06-25",
+    "precio_export": 4.237,
+    "precio_novillo": 4.145,
+    "precio_vaca": 3.661,
+    "rhe_novillo": 0.978,
+    "rhe_vaca": 0.864
+  },
+  {
+    "fecha": "2023-07-02",
+    "precio_export": 4.212,
+    "precio_novillo": 4.045,
+    "precio_vaca": 3.542,
+    "rhe_novillo": 0.96,
+    "rhe_vaca": 0.841
+  },
+  {
+    "fecha": "2023-07-09",
+    "precio_export": 4.037,
+    "precio_novillo": 3.959,
+    "precio_vaca": 3.416,
+    "rhe_novillo": 0.981,
+    "rhe_vaca": 0.846
+  },
+  {
+    "fecha": "2023-07-16",
+    "precio_export": 4.276,
+    "precio_novillo": 3.895,
+    "precio_vaca": 3.375,
+    "rhe_novillo": 0.911,
+    "rhe_vaca": 0.789
+  },
+  {
+    "fecha": "2023-07-23",
+    "precio_export": 4.294,
+    "precio_novillo": 3.943,
+    "precio_vaca": 3.381,
+    "rhe_novillo": 0.918,
+    "rhe_vaca": 0.787
+  },
+  {
+    "fecha": "2023-07-30",
+    "precio_export": 4.297,
+    "precio_novillo": 3.978,
+    "precio_vaca": 3.413,
+    "rhe_novillo": 0.926,
+    "rhe_vaca": 0.794
+  },
+  {
+    "fecha": "2023-08-06",
+    "precio_export": 4.049,
+    "precio_novillo": 3.988,
+    "precio_vaca": 3.416,
+    "rhe_novillo": 0.985,
+    "rhe_vaca": 0.844
+  },
+  {
+    "fecha": "2023-08-13",
+    "precio_export": 4.001,
+    "precio_novillo": 3.958,
+    "precio_vaca": 3.382,
+    "rhe_novillo": 0.989,
+    "rhe_vaca": 0.845
+  },
+  {
+    "fecha": "2023-08-20",
+    "precio_export": 4.096,
+    "precio_novillo": 3.933,
+    "precio_vaca": 3.339,
+    "rhe_novillo": 0.96,
+    "rhe_vaca": 0.815
+  },
+  {
+    "fecha": "2023-08-27",
+    "precio_export": 4.078,
+    "precio_novillo": 3.86,
+    "precio_vaca": 3.257,
+    "rhe_novillo": 0.946,
+    "rhe_vaca": 0.799
+  },
+  {
+    "fecha": "2023-09-03",
+    "precio_export": 4.088,
+    "precio_novillo": 3.773,
+    "precio_vaca": 3.193,
+    "rhe_novillo": 0.923,
+    "rhe_vaca": 0.781
+  },
+  {
+    "fecha": "2023-09-10",
+    "precio_export": 3.952,
+    "precio_novillo": 3.671,
+    "precio_vaca": 3.135,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.793
+  },
+  {
+    "fecha": "2023-09-17",
+    "precio_export": 4.15,
+    "precio_novillo": 3.572,
+    "precio_vaca": 3.059,
+    "rhe_novillo": 0.861,
+    "rhe_vaca": 0.737
+  },
+  {
+    "fecha": "2023-09-24",
+    "precio_export": 4.058,
+    "precio_novillo": 3.441,
+    "precio_vaca": 2.978,
+    "rhe_novillo": 0.848,
+    "rhe_vaca": 0.734
+  },
+  {
+    "fecha": "2023-10-01",
+    "precio_export": 4.048,
+    "precio_novillo": 3.343,
+    "precio_vaca": 2.874,
+    "rhe_novillo": 0.826,
+    "rhe_vaca": 0.71
+  },
+  {
+    "fecha": "2023-10-08",
+    "precio_export": 3.915,
+    "precio_novillo": 3.323,
+    "precio_vaca": 2.8,
+    "rhe_novillo": 0.849,
+    "rhe_vaca": 0.715
+  },
+  {
+    "fecha": "2023-10-15",
+    "precio_export": 3.904,
+    "precio_novillo": 3.307,
+    "precio_vaca": 2.786,
+    "rhe_novillo": 0.847,
+    "rhe_vaca": 0.714
+  },
+  {
+    "fecha": "2023-10-22",
+    "precio_export": 3.804,
+    "precio_novillo": 3.383,
+    "precio_vaca": 2.807,
+    "rhe_novillo": 0.889,
+    "rhe_vaca": 0.738
+  },
+  {
+    "fecha": "2023-10-29",
+    "precio_export": 4.0,
+    "precio_novillo": 3.449,
+    "precio_vaca": 2.822,
+    "rhe_novillo": 0.862,
+    "rhe_vaca": 0.705
+  },
+  {
+    "fecha": "2023-11-05",
+    "precio_export": 3.901,
+    "precio_novillo": 3.492,
+    "precio_vaca": 2.811,
+    "rhe_novillo": 0.895,
+    "rhe_vaca": 0.721
+  },
+  {
+    "fecha": "2023-11-12",
+    "precio_export": 4.036,
+    "precio_novillo": 3.466,
+    "precio_vaca": 2.787,
+    "rhe_novillo": 0.859,
+    "rhe_vaca": 0.691
+  },
+  {
+    "fecha": "2023-11-19",
+    "precio_export": 3.964,
+    "precio_novillo": 3.398,
+    "precio_vaca": 2.782,
+    "rhe_novillo": 0.857,
+    "rhe_vaca": 0.702
+  },
+  {
+    "fecha": "2023-11-26",
+    "precio_export": 4.091,
+    "precio_novillo": 3.342,
+    "precio_vaca": 2.801,
+    "rhe_novillo": 0.817,
+    "rhe_vaca": 0.684
+  },
+  {
+    "fecha": "2023-12-03",
+    "precio_export": 3.939,
+    "precio_novillo": 3.306,
+    "precio_vaca": 2.838,
+    "rhe_novillo": 0.839,
+    "rhe_vaca": 0.721
+  },
+  {
+    "fecha": "2023-12-10",
+    "precio_export": 3.882,
+    "precio_novillo": 3.315,
+    "precio_vaca": 2.885,
+    "rhe_novillo": 0.854,
+    "rhe_vaca": 0.743
+  },
+  {
+    "fecha": "2023-12-17",
+    "precio_export": 3.753,
+    "precio_novillo": 3.331,
+    "precio_vaca": 2.931,
+    "rhe_novillo": 0.888,
+    "rhe_vaca": 0.781
+  },
+  {
+    "fecha": "2023-12-24",
+    "precio_export": 3.761,
+    "precio_novillo": 3.344,
+    "precio_vaca": 2.969,
+    "rhe_novillo": 0.889,
+    "rhe_vaca": 0.789
+  },
+  {
+    "fecha": "2023-12-31",
+    "precio_export": 3.79,
+    "precio_novillo": 3.392,
+    "precio_vaca": 3.008,
+    "rhe_novillo": 0.895,
+    "rhe_vaca": 0.794
+  },
+  {
+    "fecha": "2024-01-07",
+    "precio_export": 3.943,
+    "precio_novillo": 3.497,
+    "precio_vaca": 3.077,
+    "rhe_novillo": 0.887,
+    "rhe_vaca": 0.78
+  },
+  {
+    "fecha": "2024-01-14",
+    "precio_export": 3.91,
+    "precio_novillo": 3.565,
+    "precio_vaca": 3.127,
+    "rhe_novillo": 0.912,
+    "rhe_vaca": 0.8
+  },
+  {
+    "fecha": "2024-01-21",
+    "precio_export": 3.916,
+    "precio_novillo": 3.588,
+    "precio_vaca": 3.175,
+    "rhe_novillo": 0.916,
+    "rhe_vaca": 0.811
+  },
+  {
+    "fecha": "2024-01-28",
+    "precio_export": 3.85,
+    "precio_novillo": 3.602,
+    "precio_vaca": 3.179,
+    "rhe_novillo": 0.936,
+    "rhe_vaca": 0.826
+  },
+  {
+    "fecha": "2024-02-04",
+    "precio_export": 3.956,
+    "precio_novillo": 3.613,
+    "precio_vaca": 3.166,
+    "rhe_novillo": 0.913,
+    "rhe_vaca": 0.8
+  },
+  {
+    "fecha": "2024-02-11",
+    "precio_export": 4.028,
+    "precio_novillo": 3.63,
+    "precio_vaca": 3.142,
+    "rhe_novillo": 0.901,
+    "rhe_vaca": 0.78
+  },
+  {
+    "fecha": "2024-02-18",
+    "precio_export": 4.173,
+    "precio_novillo": 3.63,
+    "precio_vaca": 3.161,
+    "rhe_novillo": 0.87,
+    "rhe_vaca": 0.757
+  },
+  {
+    "fecha": "2024-02-25",
+    "precio_export": 4.29,
+    "precio_novillo": 3.645,
+    "precio_vaca": 3.203,
+    "rhe_novillo": 0.85,
+    "rhe_vaca": 0.747
+  },
+  {
+    "fecha": "2024-03-03",
+    "precio_export": 4.297,
+    "precio_novillo": 3.669,
+    "precio_vaca": 3.264,
+    "rhe_novillo": 0.854,
+    "rhe_vaca": 0.76
+  },
+  {
+    "fecha": "2024-03-10",
+    "precio_export": 4.158,
+    "precio_novillo": 3.713,
+    "precio_vaca": 3.317,
+    "rhe_novillo": 0.893,
+    "rhe_vaca": 0.798
+  },
+  {
+    "fecha": "2024-03-17",
+    "precio_export": 3.973,
+    "precio_novillo": 3.741,
+    "precio_vaca": 3.35,
+    "rhe_novillo": 0.942,
+    "rhe_vaca": 0.843
+  },
+  {
+    "fecha": "2024-03-24",
+    "precio_export": 3.924,
+    "precio_novillo": 3.744,
+    "precio_vaca": 3.351,
+    "rhe_novillo": 0.954,
+    "rhe_vaca": 0.854
+  },
+  {
+    "fecha": "2024-03-31",
+    "precio_export": 3.982,
+    "precio_novillo": 3.736,
+    "precio_vaca": 3.345,
+    "rhe_novillo": 0.938,
+    "rhe_vaca": 0.84
+  },
+  {
+    "fecha": "2024-04-07",
+    "precio_export": 4.0,
+    "precio_novillo": 3.736,
+    "precio_vaca": 3.345,
+    "rhe_novillo": 0.934,
+    "rhe_vaca": 0.836
+  },
+  {
+    "fecha": "2024-04-14",
+    "precio_export": 4.004,
+    "precio_novillo": 3.741,
+    "precio_vaca": 3.336,
+    "rhe_novillo": 0.934,
+    "rhe_vaca": 0.833
+  },
+  {
+    "fecha": "2024-04-21",
+    "precio_export": 3.856,
+    "precio_novillo": 3.755,
+    "precio_vaca": 3.353,
+    "rhe_novillo": 0.974,
+    "rhe_vaca": 0.87
+  },
+  {
+    "fecha": "2024-04-28",
+    "precio_export": 3.93,
+    "precio_novillo": 3.777,
+    "precio_vaca": 3.367,
+    "rhe_novillo": 0.961,
+    "rhe_vaca": 0.857
+  },
+  {
+    "fecha": "2024-05-05",
+    "precio_export": 4.003,
+    "precio_novillo": 3.788,
+    "precio_vaca": 3.364,
+    "rhe_novillo": 0.946,
+    "rhe_vaca": 0.84
+  },
+  {
+    "fecha": "2024-05-12",
+    "precio_export": 4.149,
+    "precio_novillo": 3.789,
+    "precio_vaca": 3.343,
+    "rhe_novillo": 0.913,
+    "rhe_vaca": 0.806
+  },
+  {
+    "fecha": "2024-05-19",
+    "precio_export": 4.253,
+    "precio_novillo": 3.786,
+    "precio_vaca": 3.349,
+    "rhe_novillo": 0.89,
+    "rhe_vaca": 0.787
+  },
+  {
+    "fecha": "2024-05-26",
+    "precio_export": 4.302,
+    "precio_novillo": 3.795,
+    "precio_vaca": 3.4,
+    "rhe_novillo": 0.882,
+    "rhe_vaca": 0.79
+  },
+  {
+    "fecha": "2024-06-02",
+    "precio_export": 4.406,
+    "precio_novillo": 3.816,
+    "precio_vaca": 3.445,
+    "rhe_novillo": 0.866,
+    "rhe_vaca": 0.782
+  },
+  {
+    "fecha": "2024-06-09",
+    "precio_export": 4.169,
+    "precio_novillo": 3.827,
+    "precio_vaca": 3.467,
+    "rhe_novillo": 0.918,
+    "rhe_vaca": 0.832
+  },
+  {
+    "fecha": "2024-06-16",
+    "precio_export": 4.046,
+    "precio_novillo": 3.842,
+    "precio_vaca": 3.475,
+    "rhe_novillo": 0.95,
+    "rhe_vaca": 0.859
+  },
+  {
+    "fecha": "2024-06-23",
+    "precio_export": 3.994,
+    "precio_novillo": 3.856,
+    "precio_vaca": 3.489,
+    "rhe_novillo": 0.965,
+    "rhe_vaca": 0.873
+  },
+  {
+    "fecha": "2024-06-30",
+    "precio_export": 3.972,
+    "precio_novillo": 3.879,
+    "precio_vaca": 3.516,
+    "rhe_novillo": 0.977,
+    "rhe_vaca": 0.885
+  },
+  {
+    "fecha": "2024-07-07",
+    "precio_export": 4.212,
+    "precio_novillo": 3.913,
+    "precio_vaca": 3.551,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.843
+  },
+  {
+    "fecha": "2024-07-14",
+    "precio_export": 4.24,
+    "precio_novillo": 3.953,
+    "precio_vaca": 3.613,
+    "rhe_novillo": 0.932,
+    "rhe_vaca": 0.852
+  },
+  {
+    "fecha": "2024-07-21",
+    "precio_export": 4.212,
+    "precio_novillo": 3.997,
+    "precio_vaca": 3.655,
+    "rhe_novillo": 0.949,
+    "rhe_vaca": 0.868
+  },
+  {
+    "fecha": "2024-07-28",
+    "precio_export": 4.097,
+    "precio_novillo": 4.024,
+    "precio_vaca": 3.665,
+    "rhe_novillo": 0.982,
+    "rhe_vaca": 0.894
+  },
+  {
+    "fecha": "2024-08-04",
+    "precio_export": 3.998,
+    "precio_novillo": 4.049,
+    "precio_vaca": 3.671,
+    "rhe_novillo": 1.013,
+    "rhe_vaca": 0.918
+  },
+  {
+    "fecha": "2024-08-11",
+    "precio_export": 4.158,
+    "precio_novillo": 4.064,
+    "precio_vaca": 3.67,
+    "rhe_novillo": 0.977,
+    "rhe_vaca": 0.883
+  },
+  {
+    "fecha": "2024-08-18",
+    "precio_export": 4.285,
+    "precio_novillo": 4.087,
+    "precio_vaca": 3.706,
+    "rhe_novillo": 0.954,
+    "rhe_vaca": 0.865
+  },
+  {
+    "fecha": "2024-08-25",
+    "precio_export": 4.493,
+    "precio_novillo": 4.106,
+    "precio_vaca": 3.76,
+    "rhe_novillo": 0.914,
+    "rhe_vaca": 0.837
+  },
+  {
+    "fecha": "2024-09-01",
+    "precio_export": 4.272,
+    "precio_novillo": 4.133,
+    "precio_vaca": 3.794,
+    "rhe_novillo": 0.968,
+    "rhe_vaca": 0.888
+  },
+  {
+    "fecha": "2024-09-08",
+    "precio_export": 4.25,
+    "precio_novillo": 4.12,
+    "precio_vaca": 3.789,
+    "rhe_novillo": 0.969,
+    "rhe_vaca": 0.891
+  },
+  {
+    "fecha": "2024-09-15",
+    "precio_export": 4.128,
+    "precio_novillo": 4.095,
+    "precio_vaca": 3.755,
+    "rhe_novillo": 0.992,
+    "rhe_vaca": 0.91
+  },
+  {
+    "fecha": "2024-09-22",
+    "precio_export": 4.363,
+    "precio_novillo": 4.05,
+    "precio_vaca": 3.72,
+    "rhe_novillo": 0.928,
+    "rhe_vaca": 0.853
+  },
+  {
+    "fecha": "2024-09-29",
+    "precio_export": 4.223,
+    "precio_novillo": 4.007,
+    "precio_vaca": 3.68,
+    "rhe_novillo": 0.949,
+    "rhe_vaca": 0.871
+  },
+  {
+    "fecha": "2024-10-06",
+    "precio_export": 4.407,
+    "precio_novillo": 3.981,
+    "precio_vaca": 3.654,
+    "rhe_novillo": 0.903,
+    "rhe_vaca": 0.829
+  },
+  {
+    "fecha": "2024-10-13",
+    "precio_export": 4.298,
+    "precio_novillo": 3.992,
+    "precio_vaca": 3.671,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.854
+  },
+  {
+    "fecha": "2024-10-20",
+    "precio_export": 4.521,
+    "precio_novillo": 4.042,
+    "precio_vaca": 3.705,
+    "rhe_novillo": 0.894,
+    "rhe_vaca": 0.82
+  },
+  {
+    "fecha": "2024-10-27",
+    "precio_export": 4.513,
+    "precio_novillo": 4.085,
+    "precio_vaca": 3.75,
+    "rhe_novillo": 0.905,
+    "rhe_vaca": 0.831
+  },
+  {
+    "fecha": "2024-11-03",
+    "precio_export": 4.585,
+    "precio_novillo": 4.11,
+    "precio_vaca": 3.768,
+    "rhe_novillo": 0.897,
+    "rhe_vaca": 0.822
+  },
+  {
+    "fecha": "2024-11-10",
+    "precio_export": 4.602,
+    "precio_novillo": 4.126,
+    "precio_vaca": 3.782,
+    "rhe_novillo": 0.897,
+    "rhe_vaca": 0.822
+  },
+  {
+    "fecha": "2024-11-17",
+    "precio_export": 4.803,
+    "precio_novillo": 4.125,
+    "precio_vaca": 3.794,
+    "rhe_novillo": 0.859,
+    "rhe_vaca": 0.79
+  },
+  {
+    "fecha": "2024-11-24",
+    "precio_export": 4.634,
+    "precio_novillo": 4.133,
+    "precio_vaca": 3.817,
+    "rhe_novillo": 0.892,
+    "rhe_vaca": 0.824
+  },
+  {
+    "fecha": "2024-12-01",
+    "precio_export": 4.541,
+    "precio_novillo": 4.139,
+    "precio_vaca": 3.83,
+    "rhe_novillo": 0.911,
+    "rhe_vaca": 0.843
+  },
+  {
+    "fecha": "2024-12-08",
+    "precio_export": 4.415,
+    "precio_novillo": 4.151,
+    "precio_vaca": 3.842,
+    "rhe_novillo": 0.94,
+    "rhe_vaca": 0.87
+  },
+  {
+    "fecha": "2024-12-15",
+    "precio_export": 4.445,
+    "precio_novillo": 4.161,
+    "precio_vaca": 3.85,
+    "rhe_novillo": 0.936,
+    "rhe_vaca": 0.866
+  },
+  {
+    "fecha": "2024-12-22",
+    "precio_export": 4.527,
+    "precio_novillo": 4.164,
+    "precio_vaca": 3.859,
+    "rhe_novillo": 0.92,
+    "rhe_vaca": 0.852
+  },
+  {
+    "fecha": "2024-12-29",
+    "precio_export": 4.577,
+    "precio_novillo": 4.179,
+    "precio_vaca": 3.868,
+    "rhe_novillo": 0.913,
+    "rhe_vaca": 0.845
+  },
+  {
+    "fecha": "2025-01-05",
+    "precio_export": 4.699,
+    "precio_novillo": 4.197,
+    "precio_vaca": 3.898,
+    "rhe_novillo": 0.893,
+    "rhe_vaca": 0.83
+  },
+  {
+    "fecha": "2025-01-12",
+    "precio_export": 4.675,
+    "precio_novillo": 4.207,
+    "precio_vaca": 3.903,
+    "rhe_novillo": 0.9,
+    "rhe_vaca": 0.835
+  },
+  {
+    "fecha": "2025-01-19",
+    "precio_export": 4.664,
+    "precio_novillo": 4.207,
+    "precio_vaca": 3.897,
+    "rhe_novillo": 0.902,
+    "rhe_vaca": 0.836
+  },
+  {
+    "fecha": "2025-01-26",
+    "precio_export": 4.742,
+    "precio_novillo": 4.219,
+    "precio_vaca": 3.876,
+    "rhe_novillo": 0.89,
+    "rhe_vaca": 0.817
+  },
+  {
+    "fecha": "2025-02-02",
+    "precio_export": 4.658,
+    "precio_novillo": 4.234,
+    "precio_vaca": 3.868,
+    "rhe_novillo": 0.909,
+    "rhe_vaca": 0.831
+  },
+  {
+    "fecha": "2025-02-09",
+    "precio_export": 4.573,
+    "precio_novillo": 4.251,
+    "precio_vaca": 3.867,
+    "rhe_novillo": 0.929,
+    "rhe_vaca": 0.845
+  },
+  {
+    "fecha": "2025-02-16",
+    "precio_export": 4.697,
+    "precio_novillo": 4.263,
+    "precio_vaca": 3.886,
+    "rhe_novillo": 0.908,
+    "rhe_vaca": 0.827
+  },
+  {
+    "fecha": "2025-02-23",
+    "precio_export": 4.802,
+    "precio_novillo": 4.281,
+    "precio_vaca": 3.922,
+    "rhe_novillo": 0.892,
+    "rhe_vaca": 0.817
+  },
+  {
+    "fecha": "2025-03-02",
+    "precio_export": 4.903,
+    "precio_novillo": 4.332,
+    "precio_vaca": 3.97,
+    "rhe_novillo": 0.884,
+    "rhe_vaca": 0.81
+  },
+  {
+    "fecha": "2025-03-09",
+    "precio_export": 4.76,
+    "precio_novillo": 4.406,
+    "precio_vaca": 4.04,
+    "rhe_novillo": 0.926,
+    "rhe_vaca": 0.849
+  },
+  {
+    "fecha": "2025-03-16",
+    "precio_export": 4.682,
+    "precio_novillo": 4.469,
+    "precio_vaca": 4.124,
+    "rhe_novillo": 0.955,
+    "rhe_vaca": 0.881
+  },
+  {
+    "fecha": "2025-03-23",
+    "precio_export": 4.678,
+    "precio_novillo": 4.524,
+    "precio_vaca": 4.204,
+    "rhe_novillo": 0.967,
+    "rhe_vaca": 0.899
+  },
+  {
+    "fecha": "2025-03-30",
+    "precio_export": 4.71,
+    "precio_novillo": 4.564,
+    "precio_vaca": 4.267,
+    "rhe_novillo": 0.969,
+    "rhe_vaca": 0.906
+  },
+  {
+    "fecha": "2025-04-06",
+    "precio_export": 4.717,
+    "precio_novillo": 4.606,
+    "precio_vaca": 4.3,
+    "rhe_novillo": 0.977,
+    "rhe_vaca": 0.912
+  },
+  {
+    "fecha": "2025-04-13",
+    "precio_export": 4.681,
+    "precio_novillo": 4.619,
+    "precio_vaca": 4.315,
+    "rhe_novillo": 0.987,
+    "rhe_vaca": 0.922
+  },
+  {
+    "fecha": "2025-04-20",
+    "precio_export": 4.837,
+    "precio_novillo": 4.633,
+    "precio_vaca": 4.317,
+    "rhe_novillo": 0.958,
+    "rhe_vaca": 0.893
+  },
+  {
+    "fecha": "2025-04-27",
+    "precio_export": 4.922,
+    "precio_novillo": 4.629,
+    "precio_vaca": 4.318,
+    "rhe_novillo": 0.941,
+    "rhe_vaca": 0.877
+  },
+  {
+    "fecha": "2025-05-04",
+    "precio_export": 4.997,
+    "precio_novillo": 4.634,
+    "precio_vaca": 4.329,
+    "rhe_novillo": 0.927,
+    "rhe_vaca": 0.866
+  },
+  {
+    "fecha": "2025-05-11",
+    "precio_export": 4.996,
+    "precio_novillo": 4.655,
+    "precio_vaca": 4.351,
+    "rhe_novillo": 0.932,
+    "rhe_vaca": 0.871
+  },
+  {
+    "fecha": "2025-05-18",
+    "precio_export": 5.082,
+    "precio_novillo": 4.67,
+    "precio_vaca": 4.377,
+    "rhe_novillo": 0.919,
+    "rhe_vaca": 0.861
+  },
+  {
+    "fecha": "2025-05-25",
+    "precio_export": 5.173,
+    "precio_novillo": 4.698,
+    "precio_vaca": 4.418,
+    "rhe_novillo": 0.908,
+    "rhe_vaca": 0.854
+  },
+  {
+    "fecha": "2025-06-01",
+    "precio_export": 5.005,
+    "precio_novillo": 4.746,
+    "precio_vaca": 4.485,
+    "rhe_novillo": 0.948,
+    "rhe_vaca": 0.896
+  },
+  {
+    "fecha": "2025-06-08",
+    "precio_export": 4.902,
+    "precio_novillo": 4.808,
+    "precio_vaca": 4.559,
+    "rhe_novillo": 0.981,
+    "rhe_vaca": 0.93
+  },
+  {
+    "fecha": "2025-06-15",
+    "precio_export": 4.818,
+    "precio_novillo": 4.871,
+    "precio_vaca": 4.643,
+    "rhe_novillo": 1.011,
+    "rhe_vaca": 0.964
+  },
+  {
+    "fecha": "2025-06-22",
+    "precio_export": 4.873,
+    "precio_novillo": 4.914,
+    "precio_vaca": 4.697,
+    "rhe_novillo": 1.008,
+    "rhe_vaca": 0.964
+  },
+  {
+    "fecha": "2025-06-29",
+    "precio_export": 5.008,
+    "precio_novillo": 4.973,
+    "precio_vaca": 4.739,
+    "rhe_novillo": 0.993,
+    "rhe_vaca": 0.946
+  },
+  {
+    "fecha": "2025-07-06",
+    "precio_export": 4.882,
+    "precio_novillo": 5.014,
+    "precio_vaca": 4.779,
+    "rhe_novillo": 1.027,
+    "rhe_vaca": 0.979
+  },
+  {
+    "fecha": "2025-07-13",
+    "precio_export": 4.988,
+    "precio_novillo": 5.056,
+    "precio_vaca": 4.823,
+    "rhe_novillo": 1.014,
+    "rhe_vaca": 0.967
+  },
+  {
+    "fecha": "2025-07-20",
+    "precio_export": 5.091,
+    "precio_novillo": 5.066,
+    "precio_vaca": 4.842,
+    "rhe_novillo": 0.995,
+    "rhe_vaca": 0.951
+  },
+  {
+    "fecha": "2025-07-27",
+    "precio_export": 5.254,
+    "precio_novillo": 5.068,
+    "precio_vaca": 4.834,
+    "rhe_novillo": 0.965,
+    "rhe_vaca": 0.92
+  },
+  {
+    "fecha": "2025-08-03",
+    "precio_export": 5.311,
+    "precio_novillo": 5.084,
+    "precio_vaca": 4.83,
+    "rhe_novillo": 0.957,
+    "rhe_vaca": 0.909
+  },
+  {
+    "fecha": "2025-08-10",
+    "precio_export": 5.484,
+    "precio_novillo": 5.11,
+    "precio_vaca": 4.833,
+    "rhe_novillo": 0.932,
+    "rhe_vaca": 0.881
+  },
+  {
+    "fecha": "2025-08-17",
+    "precio_export": 5.54,
+    "precio_novillo": 5.152,
+    "precio_vaca": 4.852,
+    "rhe_novillo": 0.93,
+    "rhe_vaca": 0.876
+  },
+  {
+    "fecha": "2025-08-24",
+    "precio_export": 5.387,
+    "precio_novillo": 5.19,
+    "precio_vaca": 4.888,
+    "rhe_novillo": 0.963,
+    "rhe_vaca": 0.907
+  },
+  {
+    "fecha": "2025-08-31",
+    "precio_export": 5.104,
+    "precio_novillo": 5.228,
+    "precio_vaca": 4.926,
+    "rhe_novillo": 1.024,
+    "rhe_vaca": 0.965
+  },
+  {
+    "fecha": "2025-09-07",
+    "precio_export": 5.045,
+    "precio_novillo": 5.243,
+    "precio_vaca": 4.986,
+    "rhe_novillo": 1.039,
+    "rhe_vaca": 0.988
+  },
+  {
+    "fecha": "2025-09-14",
+    "precio_export": 5.079,
+    "precio_novillo": 5.279,
+    "precio_vaca": 5.042,
+    "rhe_novillo": 1.039,
+    "rhe_vaca": 0.993
+  },
+  {
+    "fecha": "2025-09-21",
+    "precio_export": 5.243,
+    "precio_novillo": 5.335,
+    "precio_vaca": 5.104,
+    "rhe_novillo": 1.017,
+    "rhe_vaca": 0.973
+  },
+  {
+    "fecha": "2025-09-28",
+    "precio_export": 5.103,
+    "precio_novillo": 5.414,
+    "precio_vaca": 5.156,
+    "rhe_novillo": 1.061,
+    "rhe_vaca": 1.01
+  },
+  {
+    "fecha": "2025-10-05",
+    "precio_export": 4.84,
+    "precio_novillo": 5.448,
+    "precio_vaca": 5.186,
+    "rhe_novillo": 1.126,
+    "rhe_vaca": 1.071
+  },
+  {
+    "fecha": "2025-10-12",
+    "precio_export": 4.711,
+    "precio_novillo": 5.467,
+    "precio_vaca": 5.199,
+    "rhe_novillo": 1.161,
+    "rhe_vaca": 1.104
+  },
+  {
+    "fecha": "2025-10-19",
+    "precio_export": 5.116,
+    "precio_novillo": 5.461,
+    "precio_vaca": 5.185,
+    "rhe_novillo": 1.067,
+    "rhe_vaca": 1.013
+  },
+  {
+    "fecha": "2025-10-26",
+    "precio_export": 5.111,
+    "precio_novillo": 5.461,
+    "precio_vaca": 5.158,
+    "rhe_novillo": 1.068,
+    "rhe_vaca": 1.009
+  },
+  {
+    "fecha": "2025-11-02",
+    "precio_export": 5.412,
+    "precio_novillo": 5.457,
+    "precio_vaca": 5.102,
+    "rhe_novillo": 1.008,
+    "rhe_vaca": 0.943
+  },
+  {
+    "fecha": "2025-11-09",
+    "precio_export": 5.232,
+    "precio_novillo": 5.42,
+    "precio_vaca": 5.01,
+    "rhe_novillo": 1.036,
+    "rhe_vaca": 0.958
+  },
+  {
+    "fecha": "2025-11-16",
+    "precio_export": 5.738,
+    "precio_novillo": 5.376,
+    "precio_vaca": 4.924,
+    "rhe_novillo": 0.937,
+    "rhe_vaca": 0.858
+  },
+  {
+    "fecha": "2025-11-23",
+    "precio_export": 5.567,
+    "precio_novillo": 5.329,
+    "precio_vaca": 4.862,
+    "rhe_novillo": 0.957,
+    "rhe_vaca": 0.873
+  },
+  {
+    "fecha": "2025-11-30",
+    "precio_export": 5.577,
+    "precio_novillo": 5.316,
+    "precio_vaca": 4.846,
+    "rhe_novillo": 0.953,
+    "rhe_vaca": 0.869
+  },
+  {
+    "fecha": "2025-12-07",
+    "precio_export": 5.14,
+    "precio_novillo": 5.317,
+    "precio_vaca": 4.845,
+    "rhe_novillo": 1.034,
+    "rhe_vaca": 0.943
+  },
+  {
+    "fecha": "2025-12-14",
+    "precio_export": 5.224,
+    "precio_novillo": 5.303,
+    "precio_vaca": 4.822,
+    "rhe_novillo": 1.015,
+    "rhe_vaca": 0.923
+  },
+  {
+    "fecha": "2025-12-21",
+    "precio_export": 5.204,
+    "precio_novillo": 5.283,
+    "precio_vaca": 4.791,
+    "rhe_novillo": 1.015,
+    "rhe_vaca": 0.921
+  },
+  {
+    "fecha": "2025-12-28",
+    "precio_export": 5.323,
+    "precio_novillo": 5.266,
+    "precio_vaca": 4.763,
+    "rhe_novillo": 0.989,
+    "rhe_vaca": 0.895
+  },
+  {
+    "fecha": "2026-01-04",
+    "precio_export": 5.315,
+    "precio_novillo": 5.282,
+    "precio_vaca": 4.783,
+    "rhe_novillo": 0.994,
+    "rhe_vaca": 0.9
+  },
+  {
+    "fecha": "2026-01-11",
+    "precio_export": 5.334,
+    "precio_novillo": 5.317,
+    "precio_vaca": 4.819,
+    "rhe_novillo": 0.997,
+    "rhe_vaca": 0.904
+  },
+  {
+    "fecha": "2026-01-18",
+    "precio_export": 5.431,
+    "precio_novillo": 5.335,
+    "precio_vaca": 4.841,
+    "rhe_novillo": 0.982,
+    "rhe_vaca": 0.891
+  },
+  {
+    "fecha": "2026-01-25",
+    "precio_export": 5.319,
+    "precio_novillo": 5.382,
+    "precio_vaca": 4.911,
+    "rhe_novillo": 1.012,
+    "rhe_vaca": 0.923
+  },
+  {
+    "fecha": "2026-02-01",
+    "precio_export": 5.374,
+    "precio_novillo": 5.443,
+    "precio_vaca": 4.994,
+    "rhe_novillo": 1.013,
+    "rhe_vaca": 0.929
+  },
+  {
+    "fecha": "2026-02-08",
+    "precio_export": 5.448,
+    "precio_novillo": 5.523,
+    "precio_vaca": 5.109,
+    "rhe_novillo": 1.014,
+    "rhe_vaca": 0.938
+  },
+  {
+    "fecha": "2026-02-15",
+    "precio_export": 5.417,
+    "precio_novillo": 5.592,
+    "precio_vaca": 5.187,
+    "rhe_novillo": 1.032,
+    "rhe_vaca": 0.957
+  },
+  {
+    "fecha": "2026-02-22",
+    "precio_export": 5.395,
+    "precio_novillo": 5.657,
+    "precio_vaca": 5.282,
+    "rhe_novillo": 1.049,
+    "rhe_vaca": 0.979
+  },
+  {
+    "fecha": "2026-03-01",
+    "precio_export": 5.421,
+    "precio_novillo": 5.692,
+    "precio_vaca": 5.368,
+    "rhe_novillo": 1.05,
+    "rhe_vaca": 0.99
+  },
+  {
+    "fecha": "2026-03-08",
+    "precio_export": 5.548,
+    "precio_novillo": 5.728,
+    "precio_vaca": 5.414,
+    "rhe_novillo": 1.032,
+    "rhe_vaca": 0.976
+  },
+  {
+    "fecha": "2026-03-15",
+    "precio_export": 5.756,
+    "precio_novillo": 5.707,
+    "precio_vaca": 5.374,
+    "rhe_novillo": 0.992,
+    "rhe_vaca": 0.934
+  },
+  {
+    "fecha": "2026-03-22",
+    "precio_export": 5.692,
+    "precio_novillo": 5.648,
+    "precio_vaca": 5.23,
+    "rhe_novillo": 0.992,
+    "rhe_vaca": 0.919
+  },
+  {
+    "fecha": "2026-03-29",
+    "precio_export": 5.729,
+    "precio_novillo": 5.577,
+    "precio_vaca": 5.107,
+    "rhe_novillo": 0.973,
+    "rhe_vaca": 0.891
+  },
+  {
+    "fecha": "2026-04-05",
+    "precio_export": 5.77,
+    "precio_novillo": 5.519,
+    "precio_vaca": 4.957,
+    "rhe_novillo": 0.957,
+    "rhe_vaca": 0.859
+  }
+]
