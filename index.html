@@ -57,6 +57,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
         nav a.active[href="#global"]{background:var(--blue);}
         nav a.active[href="#commodities"]{background:var(--amber);}
         nav a.active[href="#ganaderia"]{background:var(--red);}
+        nav a.active[href="#lacteos"]{background:#4a90e2;}
         nav a.active[href="#productividad"]{background:var(--purple);}
         nav a.active[href="#economia"]{background:#1a6b5a;}
         nav a.active[href="#medios"]{background:var(--blue);}
@@ -80,7 +81,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
   opacity:1;
 }
 .collapsible-content.collapsed{
-  max-height:0;opacity:0;margin-bottom:0;
+  max-height:0;opacity:0;margin-bottom:0;overflow:hidden;
 }
 .section-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .section-label h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;}
@@ -321,6 +322,7 @@ body{
     <a href="#precios">Precios</a>
     <a href="#clima">Monitor Clima</a>
     <a href="#ganaderia">Ganadería</a>
+    <a href="#lacteos">Lácteos</a>
     <a href="#commodities">Por Commodity</a>
     <a href="#uruguay">Uruguay</a>
     <a href="#global">Mercados Globales</a>
@@ -1445,6 +1447,140 @@ body{
             </div>
         </div>
     </div>
+    </div>
+
+
+    <!-- LÁCTEOS -->
+    <div class="section-label collapsible" id="lacteos" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
+        <span style="font-size:1.2rem;">🥛</span>
+        <h2>Lácteos</h2>
+        <span class="toggle-text">▲ Ocultar</span>
+    </div>
+    <div class="collapsible-content">
+    
+    <!-- Enlace al Dashboard completo -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>
+                <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:8px;">📊 Dashboard Mercado Lácteo Internacional</div>
+                <div style="font-size:0.85rem;color:var(--text2);line-height:1.5;">
+                    Seguimiento integrado de precios GDT, Fonterra NZ, FAO y mercado uruguayo (INALE). 
+                    Actualizado con datos de abril 2026.
+                </div>
+            </div>
+            <a href="dashboard-lacteos.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Ver Dashboard Completo
+            </a>
+        </div>
+    </div>
+
+    <!-- Resumen ejecutivo integrado -->
+    <div style="background:var(--amber-l);border:1px solid var(--amber);border-left:5px solid var(--amber);border-radius:12px;padding:18px 20px;margin-bottom:20px;">
+        <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:10px;">⚠️ RESUMEN DE MERCADO — ABRIL 2026</div>
+        <div style="font-size:0.85rem;color:var(--text);line-height:1.7;">
+            <strong>GDT:</strong> Índice cayó -2.7% (segunda caída consecutiva). Mantequilla lidera bajas con -7.9%, AMF -9.6%. Único aumento: SMP +3.2%.<br>
+            <strong>FAO Dairy:</strong> Subió +1.2% en marzo (primer aumento desde julio 2025), impulsado por leches en polvo.<br>
+            <strong>Fonterra NZ:</strong> Elevó precio a productores a USD 5.59/kgMS (rango USD 5.41-5.77). Advierte volatilidad por producción global sobre niveles estacionales.<br>
+            <strong>Uruguay (INALE):</strong> Precio tambo USD 0.43/litro (estable). Poder de compra +3% (dic/25 vs dic/24). Exportación +8%, mercado interno -13%.
+        </div>
+    </div>
+
+    <!-- Cards con datos clave -->
+    <div class="grid">
+        <!-- GDT Card -->
+        <div class="card gl">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">Global Dairy Trade</span>
+                <h3>Subasta GDT — 21 Abril 2026</h3>
+                <p class="desc">
+                    <strong>Índice:</strong> -2.7% (2da caída consecutiva)<br>
+                    <strong>Volumen:</strong> 14,993 toneladas<br>
+                    <strong>WMP:</strong> USD 3,666/ton (-0.6%)<br>
+                    <strong>SMP:</strong> USD 3,448/ton (+3.2%)<br>
+                    <strong>Mantequilla:</strong> USD 5,702/ton (-7.9%)
+                </p>
+            </div>
+            <div class="foot">
+                <span class="date">21 Abril 2026</span>
+                <a href="https://www.globaldairytrade.info/en/product-results/" target="_blank" rel="noopener noreferrer" class="cta">Ver GDT →</a>
+            </div>
+        </div>
+
+        <!-- Fonterra Card -->
+        <div class="card gl">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">Fonterra NZ</span>
+                <h3>Precio a Productores 2025/26</h3>
+                <p class="desc">
+                    <strong>Farmgate Price:</strong> USD 5.59/kgMS<br>
+                    <strong>Rango:</strong> USD 5.41 - 5.77<br>
+                    <strong>Temp. anterior:</strong> USD 5.98/kgMS<br>
+                    <strong>Recolección:</strong> 1,545 M kgMS proyectados
+                </p>
+            </div>
+            <div class="foot">
+                <span class="date">Febrero 2026</span>
+                <a href="https://www.fonterra.com/nz/en/investors/global-dairy-update.html" target="_blank" rel="noopener noreferrer" class="cta">Ver Fonterra →</a>
+            </div>
+        </div>
+
+        <!-- FAO Card -->
+        <div class="card gl">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">FAO</span>
+                <h3>Índice FAO Dairy — Marzo 2026</h3>
+                <p class="desc">
+                    <strong>Índice:</strong> 120.9 puntos<br>
+                    <strong>Variación mensual:</strong> +1.2%<br>
+                    <strong>vs Año anterior:</strong> -18.7%<br>
+                    <strong>Estado:</strong> Primer aumento desde julio 2025
+                </p>
+            </div>
+            <div class="foot">
+                <span class="date">Marzo 2026</span>
+                <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en" target="_blank" rel="noopener noreferrer" class="cta">Ver FAO →</a>
+            </div>
+        </div>
+
+        <!-- INALE Uruguay Card -->
+        <div class="card uy">
+            <div class="stripe"></div>
+            <div class="body">
+                <span class="tag">Uruguay — INALE</span>
+                <h3>Mercado Lácteo Uruguay</h3>
+                <p class="desc">
+                    <strong>Precio tambo (ene/26):</strong> USD 0.43/litro (estable)<br>
+                    <strong>Exportación:</strong> USD 0.57/litro (+8% vs dic)<br>
+                    <strong>Mercado interno:</strong> USD 1.09/litro (-13% vs dic)<br>
+                    <strong>Poder de compra (dic/25):</strong> +3% vs 2024
+                </p>
+            </div>
+            <div class="foot">
+                <span class="date">Enero 2026</span>
+                <a href="https://www.inale.org/tipos_de_informes/" target="_blank" rel="noopener noreferrer" class="cta">Ver INALE →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Análisis de tendencias -->
+    <div style="background:var(--blue-l);border:1px solid var(--blue);border-left:5px solid var(--blue);border-radius:12px;padding:18px 20px;margin-top:20px;">
+        <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue);margin-bottom:10px;">📈 ANÁLISIS DE TENDENCIAS</div>
+        <div style="font-size:0.85rem;color:var(--text);line-height:1.7;">
+            <strong>Productos grasos bajo presión:</strong> Mantequilla y AMF lideran las caídas en GDT (-7.9% y -9.6%), reflejando debilidad en demanda global de grasas lácteas.<br><br>
+            <strong>Leches en polvo sostienen el mercado:</strong> SMP muestra fortaleza (+3.2% en GDT) apoyada por demanda firme de importadores en Norte de África y Sudeste Asiático. El índice FAO sube por primera vez en 8 meses impulsado por este segmento.<br><br>
+            <strong>Producción global sobre niveles estacionales:</strong> Fonterra advierte volatilidad por oferta abundante en principales regiones exportadoras (UE, NZ, Australia, EEUU, Argentina).<br><br>
+            <strong>Uruguay: estabilidad con divergencias:</strong> Precio a productor estable en USD 0.43/litro. Mejora poder de compra (+3%) por incremento de precios vs costos. Exportaciones suben (+8%) mientras mercado interno cae (-13%).
+        </div>
+    </div>
+
     </div>
 
 
