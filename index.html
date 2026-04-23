@@ -75,7 +75,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
 .section-label.collapsible:hover .toggle-text{background:#ffe8cc;}
 .section-label.collapsed .chevron{transform:rotate(-90deg);}
 .collapsible-content{
-  max-height:2000px;overflow:hidden;
+  max-height:5000px;overflow:visible;
   transition:max-height 0.4s ease, opacity 0.3s ease;
   opacity:1;
 }
@@ -152,6 +152,162 @@ body{
   -moz-user-select:none;
   -ms-user-select:none;
   user-select:none;
+}
+
+/* Formulario de sugerencias */
+.feedback-minimal {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 2px solid var(--border);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feedback-minimal .header-line {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.feedback-minimal h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.feedback-minimal .divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 4px;
+}
+
+.feedback-minimal .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.minimal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.minimal-form textarea {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.2s ease;
+}
+
+.minimal-form textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    background: white;
+}
+
+.minimal-form textarea::placeholder {
+    color: var(--muted);
+}
+
+.bottom-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.minimal-form input[type="email"] {
+    flex: 1;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+.minimal-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--green);
+    background: white;
+}
+
+.minimal-form input[type="email"]::placeholder {
+    color: var(--muted);
+}
+
+.submit-minimal {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.submit-minimal:hover {
+    background: #236028;
+    transform: translateY(-1px);
+}
+
+.submit-minimal:active {
+    transform: translateY(0);
+}
+
+.success-minimal {
+    display: none;
+    padding: 12px 16px;
+    background: var(--green-l);
+    border-left: 3px solid var(--green);
+    border-radius: 4px;
+    color: var(--green);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.success-minimal.show {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { 
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .bottom-row {
+        flex-direction: column;
+    }
+    
+    .submit-minimal {
+        width: 100%;
+    }
+    
+    .feedback-minimal .header-line {
+        flex-wrap: wrap;
+    }
 }
 </style>
 </head>
@@ -754,12 +910,16 @@ body{
             varEl.style.background = v > 0 ? '#edf5ef' : '#fceaea';
             varEl.style.color = v > 0 ? '#2a7235' : '#a32d2d';
             
-            // Variación vs año anterior
+            // Variación vs año anterior (solo si existe)
             const varAñoEl = document.getElementById('novillo-var-año');
-            const vAño = d.variacion_año;
-            varAñoEl.textContent = 'vs año ant: ' + (vAño > 0 ? '▲ +' : '▼ ') + vAño + '%';
-            varAñoEl.style.background = vAño > 0 ? '#edf5ef' : '#fceaea';
-            varAñoEl.style.color = vAño > 0 ? '#2a7235' : '#a32d2d';
+            if (d.variacion_año !== undefined) {
+                const vAño = d.variacion_año;
+                varAñoEl.textContent = 'vs año ant: ' + (vAño > 0 ? '▲ +' : '▼ ') + vAño + '%';
+                varAñoEl.style.background = vAño > 0 ? '#edf5ef' : '#fceaea';
+                varAñoEl.style.color = vAño > 0 ? '#2a7235' : '#a32d2d';
+            } else {
+                varAñoEl.style.display = 'none';
+            }
             
             // Valor Hacienda (VH)
             document.getElementById('novillo-vh').textContent = d.vh.toLocaleString('es-UY');
@@ -771,12 +931,16 @@ body{
             vhVarEl.style.background = vhV > 0 ? '#edf5ef' : '#fceaea';
             vhVarEl.style.color = vhV > 0 ? '#2a7235' : '#a32d2d';
             
-            // VH Variación vs año anterior
+            // VH Variación vs año anterior (solo si existe)
             const vhVarAñoEl = document.getElementById('novillo-vh-var-año');
-            const vhVAño = d.vh_variacion_año;
-            vhVarAñoEl.textContent = 'vs año ant: ' + (vhVAño > 0 ? '▲ +' : '▼ ') + vhVAño + '%';
-            vhVarAñoEl.style.background = vhVAño > 0 ? '#edf5ef' : '#fceaea';
-            vhVarAñoEl.style.color = vhVAño > 0 ? '#2a7235' : '#a32d2d';
+            if (d.vh_variacion_año !== undefined) {
+                const vhVAño = d.vh_variacion_año;
+                vhVarAñoEl.textContent = 'vs año ant: ' + (vhVAño > 0 ? '▲ +' : '▼ ') + vhVAño + '%';
+                vhVarAñoEl.style.background = vhVAño > 0 ? '#edf5ef' : '#fceaea';
+                vhVarAñoEl.style.color = vhVAño > 0 ? '#2a7235' : '#a32d2d';
+            } else {
+                vhVarAñoEl.style.display = 'none';
+            }
             
             document.getElementById('novillo-vh-pct').textContent = d.vh_participacion + '% del total';
             
@@ -790,12 +954,16 @@ body{
             vaiVarEl.style.background = vaiV > 0 ? '#edf5ef' : '#fceaea';
             vaiVarEl.style.color = vaiV > 0 ? '#2a7235' : '#a32d2d';
             
-            // VAI Variación vs año anterior
+            // VAI Variación vs año anterior (solo si existe)
             const vaiVarAñoEl = document.getElementById('novillo-vai-var-año');
-            const vaiVAño = d.vai_variacion_año;
-            vaiVarAñoEl.textContent = 'vs año ant: ' + (vaiVAño > 0 ? '▲ +' : '▼ ') + vaiVAño + '%';
-            vaiVarAñoEl.style.background = vaiVAño > 0 ? '#edf5ef' : '#fceaea';
-            vaiVarAñoEl.style.color = vaiVAño > 0 ? '#2a7235' : '#a32d2d';
+            if (d.vai_variacion_año !== undefined) {
+                const vaiVAño = d.vai_variacion_año;
+                vaiVarAñoEl.textContent = 'vs año ant: ' + (vaiVAño > 0 ? '▲ +' : '▼ ') + vaiVAño + '%';
+                vaiVarAñoEl.style.background = vaiVAño > 0 ? '#edf5ef' : '#fceaea';
+                vaiVarAñoEl.style.color = vaiVAño > 0 ? '#2a7235' : '#a32d2d';
+            } else {
+                vaiVarAñoEl.style.display = 'none';
+            }
             
             document.getElementById('novillo-vai-pct').textContent = d.vai_participacion + '% del total';
         })
@@ -868,6 +1036,7 @@ body{
                     <span id="faena-total" style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--dark);">—</span>
                     <span style="font-size:0.78rem;color:var(--text2);">cabezas</span>
                 </div>
+                <div id="faena-var-año" style="display:inline-block;padding:3px 8px;border-radius:6px;font-size:0.75rem;font-weight:600;margin-top:6px;">—</div>
             </div>
             <div>
                 <div style="font-size:0.75rem;font-weight:600;color:var(--text2);margin-bottom:4px;">Novillo</div>
@@ -920,6 +1089,17 @@ body{
             document.getElementById('faena-vaquillona-pct').textContent = d.vaquillona_pct + '%';
             document.getElementById('faena-periodo').textContent = 'Período: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
             
+            // Variación vs año anterior
+            const varAñoEl = document.getElementById('faena-var-año');
+            if (d.variacion_año !== undefined) {
+                const varAño = d.variacion_año;
+                varAñoEl.textContent = 'vs año ant: ' + (varAño > 0 ? '▲ +' : '▼ ') + varAño + '%';
+                varAñoEl.style.background = varAño > 0 ? '#edf5ef' : '#fceaea';
+                varAñoEl.style.color = varAño > 0 ? '#2a7235' : '#a32d2d';
+            } else {
+                varAñoEl.style.display = 'none';
+            }
+            
             // Ranking frigoríficos
             const ranking = document.getElementById('frigo-ranking');
             d.frigorificos.forEach((f, i) => {
@@ -957,6 +1137,12 @@ body{
             document.getElementById('faena-vaquillona').textContent = '94.829';
             document.getElementById('faena-vaquillona-pct').textContent = '16%';
             document.getElementById('faena-periodo').textContent = 'Período: Enero - Abril 2026';
+            
+            // Variación vs año anterior (hardcoded)
+            const varAñoEl = document.getElementById('faena-var-año');
+            varAñoEl.textContent = 'vs año ant: ▼ -17,1%';
+            varAñoEl.style.background = '#fceaea';
+            varAñoEl.style.color = '#a32d2d';
             
             // Ranking fallback
             const frigosFallback = [
@@ -1612,6 +1798,38 @@ body{
         <p>Esta plataforma reúne informes y análisis consolidados sobre mercados agrícolas, commodities y economía, con especial foco en Uruguay y la región. Los reportes se elaboran a partir de fuentes oficiales, sintetizando datos complejos en formatos claros y accesibles.</p>
         <p>El objetivo es democratizar el acceso a información agropecuaria de calidad para productores, analistas, inversores y tomadores de decisiones.</p>
     </div>
+
+    <!-- FORMULARIO DE SUGERENCIAS -->
+    <section class="feedback-minimal">
+        <div class="header-line">
+            <h3>Sugerencias</h3>
+            <div class="divider"></div>
+            <span class="hint">Tu feedback es bienvenido</span>
+        </div>
+        
+        <form class="minimal-form" id="minimalForm">
+            
+            <textarea 
+                name="message" 
+                placeholder="Escribe tu recomendación, idea o comentario..."
+                required
+            ></textarea>
+
+            <div class="bottom-row">
+                <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="email@opcional.com"
+                >
+                <button type="submit" class="submit-minimal">Enviar</button>
+            </div>
+            
+            <div class="success-minimal" id="successMinimal">
+                ✓ Recibido. Gracias por tu feedback.
+            </div>
+        </form>
+    </section>
+
 </main>
 <footer>
   <p>© 2026 ceterisparibus-uy · Los datos presentados son con fines informativos y no constituyen asesoramiento financiero</p>
@@ -1770,6 +1988,57 @@ body{
             toggleText.textContent = 'Colapsar todo';
         }
     }
+</script>
+<script>
+    // Manejo del formulario de sugerencias
+    document.getElementById('minimalForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = this.querySelector('.submit-minimal');
+        const originalText = submitBtn.textContent;
+        
+        // Deshabilitar botón mientras se envía
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.style.opacity = '0.6';
+        
+        const formData = new FormData(this);
+        
+        // Agregar campos ocultos para FormSubmit
+        formData.append('_subject', 'Nueva recomendación desde ceterisparibus-uy');
+        formData.append('_captcha', 'false');
+        formData.append('_template', 'table');
+        
+        try {
+            const response = await fetch('https://formsubmit.co/mltn1980@gmail.com', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                // Mostrar confirmación
+                document.getElementById('successMinimal').classList.add('show');
+                
+                // Resetear formulario
+                this.reset();
+                
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    document.getElementById('successMinimal').classList.remove('show');
+                }, 5000);
+            } else {
+                alert('Hubo un error al enviar. Por favor, intenta nuevamente.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar. Por favor, intenta nuevamente.');
+        } finally {
+            // Restaurar botón
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            submitBtn.style.opacity = '1';
+        }
+    });
 </script>
  </body>
 </html>

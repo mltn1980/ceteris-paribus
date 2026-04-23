@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Lácteos - Mercado Internacional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .last-update {
+            background: #1e3c72;
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+        .content {
+            padding: 25px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .section-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-card h2 {
+            color: #2c3e50;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1e3c72;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 500;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #1e3c72;
+        }
+
+        .metric-value.large {
+            font-size: 1.4em;
+        }
+
+        .metric-value.negative {
+            color: #dc3545;
+        }
+
+        .metric-value.positive {
+            color: #28a745;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .badge.down {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge.up {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.neutral {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .product-mini {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .product-mini.negative {
+            border-left-color: #dc3545;
+        }
+
+        .product-mini.positive {
+            border-left-color: #28a745;
+        }
+
+        .product-mini h4 {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .product-mini .price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 5px 0;
+        }
+
+        .product-mini .change {
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 18px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .alert-box.info {
+            background: #d1ecf1;
+            border-left-color: #0c5460;
+        }
+
+        .alert-box h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .alert-box p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .converter {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .converter h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .converter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .converter-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .converter-item label {
+            display: block;
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .converter-item .value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .link-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #1e3c72;
+            transition: background 0.3s;
+            font-size: 0.9em;
+        }
+
+        .link-item:hover {
+            background: #e9ecef;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .converter-row {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Dashboard Mercado Lácteo Internacional</h1>
+            <p>Información Integrada para Productores</p>
+        </header>
+
+        <div class="last-update">
+            <strong>Última Actualización:</strong> 22 de Abril de 2026 | <strong>Próxima Subasta GDT:</strong> 5 de Mayo 2026
+        </div>
+
+        <div class="content">
+            <div class="alert-box">
+                <h3>⚠️ Resumen de Mercado</h3>
+                <p>
+                    El índice GDT cayó -2.7% (segunda caída consecutiva). La mantequilla lidera las bajas con -7.9%. 
+                    El índice FAO Dairy subió +1.2% en marzo (primer aumento desde julio 2025). 
+                    Fonterra elevó su precio a productores a USD 5.59/kgMS (rango USD 5.41-5.77).
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- GDT Auction -->
+                <div class="section-card">
+                    <h2>💹 GlobalDairyTrade (GDT)</h2>
+                    <div class="metric-row">
+                        <span class="metric-label">Última Subasta</span>
+                        <span class="metric-value">21 Abril 2026</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Índice General</span>
+                        <span class="metric-value negative large">-2.7%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Precio Promedio</span>
+                        <span class="metric-value">USD 4,143/ton</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Volumen Total</span>
+                        <span class="metric-value">14,993 ton</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Estado</span>
+                        <span class="badge down">2da caída consecutiva</span>
+                    </div>
+                </div>
+
+                <!-- Fonterra -->
+                <div class="section-card">
+                    <h2>🥛 Fonterra NZ</h2>
+                    <div class="metric-row">
+                        <span class="metric-label">Precio a Productor (Farmgate)</span>
+                        <span class="metric-value">USD 5.59/kgMS</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Rango Pronóstico 25/26</span>
+                        <span class="metric-value">USD 5.41 - 5.77</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Temporada Anterior 24/25</span>
+                        <span class="metric-value">USD 5.98/kgMS</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Recolección Proyectada</span>
+                        <span class="metric-value">1,545 M kgMS</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label" style="font-size: 0.85em; color: #999;">TC usado: 1 NZD = 0.5884 USD</span>
+                        <span class="metric-value" style="font-size: 0.85em; color: #999;">NZ$9.50 → USD 5.59</span>
+                    </div>
+                </div>
+
+                <!-- FAO Index -->
+                <div class="section-card">
+                    <h2>🌍 Índice FAO Lácteos</h2>
+                    <div class="metric-row">
+                        <span class="metric-label">Marzo 2026</span>
+                        <span class="metric-value large">120.9 puntos</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Variación Mensual</span>
+                        <span class="metric-value positive">+1.2%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">vs Año Anterior</span>
+                        <span class="metric-value negative">-18.7%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Estado</span>
+                        <span class="badge up">1er aumento desde jul/25</span>
+                    </div>
+                </div>
+
+                <!-- INALE Uruguay - Ocupa toda la fila -->
+                <div class="section-card" style="grid-column: 1 / -1;">
+                    <h2>🇺🇾 Uruguay (INALE) - Datos Enero 2026 + Poder de Compra Diciembre 2025</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 15px;">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #1e3c72;">
+                            <h3 style="font-size: 0.95em; color: #1e3c72; margin-bottom: 12px; font-weight: 600;">💰 Precio al Productor</h3>
+                            <div class="metric-row">
+                                <span class="metric-label">Enero 2026</span>
+                                <span class="metric-value">USD 0.43/litro</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">vs Diciembre 2025</span>
+                                <span class="metric-value" style="color: #6c757d;">0% (estable)</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Promedio 12 meses</span>
+                                <span class="metric-value positive">+6% anual</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+                            <h3 style="font-size: 0.95em; color: #1e3c72; margin-bottom: 12px; font-weight: 600;">📦 Exportación</h3>
+                            <div class="metric-row">
+                                <span class="metric-label">Precio enero</span>
+                                <span class="metric-value">USD 0.57/litro</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">vs Diciembre</span>
+                                <span class="metric-value positive">+8%</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Prom. 12 meses</span>
+                                <span class="metric-value positive">+10% anual</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #dc3545;">
+                            <h3 style="font-size: 0.95em; color: #1e3c72; margin-bottom: 12px; font-weight: 600;">🏪 Mercado Interno</h3>
+                            <div class="metric-row">
+                                <span class="metric-label">Precio enero</span>
+                                <span class="metric-value">USD 1.09/litro</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">vs Diciembre</span>
+                                <span class="metric-value negative">-13%</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Prom. 12 meses</span>
+                                <span class="metric-value positive">+8% anual</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                            <h3 style="font-size: 0.95em; color: #1e3c72; margin-bottom: 12px; font-weight: 600;">🏭 Total Industria</h3>
+                            <div class="metric-row">
+                                <span class="metric-label">Precio enero</span>
+                                <span class="metric-value">USD 0.71/litro</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">vs Diciembre</span>
+                                <span class="metric-value negative">-1%</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Prom. 12 meses</span>
+                                <span class="metric-value positive">+8% anual</span>
+                            </div>
+                        </div>
+                        <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; border-left: 4px solid #0c5460;">
+                            <h3 style="font-size: 0.95em; color: #1e3c72; margin-bottom: 12px; font-weight: 600;">📊 Indicadores Clave</h3>
+                            <div class="metric-row">
+                                <span class="metric-label">Participación Productor</span>
+                                <span class="metric-value">60%</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Poder Compra Dic/25</span>
+                                <span class="metric-value positive">+3% vs 2024</span>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">TC Prom. Ene/26</span>
+                                <span class="metric-value">$38.44/USD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GDT Products -->
+            <div class="section-card">
+                <h2>📊 Precios GDT por Producto (USD/tonelada)</h2>
+                <div class="products-grid">
+                    <div class="product-mini negative">
+                        <h4>Leche Entera (WMP)</h4>
+                        <div class="price">USD 3,666</div>
+                        <div class="change" style="color: #dc3545;">-0.6% <small>(vs ant.)</small></div>
+                    </div>
+                    <div class="product-mini positive">
+                        <h4>Leche Descremada (SMP)</h4>
+                        <div class="price">USD 3,448</div>
+                        <div class="change" style="color: #28a745;">+3.2% <small>(vs ant.)</small></div>
+                    </div>
+                    <div class="product-mini negative">
+                        <h4>Mantequilla</h4>
+                        <div class="price">USD 5,702</div>
+                        <div class="change" style="color: #dc3545;">-7.9% <small>(vs ant.)</small></div>
+                    </div>
+                    <div class="product-mini negative">
+                        <h4>Grasa Láctea (AMF)</h4>
+                        <div class="price">USD 6,357</div>
+                        <div class="change" style="color: #dc3545;">-9.6% <small>(vs ant.)</small></div>
+                    </div>
+                    <div class="product-mini positive">
+                        <h4>Queso Cheddar</h4>
+                        <div class="price">USD 4,798</div>
+                        <div class="change" style="color: #28a745;">+1.1% <small>(vs ant.)</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis -->
+            <div class="alert-box info">
+                <h3>📈 Análisis de Tendencias</h3>
+                <p>
+                    <strong>GDT:</strong> Volumen comercializado en tendencia bajista (14,993 ton). 
+                    Productos grasos (mantequilla -7.9%, AMF -9.6%) con mayores caídas. 
+                    Única suba: SMP +3.2%.
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>FAO:</strong> Primer aumento desde julio 2025, impulsado por leches en polvo y mantequilla 
+                    (mayor demanda global + menor producción estacional en Oceanía). 
+                    Quesos en baja por mayor oferta UE.
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>Fonterra:</strong> Elevó pronóstico de USD 5.30 a USD 5.59/kgMS basado en mejoras recientes en GDT, 
+                    pero advierte volatilidad por producción global sobre niveles estacionales.
+                </p>
+            </div>
+
+            <!-- Links -->
+            <div class="section-card">
+                <h2>🔗 Fuentes de Datos</h2>
+                <div class="links-grid">
+                    <a href="https://www.globaldairytrade.info/en/product-results/" target="_blank" class="link-item">
+                        📊 GlobalDairyTrade - Resultados
+                    </a>
+                    <a href="https://www.fonterra.com/nz/en/investors/global-dairy-update.html" target="_blank" class="link-item">
+                        🌍 Fonterra - Global Dairy Update
+                    </a>
+                    <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en" target="_blank" class="link-item">
+                        🌾 FAO - Food Price Index
+                    </a>
+                    <a href="https://www.fao.org/markets-and-trade/commodities-overview/basic-foods/fao-dairy-price-index/en" target="_blank" class="link-item">
+                        🥛 FAO - Dairy Price Index
+                    </a>
+                    <a href="https://ahdb.org.uk/dairy/global-dairy-trade-events" target="_blank" class="link-item">
+                        📈 AHDB - Análisis GDT
+                    </a>
+                    <a href="https://www.inale.org/tipos_de_informes/" target="_blank" class="link-item">
+                        🇺🇾 INALE - Informes Uruguay
+                    </a>
+                    <a href="https://www.inale.org/tipo_de_informe/precios-de-la-leche-en-tambo-e-industria/" target="_blank" class="link-item">
+                        💰 INALE - Precios Tambo/Industria
+                    </a>
+                    <a href="https://www.bcu.gub.uy/Estadisticas-e-Indicadores/Paginas/Cotizaciones.aspx" target="_blank" class="link-item">
+                        💱 BCU - Cotizaciones UY
+                    </a>
+                    <a href="https://www.globaldairytrade.info/en/gdt-events/calendar/" target="_blank" class="link-item">
+                        📅 Calendario Subastas GDT
+                    </a>
+                </div>
+            </div>
+
+            <div class="alert-box info" style="margin-top: 20px;">
+                <h3>ℹ️ Notas</h3>
+                <p>
+                    <strong>Precios GDT:</strong> USD por Tonelada Métrica, base FAS (Free Alongside Ship).<br>
+                    <strong>Farmgate Milk Price:</strong> Precio que Fonterra paga a productores neozelandeses por kg de sólidos lácteos (kgMS).<br>
+                    <strong>Índice FAO:</strong> Media ponderada de precios internacionales de lácteos (base 2014-2016=100).<br>
+                    <strong>Subastas GDT:</strong> Primer y tercer martes de cada mes, 12:00 UTC.
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Fuentes:</strong> 
+                <a href="https://www.globaldairytrade.info" target="_blank">GlobalDairyTrade</a> | 
+                <a href="https://www.fonterra.com" target="_blank">Fonterra</a> | 
+                <a href="https://www.fao.org" target="_blank">FAO</a> | 
+                <a href="https://ahdb.org.uk" target="_blank">AHDB</a> | 
+                <a href="https://www.inale.org" target="_blank">INALE</a>
+            </p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                Dashboard informativo - Datos internacionales al 22/04/2026 | Datos Uruguay (INALE): Enero 2026 / T4 2025
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
