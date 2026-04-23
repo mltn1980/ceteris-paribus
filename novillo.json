@@ -2,10 +2,14 @@
   "periodo": "marzo 2026",
   "valor": 1976,
   "variacion": 2.3,
+  "variacion_año": 18.3,
   "vh": 1608,
   "vh_variacion": 0.4,
+  "vh_variacion_año": 26.6,
   "vh_participacion": 81,
   "vai": 368,
-  "vai_participacion": 19,
+  "vai_variacion": 11.2,
+  "vai_variacion_año": -8.2,
+  "vai_participacion": 18,
   "actualizado": "2026-04-15"
 }
