@@ -131,10 +131,165 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(rhe => {
             const rheNovPct = (rhe.rhe_novillo * 100).toFixed(1);
             const context = `<strong>Contexto de mercado:</strong> El productor recibe ${rheNovPct}% del precio de exportación (RHE ${rheNovPct}%). Precio export: USD ${rhe.precio_export.toFixed(2)}/kg · Novillo: USD ${rhe.precio_novillo.toFixed(2)}/kg · Semana ${rhe.periodo}.`;
-            document.getElementById('novillo-rhe-context').innerHTML = context;
+            const contextEl = document.getElementById('novillo-rhe-context');
+            if (contextEl) {
+                contextEl.innerHTML = context;
+            }
         })
         .catch(() => {
             // Fallback sin contexto RHE
+        });
+    
+    // ============================================
+    // RHE CARD - Datos completos de RHE
+    // ============================================
+    
+    // Valores semana anterior (semana 14) - fallback
+    const semanaAnterior = {
+        rhe_novillo: 0.971,
+        rhe_vaca: 0.872,
+        precio_novillo: 5.519,
+        precio_vaca: 4.957,
+        precio_export: 5.686
+    };
+    
+    function formatearVariacion(valor, valorAnterior, tipo = 'precio') {
+        const diff = valor - valorAnterior;
+        const isPositive = diff > 0;
+        const arrow = isPositive ? '▲' : (diff < 0 ? '▼' : '—');
+        const color = tipo === 'rhe' 
+            ? (isPositive ? '#2a7235' : '#8c3030')
+            : (isPositive ? '#2a7235' : '#8c3030');
+        
+        let texto = '';
+        if (tipo === 'rhe') {
+            texto = Math.abs(diff * 100).toFixed(1) + ' pts';
+        } else {
+            texto = Math.abs(diff).toFixed(2);
+        }
+        
+        return {
+            html: arrow + ' ' + texto + ' vs semana anterior',
+            color: diff === 0 ? '#918b80' : color
+        };
+    }
+    
+    fetch('data/rhe.json')
+        .then(r => r.json())
+        .then(d => {
+            // Valores principales
+            const rheNovilloEl = document.getElementById('rhe-novillo-pct');
+            const rheVacaEl = document.getElementById('rhe-vaca-pct');
+            const rhePrecioExportEl = document.getElementById('rhe-precio-export');
+            const rhePrecioNovilloEl = document.getElementById('rhe-precio-novillo');
+            const rhePrecioVacaEl = document.getElementById('rhe-precio-vaca');
+            const rhePeriodoEl = document.getElementById('rhe-periodo');
+            
+            if (rheNovilloEl) rheNovilloEl.textContent = (d.rhe_novillo * 100).toFixed(1) + '%';
+            if (rheVacaEl) rheVacaEl.textContent = (d.rhe_vaca * 100).toFixed(1) + '%';
+            if (rhePrecioExportEl) rhePrecioExportEl.textContent = d.precio_export.toFixed(2);
+            if (rhePrecioNovilloEl) rhePrecioNovilloEl.textContent = d.precio_novillo.toFixed(2);
+            if (rhePrecioVacaEl) rhePrecioVacaEl.textContent = d.precio_vaca.toFixed(2);
+            if (rhePeriodoEl) rhePeriodoEl.textContent = 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
+            
+            // Variaciones RHE
+            const varNovillo = formatearVariacion(d.rhe_novillo, d.rhe_novillo_anterior || semanaAnterior.rhe_novillo, 'rhe');
+            const varVaca = formatearVariacion(d.rhe_vaca, d.rhe_vaca_anterior || semanaAnterior.rhe_vaca, 'rhe');
+            
+            const rheNovilloVarEl = document.getElementById('rhe-novillo-var');
+            const rheVacaVarEl = document.getElementById('rhe-vaca-var');
+            
+            if (rheNovilloVarEl) {
+                rheNovilloVarEl.textContent = varNovillo.html;
+                rheNovilloVarEl.style.color = varNovillo.color;
+            }
+            if (rheVacaVarEl) {
+                rheVacaVarEl.textContent = varVaca.html;
+                rheVacaVarEl.style.color = varVaca.color;
+            }
+            
+            // Variaciones Precios
+            const varExport = formatearVariacion(d.precio_export, d.precio_export_anterior || semanaAnterior.precio_export, 'precio');
+            const varPrecioNovillo = formatearVariacion(d.precio_novillo, d.precio_novillo_anterior || semanaAnterior.precio_novillo, 'precio');
+            const varPrecioVaca = formatearVariacion(d.precio_vaca, d.precio_vaca_anterior || semanaAnterior.precio_vaca, 'precio');
+            
+            const rhePrecioExportVarEl = document.getElementById('rhe-precio-export-var');
+            const rhePrecioNovilloVarEl = document.getElementById('rhe-precio-novillo-var');
+            const rhePrecioVacaVarEl = document.getElementById('rhe-precio-vaca-var');
+            
+            if (rhePrecioExportVarEl) {
+                rhePrecioExportVarEl.textContent = varExport.html;
+                rhePrecioExportVarEl.style.color = varExport.color;
+            }
+            if (rhePrecioNovilloVarEl) {
+                rhePrecioNovilloVarEl.textContent = varPrecioNovillo.html;
+                rhePrecioNovilloVarEl.style.color = varPrecioNovillo.color;
+            }
+            if (rhePrecioVacaVarEl) {
+                rhePrecioVacaVarEl.textContent = varPrecioVaca.html;
+                rhePrecioVacaVarEl.style.color = varPrecioVaca.color;
+            }
+        })
+        .catch(() => {
+            // Valores actuales (fallback semana 15)
+            const actual = {
+                rhe_novillo: 0.959,
+                rhe_vaca: 0.855,
+                precio_novillo: 5.515,
+                precio_vaca: 4.918,
+                precio_export: 5.750
+            };
+            
+            const rheNovilloEl = document.getElementById('rhe-novillo-pct');
+            const rheVacaEl = document.getElementById('rhe-vaca-pct');
+            const rhePrecioExportEl = document.getElementById('rhe-precio-export');
+            const rhePrecioNovilloEl = document.getElementById('rhe-precio-novillo');
+            const rhePrecioVacaEl = document.getElementById('rhe-precio-vaca');
+            const rhePeriodoEl = document.getElementById('rhe-periodo');
+            
+            if (rheNovilloEl) rheNovilloEl.textContent = '95.9%';
+            if (rheVacaEl) rheVacaEl.textContent = '85.5%';
+            if (rhePrecioExportEl) rhePrecioExportEl.textContent = '5.75';
+            if (rhePrecioNovilloEl) rhePrecioNovilloEl.textContent = '5.52';
+            if (rhePrecioVacaEl) rhePrecioVacaEl.textContent = '4.92';
+            if (rhePeriodoEl) rhePeriodoEl.textContent = 'Semana: 12-18 abril 2026';
+            
+            // Calcular y mostrar variaciones
+            const varNovillo = formatearVariacion(actual.rhe_novillo, semanaAnterior.rhe_novillo, 'rhe');
+            const varVaca = formatearVariacion(actual.rhe_vaca, semanaAnterior.rhe_vaca, 'rhe');
+            
+            const rheNovilloVarEl = document.getElementById('rhe-novillo-var');
+            const rheVacaVarEl = document.getElementById('rhe-vaca-var');
+            
+            if (rheNovilloVarEl) {
+                rheNovilloVarEl.textContent = varNovillo.html;
+                rheNovilloVarEl.style.color = varNovillo.color;
+            }
+            if (rheVacaVarEl) {
+                rheVacaVarEl.textContent = varVaca.html;
+                rheVacaVarEl.style.color = varVaca.color;
+            }
+            
+            const varExport = formatearVariacion(actual.precio_export, semanaAnterior.precio_export, 'precio');
+            const varPrecioNovillo = formatearVariacion(actual.precio_novillo, semanaAnterior.precio_novillo, 'precio');
+            const varPrecioVaca = formatearVariacion(actual.precio_vaca, semanaAnterior.precio_vaca, 'precio');
+            
+            const rhePrecioExportVarEl = document.getElementById('rhe-precio-export-var');
+            const rhePrecioNovilloVarEl = document.getElementById('rhe-precio-novillo-var');
+            const rhePrecioVacaVarEl = document.getElementById('rhe-precio-vaca-var');
+            
+            if (rhePrecioExportVarEl) {
+                rhePrecioExportVarEl.textContent = varExport.html;
+                rhePrecioExportVarEl.style.color = varExport.color;
+            }
+            if (rhePrecioNovilloVarEl) {
+                rhePrecioNovilloVarEl.textContent = varPrecioNovillo.html;
+                rhePrecioNovilloVarEl.style.color = varPrecioNovillo.color;
+            }
+            if (rhePrecioVacaVarEl) {
+                rhePrecioVacaVarEl.textContent = varPrecioVaca.html;
+                rhePrecioVacaVarEl.style.color = varPrecioVaca.color;
+            }
         });
     
     // ============================================
