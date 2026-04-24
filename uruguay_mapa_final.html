@@ -16,21 +16,21 @@
             background: linear-gradient(135deg, var(--crema) 0%, #E8DCC8 100%);
             color: var(--negro); min-height: 100vh;
         }
-        header { background: var(--tierra-oscura); padding: 2rem 3rem; }
+        header { background: var(--tierra-oscura); padding: 1rem 2rem; }
         h1 {
-            font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--oro);
+            font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--oro);
             letter-spacing: 0.15em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
-        .subtitle { color: var(--crema); font-size: 1.2rem; letter-spacing: 0.1em; }
-        .container { max-width: 1800px; margin: 0 auto; padding: 3rem; }
+        .subtitle { color: var(--crema); font-size: 0.9rem; letter-spacing: 0.08em; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
         .controls {
-            background: white; padding: 2rem; border-radius: 4px; margin-bottom: 2rem;
+            background: white; padding: 1.2rem; border-radius: 4px; margin-bottom: 1.2rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-left: 6px solid var(--tierra);
         }
         .controls h2 {
-            font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
-            color: var(--tierra-oscura); margin-bottom: 1.5rem; letter-spacing: 0.1em;
+            font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+            color: var(--tierra-oscura); margin-bottom: 1rem; letter-spacing: 0.1em;
         }
         .filter-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
         .filter-item { flex: 1; min-width: 200px; }
@@ -39,39 +39,121 @@
             width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 3px;
             font-family: 'Crimson Pro', serif; font-size: 1rem; background: white;
         }
-        .map-container { display: grid; grid-template-columns: 1.2fr 450px; gap: 2rem; margin-bottom: 3rem; }
-        #mapa { background: white; padding: 3rem; border-radius: 4px; box-shadow: 0 15px 50px rgba(0,0,0,0.15); }
-        #svg-mapa { width: 100%; height: auto; }
+        .instrucciones {
+            background: linear-gradient(135deg, #f8f5f0 0%, #ffffff 100%);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--verde-campo);
+        }
+        .instrucciones h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            color: var(--tierra-oscura);
+            margin-bottom: 1rem;
+            letter-spacing: 0.08em;
+        }
+        .instrucciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .instruccion-item {
+            display: flex;
+            gap: 0.8rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e8e8e8;
+            transition: all 0.2s ease;
+        }
+        .instruccion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--oro);
+        }
+        .instruccion-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .instruccion-item strong {
+            display: block;
+            color: var(--tierra-oscura);
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .instruccion-item p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--gris);
+            line-height: 1.5;
+        }
+        .map-container { display: grid; grid-template-columns: 500px 380px; gap: 1.2rem; margin-bottom: 1.5rem; justify-content: center; }
+        #mapa { background: white; padding: 1.5rem; border-radius: 4px; box-shadow: 0 15px 50px rgba(0,0,0,0.15); }
+        #svg-mapa { width: 100%; height: auto; max-width: 450px; margin: 0 auto; display: block; }
         #svg-mapa path { stroke: var(--tierra-oscura); stroke-width: 1.5; transition: all 0.3s ease; cursor: pointer; }
         #svg-mapa path:hover { stroke-width: 3; filter: brightness(1.15); }
         #svg-mapa path.selected { stroke: var(--oro); stroke-width: 4; filter: brightness(1.2); }
         .info-panel {
-            background: white; padding: 2.5rem; border-radius: 4px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15); height: fit-content; position: sticky; top: 2rem;
+            background: white; padding: 1.5rem; border-radius: 4px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); height: fit-content; position: sticky; top: 1.5rem;
         }
         .info-panel h3 {
-            font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--tierra);
-            margin-bottom: 1rem; border-bottom: 3px solid var(--oro); padding-bottom: 0.5rem;
+            font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--tierra);
+            margin-bottom: 0.8rem; border-bottom: 3px solid var(--oro); padding-bottom: 0.4rem;
         }
         .stat {
-            padding: 1.5rem; margin-bottom: 1rem;
+            padding: 1rem; margin-bottom: 0.7rem;
             background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
             border-left: 4px solid var(--oro); border-radius: 3px;
         }
         .stat-label { font-size: 0.85rem; color: var(--gris); margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 600; }
-        .stat-value { font-size: 2.2rem; font-weight: 700; color: var(--tierra-oscura); font-family: 'Bebas Neue', sans-serif; }
+        .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--tierra-oscura); font-family: 'Bebas Neue', sans-serif; }
         .stat-unit { font-size: 1rem; color: var(--gris); font-weight: 400; }
-        .legend { margin-top: 2rem; padding: 1.5rem; background: #f8f8f8; border-radius: 3px; }
-        .legend h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--tierra-oscura); }
-        .legend-item { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.9rem; }
-        .legend-color { width: 35px; height: 22px; margin-right: 0.75rem; border-radius: 2px; border: 1px solid #ddd; }
+        .legend { 
+            margin: 1.5rem auto 0;
+            padding: 1.2rem 1.5rem;
+            background: white;
+            border-radius: 4px;
+            max-width: 900px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-left: 6px solid var(--oro);
+        }
+        .legend h4 { 
+            font-family: 'Bebas Neue', sans-serif; 
+            font-size: 1.3rem; 
+            margin-bottom: 1rem; 
+            color: var(--tierra-oscura); 
+            text-align: center;
+        }
+        #legendContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        .legend-item { 
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 0; 
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+        .legend-color { width: 28px; height: 18px; margin-right: 0.6rem; border-radius: 2px; border: 1px solid #ddd; }
         .rubros-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
         .rubro-item { background: white; padding: 0.75rem; border-radius: 3px; border-left: 3px solid var(--verde-campo); }
         .rubro-name { font-size: 1rem; color: var(--gris); margin-bottom: 0.25rem; text-transform: uppercase; font-weight: 600; }
-        .rubro-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--verde-campo); }
+        .rubro-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--verde-campo); }
         @media (max-width: 1400px) {
             .map-container { grid-template-columns: 1fr; }
             .info-panel { position: relative; top: 0; }
+            #svg-mapa { max-width: 100%; }
+            .instrucciones-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -211,9 +293,56 @@
                         <div class="stat-value">USD 4.178 <span class="stat-unit">/ha</span></div>
                     </div>
                 </div>
-                <div class="legend">
-                    <h4>Escala de Colores</h4>
-                    <div id="legendContainer"></div>
+            </div>
+        </div>
+        <div class="legend">
+            <h4>Escala de Colores</h4>
+            <div id="legendContainer"></div>
+        </div>
+        <div class="instrucciones">
+            <h2>📍 Cómo usar el mapa</h2>
+            <div class="instrucciones-grid">
+                <div class="instruccion-item">
+                    <span class="instruccion-icon">🖱️</span>
+                    <div>
+                        <strong>Interactuar con el mapa:</strong>
+                        <p>Haz clic en cualquier departamento para ver sus datos específicos en el panel lateral.</p>
+                    </div>
+                </div>
+                <div class="instruccion-item">
+                    <span class="instruccion-icon">🎨</span>
+                    <div>
+                        <strong>Colores del mapa:</strong>
+                        <p>Los tonos más oscuros indican precios más altos. Consulta la escala de colores arriba.</p>
+                    </div>
+                </div>
+                <div class="instruccion-item">
+                    <span class="instruccion-icon">💰</span>
+                    <div>
+                        <strong>Compraventa:</strong>
+                        <p>Muestra el precio promedio por hectárea en dólares (USD/ha) para transacciones de compra-venta del año 2025 completo.</p>
+                    </div>
+                </div>
+                <div class="instruccion-item">
+                    <span class="instruccion-icon">📋</span>
+                    <div>
+                        <strong>Arrendamiento:</strong>
+                        <p>Muestra la renta anual promedio (USD/ha/año) del 1er semestre 2025. Filtra por rubro: ganadería, agricultura, arroz, lechería, forestación o agrícola-ganadero.</p>
+                    </div>
+                </div>
+                <div class="instruccion-item">
+                    <span class="instruccion-icon">📊</span>
+                    <div>
+                        <strong>Vista combinada:</strong>
+                        <p>Muestra el monto total combinado de compraventa + arrendamiento por departamento en millones de dólares.</p>
+                    </div>
+                </div>
+                <div class="instruccion-item">
+                    <span class="instruccion-icon">ℹ️</span>
+                    <div>
+                        <strong>Panel de información:</strong>
+                        <p>Al seleccionar un departamento, se muestran estadísticas detalladas: operaciones, superficie, montos y precios específicos.</p>
+                    </div>
                 </div>
             </div>
         </div>
