@@ -13,7 +13,15 @@ function fetchUrl(url) {
 
 exports.handler = async () => {
   try {
-    const apiKey = '76e4e78a92c046128cbc2f8aa685910a';
+    const apiKey = process.env.TWELVEDATA_API_KEY;
+    if (!apiKey) {
+      console.error('TWELVEDATA_API_KEY no está configurada en las variables de entorno de Netlify');
+      return {
+        statusCode: 500,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ error: 'Configuración de API incompleta' })
+      };
+    }
     
     // Obtener precios en paralelo
     const [sojaRes, trigoRes, arrozRes] = await Promise.all([

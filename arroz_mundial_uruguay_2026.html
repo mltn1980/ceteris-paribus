@@ -282,13 +282,6 @@ h3:first-child{margin-top:0;}
 .con.c-teal .con-metric{background:var(--teal-bg);border-color:rgba(14,110,110,.2);color:var(--teal);}
 .con.c-blue .con-metric{background:rgba(74,127,191,.08);border-color:rgba(74,127,191,.2);color:#4A7FBF;}
 
-/* ─── COPY PROTECTION ─── */
-body{
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-}
 .ticker{
   background:#F5C842;overflow:hidden;height:34px;
   display:flex;align-items:center;
@@ -1149,22 +1142,5 @@ footer{background:var(--ink);padding:40px 48px;}
         })();
     </script>
 
-    <script>
-        // ─── COPY PROTECTION ───
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('selectstart', e => e.preventDefault());
-        document.addEventListener('dragstart', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (
-                (e.ctrlKey || e.metaKey) && (
-                    e.key === 'c' || e.key === 'C' ||
-                    e.key === 'a' || e.key === 'A' ||
-                    e.key === 'u' || e.key === 'U' ||
-                    e.key === 's' || e.key === 'S' ||
-                    e.key === 'p' || e.key === 'P'
-                )
-            ) { e.preventDefault(); }
-        });
-    </script>
 </body>
 </html>

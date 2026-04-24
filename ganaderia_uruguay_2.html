@@ -2017,34 +2017,6 @@
         });
     </script>
 
-    <!-- ── PROTECCIÓN DE CONTENIDO ── -->
-    <style>
-        /* 1. Bloquea selección de texto en todo el documento */
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    </style>
-    <script>
-        // 2. Clic derecho deshabilitado
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // 3. Atajos de teclado bloqueados
-        document.addEventListener('keydown', function(e) {
-            const key = e.key.toLowerCase();
-            const ctrl = e.ctrlKey || e.metaKey;
-            if (!ctrl) return;
-            // Ctrl/Cmd + C (copiar), A (seleccionar todo), U (ver fuente), S (guardar), P (imprimir)
-            if (['c', 'a', 'u', 's', 'p'].includes(key)) {
-                e.preventDefault();
-            }
-        });
-    </script>
-    <!-- COPIAR DESDE ACÁ ↓ -->
 
     <style>
         .share-bar {

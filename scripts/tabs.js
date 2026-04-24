@@ -2,165 +2,102 @@
 // TABS.JS - Sistemas de pestañas
 // ============================================
 
-// ============================================
-// GANADERÍA - Sistema de pestañas
-// ============================================
-document.querySelectorAll('.ganaderia-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-        const target = this.getAttribute('data-ganaderia');
-        
-        // Actualizar botones
-        document.querySelectorAll('.ganaderia-tab').forEach(t => {
-            t.classList.remove('active');
-            t.style.borderBottomColor = 'transparent';
-            t.style.color = 'var(--text2)';
-            t.style.background = 'transparent';
-        });
-        this.classList.add('active');
-        this.style.borderBottomColor = 'var(--red)';
-        this.style.color = 'var(--text)';
-        this.style.background = 'var(--surface)';
-        
-        // Actualizar contenido
-        document.querySelectorAll('.ganaderia-content').forEach(content => {
-            content.style.display = 'none';
-            content.classList.remove('active');
-        });
-        const targetContent = document.querySelector(`.ganaderia-content[data-ganaderia="${target}"]`);
-        if (targetContent) {
-            targetContent.style.display = 'block';
-            targetContent.classList.add('active');
-        }
-    });
-});
+function initTabSystem({ tabSelector, contentSelector, dataAttr, activeColor, extraSelector }) {
+    const tabs = document.querySelectorAll(tabSelector);
+    if (!tabs.length) return;
 
-// ============================================
-// GRANOS - Sistema de pestañas
-// ============================================
-document.querySelectorAll('.grain-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-        const grain = this.getAttribute('data-grain');
-        
-        // Remover active de todos los tabs
-        document.querySelectorAll('.grain-tab').forEach(t => {
-            t.classList.remove('active');
-            t.style.borderBottomColor = 'transparent';
-            t.style.color = 'var(--text2)';
-            t.style.background = 'transparent';
-        });
-        
-        // Activar tab clickeado
-        this.classList.add('active');
-        this.style.borderBottomColor = 'var(--amber)';
-        this.style.color = 'var(--text)';
-        this.style.background = 'var(--surface)';
-        
-        // Ocultar todos los contenidos
-        document.querySelectorAll('.grain-content').forEach(content => {
-            content.style.display = 'none';
-        });
-        
-        // Ocultar todos los botones
-        document.querySelectorAll('.grain-button').forEach(btn => {
-            btn.style.display = 'none';
-        });
-        
-        // Mostrar contenido seleccionado
-        document.querySelector(`.grain-content[data-grain="${grain}"]`).style.display = 'block';
-        
-        // Mostrar botón correspondiente si existe
-        const grainButton = document.querySelector(`.grain-button[data-grain="${grain}"]`);
-        if (grainButton) {
-            grainButton.style.display = 'block';
-        }
-    });
-});
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            const value = this.getAttribute(dataAttr);
 
-// Activar el tab "General" por defecto
-const activeGrainTab = document.querySelector('.grain-tab.active');
-if (activeGrainTab) {
-    activeGrainTab.style.borderBottomColor = 'var(--amber)';
-    activeGrainTab.style.color = 'var(--text)';
-    activeGrainTab.style.background = 'var(--surface)';
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.style.borderBottomColor = 'transparent';
+                t.style.color = 'var(--text2)';
+                t.style.background = 'transparent';
+            });
+            this.classList.add('active');
+            this.style.borderBottomColor = activeColor;
+            this.style.color = 'var(--text)';
+            this.style.background = 'var(--surface)';
+
+            document.querySelectorAll(contentSelector).forEach(c => {
+                c.style.display = 'none';
+                c.classList.remove('active');
+            });
+
+            if (extraSelector) {
+                document.querySelectorAll(extraSelector).forEach(b => b.style.display = 'none');
+            }
+
+            const target = document.querySelector(`${contentSelector}[${dataAttr}="${value}"]`);
+            if (target) {
+                target.style.display = 'block';
+                target.classList.add('active');
+            }
+
+            if (extraSelector) {
+                const extraTarget = document.querySelector(`${extraSelector}[${dataAttr}="${value}"]`);
+                if (extraTarget) extraTarget.style.display = 'block';
+            }
+        });
+    });
+
+    // Aplicar estilos al tab activo inicial
+    const activeTab = document.querySelector(`${tabSelector}.active`);
+    if (activeTab) {
+        activeTab.style.borderBottomColor = activeColor;
+        activeTab.style.color = 'var(--text)';
+        activeTab.style.background = 'var(--surface)';
+    }
 }
 
-// ============================================
-// LÁCTEOS - Sistema de pestañas
-// ============================================
-document.querySelectorAll('.lacteos-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-        const lacteos = this.getAttribute('data-lacteos');
-        
-        // Remover active de todos los tabs de lácteos
-        document.querySelectorAll('.lacteos-tab').forEach(t => {
-            t.classList.remove('active');
-            t.style.borderBottomColor = 'transparent';
-            t.style.color = 'var(--text2)';
-            t.style.background = 'transparent';
-        });
-        
-        // Activar tab clickeado
-        this.classList.add('active');
-        this.style.borderBottomColor = '#4a90e2';
-        this.style.color = 'var(--text)';
-        this.style.background = 'var(--surface)';
-        
-        // Ocultar todos los contenidos de lácteos
-        document.querySelectorAll('.lacteos-content').forEach(content => {
-            content.style.display = 'none';
-            content.classList.remove('active');
-        });
-        
-        // Mostrar contenido seleccionado
-        const selectedContent = document.querySelector(`.lacteos-content[data-lacteos="${lacteos}"]`);
-        if (selectedContent) {
-            selectedContent.style.display = 'block';
-            selectedContent.classList.add('active');
-        }
-    });
+initTabSystem({
+    tabSelector: '.ganaderia-tab',
+    contentSelector: '.ganaderia-content',
+    dataAttr: 'data-ganaderia',
+    activeColor: 'var(--red)'
 });
 
-// Activar el tab "Resumen" de lácteos por defecto
-const activeTabLacteos = document.querySelector('.lacteos-tab.active');
-if (activeTabLacteos) {
-    activeTabLacteos.style.borderBottomColor = '#4a90e2';
-    activeTabLacteos.style.color = 'var(--text)';
-    activeTabLacteos.style.background = 'var(--surface)';
-}
+initTabSystem({
+    tabSelector: '.grain-tab',
+    contentSelector: '.grain-content',
+    dataAttr: 'data-grain',
+    activeColor: 'var(--amber)',
+    extraSelector: '.grain-button'
+});
+
+initTabSystem({
+    tabSelector: '.lacteos-tab',
+    contentSelector: '.lacteos-content',
+    dataAttr: 'data-lacteos',
+    activeColor: '#4a90e2'
+});
 
 // ============================================
 // COLAPSAR/EXPANDIR - Función global
 // ============================================
-window.toggleAllSections = function() {
+window.toggleAllSections = function () {
     const collapsibleSections = document.querySelectorAll('.section-label.collapsible');
     const collapsibleContents = document.querySelectorAll('.collapsible-content');
-    const toggleBtn = document.getElementById('toggleAll');
     const toggleText = document.getElementById('toggleText');
-    
-    // Verificar si hay alguna sección expandida
-    const anyExpanded = Array.from(collapsibleSections).some(section => !section.classList.contains('collapsed'));
-    
-    if (anyExpanded) {
-        // Colapsar todas
-        collapsibleSections.forEach(section => {
+
+    const anyExpanded = Array.from(collapsibleSections).some(s => !s.classList.contains('collapsed'));
+
+    collapsibleSections.forEach(section => {
+        const toggleTextEl = section.querySelector('.toggle-text');
+        if (anyExpanded) {
             section.classList.add('collapsed');
-            const toggleTextEl = section.querySelector('.toggle-text');
             if (toggleTextEl) toggleTextEl.textContent = '▼ Mostrar';
-        });
-        collapsibleContents.forEach(content => {
-            content.classList.add('collapsed');
-        });
-        if (toggleText) toggleText.textContent = 'Expandir todo';
-    } else {
-        // Expandir todas
-        collapsibleSections.forEach(section => {
+        } else {
             section.classList.remove('collapsed');
-            const toggleTextEl = section.querySelector('.toggle-text');
             if (toggleTextEl) toggleTextEl.textContent = '▲ Ocultar';
-        });
-        collapsibleContents.forEach(content => {
-            content.classList.remove('collapsed');
-        });
-        if (toggleText) toggleText.textContent = 'Colapsar todo';
-    }
+        }
+    });
+
+    collapsibleContents.forEach(content => {
+        content.classList.toggle('collapsed', anyExpanded);
+    });
+
+    if (toggleText) toggleText.textContent = anyExpanded ? 'Expandir todo' : 'Colapsar todo';
 };

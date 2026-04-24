@@ -16,6 +16,12 @@ function fetchUrl(url) {
   });
 }
 
+function periodoActual() {
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const now = new Date();
+  return `${meses[now.getMonth()]} ${now.getFullYear()}`;
+}
+
 function extractNovillo(text) {
   // Buscar el patron del informe: "marzo 2026" seguido de "Novillo Tipo (NT)" y el valor
   const match1 = text.match(/(\w+)\s+(\d{4})\s+Novillo\s+Tipo[^\d]+([\d\.]+)\s+([\d,]+)/i);
@@ -31,7 +37,7 @@ function extractNovillo(text) {
   const match2 = text.match(/DATO\s+MENSUAL[\s\S]{0,100}?(\d[\.\d]{3,})\s+([\d,]+)/i);
   if (match2) {
     return {
-      periodo: "marzo 2026",
+      periodo: periodoActual(),
       valor: parseFloat(match2[1].replace(".", "")),
       variacion: parseFloat(match2[2].replace(",", "."))
     };

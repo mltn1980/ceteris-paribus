@@ -3,3 +3,6 @@
 
 [functions]
   directory = "netlify/functions"
+
+[functions.novillo]
+  schedule = "@daily"

@@ -2,149 +2,112 @@
 // DATA-LOADER.JS - Carga de datos desde JSON
 // ============================================
 
-// Esperar a que el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ============================================
+    // Utilidades
+    // ============================================
+
+    function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    }
+
+    function setVariacion(id, valor, label) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const positivo = valor > 0;
+        el.textContent = label + ': ' + (positivo ? '▲ +' : '▼ ') + valor + '%';
+        el.style.background = positivo ? '#edf5ef' : '#fceaea';
+        el.style.color = positivo ? '#2a7235' : '#a32d2d';
+    }
+
+    function ocultarSi(id, condicion) {
+        const el = document.getElementById(id);
+        if (el && condicion) el.style.display = 'none';
+    }
+
     // ============================================
     // NOVILLO - Datos INAC
     // ============================================
     fetch('data/novillo.json')
         .then(r => r.json())
         .then(d => {
-            // Novillo Tipo principal
-            document.getElementById('novillo-valor').textContent = d.valor.toLocaleString('es-UY');
-            document.getElementById('novillo-periodo').textContent = 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
-            
-            // Variación vs mes anterior
-            const varEl = document.getElementById('novillo-var');
-            const v = d.variacion;
-            varEl.textContent = 'vs mes ant: ' + (v > 0 ? '▲ +' : '▼ ') + v + '%';
-            varEl.style.background = v > 0 ? '#edf5ef' : '#fceaea';
-            varEl.style.color = v > 0 ? '#2a7235' : '#a32d2d';
-            
-            // Variación vs año anterior (solo si existe)
-            const varAñoEl = document.getElementById('novillo-var-año');
+            setText('novillo-valor', d.valor.toLocaleString('es-UY'));
+            setText('novillo-periodo', 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
+            setVariacion('novillo-var', d.variacion, 'vs mes ant');
+
             if (d.variacion_año !== undefined) {
-                const vAño = d.variacion_año;
-                varAñoEl.textContent = 'vs año ant: ' + (vAño > 0 ? '▲ +' : '▼ ') + vAño + '%';
-                varAñoEl.style.background = vAño > 0 ? '#edf5ef' : '#fceaea';
-                varAñoEl.style.color = vAño > 0 ? '#2a7235' : '#a32d2d';
+                setVariacion('novillo-var-año', d.variacion_año, 'vs año ant');
             } else {
-                varAñoEl.style.display = 'none';
+                ocultarSi('novillo-var-año', true);
             }
-            
-            // Valor Hacienda (VH)
-            document.getElementById('novillo-vh').textContent = d.vh.toLocaleString('es-UY');
-            
-            // VH Variación vs mes anterior
-            const vhVarEl = document.getElementById('novillo-vh-var');
-            const vhV = d.vh_variacion;
-            vhVarEl.textContent = 'vs mes ant: ' + (vhV > 0 ? '▲ +' : '▼ ') + vhV + '%';
-            vhVarEl.style.background = vhV > 0 ? '#edf5ef' : '#fceaea';
-            vhVarEl.style.color = vhV > 0 ? '#2a7235' : '#a32d2d';
-            
-            // VH Variación vs año anterior (solo si existe)
-            const vhVarAñoEl = document.getElementById('novillo-vh-var-año');
+
+            setText('novillo-vh', d.vh.toLocaleString('es-UY'));
+            setVariacion('novillo-vh-var', d.vh_variacion, 'vs mes ant');
+
             if (d.vh_variacion_año !== undefined) {
-                const vhVAño = d.vh_variacion_año;
-                vhVarAñoEl.textContent = 'vs año ant: ' + (vhVAño > 0 ? '▲ +' : '▼ ') + vhVAño + '%';
-                vhVarAñoEl.style.background = vhVAño > 0 ? '#edf5ef' : '#fceaea';
-                vhVarAñoEl.style.color = vhVAño > 0 ? '#2a7235' : '#a32d2d';
+                setVariacion('novillo-vh-var-año', d.vh_variacion_año, 'vs año ant');
             } else {
-                vhVarAñoEl.style.display = 'none';
+                ocultarSi('novillo-vh-var-año', true);
             }
-            
-            document.getElementById('novillo-vh-pct').textContent = d.vh_participacion + '% del total';
-            
-            // Valor Agregado Industrial (VAI)
-            document.getElementById('novillo-vai').textContent = d.vai.toLocaleString('es-UY');
-            
-            // VAI Variación vs mes anterior
-            const vaiVarEl = document.getElementById('novillo-vai-var');
-            const vaiV = d.vai_variacion;
-            vaiVarEl.textContent = 'vs mes ant: ' + (vaiV > 0 ? '▲ +' : '▼ ') + vaiV + '%';
-            vaiVarEl.style.background = vaiV > 0 ? '#edf5ef' : '#fceaea';
-            vaiVarEl.style.color = vaiV > 0 ? '#2a7235' : '#a32d2d';
-            
-            // VAI Variación vs año anterior (solo si existe)
-            const vaiVarAñoEl = document.getElementById('novillo-vai-var-año');
+
+            setText('novillo-vh-pct', d.vh_participacion + '% del total');
+            setText('novillo-vai', d.vai.toLocaleString('es-UY'));
+            setVariacion('novillo-vai-var', d.vai_variacion, 'vs mes ant');
+
             if (d.vai_variacion_año !== undefined) {
-                const vaiVAño = d.vai_variacion_año;
-                vaiVarAñoEl.textContent = 'vs año ant: ' + (vaiVAño > 0 ? '▲ +' : '▼ ') + vaiVAño + '%';
-                vaiVarAñoEl.style.background = vaiVAño > 0 ? '#edf5ef' : '#fceaea';
-                vaiVarAñoEl.style.color = vaiVAño > 0 ? '#2a7235' : '#a32d2d';
+                setVariacion('novillo-vai-var-año', d.vai_variacion_año, 'vs año ant');
             } else {
-                vaiVarAñoEl.style.display = 'none';
+                ocultarSi('novillo-vai-var-año', true);
             }
-            
-            document.getElementById('novillo-vai-pct').textContent = d.vai_participacion + '% del total';
+
+            setText('novillo-vai-pct', d.vai_participacion + '% del total');
         })
         .catch(() => {
             // Fallback con datos de marzo 2026
-            document.getElementById('novillo-valor').textContent = '1.976';
-            document.getElementById('novillo-periodo').textContent = 'Dato: marzo 2026';
-            
-            const varEl = document.getElementById('novillo-var');
-            varEl.textContent = 'vs mes ant: ▲ +2,3%';
-            varEl.style.background = '#edf5ef';
-            varEl.style.color = '#2a7235';
-            
-            const varAñoEl = document.getElementById('novillo-var-año');
-            varAñoEl.textContent = 'vs año ant: ▲ +18,3%';
-            varAñoEl.style.background = '#edf5ef';
-            varAñoEl.style.color = '#2a7235';
-            
-            document.getElementById('novillo-vh').textContent = '1.608';
-            
-            const vhVarEl = document.getElementById('novillo-vh-var');
-            vhVarEl.textContent = 'vs mes ant: ▲ +0,4%';
-            vhVarEl.style.background = '#edf5ef';
-            vhVarEl.style.color = '#2a7235';
-            
-            const vhVarAñoEl = document.getElementById('novillo-vh-var-año');
-            vhVarAñoEl.textContent = 'vs año ant: ▲ +26,6%';
-            vhVarAñoEl.style.background = '#edf5ef';
-            vhVarAñoEl.style.color = '#2a7235';
-            
-            document.getElementById('novillo-vh-pct').textContent = '81% del total';
-            
-            document.getElementById('novillo-vai').textContent = '368';
-            
-            const vaiVarEl = document.getElementById('novillo-vai-var');
-            vaiVarEl.textContent = 'vs mes ant: ▲ +11,2%';
-            vaiVarEl.style.background = '#edf5ef';
-            vaiVarEl.style.color = '#2a7235';
-            
-            const vaiVarAñoEl = document.getElementById('novillo-vai-var-año');
-            vaiVarAñoEl.textContent = 'vs año ant: ▼ -8,2%';
-            vaiVarAñoEl.style.background = '#fceaea';
-            vaiVarAñoEl.style.color = '#a32d2d';
-            
-            document.getElementById('novillo-vai-pct').textContent = '19% del total';
+            setText('novillo-valor', '1.976');
+            setText('novillo-periodo', 'Dato: marzo 2026');
+            setVariacion('novillo-var', 2.3, 'vs mes ant');
+            setVariacion('novillo-var-año', 18.3, 'vs año ant');
+            setText('novillo-vh', '1.608');
+            setVariacion('novillo-vh-var', 0.4, 'vs mes ant');
+            setVariacion('novillo-vh-var-año', 26.6, 'vs año ant');
+            setText('novillo-vh-pct', '81% del total');
+            setText('novillo-vai', '368');
+            setVariacion('novillo-vai-var', 11.2, 'vs mes ant');
+            setVariacion('novillo-vai-var-año', -8.2, 'vs año ant');
+            setText('novillo-vai-pct', '19% del total');
         });
-    
+
     // ============================================
     // RHE - Contexto de mercado
     // ============================================
     fetch('data/rhe.json')
         .then(r => r.json())
         .then(rhe => {
-            const rheNovPct = (rhe.rhe_novillo * 100).toFixed(1);
-            const context = `<strong>Contexto de mercado:</strong> El productor recibe ${rheNovPct}% del precio de exportación (RHE ${rheNovPct}%). Precio export: USD ${rhe.precio_export.toFixed(2)}/kg · Novillo: USD ${rhe.precio_novillo.toFixed(2)}/kg · Semana ${rhe.periodo}.`;
             const contextEl = document.getElementById('novillo-rhe-context');
-            if (contextEl) {
-                contextEl.innerHTML = context;
-            }
+            if (!contextEl) return;
+
+            const rheNovPct = (rhe.rhe_novillo * 100).toFixed(1);
+
+            // Construir el contenido sin innerHTML para evitar XSS
+            const strong = document.createElement('strong');
+            strong.textContent = 'Contexto de mercado:';
+            contextEl.textContent = '';
+            contextEl.appendChild(strong);
+            contextEl.append(
+                ` El productor recibe ${rheNovPct}% del precio de exportación` +
+                ` (RHE ${rheNovPct}%). Precio export: USD ${rhe.precio_export.toFixed(2)}/kg` +
+                ` · Novillo: USD ${rhe.precio_novillo.toFixed(2)}/kg · Semana ${rhe.periodo}.`
+            );
         })
-        .catch(() => {
-            // Fallback sin contexto RHE
-        });
-    
+        .catch(() => { /* sin contexto RHE disponible */ });
+
     // ============================================
     // RHE CARD - Datos completos de RHE
     // ============================================
-    
-    // Valores semana anterior (semana 14) - fallback
+
     const semanaAnterior = {
         rhe_novillo: 0.971,
         rhe_vaca: 0.872,
@@ -152,195 +115,103 @@ document.addEventListener('DOMContentLoaded', function() {
         precio_vaca: 4.957,
         precio_export: 5.686
     };
-    
-    function formatearVariacion(valor, valorAnterior, tipo = 'precio') {
+
+    function formatearVariacion(valor, valorAnterior, tipo) {
         const diff = valor - valorAnterior;
         const isPositive = diff > 0;
         const arrow = isPositive ? '▲' : (diff < 0 ? '▼' : '—');
-        const color = tipo === 'rhe' 
-            ? (isPositive ? '#2a7235' : '#8c3030')
-            : (isPositive ? '#2a7235' : '#8c3030');
-        
-        let texto = '';
-        if (tipo === 'rhe') {
-            texto = Math.abs(diff * 100).toFixed(1) + ' pts';
-        } else {
-            texto = Math.abs(diff).toFixed(2);
-        }
-        
+        const color = isPositive ? '#2a7235' : '#8c3030';
+        const texto = tipo === 'rhe'
+            ? Math.abs(diff * 100).toFixed(1) + ' pts'
+            : Math.abs(diff).toFixed(2);
+
         return {
             html: arrow + ' ' + texto + ' vs semana anterior',
             color: diff === 0 ? '#918b80' : color
         };
     }
-    
+
+    function aplicarVariacion(id, varObj) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = varObj.html;
+        el.style.color = varObj.color;
+    }
+
+    function cargarRHECard(d) {
+        setText('rhe-novillo-pct', (d.rhe_novillo * 100).toFixed(1) + '%');
+        setText('rhe-vaca-pct', (d.rhe_vaca * 100).toFixed(1) + '%');
+        setText('rhe-precio-export', d.precio_export.toFixed(2));
+        setText('rhe-precio-novillo', d.precio_novillo.toFixed(2));
+        setText('rhe-precio-vaca', d.precio_vaca.toFixed(2));
+        setText('rhe-periodo', 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
+
+        aplicarVariacion('rhe-novillo-var', formatearVariacion(d.rhe_novillo, d.rhe_novillo_anterior || semanaAnterior.rhe_novillo, 'rhe'));
+        aplicarVariacion('rhe-vaca-var', formatearVariacion(d.rhe_vaca, d.rhe_vaca_anterior || semanaAnterior.rhe_vaca, 'rhe'));
+        aplicarVariacion('rhe-precio-export-var', formatearVariacion(d.precio_export, d.precio_export_anterior || semanaAnterior.precio_export, 'precio'));
+        aplicarVariacion('rhe-precio-novillo-var', formatearVariacion(d.precio_novillo, d.precio_novillo_anterior || semanaAnterior.precio_novillo, 'precio'));
+        aplicarVariacion('rhe-precio-vaca-var', formatearVariacion(d.precio_vaca, d.precio_vaca_anterior || semanaAnterior.precio_vaca, 'precio'));
+    }
+
     fetch('data/rhe.json')
         .then(r => r.json())
-        .then(d => {
-            // Valores principales
-            const rheNovilloEl = document.getElementById('rhe-novillo-pct');
-            const rheVacaEl = document.getElementById('rhe-vaca-pct');
-            const rhePrecioExportEl = document.getElementById('rhe-precio-export');
-            const rhePrecioNovilloEl = document.getElementById('rhe-precio-novillo');
-            const rhePrecioVacaEl = document.getElementById('rhe-precio-vaca');
-            const rhePeriodoEl = document.getElementById('rhe-periodo');
-            
-            if (rheNovilloEl) rheNovilloEl.textContent = (d.rhe_novillo * 100).toFixed(1) + '%';
-            if (rheVacaEl) rheVacaEl.textContent = (d.rhe_vaca * 100).toFixed(1) + '%';
-            if (rhePrecioExportEl) rhePrecioExportEl.textContent = d.precio_export.toFixed(2);
-            if (rhePrecioNovilloEl) rhePrecioNovilloEl.textContent = d.precio_novillo.toFixed(2);
-            if (rhePrecioVacaEl) rhePrecioVacaEl.textContent = d.precio_vaca.toFixed(2);
-            if (rhePeriodoEl) rhePeriodoEl.textContent = 'Semana: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
-            
-            // Variaciones RHE
-            const varNovillo = formatearVariacion(d.rhe_novillo, d.rhe_novillo_anterior || semanaAnterior.rhe_novillo, 'rhe');
-            const varVaca = formatearVariacion(d.rhe_vaca, d.rhe_vaca_anterior || semanaAnterior.rhe_vaca, 'rhe');
-            
-            const rheNovilloVarEl = document.getElementById('rhe-novillo-var');
-            const rheVacaVarEl = document.getElementById('rhe-vaca-var');
-            
-            if (rheNovilloVarEl) {
-                rheNovilloVarEl.textContent = varNovillo.html;
-                rheNovilloVarEl.style.color = varNovillo.color;
-            }
-            if (rheVacaVarEl) {
-                rheVacaVarEl.textContent = varVaca.html;
-                rheVacaVarEl.style.color = varVaca.color;
-            }
-            
-            // Variaciones Precios
-            const varExport = formatearVariacion(d.precio_export, d.precio_export_anterior || semanaAnterior.precio_export, 'precio');
-            const varPrecioNovillo = formatearVariacion(d.precio_novillo, d.precio_novillo_anterior || semanaAnterior.precio_novillo, 'precio');
-            const varPrecioVaca = formatearVariacion(d.precio_vaca, d.precio_vaca_anterior || semanaAnterior.precio_vaca, 'precio');
-            
-            const rhePrecioExportVarEl = document.getElementById('rhe-precio-export-var');
-            const rhePrecioNovilloVarEl = document.getElementById('rhe-precio-novillo-var');
-            const rhePrecioVacaVarEl = document.getElementById('rhe-precio-vaca-var');
-            
-            if (rhePrecioExportVarEl) {
-                rhePrecioExportVarEl.textContent = varExport.html;
-                rhePrecioExportVarEl.style.color = varExport.color;
-            }
-            if (rhePrecioNovilloVarEl) {
-                rhePrecioNovilloVarEl.textContent = varPrecioNovillo.html;
-                rhePrecioNovilloVarEl.style.color = varPrecioNovillo.color;
-            }
-            if (rhePrecioVacaVarEl) {
-                rhePrecioVacaVarEl.textContent = varPrecioVaca.html;
-                rhePrecioVacaVarEl.style.color = varPrecioVaca.color;
-            }
-        })
+        .then(cargarRHECard)
         .catch(() => {
-            // Valores actuales (fallback semana 15)
-            const actual = {
+            const fallback = {
                 rhe_novillo: 0.959,
                 rhe_vaca: 0.855,
                 precio_novillo: 5.515,
                 precio_vaca: 4.918,
-                precio_export: 5.750
+                precio_export: 5.750,
+                periodo: '12-18 abril 2026',
+                actualizado: new Date().toISOString()
             };
-            
-            const rheNovilloEl = document.getElementById('rhe-novillo-pct');
-            const rheVacaEl = document.getElementById('rhe-vaca-pct');
-            const rhePrecioExportEl = document.getElementById('rhe-precio-export');
-            const rhePrecioNovilloEl = document.getElementById('rhe-precio-novillo');
-            const rhePrecioVacaEl = document.getElementById('rhe-precio-vaca');
-            const rhePeriodoEl = document.getElementById('rhe-periodo');
-            
-            if (rheNovilloEl) rheNovilloEl.textContent = '95.9%';
-            if (rheVacaEl) rheVacaEl.textContent = '85.5%';
-            if (rhePrecioExportEl) rhePrecioExportEl.textContent = '5.75';
-            if (rhePrecioNovilloEl) rhePrecioNovilloEl.textContent = '5.52';
-            if (rhePrecioVacaEl) rhePrecioVacaEl.textContent = '4.92';
-            if (rhePeriodoEl) rhePeriodoEl.textContent = 'Semana: 12-18 abril 2026';
-            
-            // Calcular y mostrar variaciones
-            const varNovillo = formatearVariacion(actual.rhe_novillo, semanaAnterior.rhe_novillo, 'rhe');
-            const varVaca = formatearVariacion(actual.rhe_vaca, semanaAnterior.rhe_vaca, 'rhe');
-            
-            const rheNovilloVarEl = document.getElementById('rhe-novillo-var');
-            const rheVacaVarEl = document.getElementById('rhe-vaca-var');
-            
-            if (rheNovilloVarEl) {
-                rheNovilloVarEl.textContent = varNovillo.html;
-                rheNovilloVarEl.style.color = varNovillo.color;
-            }
-            if (rheVacaVarEl) {
-                rheVacaVarEl.textContent = varVaca.html;
-                rheVacaVarEl.style.color = varVaca.color;
-            }
-            
-            const varExport = formatearVariacion(actual.precio_export, semanaAnterior.precio_export, 'precio');
-            const varPrecioNovillo = formatearVariacion(actual.precio_novillo, semanaAnterior.precio_novillo, 'precio');
-            const varPrecioVaca = formatearVariacion(actual.precio_vaca, semanaAnterior.precio_vaca, 'precio');
-            
-            const rhePrecioExportVarEl = document.getElementById('rhe-precio-export-var');
-            const rhePrecioNovilloVarEl = document.getElementById('rhe-precio-novillo-var');
-            const rhePrecioVacaVarEl = document.getElementById('rhe-precio-vaca-var');
-            
-            if (rhePrecioExportVarEl) {
-                rhePrecioExportVarEl.textContent = varExport.html;
-                rhePrecioExportVarEl.style.color = varExport.color;
-            }
-            if (rhePrecioNovilloVarEl) {
-                rhePrecioNovilloVarEl.textContent = varPrecioNovillo.html;
-                rhePrecioNovilloVarEl.style.color = varPrecioNovillo.color;
-            }
-            if (rhePrecioVacaVarEl) {
-                rhePrecioVacaVarEl.textContent = varPrecioVaca.html;
-                rhePrecioVacaVarEl.style.color = varPrecioVaca.color;
-            }
+            cargarRHECard(fallback);
         });
-    
+
     // ============================================
     // FAENA - Datos de faena y frigoríficos
     // ============================================
     fetch('data/faena.json')
         .then(r => r.json())
         .then(d => {
-            // Total y categorías
-            document.getElementById('faena-total').textContent = d.total.toLocaleString('es-UY');
-            document.getElementById('faena-novillo').textContent = d.novillo.toLocaleString('es-UY');
-            document.getElementById('faena-novillo-pct').textContent = d.novillo_pct + '%';
-            document.getElementById('faena-vaca').textContent = d.vaca.toLocaleString('es-UY');
-            document.getElementById('faena-vaca-pct').textContent = d.vaca_pct + '%';
-            document.getElementById('faena-vaquillona').textContent = d.vaquillona.toLocaleString('es-UY');
-            document.getElementById('faena-vaquillona-pct').textContent = d.vaquillona_pct + '%';
-            document.getElementById('faena-periodo').textContent = 'Período: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY');
-            
-            // Variación vs año anterior
-            const varAñoEl = document.getElementById('faena-var-año');
+            setText('faena-total', d.total.toLocaleString('es-UY'));
+            setText('faena-novillo', d.novillo.toLocaleString('es-UY'));
+            setText('faena-novillo-pct', d.novillo_pct + '%');
+            setText('faena-vaca', d.vaca.toLocaleString('es-UY'));
+            setText('faena-vaca-pct', d.vaca_pct + '%');
+            setText('faena-vaquillona', d.vaquillona.toLocaleString('es-UY'));
+            setText('faena-vaquillona-pct', d.vaquillona_pct + '%');
+            setText('faena-periodo', 'Período: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
+
             if (d.variacion_año !== undefined) {
-                const varAño = d.variacion_año;
-                varAñoEl.textContent = 'vs año ant: ' + (varAño > 0 ? '▲ +' : '▼ ') + varAño + '%';
-                varAñoEl.style.background = varAño > 0 ? '#edf5ef' : '#fceaea';
-                varAñoEl.style.color = varAño > 0 ? '#2a7235' : '#a32d2d';
+                setVariacion('faena-var-año', d.variacion_año, 'vs año ant');
             } else {
-                varAñoEl.style.display = 'none';
+                ocultarSi('faena-var-año', true);
             }
-            
-            // Ranking frigoríficos
+
             const ranking = document.getElementById('frigo-ranking');
-            ranking.innerHTML = ''; // Limpiar contenido previo
-            
+            if (!ranking) return;
+            ranking.textContent = '';
+
             d.frigorificos.forEach((f, i) => {
                 const bar = document.createElement('div');
                 bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
-                
+
                 const label = document.createElement('div');
                 label.style.cssText = 'font-size:0.78rem;font-weight:600;color:var(--text);min-width:120px;';
                 label.textContent = (i + 1) + '. ' + f.nombre;
-                
+
                 const barContainer = document.createElement('div');
                 barContainer.style.cssText = 'flex:1;background:var(--surface2);border-radius:4px;height:20px;position:relative;overflow:hidden;';
-                
+
                 const barFill = document.createElement('div');
                 barFill.style.cssText = 'background:var(--red);height:100%;border-radius:4px;transition:width 0.3s;width:' + f.porcentaje + '%';
-                
+
                 const pct = document.createElement('div');
                 pct.style.cssText = 'font-size:0.75rem;font-weight:600;color:var(--text2);min-width:40px;text-align:right;';
                 pct.textContent = f.porcentaje.toFixed(1) + '%';
-                
+
                 barContainer.appendChild(barFill);
                 bar.appendChild(label);
                 bar.appendChild(barContainer);
@@ -351,5 +222,5 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(() => {
             console.warn('No se pudo cargar data/faena.json');
         });
-    
+
 });
