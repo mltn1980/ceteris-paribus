@@ -204,6 +204,23 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
   .uru-stat-grid{grid-template-columns:1fr;}
   .ratings-grid{grid-template-columns:1fr 1fr;}
 }
+
+/* ── PBI sub-tabs ── */
+.pbi-tab{flex-shrink:0;padding:10px 18px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;}
+.pbi-tab:hover{color:var(--text);background:var(--surface2);}
+
+/* ── Tabla sectorial ── */
+.sector-table{width:100%;border-collapse:collapse;font-size:0.83rem;margin-bottom:20px;}
+.sector-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);padding:8px 10px;text-align:right;border-bottom:2px solid var(--border);}
+.sector-table th:first-child{text-align:left;}
+.sector-table td{padding:9px 10px;border-bottom:1px solid var(--surface2);color:var(--text2);text-align:right;vertical-align:middle;}
+.sector-table td:first-child{text-align:left;font-weight:600;color:var(--text);}
+.sector-table tr.total td{font-weight:700;color:var(--text);background:var(--surface2);border-top:2px solid var(--border);}
+.sector-table tr.subtotal td{font-weight:600;color:var(--text);font-style:italic;}
+.val-pos{color:var(--green);font-family:'IBM Plex Mono',monospace;font-weight:600;}
+.val-neg{color:var(--red);font-family:'IBM Plex Mono',monospace;font-weight:600;}
+.val-neu{color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.fuente{font-size:0.72rem;color:var(--muted);margin-top:6px;font-style:italic;}
 </style>
 </head>
 <body>
@@ -1652,6 +1669,298 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 
     <!-- Tab: PBI -->
     <div class="uruguay-content" data-uruguay="pbi" style="display:none;">
+
+        <!-- Sub-tabs de PBI -->
+        <div class="uru-sub-tabs">
+            <button class="pbi-tab active" data-pbi="anual">📅 Año 2025</button>
+            <button class="pbi-tab" data-pbi="trimestral">📊 4° Trimestre</button>
+            <button class="pbi-tab" data-pbi="actividad">🏭 Por Actividad</button>
+            <button class="pbi-tab" data-pbi="gasto">💰 Componentes del Gasto</button>
+        </div>
+
+        <!-- Sub-tab: Año 2025 -->
+        <div class="pbi-content" data-pbi="anual">
+            <div class="uru-stat-grid">
+                <div class="uru-stat-card highlight">
+                    <div class="uru-stat-label">PIB — Variación real</div>
+                    <div class="uru-stat-value">+1,8%</div>
+                    <div class="uru-stat-desc">Volumen físico 2025 vs 2024</div>
+                    <div class="uru-stat-change down">VAB +1,5% · Impuestos +4,0%</div>
+                </div>
+                <div class="uru-stat-card highlight">
+                    <div class="uru-stat-label">PIB Nominal</div>
+                    <div class="uru-stat-value">$3.516 B</div>
+                    <div class="uru-stat-desc">Billones de pesos uruguayos</div>
+                    <div class="uru-stat-change down">↑ vs $3.310 B en 2024</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">Precios Implícitos del PIB</div>
+                    <div class="uru-stat-value">+4,3%</div>
+                    <div class="uru-stat-desc">Variación interanual 2025</div>
+                    <div class="uru-stat-change up">4,2% en 2024</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">PIB 2024 (revisado)</div>
+                    <div class="uru-stat-value">+3,3%</div>
+                    <div class="uru-stat-desc">Revisado al alza desde 3,1%</div>
+                    <div class="uru-stat-change up">↑ 0,2 p.p. vs estimación anterior</div>
+                </div>
+            </div>
+
+            <div class="uru-info-box success">
+                <h4>📈 Impulsores del crecimiento 2025</h4>
+                <p>El crecimiento de 1,8% fue liderado por la <strong>Industria manufacturera (+6,2%)</strong> — impulsada por la mayor actividad de la refinería de ANCAP y los frigoríficos —, los <strong>Servicios financieros (+4,2%)</strong> y el <strong>Comercio y Alojamiento (+1,9%)</strong> vinculado al turismo receptivo y la demanda interna. En sentido contrario, la <strong>Construcción (−2,5%)</strong> y la <strong>Energía eléctrica (−3,1%)</strong> restaron al resultado.</p>
+            </div>
+
+            <div class="uru-info-box">
+                <h4>🌍 Demanda externa</h4>
+                <p>Las <strong>Exportaciones crecieron 1,9%</strong> en volumen (soja, carne y turismo receptivo), mientras que las <strong>Importaciones aumentaron 4,1%</strong>, resultando en una demanda externa neta menos positiva que en 2024. El Gasto de Consumo Final creció 2,0% y la Formación Bruta de Capital un 4,3%.</p>
+            </div>
+        </div>
+
+        <!-- Sub-tab: 4° Trimestre -->
+        <div class="pbi-content" data-pbi="trimestral" style="display:none;">
+            <div class="uru-stat-grid">
+                <div class="uru-stat-card highlight">
+                    <div class="uru-stat-label">PIB — Q4 2025 vs Q4 2024</div>
+                    <div class="uru-stat-value">+0,1%</div>
+                    <div class="uru-stat-desc">Variación interanual volumen físico</div>
+                </div>
+                <div class="uru-stat-card highlight">
+                    <div class="uru-stat-label">PIB desestacionalizado</div>
+                    <div class="uru-stat-value">+0,1%</div>
+                    <div class="uru-stat-desc">vs Q3 2025</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">PIB corriente Q4</div>
+                    <div class="uru-stat-value">$0,917 B</div>
+                    <div class="uru-stat-desc">Billones de pesos</div>
+                    <div class="uru-stat-change down">$0,859 B en Q3 2025</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">PIB per cápita Q4</div>
+                    <div class="uru-stat-value">$87.642</div>
+                    <div class="uru-stat-desc">Pesos mensuales</div>
+                </div>
+            </div>
+
+            <div class="uru-info-box">
+                <h4>🔍 Claves del Q4 2025</h4>
+                <p>El resultado de +0,1% interanual refleja un VAB de <strong>−0,3%</strong> compensado por el alza de impuestos netos (+3,3%). Los sectores con mayor aporte positivo fueron <strong>Servicios financieros (+4,0%)</strong> e <strong>Industria manufacturera (+1,7%)</strong>. En sentido contrario, <strong>Agropecuario cayó 7,7%</strong> por menores rendimientos de cultivos de verano 2025/26 y menor producción silvícola.</p>
+            </div>
+
+            <div class="uru-composition">
+                <h4>Indicadores de precios Q4</h4>
+                <div class="comp-row">
+                    <span class="comp-label">Índice Precios Implícitos PIB (Q4)</span>
+                    <span class="comp-value val-pos">+3,1% ia.</span>
+                </div>
+                <div class="comp-row">
+                    <span class="comp-label">Índice Precios Implícitos PIB (Q3)</span>
+                    <span class="comp-value val-pos">+4,2% ia.</span>
+                </div>
+                <div class="comp-row">
+                    <span class="comp-label">Formación Bruta de Capital Fijo</span>
+                    <span class="comp-value val-neg">−0,9% (volumen)</span>
+                </div>
+                <div class="comp-row">
+                    <span class="comp-label">Exportaciones de bienes y servicios</span>
+                    <span class="comp-value val-neg">−1,9% (volumen)</span>
+                </div>
+                <div class="comp-row">
+                    <span class="comp-label">Importaciones de bienes y servicios</span>
+                    <span class="comp-value val-neg">+5,1% (volumen)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-tab: Por Actividad -->
+        <div class="pbi-content" data-pbi="actividad" style="display:none;">
+            <table class="sector-table">
+                <thead>
+                    <tr>
+                        <th>Sector</th>
+                        <th>Var. anual</th>
+                        <th>Incidencia</th>
+                        <th>Var. Q4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agropecuario, Pesca y Minería</td>
+                        <td class="val-pos">+2,3%</td>
+                        <td class="val-neu">0,2</td>
+                        <td class="val-neg">−7,7%</td>
+                    </tr>
+                    <tr>
+                        <td>Industria manufacturera</td>
+                        <td class="val-pos">+6,2%</td>
+                        <td class="val-neu">0,6</td>
+                        <td class="val-pos">+1,7%</td>
+                    </tr>
+                    <tr>
+                        <td>Energía eléctrica, Gas y Agua</td>
+                        <td class="val-neg">−3,1%</td>
+                        <td class="val-neg">−0,1</td>
+                        <td class="val-neg">−5,4%</td>
+                    </tr>
+                    <tr>
+                        <td>Construcción</td>
+                        <td class="val-neg">−2,5%</td>
+                        <td class="val-neg">−0,1</td>
+                        <td class="val-neg">−1,1%</td>
+                    </tr>
+                    <tr>
+                        <td>Comercio, Alojamiento y Suministro</td>
+                        <td class="val-pos">+1,9%</td>
+                        <td class="val-neu">0,2</td>
+                        <td class="val-pos">+1,2%</td>
+                    </tr>
+                    <tr>
+                        <td>Transporte, Información y Comunicaciones</td>
+                        <td class="val-pos">+0,3%</td>
+                        <td class="val-neu">0,0</td>
+                        <td class="val-neg">−0,2%</td>
+                    </tr>
+                    <tr>
+                        <td>Servicios financieros</td>
+                        <td class="val-pos">+4,2%</td>
+                        <td class="val-neu">0,2</td>
+                        <td class="val-pos">+4,0%</td>
+                    </tr>
+                    <tr>
+                        <td>Actividades profesionales y Arrendamiento</td>
+                        <td class="val-pos">+0,9%</td>
+                        <td class="val-neu">0,1</td>
+                        <td class="val-pos">+0,7%</td>
+                    </tr>
+                    <tr>
+                        <td>Administración pública</td>
+                        <td class="val-neg">−0,1%</td>
+                        <td class="val-neu">0,0</td>
+                        <td class="val-neg">−0,9%</td>
+                    </tr>
+                    <tr>
+                        <td>Salud, Educación, Inmobiliarias y Otros</td>
+                        <td class="val-pos">+0,7%</td>
+                        <td class="val-neu">0,2</td>
+                        <td class="val-pos">+0,4%</td>
+                    </tr>
+                    <tr class="subtotal">
+                        <td>Valor Agregado Bruto a precios básicos</td>
+                        <td class="val-pos">+1,5%</td>
+                        <td class="val-neu">1,3</td>
+                        <td class="val-neg">−0,3%</td>
+                    </tr>
+                    <tr>
+                        <td>Impuestos menos subvenciones</td>
+                        <td class="val-pos">+4,0%</td>
+                        <td class="val-neu">0,5</td>
+                        <td class="val-pos">+3,3%</td>
+                    </tr>
+                    <tr class="total">
+                        <td>PRODUCTO INTERNO BRUTO</td>
+                        <td class="val-pos">+1,8%</td>
+                        <td class="val-neu">1,8</td>
+                        <td class="val-pos">+0,1%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="fuente">Fuente: BCU — Cuentas Nacionales Q4 2025. Datos preliminares. Variación Q4: Q4 2025 vs Q4 2024.</p>
+        </div>
+
+        <!-- Sub-tab: Componentes del Gasto -->
+        <div class="pbi-content" data-pbi="gasto" style="display:none;">
+            <div class="uru-stat-grid">
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">Consumo Final</div>
+                    <div class="uru-stat-value">+2,0%</div>
+                    <div class="uru-stat-desc">Hogares +2,1% · Gobierno +1,8%</div>
+                    <div class="uru-stat-change down">79,4% del PIB corriente</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">Formación Bruta de Capital</div>
+                    <div class="uru-stat-value">+4,3%</div>
+                    <div class="uru-stat-desc">FBCF +0,3% · Existencias ↑</div>
+                    <div class="uru-stat-change down">16,2% del PIB corriente</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">Exportaciones</div>
+                    <div class="uru-stat-value">+1,9%</div>
+                    <div class="uru-stat-desc">Soja, carne y turismo receptivo</div>
+                    <div class="uru-stat-change down">27,1% del PIB corriente</div>
+                </div>
+                <div class="uru-stat-card">
+                    <div class="uru-stat-label">Importaciones</div>
+                    <div class="uru-stat-value">+4,1%</div>
+                    <div class="uru-stat-desc">Uso intermedio y consumo</div>
+                    <div class="uru-stat-change up">22,6% del PIB corriente</div>
+                </div>
+            </div>
+
+            <table class="sector-table">
+                <thead>
+                    <tr>
+                        <th>Componente del gasto</th>
+                        <th>Var. anual</th>
+                        <th>Incidencia</th>
+                        <th>% PIB 2025</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gasto de Consumo Final</td>
+                        <td class="val-pos">+2,0%</td>
+                        <td class="val-neu">1,6</td>
+                        <td class="val-neu">79,4%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:20px;font-style:italic;">— Hogares</td>
+                        <td class="val-pos">+2,1%</td>
+                        <td class="val-neu">1,3</td>
+                        <td class="val-neu">61,8%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:20px;font-style:italic;">— Gobierno e ISFLSH</td>
+                        <td class="val-pos">+1,8%</td>
+                        <td class="val-neu">0,3</td>
+                        <td class="val-neu">17,6%</td>
+                    </tr>
+                    <tr>
+                        <td>Formación Bruta de Capital</td>
+                        <td class="val-pos">+4,3%</td>
+                        <td class="val-neu">0,7</td>
+                        <td class="val-neu">16,2%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:20px;font-style:italic;">— FBCF</td>
+                        <td class="val-pos">+0,3%</td>
+                        <td class="val-neu">0,0</td>
+                        <td class="val-neu">15,8%</td>
+                    </tr>
+                    <tr>
+                        <td>Exportaciones de bienes y servicios</td>
+                        <td class="val-pos">+1,9%</td>
+                        <td class="val-neu">0,6</td>
+                        <td class="val-neu">27,1%</td>
+                    </tr>
+                    <tr>
+                        <td>(−) Importaciones de bienes y servicios</td>
+                        <td class="val-neg">+4,1%</td>
+                        <td class="val-neg">−1,1</td>
+                        <td class="val-neu">22,6%</td>
+                    </tr>
+                    <tr class="total">
+                        <td>PRODUCTO INTERNO BRUTO</td>
+                        <td class="val-pos">+1,8%</td>
+                        <td class="val-neu">1,8</td>
+                        <td class="val-neu">100%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="fuente">Fuente: BCU — Cuentas Nacionales Q4 2025 y Año 2025. Datos preliminares.</p>
+        </div>
+
     </div>
 
     </div>

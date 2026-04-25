@@ -88,6 +88,13 @@ initTabSystem({
     activeColor: 'var(--green)'
 });
 
+initTabSystem({
+    tabSelector: '.pbi-tab',
+    contentSelector: '.pbi-content',
+    dataAttr: 'data-pbi',
+    activeColor: 'var(--blue)'
+});
+
 // ============================================
 // COLAPSAR/EXPANDIR - Función global
 // ============================================
