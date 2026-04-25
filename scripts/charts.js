@@ -143,9 +143,179 @@ window.toggleAverage = function() {
     createRHEChart();
 }
 
+// ============================================
+// GRÁFICO TCRE - Tipo de Cambio Real Efectivo
+// ============================================
+const tcreData = {
+    labels: [
+        'Feb-21','Mar-21','Abr-21','May-21','Jun-21','Jul-21','Ago-21','Set-21','Oct-21','Nov-21','Dic-21',
+        'Ene-22','Feb-22','Mar-22','Abr-22','May-22','Jun-22','Jul-22','Ago-22','Set-22','Oct-22','Nov-22','Dic-22',
+        'Ene-23','Feb-23','Mar-23','Abr-23','May-23','Jun-23','Jul-23','Ago-23','Set-23','Oct-23','Nov-23','Dic-23',
+        'Ene-24','Feb-24','Mar-24','Abr-24','May-24','Jun-24','Jul-24','Ago-24','Set-24','Oct-24','Nov-24','Dic-24',
+        'Ene-25','Feb-25','Mar-25','Abr-25','May-25','Jun-25','Jul-25','Ago-25','Set-25','Oct-25','Nov-25','Dic-25',
+        'Ene-26','Feb-26(*)'
+    ],
+    global: [
+        97.20, 99.93, 100.21, 101.19, 101.08, 100.55, 98.35, 97.49, 98.47, 98.64, 99.52,
+        99.45, 98.12, 98.16, 96.89, 93.44, 90.21, 88.43, 88.34, 87.93, 88.01, 85.98, 85.71,
+        86.82, 85.55, 85.09, 84.96, 84.93, 83.63, 83.91, 81.69, 81.59, 82.63, 84.65, 84.30,
+        82.17, 84.35, 85.55, 85.97, 85.44, 84.61, 86.19, 87.83, 90.74, 91.95, 92.91, 94.93,
+        93.34, 92.86, 91.23, 91.42, 91.70, 90.79, 88.86, 88.25, 87.63, 86.99, 87.31, 86.49,
+        85.73, 88.16
+    ],
+    extraregional: [
+        114.28, 116.67, 116.09, 116.63, 114.74, 114.29, 111.79, 110.26, 112.33, 113.31, 114.31,
+        113.84, 109.73, 106.25, 102.35, 98.59, 96.03, 97.74, 95.03, 93.59, 92.71, 90.89, 91.43,
+        93.23, 91.05, 90.10, 89.20, 88.63, 86.44, 86.43, 85.87, 85.44, 87.94, 88.16, 88.51,
+        86.93, 86.67, 84.97, 84.28, 84.16, 84.78, 87.06, 88.11, 89.96, 90.18, 90.09, 92.42,
+        90.87, 89.39, 87.86, 87.99, 87.41, 86.47, 85.71, 85.33, 85.42, 85.06, 84.44, 84.13,
+        82.75, 84.03
+    ],
+    regional: [
+        79.72, 82.66, 83.68, 85.03, 86.53, 85.94, 84.04, 83.83, 83.78, 83.21, 83.98,
+        84.26, 85.53, 89.04, 90.54, 87.43, 83.50, 78.20, 80.75, 81.42, 82.52, 80.29, 79.15,
+        79.52, 79.21, 79.28, 79.98, 80.55, 80.25, 80.86, 76.79, 77.05, 76.52, 80.48, 79.37,
+        76.64, 81.52, 86.18, 87.98, 86.94, 84.33, 85.07, 87.42, 91.61, 94.07, 96.37, 98.00,
+        96.35, 97.19, 95.42, 95.71, 97.12, 96.26, 92.76, 91.87, 90.32, 89.33, 90.86, 89.38,
+        89.42, 93.38
+    ],
+    china: [
+        117.07, 119.01, 117.54, 118.17, 115.97, 115.42, 112.94, 111.40, 114.11, 115.76, 116.77,
+        116.07, 111.76, 108.12, 103.66, 98.16, 95.20, 97.52, 94.24, 91.90, 89.82, 87.34, 88.38,
+        90.74, 87.99, 86.48, 84.98, 83.85, 80.66, 80.17, 79.53, 79.27, 81.90, 81.85, 82.37,
+        80.67, 80.64, 78.35, 77.66, 77.39, 78.23, 80.24, 81.97, 84.03, 84.28, 83.91, 85.82,
+        84.70, 83.10, 80.97, 80.29, 79.78, 78.54, 77.70, 77.35, 77.48, 77.28, 76.87, 76.63,
+        75.53, 76.96
+    ]
+};
+
+function createTCREChart() {
+    const ctx = document.getElementById('tcre-chart');
+    if (!ctx) return;
+
+    const base100 = Array(tcreData.labels.length).fill(100);
+    const pointRadius = tcreData.labels.length > 30 ? 0 : 3;
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: tcreData.labels,
+            datasets: [
+                {
+                    label: 'Global',
+                    data: tcreData.global,
+                    borderColor: '#2a7235',
+                    backgroundColor: '#2a723515',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: 4,
+                    fill: false
+                },
+                {
+                    label: 'Extraregional',
+                    data: tcreData.extraregional,
+                    borderColor: '#4a90e2',
+                    backgroundColor: '#4a90e215',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: 4,
+                    fill: false
+                },
+                {
+                    label: 'Regional',
+                    data: tcreData.regional,
+                    borderColor: '#c87f2e',
+                    backgroundColor: '#c87f2e15',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: 4,
+                    fill: false
+                },
+                {
+                    label: '🇨🇳 China',
+                    data: tcreData.china,
+                    borderColor: '#7b5ea7',
+                    backgroundColor: '#7b5ea715',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: 4,
+                    fill: false
+                },
+                {
+                    label: 'Base 2019 = 100',
+                    data: base100,
+                    borderColor: '#918b8055',
+                    borderWidth: 1.5,
+                    borderDash: [6, 4],
+                    pointRadius: 0,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: { size: 11, family: "'IBM Plex Sans', sans-serif" },
+                        color: '#4a473f',
+                        boxWidth: 14,
+                        filter: function(item) {
+                            return item.text !== 'Base 2019 = 100';
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            if (context.dataset.label === 'Base 2019 = 100') return null;
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(2);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    min: 70,
+                    max: 122,
+                    ticks: {
+                        callback: function(value) { return value.toFixed(0); },
+                        font: { size: 10 },
+                        color: '#918b80',
+                        stepSize: 10
+                    },
+                    grid: { color: '#efece5' }
+                },
+                x: {
+                    ticks: {
+                        font: { size: 10 },
+                        color: '#918b80',
+                        maxRotation: 45,
+                        minRotation: 45,
+                        maxTicksLimit: 20
+                    },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+}
+
 // Inicializar cuando Chart.js esté listo
 window.addEventListener('load', function() {
     if (typeof Chart !== 'undefined') {
         createRHEChart();
+        createTCREChart();
     }
 });

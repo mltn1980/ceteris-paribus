@@ -1456,6 +1456,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <button class="uruguay-tab active" data-uruguay="informes" style="padding:10px 20px;border:none;border-bottom:2px solid var(--green);background:var(--surface);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Informes</button>
         <button class="uruguay-tab" data-uruguay="deuda" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Deuda</button>
         <button class="uruguay-tab" data-uruguay="pbi" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">PBI</button>
+        <button class="uruguay-tab" data-uruguay="tcr" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Tipo de Cambio</button>
     </div>
 
     <!-- Tab: Informes -->
@@ -1960,6 +1961,84 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             </table>
             <p class="fuente">Fuente: BCU — Cuentas Nacionales Q4 2025 y Año 2025. Datos preliminares.</p>
         </div>
+
+    </div>
+
+    <!-- Tab: Tipo de Cambio Real -->
+    <div class="uruguay-content" data-uruguay="tcr" style="display:none;">
+
+        <div class="uru-info-box" style="margin-bottom:20px;">
+            <strong>Tipo de Cambio Real Efectivo (TCRE)</strong> — Índices base 2019 = 100. Valores
+            <strong>por encima de 100</strong> indican mayor competitividad cambiaria que en el año base.
+            Valores <strong>por debajo de 100</strong> indican menor competitividad. Dato: <strong>febrero 2026 (preliminar)</strong>.
+        </div>
+
+        <!-- Índices principales -->
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card highlight">
+                <div class="uru-stat-label">TCRE Global</div>
+                <div id="tcre-global" class="uru-stat-value">88,16</div>
+                <div class="uru-stat-desc">Índice base 2019 = 100</div>
+                <div id="tcre-global-var-m" class="uru-stat-change up">▲ +2,8% vs mes ant</div>
+                <div id="tcre-global-var-a" class="uru-stat-change down" style="margin-top:3px;">▼ −5,1% vs año ant</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">TCRE Extraregional</div>
+                <div id="tcre-extra" class="uru-stat-value">84,03</div>
+                <div class="uru-stat-desc">Socios fuera de la región</div>
+                <div id="tcre-extra-var-m" class="uru-stat-change up">▲ +1,5% vs mes ant</div>
+                <div id="tcre-extra-var-a" class="uru-stat-change down" style="margin-top:3px;">▼ −6,0% vs año ant</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">TCRE Regional</div>
+                <div id="tcre-regional" class="uru-stat-value">93,38</div>
+                <div class="uru-stat-desc">Argentina · Brasil · México</div>
+                <div id="tcre-regional-var-m" class="uru-stat-change up">▲ +4,4% vs mes ant</div>
+                <div id="tcre-regional-var-a" class="uru-stat-change down" style="margin-top:3px;">▼ −3,9% vs año ant</div>
+            </div>
+        </div>
+
+        <!-- Socios comerciales principales -->
+        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Socios Comerciales — <span id="tcre-periodo">feb-26</span></h4>
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">🇦🇷 Argentina</div>
+                <div id="tcre-arg" class="uru-stat-value" style="color:var(--green);">114,40</div>
+                <div class="uru-stat-desc">Competitivo vs 2019</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">🇧🇷 Brasil</div>
+                <div id="tcre-bra" class="uru-stat-value" style="color:var(--red);">77,79</div>
+                <div class="uru-stat-desc">Menos competitivo vs 2019</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">🇺🇸 EEUU</div>
+                <div id="tcre-usa" class="uru-stat-value" style="color:var(--red);">91,39</div>
+                <div class="uru-stat-desc">Menos competitivo vs 2019</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">🇲🇽 México</div>
+                <div id="tcre-mex" class="uru-stat-value" style="color:var(--green);">110,95</div>
+                <div class="uru-stat-desc">Competitivo vs 2019</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">🇩🇪 Alemania</div>
+                <div id="tcre-deu" class="uru-stat-value" style="color:var(--red);">93,46</div>
+                <div class="uru-stat-desc">Levemente menos competitivo</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">🇨🇳 China</div>
+                <div id="tcre-chn" class="uru-stat-value" style="color:var(--red);">76,96</div>
+                <div class="uru-stat-desc">Menos competitivo vs 2019</div>
+            </div>
+        </div>
+
+        <!-- Gráfico evolución 12 meses -->
+        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Evolución últimos 5 años (feb-21 · feb-26)</h4>
+        <div style="position:relative;height:280px;margin-bottom:8px;">
+            <canvas id="tcre-chart"></canvas>
+        </div>
+        <p class="fuente">Fuente: BCU — Indicadores de Tipo de Cambio Real, base 2019=100. La línea punteada marca el valor base (100 = año 2019). (*) Datos preliminares. Actualizado: abr-26.</p>
 
     </div>
 

@@ -223,4 +223,48 @@ document.addEventListener('DOMContentLoaded', function () {
             console.warn('No se pudo cargar data/faena.json');
         });
 
+    // ============================================
+    // TCRE - Tipo de Cambio Real Efectivo
+    // ============================================
+    fetch('data/tcre.json')
+        .then(r => r.json())
+        .then(d => {
+            // Índices principales
+            setText('tcre-global', d.global.toFixed(2).replace('.', ','));
+            setText('tcre-extra', d.extraregional.toFixed(2).replace('.', ','));
+            setText('tcre-regional', d.regional.toFixed(2).replace('.', ','));
+            setText('tcre-periodo', 'Dato: ' + d.periodo + (d.preliminar ? ' (*)' : '') + ' · Base 2019=100');
+
+            // Variaciones vs mes anterior
+            function varTCRE(id, actual, anterior, etiqueta) {
+                const pct = ((actual - anterior) / anterior * 100);
+                const positivo = pct > 0;
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.textContent = (positivo ? '▲ +' : '▼ ') + Math.abs(pct).toFixed(1) + '% vs ' + etiqueta;
+                el.style.color = positivo ? 'var(--green)' : 'var(--red)';
+            }
+
+            if (d.anterior) {
+                varTCRE('tcre-global-var-m', d.global, d.anterior.global, 'mes ant');
+                varTCRE('tcre-extra-var-m', d.extraregional, d.anterior.extraregional, 'mes ant');
+                varTCRE('tcre-regional-var-m', d.regional, d.anterior.regional, 'mes ant');
+            }
+            if (d.mismo_mes_año_anterior) {
+                varTCRE('tcre-global-var-a', d.global, d.mismo_mes_año_anterior.global, 'año ant');
+                varTCRE('tcre-extra-var-a', d.extraregional, d.mismo_mes_año_anterior.extraregional, 'año ant');
+                varTCRE('tcre-regional-var-a', d.regional, d.mismo_mes_año_anterior.regional, 'año ant');
+            }
+
+            // Socios
+            const socios = { argentina: 'tcre-arg', brasil: 'tcre-bra', eeuu: 'tcre-usa', mexico: 'tcre-mex', alemania: 'tcre-deu', china: 'tcre-chn' };
+            Object.entries(socios).forEach(([key, id]) => {
+                const el = document.getElementById(id);
+                if (!el || d[key] === undefined) return;
+                el.textContent = d[key].toFixed(2).replace('.', ',');
+                el.style.color = d[key] >= 100 ? 'var(--green)' : 'var(--red)';
+            });
+        })
+        .catch(() => { /* datos hardcodeados en HTML como fallback */ });
+
 });
