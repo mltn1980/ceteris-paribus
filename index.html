@@ -22,6 +22,7 @@
   --dark:#1b1b18;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+*{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 html{scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15.5px;}
 header{background:var(--dark);color:var(--bg);padding:56px 24px 44px;text-align:center;position:relative;overflow:hidden;}
@@ -2297,6 +2298,18 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 <script src="scripts/tabs.js" defer></script>
 <script src="scripts/data-loader.js" defer></script>
 <script src="scripts/charts.js" defer></script>
-
+<script>
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    if((e.ctrlKey||e.metaKey) && ['c','x','a','u'].includes(e.key.toLowerCase())){
+      e.preventDefault();
+    }
+    if(e.key==='F12'){ e.preventDefault(); }
+  });
+})();
+</script>
  </body>
 </html>
