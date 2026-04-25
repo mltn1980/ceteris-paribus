@@ -5,18 +5,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // ============================================
-    // FLECHAS en tablas sectoriales
-    // ============================================
-    document.querySelectorAll('.sector-table td.val-pos, .sector-table td.val-neg').forEach(td => {
-        const text = td.textContent.trim();
-        if (text.startsWith('+')) {
-            td.textContent = '▲ ' + text;
-        } else if (text.startsWith('−') || text.startsWith('-')) {
-            td.textContent = '▼ ' + text;
-        }
-    });
-
-    // ============================================
     // Utilidades
     // ============================================
 
