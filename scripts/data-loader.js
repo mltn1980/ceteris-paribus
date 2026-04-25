@@ -230,11 +230,13 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(r => r.json())
         .then(c => {
             // Fecha de actualización
-            const fechaEl = document.getElementById('clima-fecha-update');
-            if (fechaEl && c.actualizado) {
+            if (c.actualizado) {
                 const [y, m, d] = c.actualizado.split('-');
                 const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-                fechaEl.textContent = `${parseInt(d)} de ${meses[parseInt(m)-1]} de ${y}`;
+                const fechaLarga = `${parseInt(d)} de ${meses[parseInt(m)-1]} de ${y}`;
+                const fechaCorta = `${parseInt(d)} ${meses[parseInt(m)-1].slice(0,3)} ${y}`;
+                setText('clima-fecha-update', fechaLarga);
+                setText('clima-header-fecha', 'Actualizado: ' + fechaCorta);
             }
 
             // Alerta meteorológica
