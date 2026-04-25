@@ -224,6 +224,127 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     // ============================================
+    // CLIMA - Monitor Climático desde clima.json
+    // ============================================
+    fetch('data/clima.json')
+        .then(r => r.json())
+        .then(c => {
+            // Fecha de actualización
+            const fechaEl = document.getElementById('clima-fecha-update');
+            if (fechaEl && c.actualizado) {
+                const [y, m, d] = c.actualizado.split('-');
+                const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+                fechaEl.textContent = `${parseInt(d)} de ${meses[parseInt(m)-1]} de ${y}`;
+            }
+
+            // Alerta meteorológica
+            const alertaBox = document.getElementById('clima-alerta-box');
+            if (alertaBox && c.alerta) {
+                if (c.alerta.activa) {
+                    document.getElementById('clima-alerta-titulo').textContent = c.alerta.titulo || '';
+                    document.getElementById('clima-alerta-desc').textContent = c.alerta.descripcion || '';
+                    document.getElementById('clima-alerta-vigencia').textContent = 'Vigencia: ' + (c.alerta.vigencia || '') + ' · ' + (c.alerta.fuente || '');
+                    alertaBox.style.display = 'block';
+                } else {
+                    alertaBox.style.display = 'none';
+                }
+            }
+
+            // Cards ENSO
+            if (c.enso) {
+                setText('clima-fase', c.enso.fase || '');
+                if (c.enso.nino34 !== undefined) {
+                    const signo = c.enso.nino34 >= 0 ? '+' : '';
+                    setText('clima-nino34', signo + c.enso.nino34.toFixed(1).replace('.', ',') + '°C');
+                }
+                if (c.enso.nino34_anterior !== undefined && c.enso.nino34 !== undefined) {
+                    const diff = c.enso.nino34 - c.enso.nino34_anterior;
+                    const signo = diff >= 0 ? '▲ desde ' : '▼ desde ';
+                    const ant = (c.enso.nino34_anterior >= 0 ? '+' : '') + c.enso.nino34_anterior.toFixed(1).replace('.', ',') + '°C';
+                    const badge = document.getElementById('clima-nino34-cambio');
+                    if (badge) {
+                        badge.textContent = signo + ant;
+                        badge.style.color = diff >= 0 ? 'var(--green)' : 'var(--red)';
+                        badge.style.background = diff >= 0 ? 'var(--green-l)' : 'var(--red-l)';
+                    }
+                }
+                setText('clima-nino34-fecha', 'Semana del ' + (c.enso.nino34_semana || ''));
+                setText('clima-perspectiva-pct', (c.enso.perspectiva_pct || '') + ' probabilidad · ' + (c.enso.fuente_fecha || ''));
+                setText('clima-proximo-update', c.enso.proximo_update || '');
+
+                // Nota extra (onda Kelvin, etc.)
+                const notaEl = document.getElementById('clima-nota-extra');
+                if (notaEl) {
+                    if (c.enso.nota_extra) {
+                        notaEl.textContent = c.enso.nota_extra;
+                        notaEl.style.display = 'block';
+                    } else {
+                        notaEl.style.display = 'none';
+                    }
+                }
+            }
+
+            // Timeline de probabilidades
+            const timeline = document.getElementById('clima-timeline');
+            if (timeline && c.probabilidades && c.probabilidades.length) {
+                timeline.innerHTML = '';
+                c.probabilidades.forEach((p, i) => {
+                    const isActual = p.actual;
+                    const isLast = i === c.probabilidades.length - 1;
+                    const item = document.createElement('div');
+                    item.style.cssText = 'position:relative;' + (isLast ? '' : 'margin-bottom:22px;');
+
+                    const dot = document.createElement('div');
+                    dot.style.cssText = `position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:${isActual ? 'var(--amber)' : 'var(--surface)'};border:2px solid ${isActual ? 'var(--amber)' : (p.el_nino > 60 ? 'var(--amber)' : 'var(--border)')};`;
+                    item.appendChild(dot);
+
+                    const title = document.createElement('div');
+                    title.style.cssText = 'font-size:0.88rem;font-weight:' + (isActual ? '700' : '600') + ';margin-bottom:6px;color:var(--text);';
+                    title.textContent = p.label;
+                    if (isActual) {
+                        const badge = document.createElement('span');
+                        badge.style.cssText = 'font-size:0.72rem;background:var(--amber);color:#fff;padding:2px 7px;border-radius:4px;font-weight:700;margin-left:6px;';
+                        badge.textContent = 'AHORA';
+                        title.appendChild(badge);
+                    }
+                    item.appendChild(title);
+
+                    const desc = document.createElement('div');
+                    desc.style.cssText = 'font-size:0.82rem;color:var(--text2);margin-bottom:8px;';
+                    const tag = document.createElement('span');
+                    tag.style.cssText = 'display:inline-block;padding:3px 10px;border-radius:6px;background:var(--amber-l);color:var(--amber);font-size:0.75rem;font-weight:' + (isActual ? '700' : '600') + ';';
+                    tag.textContent = 'El Niño';
+                    desc.appendChild(tag);
+                    desc.append(' ' + (p.descripcion || ''));
+                    item.appendChild(desc);
+
+                    // Barra de probabilidad
+                    const barRow = document.createElement('div');
+                    barRow.style.cssText = 'display:flex;gap:4px;align-items:center;font-size:0.75rem;';
+                    const bNino = document.createElement('div');
+                    bNino.style.cssText = `flex:${p.el_nino};background:var(--amber);height:8px;border-radius:3px 0 0 3px;`;
+                    const bNeutral = document.createElement('div');
+                    bNeutral.style.cssText = `flex:${p.neutral};background:var(--blue-l);height:8px;border-radius:${p.la_nina > 0 ? '0' : '0 3px 3px 0'};`;
+                    barRow.appendChild(bNino);
+                    barRow.appendChild(bNeutral);
+                    if (p.la_nina > 0) {
+                        const bNina = document.createElement('div');
+                        bNina.style.cssText = `flex:${p.la_nina};background:#e8c0c0;height:8px;border-radius:0 3px 3px 0;`;
+                        barRow.appendChild(bNina);
+                    }
+                    const label = document.createElement('span');
+                    label.style.cssText = 'color:var(--text2);white-space:nowrap;margin-left:6px;';
+                    label.textContent = `El Niño ${p.el_nino}% · Neutral ${p.neutral}%` + (p.la_nina > 0 ? ` · La Niña ${p.la_nina}%` : '');
+                    barRow.appendChild(label);
+                    item.appendChild(barRow);
+
+                    timeline.appendChild(item);
+                });
+            }
+        })
+        .catch(() => { /* Fallback: contenido hardcodeado en HTML */ });
+
+    // ============================================
     // TCRE - Tipo de Cambio Real Efectivo
     // ============================================
     fetch('data/tcre.json')

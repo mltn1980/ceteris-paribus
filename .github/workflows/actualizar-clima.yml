@@ -1,0 +1,50 @@
+name: 🌦️ Actualizar Monitor Climático
+
+on:
+  schedule:
+    # Todos los días a las 9:23am Uruguay (UTC-3 = 12:23 UTC)
+    - cron: '23 12 * * *'
+  workflow_dispatch:
+    inputs:
+      forzar:
+        description: 'Forzar actualización aunque no haya cambios'
+        required: false
+        default: 'false'
+
+jobs:
+  actualizar-clima:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: pip install anthropic requests
+
+      - name: Correr actualizador climático
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FORZAR: ${{ github.event.inputs.forzar || 'false' }}
+        run: python scripts/actualizar-clima.py
+
+      - name: Commit y push si hay cambios
+        run: |
+          git config user.name "ceterisparibus-bot"
+          git config user.email "bot@ceterisparibus.uy"
+          git add data/clima.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios en clima.json — no se hace commit."
+          else
+            FECHA=$(date +'%d/%m/%Y %H:%M UTC')
+            git commit -m "🌦️ Monitor Climático: actualización automática ${FECHA}"
+            git push
+            echo "✅ Cambios pusheados. Netlify desplegará automáticamente."
+          fi
