@@ -74,6 +74,20 @@ initTabSystem({
     activeColor: '#4a90e2'
 });
 
+initTabSystem({
+    tabSelector: '.uruguay-tab',
+    contentSelector: '.uruguay-content',
+    dataAttr: 'data-uruguay',
+    activeColor: 'var(--green)'
+});
+
+initTabSystem({
+    tabSelector: '.deuda-tab',
+    contentSelector: '.deuda-content',
+    dataAttr: 'data-deuda',
+    activeColor: 'var(--green)'
+});
+
 // ============================================
 // COLAPSAR/EXPANDIR - Función global
 // ============================================
