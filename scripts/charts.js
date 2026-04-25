@@ -312,10 +312,74 @@ function createTCREChart() {
     });
 }
 
+// ============================================
+// GRÁFICO AFAP - Participación de mercado
+// ============================================
+function createAFAPChart() {
+    const canvas = document.getElementById('afap-chart');
+    if (!canvas) return;
+
+    new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: ['República AFAP', 'AFAP Itaú', 'AFAP SURA', 'Integración AFAP'],
+            datasets: [
+                {
+                    label: '% Afiliados',
+                    data: [38.6, 23.3, 22.7, 15.3],
+                    backgroundColor: 'rgba(42, 114, 53, 0.75)',
+                    borderColor: '#2a7235',
+                    borderWidth: 1,
+                    borderRadius: 4
+                },
+                {
+                    label: '% Fondo (FAP)',
+                    data: [54.9, 16.9, 18.1, 10.1],
+                    backgroundColor: 'rgba(27, 94, 133, 0.75)',
+                    borderColor: '#1b5e85',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: { font: { size: 11 }, color: '#4a473f', boxWidth: 14 }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + '%'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    max: 65,
+                    ticks: {
+                        callback: v => v + '%',
+                        font: { size: 10 },
+                        color: '#918b80'
+                    },
+                    grid: { color: '#efece5' }
+                },
+                x: {
+                    ticks: { font: { size: 11 }, color: '#4a473f' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+}
+
 // Inicializar cuando Chart.js esté listo
 window.addEventListener('load', function() {
     if (typeof Chart !== 'undefined') {
         createRHEChart();
         createTCREChart();
+        createAFAPChart();
     }
 });

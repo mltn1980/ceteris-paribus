@@ -1483,6 +1483,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <button class="uruguay-tab" data-uruguay="deuda" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Deuda</button>
         <button class="uruguay-tab" data-uruguay="pbi" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">PBI</button>
         <button class="uruguay-tab" data-uruguay="tcr" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Tipo de Cambio</button>
+        <button class="uruguay-tab" data-uruguay="afap" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">AFAPs</button>
     </div>
 
     <!-- Tab: Informes -->
@@ -2068,6 +2069,122 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 
     </div>
 
+    </div>
+
+    <!-- Tab: AFAPs -->
+    <div class="uruguay-content" data-uruguay="afap" style="display:none;">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
+            Régimen de Jubilación por Ahorro Individual Obligatorio — datos al <strong style="color:var(--text);">31 mar 2026</strong>.
+            Fuente: BCU / Superintendencia de Servicios Financieros.
+        </p>
+
+        <!-- Headline cards -->
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Afiliados totales</div>
+                <div class="uru-stat-value">1.742.346</div>
+                <div class="uru-stat-change up">▲ +61.745 vs mar-25</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Fondo total (FAP)</div>
+                <div class="uru-stat-value" style="font-size:1.4rem;">$1.085.066M</div>
+                <div class="uru-stat-change up">▲ +$92.170M vs mar-25</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Aportes BPS → AFAPs</div>
+                <div class="uru-stat-value" style="font-size:1.4rem;">$5.297M</div>
+                <div class="uru-stat-desc">Mensual · mar 2026</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Rentabilidad anual (UI)</div>
+                <div class="uru-stat-value">2,13%</div>
+                <div class="uru-stat-change down">▼ vs 2,30% mar-25</div>
+            </div>
+        </div>
+
+        <!-- Gráfico participación de mercado -->
+        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Participación de mercado por AFAP</h4>
+        <div style="position:relative;height:220px;margin-bottom:8px;">
+            <canvas id="afap-chart"></canvas>
+        </div>
+        <p class="fuente" style="margin-bottom:24px;">% sobre total del régimen. República concentra mayor proporción de fondos que de afiliados, reflejando saldos promedio más altos.</p>
+
+        <!-- Tabla de rentabilidades -->
+        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Rentabilidad bruta real anual — mar 2026</h4>
+        <table class="sector-table">
+            <thead>
+                <tr>
+                    <th style="text-align:left;">AFAP</th>
+                    <th>En U.R.</th>
+                    <th>En U.I.</th>
+                    <th>Afiliados</th>
+                    <th>Fondo (mill. $)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>República AFAP</td>
+                    <td class="val-pos">0,97%</td>
+                    <td class="val-pos">2,41%</td>
+                    <td class="val-neu">673.121</td>
+                    <td class="val-neu">595.805</td>
+                </tr>
+                <tr>
+                    <td>AFAP Itaú</td>
+                    <td class="val-pos">0,56%</td>
+                    <td class="val-pos">1,99%</td>
+                    <td class="val-neu">406.472</td>
+                    <td class="val-neu">183.505</td>
+                </tr>
+                <tr>
+                    <td>AFAP SURA</td>
+                    <td class="val-pos">0,42%</td>
+                    <td class="val-pos">1,85%</td>
+                    <td class="val-neu">395.571</td>
+                    <td class="val-neu">195.847</td>
+                </tr>
+                <tr>
+                    <td>Integración AFAP</td>
+                    <td class="val-neg">−0,10%</td>
+                    <td class="val-pos">1,32%</td>
+                    <td class="val-neu">267.182</td>
+                    <td class="val-neu">109.909</td>
+                </tr>
+                <tr class="total">
+                    <td>Promedio régimen</td>
+                    <td class="val-pos">0,70%</td>
+                    <td class="val-pos">2,13%</td>
+                    <td class="val-neu">1.742.346</td>
+                    <td class="val-neu">1.085.066</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Subfondos -->
+        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin:24px 0 12px;">Distribución por Subfondo</h4>
+        <div class="uru-stat-grid">
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Acumulación</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">$646.069M</div>
+                <div class="uru-stat-desc">59,5% del FAP · 645.957 afiliados</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Retiro</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">$270.108M</div>
+                <div class="uru-stat-desc">24,9% del FAP · 280.283 afiliados</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Crecimiento</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">$168.889M</div>
+                <div class="uru-stat-desc">15,6% del FAP · 816.106 afiliados</div>
+            </div>
+            <div class="uru-stat-card">
+                <div class="uru-stat-label">Voluntario</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">$1.657M</div>
+                <div class="uru-stat-desc">Creado dic-2023 · Ley 20.130</div>
+            </div>
+        </div>
+        <p class="fuente" style="margin-top:12px;">Fuente: BCU — Superintendencia de Servicios Financieros. Principales Variables del Régimen de Jubilación por Ahorro Individual Obligatorio, marzo 2026.</p>
     </div>
 
     <!-- MERCADOS GLOBALES -->
