@@ -83,27 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // ============================================
     // RHE - Contexto de mercado
     // ============================================
-    fetch('data/rhe.json')
-        .then(r => r.json())
-        .then(rhe => {
-            const contextEl = document.getElementById('novillo-rhe-context');
-            if (!contextEl) return;
-
-            const rheNovPct = (rhe.rhe_novillo * 100).toFixed(1);
-
-            // Construir el contenido sin innerHTML para evitar XSS
-            const strong = document.createElement('strong');
-            strong.textContent = 'Contexto de mercado:';
-            contextEl.textContent = '';
-            contextEl.appendChild(strong);
-            contextEl.append(
-                ` El productor recibe ${rheNovPct}% del precio de exportación` +
-                ` (RHE ${rheNovPct}%). Precio export: USD ${rhe.precio_export.toFixed(2)}/kg` +
-                ` · Novillo: USD ${rhe.precio_novillo.toFixed(2)}/kg · Semana ${rhe.periodo}.`
-            );
-        })
-        .catch(() => { /* sin contexto RHE disponible */ });
-
     // ============================================
     // RHE CARD - Datos completos de RHE
     // ============================================
