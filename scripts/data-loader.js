@@ -117,6 +117,15 @@ document.addEventListener('DOMContentLoaded', function () {
         el.style.color = varObj.color;
     }
 
+    function varAnualBadge(pct, sufijo) {
+        if (pct == null) return null;
+        const isPos = pct > 0;
+        const arrow = isPos ? '▲' : (pct < 0 ? '▼' : '—');
+        const color = isPos ? '#2a7235' : '#8c3030';
+        const signo = isPos ? '+' : '';
+        return { html: arrow + ' ' + signo + pct.toFixed(1) + (sufijo || '%') + ' i.a.', color: pct === 0 ? '#918b80' : color };
+    }
+
     function cargarRHECard(d) {
         setText('rhe-novillo-pct', (d.rhe_novillo * 100).toFixed(1) + '%');
         setText('rhe-vaca-pct', (d.rhe_vaca * 100).toFixed(1) + '%');
@@ -130,6 +139,18 @@ document.addEventListener('DOMContentLoaded', function () {
         aplicarVariacion('rhe-precio-export-var', formatearVariacion(d.precio_export, d.precio_export_anterior || semanaAnterior.precio_export, 'precio'));
         aplicarVariacion('rhe-precio-novillo-var', formatearVariacion(d.precio_novillo, d.precio_novillo_anterior || semanaAnterior.precio_novillo, 'precio'));
         aplicarVariacion('rhe-precio-vaca-var', formatearVariacion(d.precio_vaca, d.precio_vaca_anterior || semanaAnterior.precio_vaca, 'precio'));
+
+        // Variaciones interanuales
+        const vExport  = varAnualBadge(d.export_var_a,  '%');
+        const vNovillo = varAnualBadge(d.novillo_var_a, '%');
+        const vVaca    = varAnualBadge(d.vaca_var_a,    '%');
+        const vRheNov  = varAnualBadge(d.rhe_nov_var_a, ' pts');
+        const vRheVac  = varAnualBadge(d.rhe_vac_var_a, ' pts');
+        if (vExport)  aplicarVariacion('rhe-export-var-a',  vExport);
+        if (vNovillo) aplicarVariacion('rhe-novillo-var-a', vNovillo);
+        if (vVaca)    aplicarVariacion('rhe-vaca-var-a',    vVaca);
+        if (vRheNov)  aplicarVariacion('rhe-nov-var-a',     vRheNov);
+        if (vRheVac)  aplicarVariacion('rhe-vac-var-a',     vRheVac);
     }
 
     fetch('data/rhe.json')

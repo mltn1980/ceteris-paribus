@@ -37,9 +37,9 @@ def download_excel(url: str) -> bytes:
     return r.content
 
 
-def parse_excel(content: bytes) -> dict:
+def parse_excel(content: bytes) -> list:
     """
-    Lee el Excel de serie semanal RHE y devuelve los datos de la última semana.
+    Lee el Excel de serie semanal RHE y devuelve todas las filas como lista.
     Columnas (desde fila 8):
       A=inicio, B=fin, C=precio_export, D=precio_novillo, E=precio_vaca,
       F=rhe_novillo, G=rhe_vaca
@@ -47,11 +47,11 @@ def parse_excel(content: bytes) -> dict:
     wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True)
     ws = wb.active
 
-    last_row = None
+    rows = []
     for row in ws.iter_rows(min_row=8, values_only=True):
         inicio, fin, export, novillo, vaca, rhe_nov, rhe_vac = (row[i] for i in range(7))
         if inicio and export:
-            last_row = {
+            rows.append({
                 "inicio":   inicio,
                 "fin":      fin,
                 "export":   float(str(export).replace(",", ".")),
@@ -59,11 +59,40 @@ def parse_excel(content: bytes) -> dict:
                 "vaca":     float(str(vaca).replace(",", ".")),
                 "rhe_nov":  float(str(rhe_nov).replace(",", ".")),
                 "rhe_vac":  float(str(rhe_vac).replace(",", "."))
-            }
+            })
 
-    if not last_row:
+    if not rows:
         raise ValueError("No se encontraron datos en el Excel")
-    return last_row
+    return rows
+
+
+def to_date(val) -> datetime:
+    if hasattr(val, "year"):
+        return val
+    s = str(val)
+    fmt = "%Y-%m-%d %H:%M:%S" if " " in s else "%Y-%m-%d"
+    return datetime.strptime(s[:10], "%Y-%m-%d")
+
+
+def buscar_misma_semana_año_ant(serie: list, ultima: dict) -> dict | None:
+    """Encuentra la fila con fechas más cercanas al mismo período del año anterior."""
+    fin_actual = to_date(ultima["fin"])
+    objetivo = fin_actual.replace(year=fin_actual.year - 1)
+    mejor = None
+    menor_delta = None
+    for row in serie[:-1]:
+        fin_row = to_date(row["fin"])
+        delta = abs((fin_row - objetivo).days)
+        if menor_delta is None or delta < menor_delta:
+            menor_delta = delta
+            mejor = row
+    return mejor if (menor_delta is not None and menor_delta <= 10) else None
+
+
+def pct(nuevo, anterior) -> float:
+    if not anterior:
+        return 0.0
+    return round((nuevo - anterior) / anterior * 100, 1)
 
 
 def formato_periodo(inicio, fin) -> str:
@@ -98,11 +127,12 @@ def main():
         print(f"❌ Error al descargar: {e}")
         sys.exit(1)
 
-    # 3. Parsear última semana
+    # 3. Parsear todas las semanas
     try:
-        ultima = parse_excel(content)
+        serie = parse_excel(content)
+        ultima = serie[-1]
         periodo = formato_periodo(ultima["inicio"], ultima["fin"])
-        print(f"   → Última semana: {periodo}")
+        print(f"   → {len(serie)} semanas, última: {periodo}")
     except Exception as e:
         print(f"❌ Error al parsear Excel: {e}")
         sys.exit(1)
@@ -112,7 +142,21 @@ def main():
         print(f"✅ Sin datos nuevos ({periodo}). No se actualiza.")
         sys.exit(0)
 
-    # 5. Construir rhe.json actualizado
+    # 5. Buscar misma semana año anterior
+    año_ant = buscar_misma_semana_año_ant(serie, ultima)
+    if año_ant:
+        periodo_ant = formato_periodo(año_ant["inicio"], año_ant["fin"])
+        print(f"   → Año anterior: {periodo_ant}")
+        export_var_a  = pct(ultima["export"],  año_ant["export"])
+        novillo_var_a = pct(ultima["novillo"], año_ant["novillo"])
+        vaca_var_a    = pct(ultima["vaca"],    año_ant["vaca"])
+        rhe_nov_var_a = round((ultima["rhe_nov"] - año_ant["rhe_nov"]) * 100, 1)
+        rhe_vac_var_a = round((ultima["rhe_vac"] - año_ant["rhe_vac"]) * 100, 1)
+    else:
+        periodo_ant = None
+        export_var_a = novillo_var_a = vaca_var_a = rhe_nov_var_a = rhe_vac_var_a = None
+
+    # 6. Construir rhe.json actualizado
     hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     updated = {
         "periodo":       periodo,
@@ -123,8 +167,15 @@ def main():
         "precio_vaca":   round(ultima["vaca"],    3),
         "actualizado":   hoy
     }
+    if periodo_ant:
+        updated["periodo_año_ant"] = periodo_ant
+        updated["export_var_a"]    = export_var_a
+        updated["novillo_var_a"]   = novillo_var_a
+        updated["vaca_var_a"]      = vaca_var_a
+        updated["rhe_nov_var_a"]   = rhe_nov_var_a
+        updated["rhe_vac_var_a"]   = rhe_vac_var_a
 
-    # 6. Escribir
+    # 7. Escribir
     RHE_JSON.write_text(
         json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -134,6 +185,8 @@ def main():
     print(f"   🐂 RHE Novillo: {current.get('rhe_novillo')} → {updated['rhe_novillo']}")
     print(f"   🐄 RHE Vaca:    {current.get('rhe_vaca')} → {updated['rhe_vaca']}")
     print(f"   💲 Export:      {current.get('precio_export')} → {updated['precio_export']} USD/kg")
+    if periodo_ant:
+        print(f"   📆 vs {periodo_ant}: Export {'+' if export_var_a >= 0 else ''}{export_var_a}%, Novillo {'+' if novillo_var_a >= 0 else ''}{novillo_var_a}%, Vaca {'+' if vaca_var_a >= 0 else ''}{vaca_var_a}%")
     print(f"✅ Listo. Fecha: {hoy}")
 
 
