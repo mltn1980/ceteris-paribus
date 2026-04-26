@@ -52,14 +52,20 @@ def parse_excel(content: bytes) -> list:
         ws2 = wb2.active
         rows = []
         for row in ws2.iter_rows(min_row=9, values_only=True):
-            mes, nov, vh, vai = (row[i] for i in range(4))
-            if mes and nov:
+            if len(row) < 4:
+                continue
+            mes, nov, vh, vai = row[0], row[1], row[2], row[3]
+            if not mes or not nov:
+                continue
+            try:
                 rows.append({
                     "mes": str(mes).strip(),
                     "novillo": int(round(float(nov))),
                     "vh":      int(round(float(vh))),
                     "vai":     int(round(float(vai)))
                 })
+            except (ValueError, TypeError):
+                continue
         return rows
 
     ws = wb.sheet_by_index(0)
