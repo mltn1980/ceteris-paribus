@@ -420,6 +420,7 @@ function createAFAPChart() {
 
     new Chart(canvas, {
         type: 'bar',
+        plugins: [ChartDataLabels],
         data: {
             labels: ['República AFAP', 'AFAP Itaú', 'AFAP SURA', 'Integración AFAP'],
             datasets: [
@@ -453,11 +454,18 @@ function createAFAPChart() {
                     callbacks: {
                         label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + '%'
                     }
+                },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'end',
+                    formatter: v => v.toFixed(1) + '%',
+                    font: { size: 12, weight: '600', family: "'IBM Plex Mono', monospace" },
+                    color: '#4a473f'
                 }
             },
             scales: {
                 y: {
-                    max: 65,
+                    max: 70,
                     ticks: {
                         callback: v => v + '%',
                         font: { size: 10 },

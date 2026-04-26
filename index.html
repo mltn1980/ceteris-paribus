@@ -149,20 +149,32 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
   div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
 }
 
-/* ── SUB-TABS INTERNOS (Deuda, etc.) ── */
-.uru-sub-tabs{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:2px solid var(--border);margin-bottom:20px;scrollbar-width:thin;}
-.uru-sub-tabs::-webkit-scrollbar{height:4px;}
-.uru-sub-tabs::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px;}
-.deuda-tab{flex-shrink:0;padding:10px 18px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;}
+/* ── SUB-TABS INTERNOS (Deuda, PBI, etc.) ── */
+.uru-sub-tabs{display:flex;gap:0;overflow:visible;border-bottom:2px solid var(--border);margin-bottom:20px;}
+.deuda-tab{flex:1;text-align:center;padding:10px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;border-radius:6px 6px 0 0;}
 .deuda-tab:hover{color:var(--text);background:var(--surface2);}
+.deuda-tab.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-l);}
 
 /* ── ESTADÍSTICAS URUGUAY ── */
 .uru-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
-.uru-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all 0.2s ease;}
-.uru-stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-.uru-stat-card.highlight{background:var(--green-l);border-color:var(--green);}
-.uru-stat-card.highlight-amber{background:var(--amber-l);border-color:var(--amber);}
+.uru-stat-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--border);border-radius:12px;padding:20px;transition:all 0.2s ease;}
+.uru-stat-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.1);}
+.uru-stat-card.highlight{background:linear-gradient(135deg,var(--green-l) 0%,#fff 100%);border-color:var(--green);border-top-color:var(--green);}
+.uru-stat-card.highlight-amber{background:linear-gradient(135deg,var(--amber-l) 0%,#fff 100%);border-color:var(--amber);border-top-color:var(--amber);}
+.uru-stat-card.card-green{border-top-color:var(--green);background:linear-gradient(175deg,#f4faf5 0%,var(--surface) 45%);}
+.uru-stat-card.card-blue{border-top-color:var(--blue);background:linear-gradient(175deg,#e8f2f9 0%,var(--surface) 45%);}
+.uru-stat-card.card-amber{border-top-color:var(--amber);background:linear-gradient(175deg,#fdf5e0 0%,var(--surface) 45%);}
+.uru-stat-card.card-red{border-top-color:var(--red);background:linear-gradient(175deg,#f8eaea 0%,var(--surface) 45%);}
 .uru-stat-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:8px;}
+.uru-section-h4{display:flex;align-items:center;gap:10px;font-size:0.9rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;}
+.uru-section-h4::before{content:'';display:block;width:4px;min-width:4px;height:1.1em;border-radius:2px;background:var(--green);}
+.uru-section-h4.blue::before{background:var(--blue);}
+.uru-section-h4.amber::before{background:var(--amber);}
+.uru-section-h4.red::before{background:var(--red);}
+.uru-cat-label{display:inline-flex;align-items:center;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.uru-cat-label.green{background:var(--green-l);color:var(--green);}
+.uru-cat-label.blue{background:var(--blue-l);color:var(--blue);}
+.uru-cat-label.amber{background:var(--amber-l);color:var(--amber);}
 .uru-stat-value{font-family:'DM Serif Display',serif;font-size:2rem;font-weight:400;color:var(--text);line-height:1;margin-bottom:4px;}
 .uru-stat-desc{font-size:0.83rem;color:var(--text2);margin-bottom:8px;}
 .uru-stat-change{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:600;padding:3px 9px;border-radius:6px;margin-top:4px;}
@@ -170,33 +182,40 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 .uru-stat-change.up{background:#fdf6e6;color:#a07418;}
 
 /* Info boxes */
-.uru-info-box{background:var(--blue-l);border-left:4px solid var(--blue);border-radius:8px;padding:18px 20px;margin-bottom:20px;}
-.uru-info-box.success{background:var(--green-l);border-left-color:var(--green);}
+.uru-info-box{background:var(--blue-l);border-left:4px solid var(--blue);border-radius:10px;padding:18px 22px;margin-bottom:20px;box-shadow:0 2px 10px rgba(27,94,133,0.07);}
+.uru-info-box.success{background:var(--green-l);border-left-color:var(--green);box-shadow:0 2px 10px rgba(42,114,53,0.07);}
 .uru-info-box h4{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:8px;color:var(--text);}
 .uru-info-box p{font-size:0.88rem;line-height:1.7;color:var(--text2);margin:0;}
 
 /* Composición */
-.uru-composition{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;}
-.uru-composition h4{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:14px;}
+.uru-composition{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--blue);border-radius:10px;padding:20px;margin-bottom:20px;}
+.uru-composition h4{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:14px;color:var(--blue);}
 .comp-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--surface2);}
 .comp-row:last-child{border-bottom:none;}
 .comp-label{font-size:0.83rem;font-weight:600;color:var(--text2);}
 .comp-value{font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--text);}
 
 /* Timeline */
-.uru-stat-timeline{display:flex;flex-direction:column;gap:6px;}
-.tl-item{font-size:0.83rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--surface2);}
-.tl-item:last-child{border-bottom:none;}
-.tl-item.current{color:var(--green);font-weight:700;}
+.uru-stat-timeline{display:flex;flex-direction:column;gap:4px;}
+.tl-item{font-size:0.83rem;color:var(--text2);padding:6px 10px;border-radius:6px;border-bottom:none;}
+.tl-item:hover{background:var(--surface2);}
+.tl-item.current{color:var(--green);font-weight:700;background:var(--green-l);border-radius:6px;padding:7px 10px;}
 .tl-item strong{font-family:'IBM Plex Mono',monospace;color:var(--text);float:right;}
+.tl-item.current strong{color:var(--green);}
 
 /* Ratings */
 .ratings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:20px;}
-.rating-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center;transition:all 0.2s ease;}
-.rating-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.09);}
-.rating-card.highlight{background:var(--amber-l);border-color:var(--amber);}
+.rating-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--border);border-radius:12px;padding:18px;text-align:center;transition:all 0.2s ease;}
+.rating-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1);}
+.rating-card.grade-a{border-top-color:var(--green);background:linear-gradient(175deg,#f4faf5 0%,var(--surface) 50%);}
+.rating-card.grade-bbb{border-top-color:var(--blue);background:linear-gradient(175deg,#e8f2f9 0%,var(--surface) 50%);}
+.rating-card.grade-a-special{border-top-color:var(--amber);background:linear-gradient(175deg,#fdf5e0 0%,var(--surface) 50%);}
+.rating-card.highlight{background:linear-gradient(135deg,var(--amber-l) 0%,#fff 100%);border-color:var(--amber);border-top-color:var(--amber);}
 .rating-agency{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-.rating-grade{font-family:'DM Serif Display',serif;font-size:2.2rem;font-weight:400;color:var(--green);line-height:1;margin-bottom:4px;}
+.rating-grade{font-family:'DM Serif Display',serif;font-size:2.2rem;font-weight:400;color:var(--blue);line-height:1;margin-bottom:4px;}
+.rating-card.grade-a .rating-grade{color:var(--green);}
+.rating-card.grade-a-special .rating-grade{color:var(--amber);}
+.rating-card.highlight .rating-grade{color:var(--amber);}
 .rating-equiv{font-size:0.75rem;color:var(--muted);margin-bottom:10px;min-height:18px;}
 .rating-outlook{font-size:0.82rem;font-weight:600;color:var(--text2);padding:5px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:7px;}
 .rating-date{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);}
@@ -207,8 +226,9 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 }
 
 /* ── PBI sub-tabs ── */
-.pbi-tab{flex-shrink:0;padding:10px 18px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;}
+.pbi-tab{flex-shrink:0;padding:10px 18px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;border-radius:6px 6px 0 0;}
 .pbi-tab:hover{color:var(--text);background:var(--surface2);}
+.pbi-tab.active{color:var(--green);border-bottom-color:var(--green);background:var(--green-l);}
 
 /* ── Tabla sectorial ── */
 .sector-table{width:100%;border-collapse:collapse;font-size:0.83rem;margin-bottom:20px;}
@@ -991,6 +1011,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     
 
     
@@ -1536,25 +1557,25 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <!-- Sub-tab: Deuda Soberana -->
         <div class="deuda-content" data-deuda="soberana">
             <div class="uru-stat-grid">
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">Deuda Bruta</div>
                     <div class="uru-stat-value">60.5%</div>
                     <div class="uru-stat-desc">del PIB a diciembre 2025</div>
                     <div class="uru-stat-change down">↓ 1.7 p.p. vs 2024</div>
                 </div>
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">Deuda Neta</div>
                     <div class="uru-stat-value">56.5%</div>
                     <div class="uru-stat-desc">del PIB a diciembre 2025</div>
                     <div class="uru-stat-change down">↓ 1.5 p.p. vs 2024</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">Moneda Local</div>
                     <div class="uru-stat-value">55.5%</div>
                     <div class="uru-stat-desc">del total de deuda</div>
                     <div class="uru-stat-change up">↑ 3.1 p.p.</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">Madurez Promedio</div>
                     <div class="uru-stat-value">12 años</div>
                     <div class="uru-stat-desc">plazo promedio</div>
@@ -1586,7 +1607,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <!-- Sub-tab: Indicadores Macro -->
         <div class="deuda-content" data-deuda="macro" style="display:none;">
             <div class="uru-stat-grid">
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">Deuda/PIB Histórico</div>
                     <div class="uru-stat-timeline">
                         <div class="tl-item">2020 <strong>61.7%</strong></div>
@@ -1597,7 +1618,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                         <div class="tl-item current">2025 <strong>60.5%</strong></div>
                     </div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">Evolución Moneda Local</div>
                     <div class="uru-stat-timeline">
                         <div class="tl-item">2020 <strong>45.5%</strong></div>
@@ -1619,22 +1640,22 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <!-- Sub-tab: Proyecciones 2026 -->
         <div class="deuda-content" data-deuda="proyecciones" style="display:none;">
             <div class="uru-stat-grid">
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-amber">
                     <div class="uru-stat-label">Necesidades Financiamiento</div>
                     <div class="uru-stat-value">USD 6.778 MM</div>
                     <div class="uru-stat-desc">Necesidades brutas 2026</div>
                 </div>
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-amber">
                     <div class="uru-stat-label">Endeudamiento Neto</div>
                     <div class="uru-stat-value">UI 21.885 MM</div>
                     <div class="uru-stat-desc">≈ USD 3.640 MM</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">Límite Legal</div>
                     <div class="uru-stat-value">UI 25.115 MM</div>
                     <div class="uru-stat-desc">Tope establecido</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">Margen Disponible</div>
                     <div class="uru-stat-value">UI 3.230 MM</div>
                     <div class="uru-stat-desc">Colchón fiscal</div>
@@ -1655,42 +1676,42 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             </div>
 
             <div class="ratings-grid">
-                <div class="rating-card">
+                <div class="rating-card grade-bbb">
                     <div class="rating-agency">Moody's</div>
                     <div class="rating-grade">Baa1</div>
                     <div class="rating-equiv">(equiv. BBB+)</div>
                     <div class="rating-outlook">Perspectiva: Estable</div>
                     <div class="rating-date">28 enero 2026</div>
                 </div>
-                <div class="rating-card">
+                <div class="rating-card grade-bbb">
                     <div class="rating-agency">S&amp;P</div>
                     <div class="rating-grade">BBB+</div>
                     <div class="rating-equiv"></div>
                     <div class="rating-outlook">Perspectiva: Estable</div>
                     <div class="rating-date">26 noviembre 2025</div>
                 </div>
-                <div class="rating-card">
+                <div class="rating-card grade-bbb">
                     <div class="rating-agency">R&amp;I</div>
                     <div class="rating-grade">BBB+</div>
                     <div class="rating-equiv"></div>
                     <div class="rating-outlook">Perspectiva: Estable</div>
                     <div class="rating-date">23 enero 2026</div>
                 </div>
-                <div class="rating-card">
+                <div class="rating-card grade-bbb">
                     <div class="rating-agency">DBRS</div>
                     <div class="rating-grade">BBB</div>
                     <div class="rating-equiv"></div>
                     <div class="rating-outlook">Perspectiva: Estable</div>
                     <div class="rating-date">17 noviembre 2025</div>
                 </div>
-                <div class="rating-card highlight">
+                <div class="rating-card grade-a-special">
                     <div class="rating-agency">HR Ratings</div>
                     <div class="rating-grade">A-</div>
                     <div class="rating-equiv">(no solicitada)</div>
                     <div class="rating-outlook">Perspectiva: Estable</div>
                     <div class="rating-date">15 diciembre 2025</div>
                 </div>
-                <div class="rating-card highlight">
+                <div class="rating-card grade-a-special">
                     <div class="rating-agency">JCR</div>
                     <div class="rating-grade">A-</div>
                     <div class="rating-equiv">(no solicitada)</div>
@@ -1698,6 +1719,13 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
                     <div class="rating-date">26 diciembre 2025</div>
                 </div>
             </div>
+        </div>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+            <p class="fuente"><strong>Fuentes:</strong></p>
+            <p class="fuente" style="margin-top:4px;">📊 <strong>Deuda Soberana e Indicadores Macro:</strong> Ministerio de Economía y Finanzas (MEF) — Área de Gestión de Deuda Pública. Boletín de Deuda Pública, diciembre 2025.</p>
+            <p class="fuente" style="margin-top:4px;">📈 <strong>Proyecciones 2026:</strong> MEF — Presupuesto Nacional 2025-2029. Ley N° 20.191. Topes de endeudamiento neto aprobados por el Parlamento.</p>
+            <p class="fuente" style="margin-top:4px;">⭐ <strong>Calificaciones crediticias:</strong> Comunicados de prensa de Moody's (ene-26), S&amp;P (nov-25), R&amp;I (ene-26), DBRS Morningstar (nov-25), HR Ratings (dic-25) y JCR (dic-25).</p>
         </div>
 
     </div>
@@ -1716,25 +1744,25 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <!-- Sub-tab: Año 2025 -->
         <div class="pbi-content" data-pbi="anual">
             <div class="uru-stat-grid">
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">PIB — Variación real</div>
                     <div class="uru-stat-value">+1,8%</div>
                     <div class="uru-stat-desc">Volumen físico 2025 vs 2024</div>
                     <div class="uru-stat-change down">VAB +1,5% · Impuestos +4,0%</div>
                 </div>
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">PIB Nominal</div>
                     <div class="uru-stat-value">$3.516 B</div>
                     <div class="uru-stat-desc">Billones de pesos uruguayos</div>
                     <div class="uru-stat-change down">↑ vs $3.310 B en 2024</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-amber">
                     <div class="uru-stat-label">Precios Implícitos del PIB</div>
                     <div class="uru-stat-value">+4,3%</div>
                     <div class="uru-stat-desc">Variación interanual 2025</div>
                     <div class="uru-stat-change up">4,2% en 2024</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">PIB 2024 (revisado)</div>
                     <div class="uru-stat-value">+3,3%</div>
                     <div class="uru-stat-desc">Revisado al alza desde 3,1%</div>
@@ -1756,23 +1784,23 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <!-- Sub-tab: 4° Trimestre -->
         <div class="pbi-content" data-pbi="trimestral" style="display:none;">
             <div class="uru-stat-grid">
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">PIB — Q4 2025 vs Q4 2024</div>
                     <div class="uru-stat-value">+0,1%</div>
                     <div class="uru-stat-desc">Variación interanual volumen físico</div>
                 </div>
-                <div class="uru-stat-card highlight">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">PIB desestacionalizado</div>
                     <div class="uru-stat-value">+0,1%</div>
                     <div class="uru-stat-desc">vs Q3 2025</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">PIB corriente Q4</div>
                     <div class="uru-stat-value">$0,917 B</div>
                     <div class="uru-stat-desc">Billones de pesos</div>
                     <div class="uru-stat-change down">$0,859 B en Q3 2025</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">PIB per cápita Q4</div>
                     <div class="uru-stat-value">$87.642</div>
                     <div class="uru-stat-desc">Pesos mensuales</div>
@@ -1907,25 +1935,25 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <!-- Sub-tab: Componentes del Gasto -->
         <div class="pbi-content" data-pbi="gasto" style="display:none;">
             <div class="uru-stat-grid">
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">Consumo Final</div>
                     <div class="uru-stat-value">+2,0%</div>
                     <div class="uru-stat-desc">Hogares +2,1% · Gobierno +1,8%</div>
                     <div class="uru-stat-change down">79,4% del PIB corriente</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-blue">
                     <div class="uru-stat-label">Formación Bruta de Capital</div>
                     <div class="uru-stat-value">+4,3%</div>
                     <div class="uru-stat-desc">FBCF +0,3% · Existencias ↑</div>
                     <div class="uru-stat-change down">16,2% del PIB corriente</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-green">
                     <div class="uru-stat-label">Exportaciones</div>
                     <div class="uru-stat-value">+1,9%</div>
                     <div class="uru-stat-desc">Soja, carne y turismo receptivo</div>
                     <div class="uru-stat-change down">27,1% del PIB corriente</div>
                 </div>
-                <div class="uru-stat-card">
+                <div class="uru-stat-card card-amber">
                     <div class="uru-stat-label">Importaciones</div>
                     <div class="uru-stat-value">+4,1%</div>
                     <div class="uru-stat-desc">Uso intermedio y consumo</div>
@@ -2009,21 +2037,21 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 
         <!-- Índices principales -->
         <div class="uru-stat-grid" style="margin-bottom:24px;">
-            <div class="uru-stat-card highlight">
+            <div class="uru-stat-card card-amber">
                 <div class="uru-stat-label">TCRE Global</div>
                 <div id="tcre-global" class="uru-stat-value">88,16</div>
                 <div class="uru-stat-desc">Índice base 2019 = 100</div>
                 <div id="tcre-global-var-m" class="uru-stat-change up">▲ +2,8% vs mes ant</div>
                 <div id="tcre-global-var-a" class="uru-stat-change down" style="margin-top:3px;">▼ −5,1% vs año ant</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-red">
                 <div class="uru-stat-label">TCRE Extraregional</div>
                 <div id="tcre-extra" class="uru-stat-value">84,03</div>
                 <div class="uru-stat-desc">Socios fuera de la región</div>
                 <div id="tcre-extra-var-m" class="uru-stat-change up">▲ +1,5% vs mes ant</div>
                 <div id="tcre-extra-var-a" class="uru-stat-change down" style="margin-top:3px;">▼ −6,0% vs año ant</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-amber">
                 <div class="uru-stat-label">TCRE Regional</div>
                 <div id="tcre-regional" class="uru-stat-value">93,38</div>
                 <div class="uru-stat-desc">Argentina · Brasil · México</div>
@@ -2033,34 +2061,34 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         </div>
 
         <!-- Socios comerciales principales -->
-        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Socios Comerciales — <span id="tcre-periodo">feb-26</span></h4>
+        <h4 class="uru-section-h4 blue">Socios Comerciales — <span id="tcre-periodo">feb-26</span></h4>
         <div class="uru-stat-grid" style="margin-bottom:24px;">
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-green">
                 <div class="uru-stat-label">🇦🇷 Argentina</div>
                 <div id="tcre-arg" class="uru-stat-value" style="color:var(--green);">114,40</div>
                 <div class="uru-stat-desc">Competitivo vs 2019</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-red">
                 <div class="uru-stat-label">🇧🇷 Brasil</div>
                 <div id="tcre-bra" class="uru-stat-value" style="color:var(--red);">77,79</div>
                 <div class="uru-stat-desc">Menos competitivo vs 2019</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-amber">
                 <div class="uru-stat-label">🇺🇸 EEUU</div>
                 <div id="tcre-usa" class="uru-stat-value" style="color:var(--red);">91,39</div>
                 <div class="uru-stat-desc">Menos competitivo vs 2019</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-green">
                 <div class="uru-stat-label">🇲🇽 México</div>
                 <div id="tcre-mex" class="uru-stat-value" style="color:var(--green);">110,95</div>
                 <div class="uru-stat-desc">Competitivo vs 2019</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-amber">
                 <div class="uru-stat-label">🇩🇪 Alemania</div>
                 <div id="tcre-deu" class="uru-stat-value" style="color:var(--red);">93,46</div>
                 <div class="uru-stat-desc">Levemente menos competitivo</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-red">
                 <div class="uru-stat-label">🇨🇳 China</div>
                 <div id="tcre-chn" class="uru-stat-value" style="color:var(--red);">76,96</div>
                 <div class="uru-stat-desc">Menos competitivo vs 2019</div>
@@ -2068,7 +2096,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         </div>
 
         <!-- Gráfico evolución 12 meses -->
-        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Evolución últimos 5 años (feb-21 · feb-26)</h4>
+        <h4 class="uru-section-h4 amber">Evolución últimos 5 años (feb-21 · feb-26)</h4>
         <div style="position:relative;height:280px;margin-bottom:8px;">
             <canvas id="tcre-chart"></canvas>
         </div>
@@ -2082,48 +2110,53 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <div class="uruguay-content" data-uruguay="afap" style="display:none;">
         <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
             Régimen de Jubilación por Ahorro Individual Obligatorio — datos al <strong style="color:var(--text);">31 mar 2026</strong>.
+            Los valores monetarios están expresados en <strong style="color:var(--text);">pesos corrientes</strong>.
             Fuente: BCU / Superintendencia de Servicios Financieros.
         </p>
 
         <!-- Headline cards -->
         <div class="uru-stat-grid" style="margin-bottom:24px;">
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-green">
                 <div class="uru-stat-label">Afiliados totales</div>
                 <div class="uru-stat-value">1.742.346</div>
                 <div class="uru-stat-change up">▲ +61.745 vs mar-25</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 1.445.573 &nbsp;<span style="color:#2a7235;font-weight:600;">▲ +20,5%</span></div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-blue">
                 <div class="uru-stat-label">Fondo total (FAP)</div>
                 <div class="uru-stat-value" style="font-size:1.4rem;">$1.085.066M</div>
-                <div class="uru-stat-change up">▲ +$92.170M vs mar-25</div>
+                <div class="uru-stat-change up" style="margin-top:4px;">▲ +$92.170M vs mar-25</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: $564.178M &nbsp;<span style="color:#2a7235;font-weight:600;">▲ +92,3%</span></div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:4px;">≈ USD 26.804M · $40,48 (31/03)</div>
             </div>
-            <div class="uru-stat-card">
+            <div class="uru-stat-card card-amber">
                 <div class="uru-stat-label">Aportes BPS → AFAPs</div>
                 <div class="uru-stat-value" style="font-size:1.4rem;">$5.297M</div>
                 <div class="uru-stat-desc">Mensual · mar 2026</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: $3.060M &nbsp;<span style="color:#2a7235;font-weight:600;">▲ +73,1%</span></div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:4px;">≈ USD 131M/mes · $40,48 (31/03)</div>
             </div>
-            <div class="uru-stat-card">
-                <div class="uru-stat-label">Rentabilidad anual (UI)</div>
-                <div class="uru-stat-value">2,13%</div>
-                <div class="uru-stat-change down">▼ vs 2,30% mar-25</div>
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Rentabilidad TNA (nominal)</div>
+                <div class="uru-stat-value">8,16%</div>
+                <div class="uru-stat-desc" style="margin-top:4px;">Promedio FAP · últimos 60 meses</div>
             </div>
         </div>
 
         <!-- Gráfico participación de mercado -->
-        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Participación de mercado por AFAP</h4>
+        <h4 class="uru-section-h4 blue">Participación de mercado por AFAP</h4>
         <div style="position:relative;height:220px;margin-bottom:8px;">
             <canvas id="afap-chart"></canvas>
         </div>
         <p class="fuente" style="margin-bottom:24px;">% sobre total del régimen. República concentra mayor proporción de fondos que de afiliados, reflejando saldos promedio más altos.</p>
 
         <!-- Tabla de rentabilidades -->
-        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Rentabilidad bruta real anual — mar 2026</h4>
+        <h4 class="uru-section-h4 amber">Rentabilidad bruta TNA nominal — mar 2026</h4>
         <table class="sector-table">
             <thead>
                 <tr>
                     <th style="text-align:left;">AFAP</th>
-                    <th>En U.R.</th>
-                    <th>En U.I.</th>
+                    <th>TNA (nominal)</th>
                     <th>Afiliados</th>
                     <th>Fondo (mill. $)</th>
                 </tr>
@@ -2131,67 +2164,138 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             <tbody>
                 <tr>
                     <td>República AFAP</td>
-                    <td class="val-pos">0,97%</td>
-                    <td class="val-pos">2,41%</td>
+                    <td class="val-pos">8,46%</td>
                     <td class="val-neu">673.121</td>
                     <td class="val-neu">595.805</td>
                 </tr>
                 <tr>
                     <td>AFAP Itaú</td>
-                    <td class="val-pos">0,56%</td>
-                    <td class="val-pos">1,99%</td>
+                    <td class="val-pos">8,02%</td>
                     <td class="val-neu">406.472</td>
                     <td class="val-neu">183.505</td>
                 </tr>
                 <tr>
                     <td>AFAP SURA</td>
-                    <td class="val-pos">0,42%</td>
-                    <td class="val-pos">1,85%</td>
+                    <td class="val-pos">7,86%</td>
                     <td class="val-neu">395.571</td>
                     <td class="val-neu">195.847</td>
                 </tr>
                 <tr>
                     <td>Integración AFAP</td>
-                    <td class="val-neg">−0,10%</td>
-                    <td class="val-pos">1,32%</td>
+                    <td class="val-pos">7,30%</td>
                     <td class="val-neu">267.182</td>
                     <td class="val-neu">109.909</td>
                 </tr>
                 <tr class="total">
                     <td>Promedio régimen</td>
-                    <td class="val-pos">0,70%</td>
-                    <td class="val-pos">2,13%</td>
+                    <td class="val-pos">8,16%</td>
                     <td class="val-neu">1.742.346</td>
                     <td class="val-neu">1.085.066</td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- Subfondos -->
-        <h4 style="font-size:0.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin:24px 0 12px;">Distribución por Subfondo</h4>
-        <div class="uru-stat-grid">
-            <div class="uru-stat-card">
-                <div class="uru-stat-label">Acumulación</div>
-                <div class="uru-stat-value" style="font-size:1.3rem;">$646.069M</div>
-                <div class="uru-stat-desc">59,5% del FAP · 645.957 afiliados</div>
+        <!-- Según Moneda e Instrumento -->
+        <h4 class="uru-section-h4" style="margin-top:24px;">Según Moneda e Instrumento</h4>
+
+        <!-- Fila 1: Moneda -->
+        <span class="uru-cat-label green">Moneda</span>
+        <div class="uru-stat-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Moneda Nacional</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">82,37%</div>
+                <div class="uru-stat-desc">Pesos UY 49,3% · Reajustables (UI) 33,1%</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 72,56% &nbsp;<span style="color:#2a7235;font-weight:600;">▲ +9,8 pp</span></div>
             </div>
-            <div class="uru-stat-card">
-                <div class="uru-stat-label">Retiro</div>
-                <div class="uru-stat-value" style="font-size:1.3rem;">$270.108M</div>
-                <div class="uru-stat-desc">24,9% del FAP · 280.283 afiliados</div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Moneda Extranjera</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">17,63%</div>
+                <div class="uru-stat-desc">Fideicomisos FF 7,8% · Notas Multilat. 9,1%</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 27,45% &nbsp;<span style="color:#8c3030;font-weight:600;">▼ −9,8 pp</span></div>
             </div>
-            <div class="uru-stat-card">
-                <div class="uru-stat-label">Crecimiento</div>
-                <div class="uru-stat-value" style="font-size:1.3rem;">$168.889M</div>
-                <div class="uru-stat-desc">15,6% del FAP · 816.106 afiliados</div>
+        </div>
+
+        <!-- Fila 2: Instrumento -->
+        <span class="uru-cat-label blue">Instrumento (tope legal)</span>
+        <div class="uru-stat-grid" style="grid-template-columns:repeat(4,1fr);">
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Estado y BCU</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">56,59%</div>
+                <div class="uru-stat-desc">Títulos públicos y reg. monetaria</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 51,70% &nbsp;<span style="color:#2a7235;font-weight:600;">▲ +4,9 pp</span></div>
             </div>
-            <div class="uru-stat-card">
-                <div class="uru-stat-label">Voluntario</div>
-                <div class="uru-stat-value" style="font-size:1.3rem;">$1.657M</div>
-                <div class="uru-stat-desc">Creado dic-2023 · Ley 20.130</div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Empresas</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">19,51%</div>
+                <div class="uru-stat-desc">Obligaciones y fideicomisos privados</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 17,49% &nbsp;<span style="color:#2a7235;font-weight:600;">▲ +2,0 pp</span></div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Org. Int. de Crédito</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">14,39%</div>
+                <div class="uru-stat-desc">Renta fija organismos internacionales</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 15,10% &nbsp;<span style="color:#8c3030;font-weight:600;">▼ −0,7 pp</span></div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Dep. Plazo y Préstamos</div>
+                <div class="uru-stat-value" style="font-size:1.3rem;">9,13%</div>
+                <div class="uru-stat-desc">Dep. plazo 7,78% · Préstamos afil. 1,35%</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:6px;">dic-19: 7,04% &nbsp;<span style="color:#8c3030;font-weight:600;">▲ +2,1 pp</span></div>
             </div>
         </div>
         <p class="fuente" style="margin-top:12px;">Fuente: BCU — Superintendencia de Servicios Financieros. Principales Variables del Régimen de Jubilación por Ahorro Individual Obligatorio, marzo 2026.</p>
+
+        <!-- Composición por subfondo -->
+        <h4 class="uru-section-h4 amber" style="margin-top:28px;">Composición del FAP por Subfondo</h4>
+        <table class="sector-table">
+            <thead>
+                <tr>
+                    <th style="text-align:left;">Subfondo</th>
+                    <th>Fondo (mill. $)</th>
+                    <th>% del FAP</th>
+                    <th>Afiliados</th>
+                    <th>% del total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Acumulación <span style="font-weight:400;color:var(--text3);font-size:0.8em;">(etapa media de la vida laboral)</span></td>
+                    <td class="val-neu">646.069</td>
+                    <td class="val-neu">59,5%</td>
+                    <td class="val-neu">645.957</td>
+                    <td class="val-neu">37,1%</td>
+                </tr>
+                <tr>
+                    <td>Retiro <span style="font-weight:400;color:var(--text3);font-size:0.8em;">(próximos a jubilarse o ya jubilados, menor riesgo)</span></td>
+                    <td class="val-neu">270.108</td>
+                    <td class="val-neu">24,9%</td>
+                    <td class="val-neu">280.283</td>
+                    <td class="val-neu">16,1%</td>
+                </tr>
+                <tr>
+                    <td>Crecimiento <span style="font-weight:400;color:var(--text3);font-size:0.8em;">(trabajadores jóvenes, mayor exposición a renta variable)</span></td>
+                    <td class="val-neu">168.889</td>
+                    <td class="val-neu">15,6%</td>
+                    <td class="val-neu">816.106</td>
+                    <td class="val-neu">46,8%</td>
+                </tr>
+                <tr>
+                    <td>Voluntario <span style="font-weight:400;color:var(--text3);font-size:0.8em;">(ahorro adicional voluntario, Ley 20.130 dic-2023)</span></td>
+                    <td class="val-neu">1.657</td>
+                    <td class="val-neu">0,15%</td>
+                    <td class="val-neu">—</td>
+                    <td class="val-neu">—</td>
+                </tr>
+                <tr class="total">
+                    <td>Total FAP</td>
+                    <td class="val-neu">1.085.066</td>
+                    <td class="val-neu">100%</td>
+                    <td class="val-neu">1.742.346</td>
+                    <td class="val-neu">100%</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="fuente" style="margin-top:8px;">Nota: Crecimiento tiene más afiliados que Acumulación pero menor fondo, reflejando saldos promedio más bajos al ser el subfondo para trabajadores más jóvenes. Voluntario es patrimonio separado (Ley 20.130, dic-2023).</p>
     </div>
 
     <!-- MERCADOS GLOBALES -->
