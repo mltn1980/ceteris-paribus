@@ -41,52 +41,71 @@ def download_excel(url: str) -> bytes:
     return r.content
 
 
-def parse_excel(content: bytes) -> list:
-    """Extrae la serie mensual desde el Excel de INAC."""
+def _safe_int(val) -> int | None:
+    if val is None:
+        return None
     try:
-        wb = xlrd.open_workbook(file_contents=content)
-    except Exception:
-        # Intentar como xlsx con openpyxl
-        import openpyxl, io as _io
-        wb2 = openpyxl.load_workbook(_io.BytesIO(content), data_only=True)
-        ws2 = wb2.active
-        rows = []
-        for row in ws2.iter_rows(min_row=9, values_only=True):
-            if len(row) < 4:
-                continue
-            mes, nov, vh, vai = row[0], row[1], row[2], row[3]
-            if not mes or not nov:
-                continue
-            try:
-                rows.append({
-                    "mes": str(mes).strip(),
-                    "novillo": int(round(float(nov))),
-                    "vh":      int(round(float(vh))),
-                    "vai":     int(round(float(vai)))
-                })
-            except (ValueError, TypeError):
-                continue
-        return rows
+        return int(round(float(val)))
+    except (ValueError, TypeError):
+        return None
 
-    ws = wb.sheet_by_index(0)
+
+def parse_excel(content: bytes) -> list:
+    """Extrae la serie mensual desde el Excel de INAC (openpyxl, con fallback xlrd)."""
+    import io as _io
+
+    # Intentar openpyxl primero (xlsx)
+    try:
+        import openpyxl
+        wb = openpyxl.load_workbook(_io.BytesIO(content), data_only=True)
+        ws = wb.active
+        print(f"   → openpyxl: {ws.max_row} filas, {ws.max_column} columnas")
+
+        rows = []
+        for i, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+            if not row or len(row) < 2:
+                continue
+            mes = row[0]
+            nov = row[1] if len(row) > 1 else None
+            vh  = row[2] if len(row) > 2 else None
+            vai = row[3] if len(row) > 3 else None
+            if not mes or _safe_int(nov) is None:
+                continue
+            mes_str = str(mes).strip()
+            if not mes_str or mes_str in ("0", "0.0", "Mes"):
+                continue
+            rows.append({
+                "mes":     mes_str,
+                "novillo": _safe_int(nov),
+                "vh":      _safe_int(vh) or 0,
+                "vai":     _safe_int(vai) or 0,
+            })
+
+        if rows:
+            print(f"   → {len(rows)} filas válidas, primera={rows[0]['mes']}, última={rows[-1]['mes']}")
+            return rows
+        print("   → openpyxl no encontró filas válidas, probando xlrd...")
+    except Exception as e:
+        print(f"   → openpyxl falló ({e}), probando xlrd...")
+
+    # Fallback xlrd (xls legacy)
+    ws2 = xlrd.open_workbook(file_contents=content).sheet_by_index(0)
+    print(f"   → xlrd: {ws2.nrows} filas, {ws2.ncols} columnas")
     rows = []
-    for r in range(8, ws.nrows):   # fila 9 en base 1 = índice 8
-        mes_cell = ws.cell(r, 0)
-        nov_cell = ws.cell(r, 1)
+    for r in range(1, ws2.nrows):
+        mes_cell = ws2.cell(r, 0)
         if mes_cell.ctype not in (xlrd.XL_CELL_TEXT, xlrd.XL_CELL_NUMBER):
             continue
         mes = str(mes_cell.value).strip()
-        if not mes or mes == "0.0":
+        if not mes or mes in ("0", "0.0", "Mes"):
             continue
-        try:
-            rows.append({
-                "mes":     mes,
-                "novillo": int(round(float(ws.cell(r, 1).value))),
-                "vh":      int(round(float(ws.cell(r, 2).value))),
-                "vai":     int(round(float(ws.cell(r, 3).value)))
-            })
-        except (ValueError, TypeError):
+        nov = _safe_int(ws2.cell(r, 1).value if ws2.ncols > 1 else None)
+        if nov is None:
             continue
+        vh  = _safe_int(ws2.cell(r, 2).value if ws2.ncols > 2 else None) or 0
+        vai = _safe_int(ws2.cell(r, 3).value if ws2.ncols > 3 else None) or 0
+        rows.append({"mes": mes, "novillo": nov, "vh": vh, "vai": vai})
+
     return rows
 
 
