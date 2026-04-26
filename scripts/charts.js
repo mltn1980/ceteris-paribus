@@ -313,6 +313,105 @@ function createTCREChart() {
 }
 
 // ============================================
+// GRÁFICO NOVILLO TIPO - Serie mensual
+// ============================================
+function createNovilloTipoChart() {
+    const canvas = document.getElementById('novillo-tipo-chart');
+    if (!canvas) return;
+
+    fetch('data/novillo-tipo-serie.json')
+        .then(r => r.json())
+        .then(serie => {
+            const labels  = serie.map(d => d.mes);
+            const novillo = serie.map(d => d.novillo);
+            const vh      = serie.map(d => d.vh);
+            const vai     = serie.map(d => d.vai);
+
+            new Chart(canvas, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Novillo Tipo (USD/cab)',
+                            data: novillo,
+                            borderColor: '#8c3030',
+                            backgroundColor: 'rgba(140,48,48,0.08)',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            tension: 0.3,
+                            fill: false
+                        },
+                        {
+                            label: 'Valor Hacienda',
+                            data: vh,
+                            borderColor: '#2a7235',
+                            backgroundColor: 'transparent',
+                            borderWidth: 1.5,
+                            borderDash: [4, 3],
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            tension: 0.3,
+                            fill: false
+                        },
+                        {
+                            label: 'VAI',
+                            data: vai,
+                            borderColor: '#a07418',
+                            backgroundColor: 'transparent',
+                            borderWidth: 1.5,
+                            borderDash: [2, 3],
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            tension: 0.3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { font: { size: 10 }, color: '#4a473f', boxWidth: 12 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ctx.dataset.label + ': USD ' + ctx.parsed.y.toLocaleString('es-UY')
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: v => 'USD ' + v.toLocaleString('es-UY'),
+                                font: { size: 10 },
+                                color: '#918b80',
+                                maxTicksLimit: 6
+                            },
+                            grid: { color: '#efece5' }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                color: '#918b80',
+                                maxRotation: 45,
+                                minRotation: 45,
+                                maxTicksLimit: 18
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(() => {});
+}
+
+// ============================================
 // GRÁFICO AFAP - Participación de mercado
 // ============================================
 function createAFAPChart() {
@@ -381,5 +480,6 @@ window.addEventListener('load', function() {
         createRHEChart();
         createTCREChart();
         createAFAPChart();
+        createNovilloTipoChart();
     }
 });
