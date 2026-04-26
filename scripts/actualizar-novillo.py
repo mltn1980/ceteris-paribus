@@ -153,17 +153,28 @@ def main():
         print(f"❌ Error al descargar: {e}")
         sys.exit(1)
 
-    # 3. Parsear
+    # 3. Identificar formato y parsear
+    magic = content[:4]
+    is_xlsx = magic == b'PK\x03\x04'
+    is_xls  = magic[:2] == b'\xd0\xcf'
+    fmt = 'xlsx' if is_xlsx else ('xls' if is_xls else f'desconocido ({magic.hex()})')
+    print(f"   → Formato detectado: {fmt}", flush=True)
+    if not is_xlsx and not is_xls:
+        print(f"   → Primeros 200 bytes: {content[:200]}", flush=True)
+        print("❌ El archivo no es Excel válido (¿responde HTML el servidor?)")
+        sys.exit(1)
+
     try:
         serie = parse_excel(content)
-        print(f"   → {len(serie)} filas, último mes: {serie[-1]['mes']}")
+        print(f"   → {len(serie)} filas parseadas", flush=True)
     except Exception as e:
         print(f"❌ Error al parsear Excel: {e}")
         sys.exit(1)
 
     if not serie:
-        print("❌ No se obtuvieron datos del Excel.")
+        print("❌ Parse devolvió 0 filas.")
         sys.exit(1)
+    print(f"   → Último mes: {serie[-1]['mes']}")
 
     # 4. Verificar si hay datos nuevos
     ultimo_mes_nuevo = serie[-1]["mes"]
