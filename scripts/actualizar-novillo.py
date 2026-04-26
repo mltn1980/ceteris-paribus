@@ -89,15 +89,22 @@ def parse_excel(content: bytes) -> list:
         print(f"   → openpyxl falló ({e}), probando xlrd...")
 
     # Fallback xlrd (xls legacy)
-    ws2 = xlrd.open_workbook(file_contents=content).sheet_by_index(0)
+    MESES_CORTOS = {1:"Ene",2:"Feb",3:"Mar",4:"Abr",5:"May",6:"Jun",
+                    7:"Jul",8:"Ago",9:"Set",10:"Oct",11:"Nov",12:"Dic"}
+    wb2 = xlrd.open_workbook(file_contents=content)
+    ws2 = wb2.sheet_by_index(0)
     print(f"   → xlrd: {ws2.nrows} filas, {ws2.ncols} columnas")
     rows = []
     for r in range(1, ws2.nrows):
         mes_cell = ws2.cell(r, 0)
-        if mes_cell.ctype not in (xlrd.XL_CELL_TEXT, xlrd.XL_CELL_NUMBER):
-            continue
-        mes = str(mes_cell.value).strip()
-        if not mes or mes in ("0", "0.0", "Mes"):
+        if mes_cell.ctype == xlrd.XL_CELL_DATE:
+            dt = xlrd.xldate_as_datetime(mes_cell.value, wb2.datemode)
+            mes = f"{MESES_CORTOS[dt.month]}-{str(dt.year)[2:]}"
+        elif mes_cell.ctype in (xlrd.XL_CELL_TEXT, xlrd.XL_CELL_NUMBER):
+            mes = str(mes_cell.value).strip()
+            if not mes or mes in ("0", "0.0", "Mes"):
+                continue
+        else:
             continue
         nov = _safe_int(ws2.cell(r, 1).value if ws2.ncols > 1 else None)
         if nov is None:
@@ -137,7 +144,6 @@ def mismo_mes_año_anterior(serie: list, ultimo: dict) -> dict | None:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    print("=== actualizar-novillo v5 ===", flush=True)
     forzar = os.environ.get("FORZAR", "false").lower() == "true"
 
     # 1. Leer estado actual
