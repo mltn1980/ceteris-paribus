@@ -28,11 +28,10 @@ jobs:
           python-version: '3.12'
 
       - name: Instalar dependencias
-        run: pip install anthropic requests pdfplumber
+        run: pip install requests openpyxl
 
       - name: Correr actualizador RHE
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FORZAR: ${{ github.event.inputs.forzar || 'false' }}
         run: python scripts/actualizar-rhe.py
 
