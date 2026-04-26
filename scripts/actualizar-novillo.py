@@ -137,6 +137,7 @@ def mismo_mes_año_anterior(serie: list, ultimo: dict) -> dict | None:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
+    print("=== actualizar-novillo v5 ===", flush=True)
     forzar = os.environ.get("FORZAR", "false").lower() == "true"
 
     # 1. Leer estado actual
