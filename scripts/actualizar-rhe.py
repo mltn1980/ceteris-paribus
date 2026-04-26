@@ -70,23 +70,31 @@ def to_date(val) -> datetime:
     if hasattr(val, "year"):
         return val
     s = str(val)
-    fmt = "%Y-%m-%d %H:%M:%S" if " " in s else "%Y-%m-%d"
     return datetime.strptime(s[:10], "%Y-%m-%d")
 
 
-def buscar_misma_semana_año_ant(serie: list, ultima: dict) -> dict | None:
-    """Encuentra la fila con fechas más cercanas al mismo período del año anterior."""
+def promedio_mes_año_ant(serie: list, ultima: dict) -> dict | None:
+    """Promedia todas las semanas del mismo mes del año anterior (por fecha fin)."""
     fin_actual = to_date(ultima["fin"])
-    objetivo = fin_actual.replace(year=fin_actual.year - 1)
-    mejor = None
-    menor_delta = None
-    for row in serie[:-1]:
-        fin_row = to_date(row["fin"])
-        delta = abs((fin_row - objetivo).days)
-        if menor_delta is None or delta < menor_delta:
-            menor_delta = delta
-            mejor = row
-    return mejor if (menor_delta is not None and menor_delta <= 10) else None
+    mes_obj = fin_actual.month
+    año_obj = fin_actual.year - 1
+    semanas = [
+        row for row in serie[:-1]
+        if to_date(row["fin"]).month == mes_obj and to_date(row["fin"]).year == año_obj
+    ]
+    if not semanas:
+        return None
+    n = len(semanas)
+    return {
+        "export":   sum(r["export"]  for r in semanas) / n,
+        "novillo":  sum(r["novillo"] for r in semanas) / n,
+        "vaca":     sum(r["vaca"]    for r in semanas) / n,
+        "rhe_nov":  sum(r["rhe_nov"] for r in semanas) / n,
+        "rhe_vac":  sum(r["rhe_vac"] for r in semanas) / n,
+        "n_semanas": n,
+        "mes": MESES_ES[mes_obj],
+        "año": año_obj,
+    }
 
 
 def pct(nuevo, anterior) -> float:
@@ -142,16 +150,17 @@ def main():
         print(f"✅ Sin datos nuevos ({periodo}). No se actualiza.")
         sys.exit(0)
 
-    # 5. Buscar misma semana año anterior
-    año_ant = buscar_misma_semana_año_ant(serie, ultima)
-    if año_ant:
-        periodo_ant = formato_periodo(año_ant["inicio"], año_ant["fin"])
-        print(f"   → Año anterior: {periodo_ant}")
-        export_var_a  = pct(ultima["export"],  año_ant["export"])
-        novillo_var_a = pct(ultima["novillo"], año_ant["novillo"])
-        vaca_var_a    = pct(ultima["vaca"],    año_ant["vaca"])
-        rhe_nov_var_a = round((ultima["rhe_nov"] - año_ant["rhe_nov"]) * 100, 1)
-        rhe_vac_var_a = round((ultima["rhe_vac"] - año_ant["rhe_vac"]) * 100, 1)
+    # 5. Promedio del mismo mes del año anterior
+    prom_ant = promedio_mes_año_ant(serie, ultima)
+    if prom_ant:
+        ref_label = f"prom. {prom_ant['mes']} {prom_ant['año']} ({prom_ant['n_semanas']} sem.)"
+        print(f"   → Referencia i.a.: {ref_label}")
+        export_var_a  = pct(ultima["export"],  prom_ant["export"])
+        novillo_var_a = pct(ultima["novillo"], prom_ant["novillo"])
+        vaca_var_a    = pct(ultima["vaca"],    prom_ant["vaca"])
+        rhe_nov_var_a = round((ultima["rhe_nov"] - prom_ant["rhe_nov"]) * 100, 1)
+        rhe_vac_var_a = round((ultima["rhe_vac"] - prom_ant["rhe_vac"]) * 100, 1)
+        periodo_ant   = f"prom. {prom_ant['mes']} {prom_ant['año']}"
     else:
         periodo_ant = None
         export_var_a = novillo_var_a = vaca_var_a = rhe_nov_var_a = rhe_vac_var_a = None
