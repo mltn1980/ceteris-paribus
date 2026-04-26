@@ -1,0 +1,51 @@
+name: 🐂 Actualizar RHE Bovinos
+
+on:
+  schedule:
+    # Martes 10:17am Uruguay (UTC-3 = 13:17 UTC)
+    # INAC publica el reporte semanal los martes
+    - cron: '17 13 * * 2'
+  workflow_dispatch:
+    inputs:
+      forzar:
+        description: 'Forzar actualización aunque no haya cambios'
+        required: false
+        default: 'false'
+
+jobs:
+  actualizar-rhe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: pip install anthropic requests pdfplumber
+
+      - name: Correr actualizador RHE
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FORZAR: ${{ github.event.inputs.forzar || 'false' }}
+        run: python scripts/actualizar-rhe.py
+
+      - name: Commit y push si hay cambios
+        run: |
+          git config user.name "ceterisparibus-bot"
+          git config user.email "bot@ceterisparibus.uy"
+          git add data/rhe.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios en rhe.json — no se hace commit."
+          else
+            FECHA=$(date +'%d/%m/%Y %H:%M UTC')
+            git commit -m "🐂 RHE Bovinos: actualización automática ${FECHA}"
+            git push
+            echo "✅ Cambios pusheados. Netlify desplegará automáticamente."
+          fi
