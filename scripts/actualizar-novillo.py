@@ -168,6 +168,8 @@ def main():
         serie = parse_excel(content)
         print(f"   → {len(serie)} filas parseadas", flush=True)
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         print(f"❌ Error al parsear Excel: {e}")
         sys.exit(1)
 
