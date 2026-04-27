@@ -554,21 +554,27 @@ function createFinDepositosChart() {
 function createFinCreditoPesosChart() {
     const ctx = document.getElementById('fin-credito-pesos-chart');
     if (!ctx) return;
+    const TC_REF = 42; // pesos/USD, promedio aproximado mar-25/mar-26
+    const totPesos = finActPesosEmp.map((e, i) => e + finActPesosFam[i]);
+    const totUSDenPesos = finActUSD.map(u => u * TC_REF);
+    const gran = totPesos.map((p, i) => p + totUSDenPesos[i]);
+    const pctPesos = totPesos.map((p, i) => parseFloat((p / gran[i] * 100).toFixed(1)));
+    const pctUSD   = totUSDenPesos.map((u, i) => parseFloat((u / gran[i] * 100).toFixed(1)));
     new Chart(ctx, {
         type: 'bar',
         data: {
             labels: finMeses,
             datasets: [
                 {
-                    label: 'Empresas ($M)',
-                    data: finActPesosEmp,
+                    label: 'Crédito en Pesos (%)',
+                    data: pctPesos,
                     backgroundColor: '#0f5c6b',
                     borderRadius: 3,
                     stack: 'cr'
                 },
                 {
-                    label: 'Familias ($M)',
-                    data: finActPesosFam,
+                    label: 'Crédito en USD (%)',
+                    data: pctUSD,
                     backgroundColor: '#4ab8cb',
                     borderRadius: 3,
                     stack: 'cr'
@@ -580,16 +586,28 @@ function createFinCreditoPesosChart() {
             maintainAspectRatio: false,
             plugins: {
                 legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
-                datalabels: { display: false },
+                datalabels: {
+                    display: true,
+                    formatter: v => v.toFixed(1) + '%',
+                    color: '#fff',
+                    font: { size: 10, weight: '600' }
+                },
                 tooltip: {
                     callbacks: {
-                        label: ctx => ` ${ctx.dataset.label}: $${ctx.raw.toLocaleString('es-UY')} M`
+                        label: ctx => {
+                            const i = ctx.dataIndex;
+                            if (ctx.datasetIndex === 0) {
+                                return ` Pesos: ${ctx.raw}% ($${totPesos[i].toLocaleString('es-UY')} M)`;
+                            } else {
+                                return ` USD: ${ctx.raw}% (USD ${finActUSD[i].toLocaleString('es-UY')} M)`;
+                            }
+                        }
                     }
                 }
             },
             scales: {
                 x: { stacked: true, ticks: { font: { size: 10 }, color: '#666' }, grid: { display: false } },
-                y: { stacked: true, ticks: { font: { size: 10 }, color: '#666', callback: v => '$' + (v/1000).toFixed(0) + 'K' }, grid: { color: '#f0f0f0' } }
+                y: { stacked: true, max: 100, ticks: { font: { size: 10 }, color: '#666', callback: v => v + '%' }, grid: { color: '#f0f0f0' } }
             }
         }
     });
