@@ -41,8 +41,10 @@ function initTabSystem({ tabSelector, contentSelector, dataAttr, activeColor, ex
                 if (extraTarget) extraTarget.style.display = 'block';
             }
 
-            // Deslizar el tab activo al borde izquierdo del scroll container
-            this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            // Deslizar el tab activo al borde izquierdo del contenedor
+            const container = this.parentElement;
+            const tabLeft = this.getBoundingClientRect().left - container.getBoundingClientRect().left + container.scrollLeft;
+            container.scrollTo({ left: tabLeft, behavior: 'smooth' });
         });
     });
 
