@@ -150,7 +150,8 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 }
 
 /* ── SUB-TABS INTERNOS (Deuda, PBI, etc.) ── */
-.uru-sub-tabs{display:flex;gap:0;overflow:visible;border-bottom:2px solid var(--border);margin-bottom:20px;}
+.uru-sub-tabs{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:2px solid var(--border);margin-bottom:20px;scrollbar-width:none;}
+.uru-sub-tabs::-webkit-scrollbar{display:none;}
 .deuda-tab{flex:1;text-align:center;padding:10px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;border-radius:6px 6px 0 0;}
 .deuda-tab:hover{color:var(--text);background:var(--surface2);}
 .deuda-tab.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-l);}
@@ -223,6 +224,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 @media(max-width:680px){
   .uru-stat-grid{grid-template-columns:1fr;}
   .ratings-grid{grid-template-columns:1fr 1fr;}
+  .deuda-tab,.pbi-tab{flex:none;flex-shrink:0;}
 }
 
 /* ── PBI sub-tabs ── */
@@ -2297,6 +2299,8 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         </table>
         <p class="fuente" style="margin-top:8px;">Nota: Crecimiento tiene más afiliados que Acumulación pero menor fondo, reflejando saldos promedio más bajos al ser el subfondo para trabajadores más jóvenes. Voluntario es patrimonio separado (Ley 20.130, dic-2023).</p>
     </div>
+
+    </div><!-- /collapsible-content Uruguay -->
 
     <!-- MERCADOS GLOBALES -->
     <div class="section-label collapsible" id="global" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('collapsed');var t=this.querySelector('.toggle-text');t.textContent=this.classList.contains('collapsed')?'▼ Mostrar':'▲ Ocultar';">
