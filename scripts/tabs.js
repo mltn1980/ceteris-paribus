@@ -106,6 +106,40 @@ initTabSystem({
 });
 
 // ============================================
+// COLAPSAR/EXPANDIR - Mejora para escape de canvas/scroll containers
+// Agrega display:none al terminar la animación de colapso para garantizar
+// que canvas de Chart.js y scroll containers queden completamente ocultos.
+// ============================================
+document.querySelectorAll('.section-label.collapsible').forEach(function (header) {
+    const content = header.nextElementSibling;
+    if (!content) return;
+    let collapseTimer = null;
+
+    // Fase capture: se ejecuta ANTES del onclick inline → permite quitar display:none
+    // antes de que arranque la animación de expansión
+    header.addEventListener('click', function () {
+        const aboutToExpand = content.classList.contains('collapsed');
+        if (aboutToExpand) {
+            clearTimeout(collapseTimer);
+            content.style.display = '';
+            content.getBoundingClientRect(); // fuerza reflow para que la transición tenga punto de inicio
+        }
+    }, { capture: true });
+
+    // Fase bubble: se ejecuta DESPUÉS del onclick inline → agrega display:none al colapsar
+    header.addEventListener('click', function () {
+        const justCollapsed = content.classList.contains('collapsed');
+        if (justCollapsed) {
+            collapseTimer = setTimeout(function () {
+                if (content.classList.contains('collapsed')) {
+                    content.style.display = 'none';
+                }
+            }, 450);
+        }
+    });
+});
+
+// ============================================
 // COLAPSAR/EXPANDIR - Función global
 // ============================================
 window.toggleAllSections = function () {
