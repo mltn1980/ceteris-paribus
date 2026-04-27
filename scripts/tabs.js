@@ -44,7 +44,7 @@ function initTabSystem({ tabSelector, contentSelector, dataAttr, activeColor, ex
             // Deslizar el tab activo al borde izquierdo del contenedor
             const container = this.parentElement;
             const tabLeft = this.getBoundingClientRect().left - container.getBoundingClientRect().left + container.scrollLeft;
-            container.scrollTo({ left: tabLeft, behavior: 'smooth' });
+            container.scrollTo({ left: tabLeft });
         });
     });
 
@@ -108,9 +108,7 @@ initTabSystem({
 });
 
 // ============================================
-// COLAPSAR/EXPANDIR - Animación JS con height real
-// Reemplaza el approach max-height (frágil con canvas y scroll containers)
-// por una animación de height medida que garantiza collapse completo.
+// COLAPSAR/EXPANDIR
 // ============================================
 function toggleCollapsible(header) {
     const content = header.nextElementSibling;
@@ -120,52 +118,30 @@ function toggleCollapsible(header) {
     const isCollapsed = content.classList.contains('collapsed');
 
     if (isCollapsed) {
-        // EXPANDIR
         content.style.display = '';
-        content.style.overflow = 'hidden';
-        content.style.height = '0px';
-        content.style.opacity = '0';
-        content.getBoundingClientRect(); // force reflow
-        const target = content.scrollHeight;
-        content.style.transition = 'height 0.35s ease, opacity 0.3s ease';
-        content.style.height = target + 'px';
-        content.style.opacity = '1';
         content.classList.remove('collapsed');
         header.classList.remove('collapsed');
         if (toggleText) toggleText.textContent = '▲ Ocultar';
-        content.addEventListener('transitionend', function done(e) {
-            if (e.propertyName !== 'height') return;
-            content.style.height = '';
-            content.style.overflow = '';
-            content.style.transition = '';
-            content.removeEventListener('transitionend', done);
-        });
     } else {
-        // COLAPSAR
-        content.style.overflow = 'hidden';
-        content.style.height = content.scrollHeight + 'px';
-        content.style.transition = 'height 0.35s ease, opacity 0.3s ease';
-        content.getBoundingClientRect(); // force reflow
-        content.style.height = '0px';
-        content.style.opacity = '0';
+        content.style.display = 'none';
         content.classList.add('collapsed');
         header.classList.add('collapsed');
         if (toggleText) toggleText.textContent = '▼ Mostrar';
-        content.addEventListener('transitionend', function done(e) {
-            if (e.propertyName !== 'height') return;
-            content.style.display = 'none';
-            content.style.height = '';
-            content.style.opacity = '';
-            content.style.overflow = '';
-            content.style.transition = '';
-            content.removeEventListener('transitionend', done);
-        });
     }
 }
 
-// Reemplaza los onclick inline de cada sección colapsable
+// Envuelve cada sección en un wrapper para que position:sticky quede acotado al section
 document.querySelectorAll('.section-label.collapsible').forEach(function (header) {
-    header.onclick = function () { toggleCollapsible(header); };
+    const content = header.nextElementSibling;
+    if (content && content.classList.contains('collapsible-content')) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section-wrapper';
+        header.parentNode.insertBefore(wrapper, header);
+        wrapper.appendChild(header);
+        wrapper.appendChild(content);
+    }
+    header.onclick = null;
+    header.addEventListener('click', function () { toggleCollapsible(header); });
 });
 
 // ============================================
