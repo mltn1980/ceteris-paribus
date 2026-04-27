@@ -554,9 +554,10 @@ function createFinDepositosChart() {
 function createFinCreditoPesosChart() {
     const ctx = document.getElementById('fin-credito-pesos-chart');
     if (!ctx) return;
-    const TC_REF = 42; // pesos/USD, promedio aproximado mar-25/mar-26
+    // TC promedio mensual BCU (pesos/USD) — mar-25 a mar-26
+    const finTC = [43.07, 43.49, 43.85, 43.52, 43.11, 42.58, 41.97, 41.41, 40.85, 40.10, 39.51, 38.40, 40.258];
     const totPesos = finActPesosEmp.map((e, i) => e + finActPesosFam[i]);
-    const totUSDenPesos = finActUSD.map(u => u * TC_REF);
+    const totUSDenPesos = finActUSD.map((u, i) => u * finTC[i]);
     const gran = totPesos.map((p, i) => p + totUSDenPesos[i]);
     const pctPesos = totPesos.map((p, i) => parseFloat((p / gran[i] * 100).toFixed(1)));
     const pctUSD   = totUSDenPesos.map((u, i) => parseFloat((u / gran[i] * 100).toFixed(1)));
