@@ -152,6 +152,9 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 /* ── SUB-TABS INTERNOS (Deuda, PBI, etc.) ── */
 .uru-sub-tabs{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:2px solid var(--border);margin-bottom:20px;scrollbar-width:none;}
 .uru-sub-tabs::-webkit-scrollbar{display:none;}
+.fin-tab{flex-shrink:0;text-align:center;padding:10px 16px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;border-radius:6px 6px 0 0;}
+.fin-tab:hover{color:var(--text);background:var(--surface2);}
+.fin-tab.active{color:#0f5c6b;border-bottom-color:#0f5c6b;background:#e6f4f5;}
 .deuda-tab{flex-shrink:0;text-align:center;padding:10px 16px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;border-radius:6px 6px 0 0;}
 .deuda-tab:hover{color:var(--text);background:var(--surface2);}
 .deuda-tab.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-l);}
@@ -224,7 +227,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 @media(max-width:680px){
   .uru-stat-grid{grid-template-columns:1fr;}
   .ratings-grid{grid-template-columns:1fr 1fr;}
-  .deuda-tab,.pbi-tab{flex:none;flex-shrink:0;}
+  .deuda-tab,.pbi-tab,.fin-tab{flex:none;flex-shrink:0;}
 }
 
 /* ── PBI sub-tabs ── */
@@ -1514,6 +1517,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <button class="uruguay-tab" data-uruguay="pbi" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">PBI</button>
         <button class="uruguay-tab" data-uruguay="tcr" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Tipo de Cambio</button>
         <button class="uruguay-tab" data-uruguay="afap" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">AFAPs</button>
+        <button class="uruguay-tab" data-uruguay="financiero" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;">Sector Financiero</button>
     </div>
 
     <!-- Tab: Informes -->
@@ -2299,6 +2303,201 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         </table>
         <p class="fuente" style="margin-top:8px;">Nota: Crecimiento tiene más afiliados que Acumulación pero menor fondo, reflejando saldos promedio más bajos al ser el subfondo para trabajadores más jóvenes. Voluntario es patrimonio separado (Ley 20.130, dic-2023).</p>
     </div>
+
+    <div class="uruguay-content" data-uruguay="financiero" style="display:none;">
+
+    <!-- Tabs Financiero -->
+    <div class="uru-sub-tabs">
+        <button class="fin-tab active" data-fin="panorama">📊 Panorama</button>
+        <button class="fin-tab" data-fin="credito">💳 Crédito</button>
+        <button class="fin-tab" data-fin="depositos">🏛️ Depósitos</button>
+    </div>
+
+    <!-- ── Tab: Panorama ─────────────────────────────────────── -->
+    <div class="fin-content" data-fin="panorama">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
+            Sistema bancario uruguayo — Sector No Financiero. Fuente: <strong style="color:var(--text);">BCU / Superintendencia de Servicios Financieros</strong>.
+            Crédito: <strong style="color:var(--text);">marzo 2026</strong> · Depósitos: <strong style="color:var(--text);">febrero 2026</strong>.
+        </p>
+
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Crédito mensual ($)</div>
+                <div class="uru-stat-value" style="font-size:1.4rem;">$43.488M</div>
+                <div class="uru-stat-desc">Capitales operados · mar 2026</div>
+                <div class="uru-stat-change up">▲ +52,4% vs mar-25</div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Crédito mensual (U$S)</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">USD 2.487M</div>
+                <div class="uru-stat-desc">Capitales operados · mar 2026</div>
+                <div class="uru-stat-change up">▲ +30,9% vs mar-25</div>
+            </div>
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Depósitos totales SNF</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$1.920.789M</div>
+                <div class="uru-stat-desc">Stock sistema bancario · feb 2026</div>
+                <div class="uru-stat-change down">▼ −0,3% vs feb-25</div>
+            </div>
+            <div class="uru-stat-card card-amber">
+                <div class="uru-stat-label">Dolarización depósitos</div>
+                <div class="uru-stat-value">67,8%</div>
+                <div class="uru-stat-desc">Moneda extranjera sobre total · feb 2026</div>
+                <div class="uru-stat-change down">▼ −2,1 pp vs feb-25</div>
+            </div>
+        </div>
+
+        <h4 class="uru-section-h4 blue">Depósitos SNF — Sistema bancario (feb-25 · feb-26)</h4>
+        <div style="position:relative;height:260px;margin-bottom:8px;">
+            <canvas id="fin-depositos-chart"></canvas>
+        </div>
+        <p class="fuente" style="margin-bottom:20px;">Miles de millones de pesos. Moneda Extranjera expresada en pesos corrientes. Fuente: BCU, Depósitos Sector No Financiero.</p>
+
+        <div class="uru-info-box">
+            <h4>📋 Notas metodológicas</h4>
+            <p><strong>Crédito (capitales operados):</strong> Volumen de operaciones de crédito concertadas en el mes — es un flujo, no el saldo de cartera. Varía significativamente por estacionalidad y grandes operaciones puntuales. <strong>Depósitos:</strong> Saldo a fin de mes del Sector No Financiero en el sistema bancario. IFEs excluidas (inactivas desde oct-2022).</p>
+        </div>
+    </div>
+
+    <!-- ── Tab: Crédito ──────────────────────────────────────── -->
+    <div class="fin-content" data-fin="credito" style="display:none;">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
+            Capitales operados en créditos bancarios al Sector No Financiero. Datos <strong style="color:var(--text);">marzo 2026</strong>.
+        </p>
+
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Empresas — Pesos</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">$29.904M</div>
+                <div class="uru-stat-desc">68,8% del crédito en $ · mar 2026</div>
+                <div class="uru-stat-change up">▲ +23,5% vs mar-25</div>
+            </div>
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Familias — Pesos</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">$13.584M</div>
+                <div class="uru-stat-desc">31,2% del crédito en $ · mar 2026</div>
+                <div class="uru-stat-change up">▲ +215,3% vs mar-25</div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Empresas — Dólares</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">USD 2.432M</div>
+                <div class="uru-stat-desc">97,8% del crédito en U$S · mar 2026</div>
+                <div class="uru-stat-change up">▲ +30,8% vs mar-25</div>
+            </div>
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Familias — Dólares</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">USD 55M</div>
+                <div class="uru-stat-desc">2,2% del crédito en U$S · mar 2026</div>
+                <div class="uru-stat-change up">▲ +39,1% vs mar-25</div>
+            </div>
+        </div>
+
+        <h4 class="uru-section-h4 blue">Crédito en pesos — Empresas y Familias (mar-25 · mar-26)</h4>
+        <div style="position:relative;height:260px;margin-bottom:8px;">
+            <canvas id="fin-credito-pesos-chart"></canvas>
+        </div>
+        <p class="fuente" style="margin-bottom:20px;">Millones de pesos. Capitales operados mensualmente (flujo). Nota: picos en set/nov/dic reflejan grandes operaciones puntuales.</p>
+
+        <h4 class="uru-section-h4 blue">Crédito en dólares — Total (mar-25 · mar-26)</h4>
+        <div style="position:relative;height:220px;margin-bottom:8px;">
+            <canvas id="fin-credito-usd-chart"></canvas>
+        </div>
+        <p class="fuente" style="margin-bottom:24px;">Millones de dólares. 97–98% corresponde a empresas.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div>
+                <h4 class="uru-section-h4 amber">Empresas por sector ($) · mar-26</h4>
+                <table class="sector-table">
+                    <thead><tr><th style="text-align:left;">Sector</th><th>Mill. $</th><th>%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Comercio y Servicios</td><td class="val-pos">20.312</td><td class="val-neu">92,9%</td></tr>
+                        <tr><td>Industria Manufacturera</td><td class="val-neu">1.370</td><td class="val-neu">6,3%</td></tr>
+                        <tr><td>Agropecuario</td><td class="val-neu">161</td><td class="val-neu">0,7%</td></tr>
+                        <tr class="total"><td>Subtotal clasificado</td><td class="val-neu">21.843</td><td class="val-neu">73,0%</td></tr>
+                    </tbody>
+                </table>
+                <p class="fuente">73% del crédito empresarial con sector identificado.</p>
+            </div>
+            <div>
+                <h4 class="uru-section-h4 amber">Empresas por tamaño ($) · mar-26</h4>
+                <table class="sector-table">
+                    <thead><tr><th style="text-align:left;">Tamaño</th><th>Mill. $</th><th>%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Gran Empresa</td><td class="val-pos">17.894</td><td class="val-neu">71,5%</td></tr>
+                        <tr><td>Mediana Empresa</td><td class="val-neu">4.339</td><td class="val-neu">17,3%</td></tr>
+                        <tr><td>Pequeña Empresa</td><td class="val-neu">1.845</td><td class="val-neu">7,4%</td></tr>
+                        <tr><td>Microempresa</td><td class="val-neu">949</td><td class="val-neu">3,8%</td></tr>
+                        <tr class="total"><td>Subtotal clasificado</td><td class="val-neu">25.027</td><td class="val-neu">83,7%</td></tr>
+                    </tbody>
+                </table>
+                <p class="fuente">84% del crédito empresarial con tamaño identificado.</p>
+            </div>
+        </div>
+        <p class="fuente" style="margin-top:12px;">Fuente: BCU — Tasas de Interés Bancarias, Anexo I: Capitales Operados, marzo 2026.</p>
+    </div>
+
+    <!-- ── Tab: Depósitos ────────────────────────────────────── -->
+    <div class="fin-content" data-fin="depositos" style="display:none;">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
+            Depósitos del Sector No Financiero en el sistema bancario uruguayo. Saldo fin de mes en millones de pesos. Datos <strong style="color:var(--text);">febrero 2026</strong>.
+        </p>
+
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Bancos Privados</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$1.037.041M</div>
+                <div class="uru-stat-desc">54,0% del sistema · feb 2026</div>
+            </div>
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Bancos Públicos</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$882.109M</div>
+                <div class="uru-stat-desc">45,9% del sistema · feb 2026</div>
+            </div>
+            <div class="uru-stat-card card-amber">
+                <div class="uru-stat-label">Depósitos a la Vista</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$1.379.841M</div>
+                <div class="uru-stat-desc">74,9% del subtotal vista+plazo · feb 2026</div>
+            </div>
+            <div class="uru-stat-card card-amber">
+                <div class="uru-stat-label">Depósitos a Plazo</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$463.328M</div>
+                <div class="uru-stat-desc">25,1% del subtotal vista+plazo · feb 2026</div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:start;">
+            <div>
+                <h4 class="uru-section-h4 blue">Por institución · feb-26</h4>
+                <div style="position:relative;height:240px;">
+                    <canvas id="fin-instituciones-chart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h4 class="uru-section-h4 blue">MN vs ME por institución · feb-26</h4>
+                <table class="sector-table" style="margin-top:8px;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;">Institución</th>
+                            <th>MN (M$)</th>
+                            <th>ME (M$)</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Bancos Privados</td><td class="val-neu">309.677</td><td class="val-neu">727.364</td><td class="val-pos">1.037.041</td></tr>
+                        <tr><td>Bancos Públicos</td><td class="val-neu">308.850</td><td class="val-neu">573.259</td><td class="val-pos">882.109</td></tr>
+                        <tr><td>Cas. Financieras</td><td class="val-neu">—</td><td class="val-neu">1.102</td><td class="val-neu">1.102</td></tr>
+                        <tr><td>Cooperativas</td><td class="val-neu">421</td><td class="val-neu">115</td><td class="val-neu">536</td></tr>
+                        <tr class="total"><td>TOTAL</td><td class="val-neu">618.948</td><td class="val-neu">1.301.840</td><td class="val-neu">1.920.789</td></tr>
+                    </tbody>
+                </table>
+                <p class="fuente" style="margin-top:8px;">ME en pesos corrientes. TC feb-26: $38,40/USD. ME equivale a ≈ USD 33.899M.</p>
+            </div>
+        </div>
+        <p class="fuente">Fuente: BCU — Depósitos Sector No Financiero, febrero 2026.</p>
+    </div>
+
+    </div><!-- /uruguay-content financiero -->
 
     </div><!-- /collapsible-content Uruguay -->
 

@@ -482,6 +482,196 @@ function createAFAPChart() {
     });
 }
 
+// ============================================
+// GRÁFICOS SECTOR FINANCIERO - BCU
+// ============================================
+
+const finDepMeses = ['Feb-25','Mar-25','Abr-25','May-25','Jun-25','Jul-25','Ago-25','Set-25','Oct-25','Nov-25','Dic-25','Ene-26','Feb-26'];
+const finDepMN =  [581,552,548,549,563,557,559,569,575,592,610,610,619];
+const finDepME = [1347,1351,1355,1356,1311,1346,1343,1342,1354,1334,1271,1304,1302];
+
+const finMeses = ['Mar-25','Abr-25','May-25','Jun-25','Jul-25','Ago-25','Set-25','Oct-25','Nov-25','Dic-25','Ene-26','Feb-26','Mar-26'];
+const finActPesosEmp = [24219,27954,25754,27888,20354,19420,20788,28294,29108,34803,26123,27000,29904];
+const finActPesosFam = [4308,4180,3995,3873,4015,4114,12572,10486,25815,16718,4798,4296,13584];
+const finActUSD = [1899,2012,2281,2510,2257,2162,2287,2453,2423,2836,2187,2130,2487];
+
+function createFinDepositosChart() {
+    const ctx = document.getElementById('fin-depositos-chart');
+    if (!ctx) return;
+    const totales = finDepMN.map((mn, i) => mn + finDepME[i]);
+    const pctMN = finDepMN.map((mn, i) => parseFloat((mn / totales[i] * 100).toFixed(1)));
+    const pctME = finDepME.map((me, i) => parseFloat((me / totales[i] * 100).toFixed(1)));
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: finDepMeses,
+            datasets: [
+                {
+                    label: 'Moneda Nacional (%)',
+                    data: pctMN,
+                    backgroundColor: '#0f5c6b',
+                    borderRadius: 3,
+                    stack: 'dep'
+                },
+                {
+                    label: 'Moneda Extranjera (%)',
+                    data: pctME,
+                    backgroundColor: '#4ab8cb',
+                    borderRadius: 3,
+                    stack: 'dep'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
+                datalabels: {
+                    display: true,
+                    formatter: v => v.toFixed(1) + '%',
+                    color: '#fff',
+                    font: { size: 10, weight: '600' }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => {
+                            const i = ctx.dataIndex;
+                            const raw = ctx.datasetIndex === 0 ? finDepMN[i] : finDepME[i];
+                            return ` ${ctx.dataset.label}: ${ctx.raw}% ($${raw.toLocaleString('es-UY')} MM)`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { stacked: true, ticks: { font: { size: 10 }, color: '#666' }, grid: { display: false } },
+                y: { stacked: true, max: 100, ticks: { font: { size: 10 }, color: '#666', callback: v => v + '%' }, grid: { color: '#f0f0f0' } }
+            }
+        }
+    });
+}
+
+function createFinCreditoPesosChart() {
+    const ctx = document.getElementById('fin-credito-pesos-chart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: finMeses,
+            datasets: [
+                {
+                    label: 'Empresas ($M)',
+                    data: finActPesosEmp,
+                    backgroundColor: '#0f5c6b',
+                    borderRadius: 3,
+                    stack: 'cr'
+                },
+                {
+                    label: 'Familias ($M)',
+                    data: finActPesosFam,
+                    backgroundColor: '#4ab8cb',
+                    borderRadius: 3,
+                    stack: 'cr'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
+                datalabels: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label}: $${ctx.raw.toLocaleString('es-UY')} M`
+                    }
+                }
+            },
+            scales: {
+                x: { stacked: true, ticks: { font: { size: 10 }, color: '#666' }, grid: { display: false } },
+                y: { stacked: true, ticks: { font: { size: 10 }, color: '#666', callback: v => '$' + (v/1000).toFixed(0) + 'K' }, grid: { color: '#f0f0f0' } }
+            }
+        }
+    });
+}
+
+function createFinCreditoUSDChart() {
+    const ctx = document.getElementById('fin-credito-usd-chart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: finMeses,
+            datasets: [{
+                label: 'Crédito total USD (MM USD)',
+                data: finActUSD,
+                borderColor: '#0f5c6b',
+                backgroundColor: 'rgba(15,92,107,0.08)',
+                borderWidth: 2.5,
+                pointRadius: 4,
+                pointBackgroundColor: '#0f5c6b',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
+                datalabels: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` USD ${ctx.raw.toLocaleString('es-UY')} MM`
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { font: { size: 10 }, color: '#666' }, grid: { display: false } },
+                y: { ticks: { font: { size: 10 }, color: '#666', callback: v => 'USD ' + v }, grid: { color: '#f0f0f0' } }
+            }
+        }
+    });
+}
+
+function createFinInstitucionesChart() {
+    const ctx = document.getElementById('fin-instituciones-chart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Bancos Privados', 'Bancos Públicos', 'Casas Financieras', 'Cooperativas'],
+            datasets: [{
+                data: [1037041, 882109, 1102, 536],
+                backgroundColor: ['#0f5c6b', '#4ab8cb', '#f0a500', '#2a7235'],
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
+                datalabels: {
+                    display: true,
+                    formatter: (value, ctx) => {
+                        const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                        return (value / total * 100).toFixed(1) + '%';
+                    },
+                    color: '#fff',
+                    font: { size: 13, weight: '700' }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` $${(ctx.raw / 1000).toFixed(0)}M MM (${(ctx.raw / 1920788 * 100).toFixed(1)}%)`
+                    }
+                }
+            }
+        }
+    });
+}
+
 // Inicializar cuando Chart.js esté listo
 window.addEventListener('load', function() {
     if (typeof Chart !== 'undefined') {
@@ -489,5 +679,9 @@ window.addEventListener('load', function() {
         createTCREChart();
         createAFAPChart();
         createNovilloTipoChart();
+        createFinDepositosChart();
+        createFinCreditoPesosChart();
+        createFinCreditoUSDChart();
+        createFinInstitucionesChart();
     }
 });

@@ -95,6 +95,13 @@ initTabSystem({
     activeColor: 'var(--blue)'
 });
 
+initTabSystem({
+    tabSelector: '.fin-tab',
+    contentSelector: '.fin-content',
+    dataAttr: 'data-fin',
+    activeColor: '#0f5c6b'
+});
+
 // ============================================
 // COLAPSAR/EXPANDIR - Función global
 // ============================================
