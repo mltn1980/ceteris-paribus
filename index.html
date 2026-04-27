@@ -64,21 +64,33 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
         nav a.active[href="#medios"]{background:var(--blue);}
         nav a.active[href="#redes"]{background:var(--dark);}
  main{max-width:1000px;margin:0 auto;padding:40px 24px 72px;}
-.section-label{display:flex;align-items:center;gap:10px;margin:40px 0 18px;padding-bottom:8px;border-bottom:2px solid var(--border);}
-.section-label.collapsible{cursor:pointer;user-select:none;position:sticky;top:60px;z-index:10;background:var(--bg);}
-.section-label.collapsible:hover{opacity:0.8;}
+.section-label{display:flex;align-items:center;gap:12px;margin:48px 0 20px;padding:14px 20px;background:var(--surface2);border-radius:10px;border-left:5px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.section-label.collapsible{cursor:pointer;user-select:none;position:sticky;top:60px;z-index:10;}
+.section-label.collapsible:hover{opacity:0.88;}
 .section-label .toggle-text{
   margin-left:auto;font-size:0.68rem;font-weight:700;
   color:#ff6b00;background:#fff3e6;
   padding:4px 12px;border-radius:6px;
   letter-spacing:0.03em;transition:all 0.2s;
   font-family:'IBM Plex Mono',monospace;
+  white-space:nowrap;
 }
 .section-label.collapsible:hover .toggle-text{background:#ffe8cc;}
 .section-label.collapsed .chevron{transform:rotate(-90deg);}
 .section-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.section-label h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;}
+.section-label h2{font-family:'DM Serif Display',serif;font-size:1.55rem;font-weight:400;margin:0;}
 .section-label span.count{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:500;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:4px;}
+/* Color tintado por sección */
+#precios.section-label{border-left-color:#c8963e;background:var(--amber-l);}
+#clima.section-label{border-left-color:#1b5e85;background:var(--blue-l);}
+#ganaderia.section-label{border-left-color:var(--red);background:var(--red-l);}
+#lacteos.section-label{border-left-color:#4a90e2;background:var(--blue-l);}
+#commodities.section-label{border-left-color:var(--amber);background:var(--amber-l);}
+#uruguay.section-label{border-left-color:var(--green);background:var(--green-l);}
+#global.section-label{border-left-color:var(--blue);background:var(--blue-l);}
+#productividad.section-label{border-left-color:var(--purple);background:var(--purple-l);}
+#medios.section-label{border-left-color:var(--blue);background:var(--blue-l);}
+#redes.section-label{border-left-color:var(--dark);background:var(--surface2);}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s;}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.07);}

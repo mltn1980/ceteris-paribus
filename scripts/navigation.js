@@ -32,7 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // El header es sticky: usamos getBoundingClientRect del wrapper (no sticky) para la posición real
+                const wrapper = targetSection.parentElement && targetSection.parentElement.classList.contains('section-wrapper')
+                    ? targetSection.parentElement : targetSection;
+                const rect = wrapper.getBoundingClientRect();
+                window.scrollTo({ top: Math.max(0, window.scrollY + rect.top - 8), behavior: 'smooth' });
             }
 
             clearTimeout(clickTimer);
