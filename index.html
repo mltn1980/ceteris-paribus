@@ -77,12 +77,10 @@ nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop
 .section-label.collapsible:hover .toggle-text{background:#ffe8cc;}
 .section-label.collapsed .chevron{transform:rotate(-90deg);}
 .collapsible-content{
-  max-height:20000px;overflow:hidden;
-  transition:max-height 0.4s ease, opacity 0.3s ease;
-  opacity:1;
+  overflow:hidden;
 }
 .collapsible-content.collapsed{
-  max-height:0;opacity:0;margin-bottom:0;overflow:hidden;
+  display:none;
 }
 .section-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .section-label h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;}

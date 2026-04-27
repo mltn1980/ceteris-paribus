@@ -108,37 +108,64 @@ initTabSystem({
 });
 
 // ============================================
-// COLAPSAR/EXPANDIR - Mejora para escape de canvas/scroll containers
-// Agrega display:none al terminar la animación de colapso para garantizar
-// que canvas de Chart.js y scroll containers queden completamente ocultos.
+// COLAPSAR/EXPANDIR - Animación JS con height real
+// Reemplaza el approach max-height (frágil con canvas y scroll containers)
+// por una animación de height medida que garantiza collapse completo.
 // ============================================
-document.querySelectorAll('.section-label.collapsible').forEach(function (header) {
+function toggleCollapsible(header) {
     const content = header.nextElementSibling;
+    const toggleText = header.querySelector('.toggle-text');
     if (!content) return;
-    let collapseTimer = null;
 
-    // Fase capture: se ejecuta ANTES del onclick inline → permite quitar display:none
-    // antes de que arranque la animación de expansión
-    header.addEventListener('click', function () {
-        const aboutToExpand = content.classList.contains('collapsed');
-        if (aboutToExpand) {
-            clearTimeout(collapseTimer);
-            content.style.display = '';
-            content.getBoundingClientRect(); // fuerza reflow para que la transición tenga punto de inicio
-        }
-    }, { capture: true });
+    const isCollapsed = content.classList.contains('collapsed');
 
-    // Fase bubble: se ejecuta DESPUÉS del onclick inline → agrega display:none al colapsar
-    header.addEventListener('click', function () {
-        const justCollapsed = content.classList.contains('collapsed');
-        if (justCollapsed) {
-            collapseTimer = setTimeout(function () {
-                if (content.classList.contains('collapsed')) {
-                    content.style.display = 'none';
-                }
-            }, 450);
-        }
-    });
+    if (isCollapsed) {
+        // EXPANDIR
+        content.style.display = '';
+        content.style.overflow = 'hidden';
+        content.style.height = '0px';
+        content.style.opacity = '0';
+        content.getBoundingClientRect(); // force reflow
+        const target = content.scrollHeight;
+        content.style.transition = 'height 0.35s ease, opacity 0.3s ease';
+        content.style.height = target + 'px';
+        content.style.opacity = '1';
+        content.classList.remove('collapsed');
+        header.classList.remove('collapsed');
+        if (toggleText) toggleText.textContent = '▲ Ocultar';
+        content.addEventListener('transitionend', function done(e) {
+            if (e.propertyName !== 'height') return;
+            content.style.height = '';
+            content.style.overflow = '';
+            content.style.transition = '';
+            content.removeEventListener('transitionend', done);
+        });
+    } else {
+        // COLAPSAR
+        content.style.overflow = 'hidden';
+        content.style.height = content.scrollHeight + 'px';
+        content.style.transition = 'height 0.35s ease, opacity 0.3s ease';
+        content.getBoundingClientRect(); // force reflow
+        content.style.height = '0px';
+        content.style.opacity = '0';
+        content.classList.add('collapsed');
+        header.classList.add('collapsed');
+        if (toggleText) toggleText.textContent = '▼ Mostrar';
+        content.addEventListener('transitionend', function done(e) {
+            if (e.propertyName !== 'height') return;
+            content.style.display = 'none';
+            content.style.height = '';
+            content.style.opacity = '';
+            content.style.overflow = '';
+            content.style.transition = '';
+            content.removeEventListener('transitionend', done);
+        });
+    }
+}
+
+// Reemplaza los onclick inline de cada sección colapsable
+document.querySelectorAll('.section-label.collapsible').forEach(function (header) {
+    header.onclick = function () { toggleCollapsible(header); };
 });
 
 // ============================================
@@ -146,24 +173,13 @@ document.querySelectorAll('.section-label.collapsible').forEach(function (header
 // ============================================
 window.toggleAllSections = function () {
     const collapsibleSections = document.querySelectorAll('.section-label.collapsible');
-    const collapsibleContents = document.querySelectorAll('.collapsible-content');
     const toggleText = document.getElementById('toggleText');
-
     const anyExpanded = Array.from(collapsibleSections).some(s => !s.classList.contains('collapsed'));
 
-    collapsibleSections.forEach(section => {
-        const toggleTextEl = section.querySelector('.toggle-text');
-        if (anyExpanded) {
-            section.classList.add('collapsed');
-            if (toggleTextEl) toggleTextEl.textContent = '▼ Mostrar';
-        } else {
-            section.classList.remove('collapsed');
-            if (toggleTextEl) toggleTextEl.textContent = '▲ Ocultar';
-        }
-    });
-
-    collapsibleContents.forEach(content => {
-        content.classList.toggle('collapsed', anyExpanded);
+    collapsibleSections.forEach(function (header) {
+        const isCollapsed = header.classList.contains('collapsed');
+        if (anyExpanded && !isCollapsed) toggleCollapsible(header);
+        if (!anyExpanded && isCollapsed) toggleCollapsible(header);
     });
 
     if (toggleText) toggleText.textContent = anyExpanded ? 'Expandir todo' : 'Colapsar todo';
