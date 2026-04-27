@@ -1,40 +1,95 @@
 {
-  "actualizado": "2026-04-25",
+  "actualizado": "2026-04-27",
   "alerta": {
     "activa": true,
     "tipo": "viento_fuerte",
-    "nivel": "naranja",
-    "titulo": "Ciclón extratropical — Vientos 70–100 km/h",
-    "descripcion": "Ciclón extratropical intenso en el Atlántico Sur. Vientos del SW con ráfagas de 70–100 km/h sobre Uruguay. Precipitaciones asociadas.",
-    "vigencia": "26–27 abr 2026",
+    "nivel": "amarillo",
+    "titulo": "Ciclón extratropical — Vientos amainando",
+    "descripcion": "Ciclón extratropical en el Atlántico Sur. Vientos del SW 30-50 km/h con ráfagas de hasta 70 km/h, amainando durante el día. Probables precipitaciones.",
+    "vigencia": "27 abr 2026",
     "fuente": "INUMET / MetSul"
   },
   "enso": {
     "fase": "Neutral → El Niño",
     "nino34": 0.5,
-    "nino34_anterior": -0.2,
+    "nino34_anterior": 0.5,
     "nino34_semana": "15 abr 2026",
     "perspectiva_label": "El Niño",
     "perspectiva_pct": "88–94%",
     "fuente": "IRI/Columbia",
     "fuente_fecha": "20 abr 2026",
     "proximo_update": "~20 may 2026",
-    "nota_extra": "Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este — potencial El Niño más intenso que el pronóstico base."
+    "nota_extra": "Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este — potencial El Niño más intenso que el pronóstico base. Niño 1+2 en +1.8°C, Niño 3 en +0.6°C, Niño 4 en +0.9°C."
   },
   "probabilidades": [
-    { "label": "Abr-May-Jun 2026", "actual": true,  "el_nino": 70, "neutral": 30, "la_nina": 0, "descripcion": "El Niño ya dominante" },
-    { "label": "May-Jun-Jul 2026", "actual": false, "el_nino": 88, "neutral": 12, "la_nina": 0, "descripcion": "Consolidándose" },
-    { "label": "Jun-Jul-Ago 2026", "actual": false, "el_nino": 92, "neutral":  8, "la_nina": 0, "descripcion": "Establecido — pico de probabilidad" },
-    { "label": "Jul-Ago-Set 2026", "actual": false, "el_nino": 94, "neutral":  6, "la_nina": 0, "descripcion": "Pleno — máxima certeza" },
-    { "label": "Oct-Nov-Dic 2026", "actual": false, "el_nino": 90, "neutral":  9, "la_nina": 1, "descripcion": "Continúa" }
+    {
+      "label": "Abr-May-Jun 2026",
+      "actual": true,
+      "el_nino": 70,
+      "neutral": 30,
+      "la_nina": 0,
+      "descripcion": "El Niño ya dominante"
+    },
+    {
+      "label": "May-Jun-Jul 2026",
+      "actual": false,
+      "el_nino": 88,
+      "neutral": 12,
+      "la_nina": 0,
+      "descripcion": "Consolidándose"
+    },
+    {
+      "label": "Jun-Jul-Ago 2026",
+      "actual": false,
+      "el_nino": 92,
+      "neutral": 8,
+      "la_nina": 0,
+      "descripcion": "Establecido — pico de probabilidad"
+    },
+    {
+      "label": "Jul-Ago-Set 2026",
+      "actual": false,
+      "el_nino": 94,
+      "neutral": 6,
+      "la_nina": 0,
+      "descripcion": "Pleno — máxima certeza"
+    },
+    {
+      "label": "Oct-Nov-Dic 2026",
+      "actual": false,
+      "el_nino": 90,
+      "neutral": 9,
+      "la_nina": 1,
+      "descripcion": "Continúa"
+    }
   ],
   "inumet": {
     "periodo": "Abr-May-Jun 2026",
-    "temperatura": { "tendencia": "Superior a normal", "pct_superior": 45, "pct_normal": 35, "pct_inferior": 20 },
+    "temperatura": {
+      "tendencia": "Superior a normal",
+      "pct_superior": 45,
+      "pct_normal": 35,
+      "pct_inferior": 20
+    },
     "precipitaciones": {
-      "noreste": { "tendencia": "Normal a inferior", "pct_superior": 20, "pct_normal": 40, "pct_inferior": 40 },
-      "suroeste": { "tendencia": "Normal a superior", "pct_superior": 40, "pct_normal": 40, "pct_inferior": 20 },
-      "resto":    { "tendencia": "Normal",            "pct_superior": 33, "pct_normal": 34, "pct_inferior": 33 }
+      "noreste": {
+        "tendencia": "Normal a inferior",
+        "pct_superior": 20,
+        "pct_normal": 40,
+        "pct_inferior": 40
+      },
+      "suroeste": {
+        "tendencia": "Normal a superior",
+        "pct_superior": 40,
+        "pct_normal": 40,
+        "pct_inferior": 20
+      },
+      "resto": {
+        "tendencia": "Normal",
+        "pct_superior": 33,
+        "pct_normal": 34,
+        "pct_inferior": 33
+      }
     }
   }
 }
