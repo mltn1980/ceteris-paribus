@@ -1545,6 +1545,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
         <button class="uruguay-tab" data-uruguay="tcr" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;white-space:nowrap;">Tipo de Cambio</button>
         <button class="uruguay-tab" data-uruguay="afap" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;white-space:nowrap;">AFAPs</button>
         <button class="uruguay-tab" data-uruguay="financiero" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;white-space:nowrap;">Sector Financiero</button>
+        <button class="uruguay-tab" data-uruguay="ipom" style="padding:10px 20px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-bottom:-2px;transition:all 0.2s;white-space:nowrap;">IPOM / BCU</button>
     </div>
 
     <!-- Tab: Informes -->
@@ -2608,6 +2609,179 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     </div>
 
     </div><!-- /uruguay-content financiero -->
+
+    <!-- Tab: IPOM / BCU -->
+    <div class="uruguay-content" data-uruguay="ipom" style="display:none;">
+
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
+            Informe de Política Monetaria — Primer Trimestre 2026. Fuente: <strong style="color:var(--text);">Banco Central del Uruguay (BCU)</strong>.
+            COPOM: <strong style="color:var(--text);">21 de abril de 2026</strong> · Corte de datos: <strong style="color:var(--text);">abril 2026</strong>.
+        </p>
+
+        <!-- Resumen ejecutivo -->
+        <div style="background:var(--amber-l);border:1px solid var(--amber);border-left:5px solid var(--amber);border-radius:12px;padding:18px 20px;margin-bottom:24px;">
+            <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:10px;">⚠️ CONTEXTO DOMINANTE — CONFLICTO MEDIO ORIENTE</div>
+            <div style="font-size:0.92rem;color:var(--text);line-height:1.7;">
+                El IPOM está enmarcado en el shock energético global iniciado a fines de febrero 2026. El petróleo Brent cotiza en torno a <strong>USD 100/barril</strong>, un alza de ~50% desde el inicio del conflicto. Uruguay mitiga el impacto por su <strong>matriz energética 98% renovable</strong>, aunque el encarecimiento de insumos (fertilizantes, combustibles) presiona costos agropecuarios. La inflación se ubica transitoriamente debajo del piso del rango objetivo por factores volátiles, mientras el BCU mantiene la TPM en 5.75% en postura expansiva.
+            </div>
+        </div>
+
+        <!-- Métricas clave -->
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Inflación (IPC)</div>
+                <div class="uru-stat-value">2.9%</div>
+                <div class="uru-stat-desc">interanual — marzo 2026</div>
+                <div class="uru-stat-change down">↓ 0.71 p.p. vs dic 2025</div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">TPM — Tasa Política Monetaria</div>
+                <div class="uru-stat-value">5.75%</div>
+                <div class="uru-stat-desc">mantenida — 21 abr 2026</div>
+                <div class="uru-stat-change down">↓ 175 pbs desde dic 2025</div>
+            </div>
+            <div class="uru-stat-card card-amber">
+                <div class="uru-stat-label">Crecimiento PIB</div>
+                <div class="uru-stat-value">1.8%</div>
+                <div class="uru-stat-desc">2025 — revisado a la baja</div>
+                <div class="uru-stat-change neg">↓ vs 3.6% proyectado</div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Desempleo</div>
+                <div class="uru-stat-value">7.0%</div>
+                <div class="uru-stat-desc">de la PEA — dic 2025</div>
+                <div class="uru-stat-change down">↓ 0.43 p.p. en 2025</div>
+            </div>
+        </div>
+
+        <!-- INFLACIÓN -->
+        <div class="uru-section-h4" style="margin-bottom:12px;">Inflación</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px;">
+                <div style="background:var(--green-l);border-radius:8px;padding:14px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--green);margin-bottom:4px;">IPC General</div>
+                    <div style="font-size:1.6rem;font-family:'DM Serif Display',serif;color:var(--text);">2.9%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">Debajo del piso del rango (3%)</div>
+                </div>
+                <div style="background:var(--blue-l);border-radius:8px;padding:14px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--blue);margin-bottom:4px;">Núcleo (IPCX)</div>
+                    <div style="font-size:1.6rem;font-family:'DM Serif Display',serif;color:var(--text);">3.5%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">↓ 0.19 p.p. vs dic 2025</div>
+                </div>
+                <div style="background:var(--surface2);border-radius:8px;padding:14px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">No Transables</div>
+                    <div style="font-size:1.6rem;font-family:'DM Serif Display',serif;color:var(--text);">5.8%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">Dentro del rango, 6 meses seguidos</div>
+                </div>
+                <div style="background:var(--surface2);border-radius:8px;padding:14px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Precios Admin.</div>
+                    <div style="font-size:1.6rem;font-family:'DM Serif Display',serif;color:var(--text);">3.3%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">↓ desde 4.8% — baja en nafta/gasoil</div>
+                </div>
+            </div>
+            <div style="font-size:0.88rem;color:var(--text2);line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
+                <strong style="color:var(--text);">Frutas y verduras:</strong> -10% interanual (impulso bajista transitorio).
+                <strong style="color:var(--text);">Rango objetivo BCU:</strong> 3%–6%, meta 4.5%.
+                <strong style="color:var(--text);">Promedio desde jun 2023:</strong> 4.6% — expectativas de analistas a 24 meses ancladas en <strong style="color:var(--text);">4.5%</strong>, 100% dentro del rango.
+            </div>
+        </div>
+
+        <!-- POLÍTICA MONETARIA -->
+        <div class="uru-section-h4 blue" style="margin-bottom:12px;">Política Monetaria</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px;">
+                <div class="uru-stat-card card-blue" style="margin:0;">
+                    <div class="uru-stat-label">Recortes en 2026</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">-175 pbs</div>
+                    <div class="uru-stat-desc">Ene: -100 pbs → 6.5% · Mar: -75 pbs → 5.75%</div>
+                </div>
+                <div class="uru-stat-card card-blue" style="margin:0;">
+                    <div class="uru-stat-label">Tasas activas (MN)</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">10%</div>
+                    <div class="uru-stat-desc">Empresas en pesos · crédito consumo 23.5%</div>
+                </div>
+                <div class="uru-stat-card card-green" style="margin:0;">
+                    <div class="uru-stat-label">Crédito MN (real)</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">+10.2%</div>
+                    <div class="uru-stat-desc">Interanual real Q1 2026 · nominal +13.7%</div>
+                </div>
+            </div>
+            <div style="background:var(--blue-l);border-left:4px solid var(--blue);border-radius:8px;padding:14px;font-size:0.88rem;color:var(--text2);line-height:1.7;">
+                <strong style="color:var(--blue);">Postura expansiva.</strong> El COPOM mantuvo la TPM en 5.75% el 21 de abril. La estrategia es <em>prospectiva y data-dependent</em>. Las expectativas de inflación a 24 meses de los analistas permanecen ancladas en 4.5% — 70% de las respuestas entre 4.2% y 4.7%. Confianza del BCU en que la inflación se mantenga dentro del rango: <strong style="color:var(--text);">65%</strong>.
+            </div>
+        </div>
+
+        <!-- ACTIVIDAD ECONÓMICA -->
+        <div class="uru-section-h4 amber" style="margin-bottom:12px;">Actividad Económica</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px;">
+                <div style="border-left:3px solid var(--amber);padding:0 0 0 12px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--amber);">PIB 2025</div>
+                    <div style="font-size:1.5rem;font-family:'DM Serif Display',serif;">1.8%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">Sequía, ANCAP, paros celulosa</div>
+                </div>
+                <div style="border-left:3px solid var(--border);padding:0 0 0 12px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--muted);">Consumo privado</div>
+                    <div style="font-size:1.5rem;font-family:'DM Serif Display',serif;">+2.1%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">Promedio 2025, salarios reales al alza</div>
+                </div>
+                <div style="border-left:3px solid var(--border);padding:0 0 0 12px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--muted);">Inversión (FBKF)</div>
+                    <div style="font-size:1.5rem;font-family:'DM Serif Display',serif;">+0.3%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">Débil · Q4 2025: -0.9% interanual</div>
+                </div>
+                <div style="border-left:3px solid var(--border);padding:0 0 0 12px;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--muted);">Brecha producto</div>
+                    <div style="font-size:1.5rem;font-family:'DM Serif Display',serif;">-0.2%</div>
+                    <div style="font-size:0.82rem;color:var(--text2);">Q1 2026 — negativa todo el HPM</div>
+                </div>
+            </div>
+            <div style="font-size:0.88rem;color:var(--text2);line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
+                <strong style="color:var(--text);">Empleo:</strong> Tasa de empleo 60.0% · Actividad 64.5% · Desempleo 7.0% (dic 2025). Incipiente mejora en Q1 2026: empleo +0.15 p.p. en febrero.
+                <strong style="color:var(--text);"> Crecimiento tendencial:</strong> ~2% interanual (promedio histórico 2005–2025: 3.4%). Proyección 2026 revisada a la baja por sequía en soja y shock energético.
+            </div>
+        </div>
+
+        <!-- CONTEXTO EXTERNO -->
+        <div class="uru-section-h4 red" style="margin-bottom:12px;">Contexto Externo — Sector Agropecuario</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px;">
+                <div class="uru-stat-card card-red" style="margin:0;">
+                    <div class="uru-stat-label">Petróleo Brent</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">~USD 100</div>
+                    <div class="uru-stat-desc">por barril · +50% desde feb 2026</div>
+                    <div class="uru-stat-change neg">↑ 11.6% del canasto importador</div>
+                </div>
+                <div class="uru-stat-card" style="margin:0;border-top:3px solid var(--red);">
+                    <div class="uru-stat-label">Impacto en IPC</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">+0.58 p.p.</div>
+                    <div class="uru-stat-desc">acumulado a jun 2026 (corto plazo)</div>
+                    <div class="uru-stat-change neg">+1.0 p.p. a 4 trimestres (DSGE)</div>
+                </div>
+                <div class="uru-stat-card card-green" style="margin:0;">
+                    <div class="uru-stat-label">Carne y lácteos</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">↑ Mejor</div>
+                    <div class="uru-stat-desc">Perspectiva de precios mejora vs IPOM anterior</div>
+                    <div class="uru-stat-change down">Demanda internacional sostenida</div>
+                </div>
+                <div class="uru-stat-card card-amber" style="margin:0;">
+                    <div class="uru-stat-label">TCR Efectivo</div>
+                    <div class="uru-stat-value" style="font-size:1.5rem;">-6.9%</div>
+                    <div class="uru-stat-desc">Brecha respecto a fundamentales (Q1 2026)</div>
+                    <div class="uru-stat-change neg">Peso aún algo sobrevaluado</div>
+                </div>
+            </div>
+            <div style="font-size:0.88rem;color:var(--text2);line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
+                <strong style="color:var(--text);">Agro 2026:</strong> Sequía de verano golpeó la soja (pérdidas significativas en área occidental). El crédito en dólares al sector agropecuario fue el mayor contribuyente al crecimiento del crédito FX (+11.4% interanual). Exportaciones de carne y soja fueron drivers del crecimiento exportador 2025 (+1.9%).
+                <br><strong style="color:var(--text);">Balanza corriente 2025:</strong> -0.4% del PIB · Exportaciones +1.9% · Importaciones +4.1%.
+            </div>
+        </div>
+
+        <div style="text-align:center;padding:8px 0;">
+            <a href="https://www.bcu.gub.uy/Politica-Economica-y-Mercados/Paginas/Informes-de-Politica-Monetaria.aspx" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:10px 24px;background:var(--green);color:#fff;border-radius:8px;font-size:0.88rem;font-weight:600;text-decoration:none;">Ver IPOM completo en BCU →</a>
+        </div>
+
+    </div><!-- /uruguay-content ipom -->
 
     </div><!-- /collapsible-content Uruguay -->
 
