@@ -258,9 +258,24 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 <body>
 <header>
   <a href="#" style="text-decoration:none;color:inherit;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+  <svg viewBox="0 0 80 58" width="80" height="58" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 14px;">
+    <!-- Sol de Mayo simplificado -->
+    <circle cx="16" cy="29" r="6.5" fill="#f0c040"/>
+    <line x1="16" y1="19" x2="16" y2="15" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+    <line x1="16" y1="39" x2="16" y2="43" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+    <line x1="6"  y1="29" x2="2"  y2="29" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+    <line x1="26" y1="29" x2="30" y2="29" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+    <line x1="9"  y1="22" x2="6"  y2="19" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="23" y1="22" x2="26" y2="19" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="9"  y1="36" x2="6"  y2="39" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="23" y1="36" x2="26" y2="39" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Signo = -->
+    <line x1="36" y1="21" x2="74" y2="21" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <line x1="36" y1="37" x2="74" y2="37" stroke="#8cc499" stroke-width="5" stroke-linecap="round"/>
+  </svg>
   <div class="logo">ceterisparibus-uy</div>
   <h1>Informes de Mercados<br>Agrícolas, Economía <em>&amp;</em> más</h1>
-  </a>  
+  </a>
   <p class="sub">Análisis consolidados de commodities, economía y mercados agrícolas. Con foco en Uruguay y la región.</p>
 </header>
 <nav>
@@ -275,14 +290,6 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <a href="#medios">Notas en Medios</a>
     <a href="#redes">Redes</a>
 </nav>
-<div style="max-width:1000px;margin:0 auto;padding:16px 24px 0;">
-    <button id="toggleAll" onclick="toggleAllSections()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.1);" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-        <span id="toggleText">Colapsar todo</span>
-    </button>
-</div>
 <main>
 
     <!-- PRECIOS & MERCADOS -->

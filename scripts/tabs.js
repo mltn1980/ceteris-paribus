@@ -144,19 +144,3 @@ document.querySelectorAll('.section-label.collapsible').forEach(function (header
     header.addEventListener('click', function () { toggleCollapsible(header); });
 });
 
-// ============================================
-// COLAPSAR/EXPANDIR - Función global
-// ============================================
-window.toggleAllSections = function () {
-    const collapsibleSections = document.querySelectorAll('.section-label.collapsible');
-    const toggleText = document.getElementById('toggleText');
-    const anyExpanded = Array.from(collapsibleSections).some(s => !s.classList.contains('collapsed'));
-
-    collapsibleSections.forEach(function (header) {
-        const isCollapsed = header.classList.contains('collapsed');
-        if (anyExpanded && !isCollapsed) toggleCollapsible(header);
-        if (!anyExpanded && isCollapsed) toggleCollapsible(header);
-    });
-
-    if (toggleText) toggleText.textContent = anyExpanded ? 'Expandir todo' : 'Colapsar todo';
-};
