@@ -184,9 +184,23 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 .uru-stat-change{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:600;padding:3px 9px;border-radius:6px;margin-top:4px;}
 .uru-stat-change.down{background:#edf5ef;color:#2a7235;}
 .uru-stat-change.up{background:#fdf6e6;color:#a07418;}
+.uru-stat-change.pos{background:#edf5ef;color:#2a7235;}
+.uru-stat-change.neg{background:#fdeaea;color:#a02020;}
 
 /* Info boxes */
 .uru-info-box{background:var(--blue-l);border-left:4px solid var(--blue);border-radius:10px;padding:18px 22px;margin-bottom:20px;box-shadow:0 2px 10px rgba(27,94,133,0.07);}
+/* Modal clasificación CIIU */
+.ciiu-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center;}
+.ciiu-modal-overlay.open{display:flex;}
+.ciiu-modal{background:#fff;border-radius:14px;padding:28px 32px;max-width:660px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);position:relative;}
+.ciiu-modal h3{font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:16px;color:var(--text);}
+.ciiu-modal-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text2);line-height:1;}
+.ciiu-modal table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+.ciiu-modal th{text-align:left;padding:7px 10px;background:var(--surface2);color:var(--text2);font-weight:600;border-bottom:2px solid var(--border);}
+.ciiu-modal td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+.ciiu-modal td:first-child{font-weight:700;white-space:nowrap;color:#0f5c6b;width:140px;}
+.ciiu-modal td code{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;background:var(--surface2);padding:1px 5px;border-radius:3px;}
+.ciiu-link{font-size:0.78rem;color:#0f5c6b;text-decoration:underline;cursor:pointer;margin-left:10px;font-weight:500;}
 .uru-info-box.success{background:var(--green-l);border-left-color:var(--green);box-shadow:0 2px 10px rgba(42,114,53,0.07);}
 .uru-info-box h4{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:8px;color:var(--text);}
 .uru-info-box p{font-size:0.88rem;line-height:1.7;color:var(--text2);margin:0;}
@@ -2309,7 +2323,8 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <!-- Tabs Financiero -->
     <div class="uru-sub-tabs">
         <button class="fin-tab active" data-fin="panorama">📊 Panorama</button>
-        <button class="fin-tab" data-fin="credito">💳 Crédito</button>
+        <button class="fin-tab" data-fin="credito">💳 Saldo Crédito</button>
+        <button class="fin-tab" data-fin="credito-mensual">📅 Créditos Mensuales</button>
         <button class="fin-tab" data-fin="depositos">🏛️ Depósitos</button>
     </div>
 
@@ -2362,45 +2377,127 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <!-- ── Tab: Crédito ──────────────────────────────────────── -->
     <div class="fin-content" data-fin="credito" style="display:none;">
         <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
-            Capitales operados en créditos bancarios al Sector No Financiero. Datos <strong style="color:var(--text);">marzo 2026</strong>.
+            <strong style="color:var(--text);">Saldo de cartera</strong> de crédito al Sector No Financiero privado residente por sector de actividad (CIIU Rev.3).
+            Fuente: <strong style="color:var(--text);">BCU / Superintendencia de Servicios Financieros</strong> · Datos <strong style="color:var(--text);">febrero 2026</strong>.
         </p>
 
         <div class="uru-stat-grid" style="margin-bottom:24px;">
             <div class="uru-stat-card card-blue">
-                <div class="uru-stat-label">Empresas — Pesos</div>
-                <div class="uru-stat-value" style="font-size:1.35rem;">$29.904M</div>
-                <div class="uru-stat-desc">68,8% del crédito en $ · mar 2026</div>
-                <div class="uru-stat-change up">▲ +23,5% vs mar-25</div>
+                <div class="uru-stat-label">Total saldo SNF privado</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$1.036.275M</div>
+                <div class="uru-stat-desc">≈ USD 26.986M · feb 2026</div>
+                <div style="font-size:0.72rem;color:var(--text3);margin-top:4px;">TC feb-26: $38,40/USD</div>
             </div>
             <div class="uru-stat-card card-green">
-                <div class="uru-stat-label">Familias — Pesos</div>
-                <div class="uru-stat-value" style="font-size:1.35rem;">$13.584M</div>
-                <div class="uru-stat-desc">31,2% del crédito en $ · mar 2026</div>
-                <div class="uru-stat-change up">▲ +215,3% vs mar-25</div>
+                <div class="uru-stat-label">Crédito a familias</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$424.686M</div>
+                <div class="uru-stat-change pos">▲ +12,1% vs feb-25</div>
+                <div class="uru-stat-desc">≈ USD 11.059M · 41,0% del total</div>
+            </div>
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Crédito a empresas</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$611.589M</div>
+                <div class="uru-stat-desc">≈ USD 15.927M · 59,0% del total</div>
+            </div>
+            <div class="uru-stat-card card-red">
+                <div class="uru-stat-label">Industria manufacturera</div>
+                <div class="uru-stat-value" style="font-size:1.2rem;">$93.029M</div>
+                <div class="uru-stat-change neg">▼ −7,7% vs feb-25</div>
+                <div class="uru-stat-desc">≈ USD 2.423M · 9,0% del total</div>
+            </div>
+        </div>
+
+        <h4 class="uru-section-h4 blue">Saldo por sector de actividad · feb 2026 <span class="ciiu-link" onclick="document.getElementById('ciiuModal').classList.add('open')">ℹ Ver clasificación</span></h4>
+        <div style="position:relative;height:300px;margin-bottom:8px;">
+            <canvas id="fin-credito-pesos-chart"></canvas>
+        </div>
+        <p class="fuente" style="margin-bottom:20px;">Millones de pesos corrientes. Saldo fin de mes, Total MN+ME. Fuente: BCU — Crédito SNF por sector CIIU Rev.3.</p>
+
+        <h4 class="uru-section-h4 blue">Evolución por sector — feb-25 · feb-26</h4>
+        <div style="position:relative;height:260px;margin-bottom:8px;">
+            <canvas id="fin-credito-usd-chart"></canvas>
+        </div>
+        <p class="fuente" style="margin-bottom:24px;">Millones de pesos corrientes. Top 4 sectores por saldo feb-2026 (excluye familias para mayor legibilidad).</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div>
+                <h4 class="uru-section-h4 amber">Detalle crédito a familias · feb-26</h4>
+                <table class="sector-table">
+                    <thead><tr><th style="text-align:left;">Tipo</th><th>Mill. $</th><th>%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Consumo</td><td class="val-neu">210.670</td><td class="val-neu">49,6%</td></tr>
+                        <tr><td>Hipotecario</td><td class="val-neu">158.694</td><td class="val-neu">37,4%</td></tr>
+                        <tr><td>Automotores</td><td class="val-neu">55.322</td><td class="val-neu">13,0%</td></tr>
+                        <tr class="total"><td>Total familias</td><td class="val-neu">424.686</td><td class="val-neu">100%</td></tr>
+                    </tbody>
+                </table>
+                <p class="fuente">Códigos BCU 97010 (hipotecas), 97020 (autos), 97030 (consumo).</p>
+            </div>
+            <div>
+                <h4 class="uru-section-h4 amber">Todos los sectores · feb-26</h4>
+                <table class="sector-table">
+                    <thead><tr><th style="text-align:left;">Sector</th><th>Mill. $</th><th>%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Familias</td><td class="val-pos">424.686</td><td class="val-neu">41,0%</td></tr>
+                        <tr><td>Agropecuario</td><td class="val-neu">159.613</td><td class="val-neu">15,4%</td></tr>
+                        <tr><td>Comercio y hotelería</td><td class="val-neu">138.200</td><td class="val-neu">13,3%</td></tr>
+                        <tr><td>Industria manufacturera</td><td class="val-neu">93.029</td><td class="val-neu">9,0%</td></tr>
+                        <tr><td>Construcción</td><td class="val-neu">54.083</td><td class="val-neu">5,2%</td></tr>
+                        <tr><td>Otros servicios</td><td class="val-neu">46.478</td><td class="val-neu">4,5%</td></tr>
+                        <tr><td>Transporte y com.</td><td class="val-neu">38.745</td><td class="val-neu">3,7%</td></tr>
+                        <tr><td>Inmobiliario y emp.</td><td class="val-neu">37.457</td><td class="val-neu">3,6%</td></tr>
+                        <tr><td>Servicios financieros</td><td class="val-neu">31.761</td><td class="val-neu">3,1%</td></tr>
+                        <tr><td>Electricidad, gas y agua</td><td class="val-neu">12.223</td><td class="val-neu">1,2%</td></tr>
+                        <tr class="total"><td>TOTAL</td><td class="val-neu">1.036.275</td><td class="val-neu">100%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p class="fuente" style="margin-top:12px;">Fuente: BCU — Crédito al SNF por sector de actividad (CIIU Rev.3), febrero 2026.</p>
+    </div>
+
+    <!-- ── Tab: Créditos Mensuales ──────────────────────────── -->
+    <div class="fin-content" data-fin="credito-mensual" style="display:none;">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
+            <strong style="color:var(--text);">Capitales operados</strong> en créditos bancarios al Sector No Financiero — volumen mensual de operaciones concertadas (flujo, no saldo). Datos <strong style="color:var(--text);">marzo 2026</strong>.
+        </p>
+
+        <div class="uru-stat-grid" style="margin-bottom:24px;">
+            <div class="uru-stat-card card-blue">
+                <div class="uru-stat-label">Empresas — $ + UI</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">$31.092M</div>
+                <div class="uru-stat-change pos">▲ +20,5% vs mar-25</div>
+                <div class="uru-stat-desc">$29.904M en $ · $1.188M en UI · mar 2026</div>
+            </div>
+            <div class="uru-stat-card card-green">
+                <div class="uru-stat-label">Familias — $ + UI</div>
+                <div class="uru-stat-value" style="font-size:1.35rem;">$53.741M</div>
+                <div class="uru-stat-change pos">▲ +481,3% vs mar-25</div>
+                <div class="uru-stat-desc">$13.584M en $ · $40.157M en UI · mar 2026</div>
             </div>
             <div class="uru-stat-card card-blue">
                 <div class="uru-stat-label">Empresas — Dólares</div>
                 <div class="uru-stat-value" style="font-size:1.35rem;">USD 2.432M</div>
+                <div class="uru-stat-change pos">▲ +30,8% vs mar-25</div>
                 <div class="uru-stat-desc">97,8% del crédito en U$S · mar 2026</div>
-                <div class="uru-stat-change up">▲ +30,8% vs mar-25</div>
             </div>
             <div class="uru-stat-card card-green">
                 <div class="uru-stat-label">Familias — Dólares</div>
                 <div class="uru-stat-value" style="font-size:1.35rem;">USD 55M</div>
+                <div class="uru-stat-change pos">▲ +39,1% vs mar-25</div>
                 <div class="uru-stat-desc">2,2% del crédito en U$S · mar 2026</div>
-                <div class="uru-stat-change up">▲ +39,1% vs mar-25</div>
             </div>
         </div>
 
-        <h4 class="uru-section-h4 blue">Crédito total — Pesos vs USD (mar-25 · mar-26)</h4>
+        <h4 class="uru-section-h4 blue">Crédito total — Pesos, UI y USD (abr-24 · mar-26)</h4>
         <div style="position:relative;height:260px;margin-bottom:8px;">
-            <canvas id="fin-credito-pesos-chart"></canvas>
+            <canvas id="fin-cap-pesos-chart"></canvas>
         </div>
-        <p class="fuente" style="margin-bottom:20px;">Participación porcentual sobre el total de capitales operados. El crédito en USD se convierte a pesos usando el <strong>TC promedio mensual del BCU</strong> de cada mes (rango $38,05–$43,85/USD) únicamente para ponderar la participación. Picos en set/nov/dic reflejan grandes operaciones puntuales.</p>
+        <p class="fuente" style="margin-bottom:20px;">Participación porcentual sobre el total de capitales operados en $, UI y USD. El crédito en <strong>UI</strong> se convierte a pesos usando el TC UI publicado por DGI (interpolado dic-24=6,1682; valores reales DGI ene/feb/mar-26). El crédito en <strong>USD</strong> usa el TC promedio mensual BCU (rango $38,40–$43,85/USD). Picos en set/oct/nov/mar reflejan grandes operaciones puntuales.</p>
 
         <h4 class="uru-section-h4 blue">Crédito en dólares — Total (mar-25 · mar-26)</h4>
         <div style="position:relative;height:220px;margin-bottom:8px;">
-            <canvas id="fin-credito-usd-chart"></canvas>
+            <canvas id="fin-cap-usd-chart"></canvas>
         </div>
         <p class="fuente" style="margin-bottom:24px;">Millones de dólares. 97–98% corresponde a empresas.</p>
 
@@ -2742,5 +2839,58 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
   });
 })();
 </script>
+<!-- Modal clasificación sectores CIIU -->
+<div class="ciiu-modal-overlay" id="ciiuModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="ciiu-modal">
+    <button class="ciiu-modal-close" onclick="document.getElementById('ciiuModal').classList.remove('open')">✕</button>
+    <h3>Clasificación de sectores — CIIU Rev.3</h3>
+    <table>
+      <thead><tr><th>Sector</th><th>Qué incluye</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Familias</td>
+          <td>Créditos a hogares clasificados por tipo de destino según códigos BCU: <code>97010</code> hipotecario/vivienda, <code>97020</code> automotores, <code>97030</code> consumo personal. No corresponden a un sector CIIU estándar.</td>
+        </tr>
+        <tr>
+          <td>Agropecuario</td>
+          <td>Agricultura, ganadería, silvicultura y pesca. Incluye cultivos (<code>1111–1133</code>), ganadería y animales (<code>1120</code>), silvicultura y extracción de madera (<code>1211–1212</code>), pesca (<code>1221–1222</code>) y servicios agropecuarios (<code>1300</code>).</td>
+        </tr>
+        <tr>
+          <td>Comercio y hotelería</td>
+          <td>Comercio al por mayor y menor (<code>50000–52999</code>), mantenimiento y reparación de vehículos (<code>50000</code>), hoteles y restaurantes (<code>55000–55999</code>).</td>
+        </tr>
+        <tr>
+          <td>Industria manufacturera</td>
+          <td>Toda la industria de transformación: alimentos y bebidas (<code>15000–16000</code>), textil y cuero (<code>17000–19999</code>), madera y papel (<code>20000–22999</code>), química y plásticos (<code>24000–25999</code>), metalmecánica (<code>27000–29999</code>), entre otros (<code>15000–37999</code>).</td>
+        </tr>
+        <tr>
+          <td>Construcción</td>
+          <td>Construcción de edificios, obras de ingeniería civil y trabajos especializados (<code>45000–45999</code>).</td>
+        </tr>
+        <tr>
+          <td>Otros servicios</td>
+          <td>Administración pública y defensa (<code>75000</code>), educación (<code>80000</code>), salud y servicios sociales (<code>85000</code>), servicios recreativos y culturales (<code>92000</code>), servicios personales (<code>93000–96000</code>).</td>
+        </tr>
+        <tr>
+          <td>Transporte y com.</td>
+          <td>Transporte terrestre, acuático y aéreo (<code>60000–62999</code>), almacenamiento (<code>63000</code>), correos y telecomunicaciones (<code>64000</code>).</td>
+        </tr>
+        <tr>
+          <td>Inmobiliario</td>
+          <td>Actividades inmobiliarias (<code>70000</code>), alquiler de maquinaria (<code>71000</code>), informática (<code>72000</code>), investigación y desarrollo (<code>73000</code>), servicios empresariales (<code>74000</code>).</td>
+        </tr>
+        <tr>
+          <td>Serv. financieros</td>
+          <td>Intermediación financiera (<code>65000</code>), seguros y fondos de pensión (<code>66000</code>), actividades auxiliares financieras (<code>67000</code>). Excluye BCU e instituciones públicas.</td>
+        </tr>
+        <tr>
+          <td>Elec., gas y agua</td>
+          <td>Generación, transmisión y distribución de electricidad (<code>40100</code>), fabricación de gas (<code>40200</code>), suministro de vapor (<code>40300</code>), captación y distribución de agua (<code>41000</code>).</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:14px;">Fuente: BCU — Crédito al SNF por sector CIIU Rev.3. Los rangos de códigos son aproximados; el BCU utiliza una adaptación de 5 dígitos de la clasificación internacional.</p>
+  </div>
+</div>
  </body>
 </html>
