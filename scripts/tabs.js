@@ -40,6 +40,10 @@ function initTabSystem({ tabSelector, contentSelector, dataAttr, activeColor, ex
                 const extraTarget = document.querySelector(`${extraSelector}[${dataAttr}="${value}"]`);
                 if (extraTarget) extraTarget.style.display = 'block';
             }
+
+            // Deslizar el tab activo al borde izquierdo del contenedor
+            const container = this.parentElement;
+            container.scrollTo({ left: this.offsetLeft, behavior: 'smooth' });
         });
     });
 
