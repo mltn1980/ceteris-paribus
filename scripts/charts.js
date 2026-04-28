@@ -92,6 +92,7 @@ function buildRHEChart() {
             responsive: true,
             maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
+            layout: { padding: { right: 50 } },
             plugins: {
                 legend: {
                     display: true,
