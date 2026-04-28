@@ -1027,12 +1027,6 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
         <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:16px;">📊 Evolución RHE - Serie Histórica</div>
         
-        <!-- Pestañas -->
-        <div style="display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--border);">
-            <button id="tab-novillo" onclick="switchRHECategory('novillo')" style="flex:1;padding:10px 16px;background:var(--green-l);border:none;border-bottom:3px solid var(--green);color:var(--green);font-weight:600;cursor:pointer;font-size:0.75rem;text-transform:uppercase;border-radius:4px 4px 0 0;">🐂 Novillo</button>
-            <button id="tab-vaca" onclick="switchRHECategory('vaca')" style="flex:1;padding:10px 16px;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--text2);font-weight:600;cursor:pointer;font-size:0.75rem;text-transform:uppercase;border-radius:4px 4px 0 0;">🐄 Vaca</button>
-        </div>
-        
         <!-- Canvas para el gráfico -->
         <div style="position:relative;height:350px;">
             <canvas id="rhe-chart"></canvas>
