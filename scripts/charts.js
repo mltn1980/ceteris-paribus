@@ -143,16 +143,16 @@ function buildRHEChart() {
                     max: 1.20,
                     ticks: {
                         callback: v => (v * 100).toFixed(0) + '%',
-                        font: { size: 10 },
-                        color: '#918b80',
+                        font: { size: 12 },
+                        color: '#4a473f',
                         stepSize: 0.05
                     },
                     grid: { color: '#efece5' }
                 },
                 x: {
                     ticks: {
-                        font: { size: 9 },
-                        color: '#918b80',
+                        font: { size: 11 },
+                        color: '#4a473f',
                         maxRotation: 45,
                         minRotation: 45,
                         maxTicksLimit: 24
