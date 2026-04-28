@@ -55,8 +55,8 @@ function buildRHEChart() {
 
     if (showAverage) {
         datasets.push(
-            { label: 'Prom. Novillo', data: Array(n).fill(avgNov), borderColor: '#2a723560', borderWidth: 1.5, borderDash: [5,4], pointRadius: 0, fill: false },
-            { label: 'Prom. Vaca',    data: Array(n).fill(avgVac), borderColor: '#8c303060', borderWidth: 1.5, borderDash: [5,4], pointRadius: 0, fill: false }
+            { label: 'Prom. Novillo', data: Array(n).fill(avgNov), borderColor: 'rgba(42,114,53,0.25)', borderWidth: 1, borderDash: [5,4], pointRadius: 0, fill: false },
+            { label: 'Prom. Vaca',    data: Array(n).fill(avgVac), borderColor: 'rgba(140,48,48,0.25)',  borderWidth: 1, borderDash: [5,4], pointRadius: 0, fill: false }
         );
     }
 
@@ -76,6 +76,32 @@ function buildRHEChart() {
                         color: '#4a473f',
                         boxWidth: 14,
                         filter: item => !item.text.startsWith('Prom.')
+                    },
+                    onClick: (e, legendItem, legend) => {
+                        const chart = legend.chart;
+                        const clicked = legendItem.text; // 'RHE Novillo' o 'RHE Vaca'
+                        const isNovillo = clicked === 'RHE Novillo';
+                        const onlyOne = chart.data.datasets.some((ds, i) => {
+                            if (ds.label === (isNovillo ? 'RHE Vaca' : 'RHE Novillo')) {
+                                return !chart.getDatasetMeta(i).hidden;
+                            }
+                            return false;
+                        });
+                        // Si el otro está visible → ocultar el otro (modo exclusivo)
+                        // Si el otro ya estaba oculto → mostrar todos
+                        chart.data.datasets.forEach((ds, i) => {
+                            const isPromNov = ds.label === 'Prom. Novillo';
+                            const isPromVac = ds.label === 'Prom. Vaca';
+                            const isNov = ds.label === 'RHE Novillo' || isPromNov;
+                            const isVac = ds.label === 'RHE Vaca'    || isPromVac;
+                            if (onlyOne) {
+                                chart.setDatasetVisibility(i, true); // restaurar todos
+                            } else {
+                                if (isNovillo) chart.setDatasetVisibility(i, isNov);
+                                else           chart.setDatasetVisibility(i, isVac);
+                            }
+                        });
+                        chart.update();
                     }
                 },
                 tooltip: {
