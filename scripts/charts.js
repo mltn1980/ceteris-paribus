@@ -38,7 +38,8 @@ function buildRHEChart() {
             pointRadius: 0,
             pointHoverRadius: 4,
             tension: 0.2,
-            fill: false
+            fill: false,
+            datalabels: { display: false }
         },
         {
             label: 'RHE Vaca',
@@ -49,19 +50,43 @@ function buildRHEChart() {
             pointRadius: 0,
             pointHoverRadius: 4,
             tension: 0.2,
-            fill: false
+            fill: false,
+            datalabels: { display: false }
         }
     ];
 
     if (showAverage) {
         datasets.push(
-            { label: 'Prom. Novillo', data: Array(n).fill(avgNov), borderColor: 'rgba(42,114,53,0.25)', borderWidth: 1, borderDash: [5,4], pointRadius: 0, fill: false },
-            { label: 'Prom. Vaca',    data: Array(n).fill(avgVac), borderColor: 'rgba(140,48,48,0.25)',  borderWidth: 1, borderDash: [5,4], pointRadius: 0, fill: false }
+            {
+                label: 'Prom. Novillo', data: Array(n).fill(avgNov),
+                borderColor: 'rgba(42,114,53,0.25)', borderWidth: 1, borderDash: [5,4], pointRadius: 0, fill: false,
+                datalabels: {
+                    display: ctx => ctx.dataIndex === n - 1,
+                    formatter: v => (v * 100).toFixed(1) + '%',
+                    color: '#2a7235',
+                    anchor: 'end', align: 'right',
+                    font: { size: 10, weight: '600', family: "'IBM Plex Sans', sans-serif" },
+                    padding: { left: 6 }
+                }
+            },
+            {
+                label: 'Prom. Vaca', data: Array(n).fill(avgVac),
+                borderColor: 'rgba(140,48,48,0.25)', borderWidth: 1, borderDash: [5,4], pointRadius: 0, fill: false,
+                datalabels: {
+                    display: ctx => ctx.dataIndex === n - 1,
+                    formatter: v => (v * 100).toFixed(1) + '%',
+                    color: '#8c3030',
+                    anchor: 'end', align: 'right',
+                    font: { size: 10, weight: '600', family: "'IBM Plex Sans', sans-serif" },
+                    padding: { left: 6 }
+                }
+            }
         );
     }
 
     rheChart = new Chart(ctx, {
         type: 'line',
+        plugins: [ChartDataLabels],
         data: { labels, datasets },
         options: {
             responsive: true,
