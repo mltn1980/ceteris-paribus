@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-04-27",
+  "actualizado": "2026-04-28",
   "alerta": {
-    "activa": true,
-    "tipo": "viento_fuerte",
-    "nivel": "amarillo",
-    "titulo": "Ciclón extratropical — Vientos amainando",
-    "descripcion": "Ciclón extratropical en el Atlántico Sur. Vientos del SW 30-50 km/h con ráfagas de hasta 70 km/h, amainando durante el día. Probables precipitaciones.",
-    "vigencia": "27 abr 2026",
-    "fuente": "INUMET / MetSul"
+    "activa": false,
+    "tipo": "",
+    "nivel": "",
+    "titulo": "",
+    "descripcion": "",
+    "vigencia": "",
+    "fuente": ""
   },
   "enso": {
     "fase": "Neutral → El Niño",
