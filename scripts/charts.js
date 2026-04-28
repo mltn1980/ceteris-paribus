@@ -90,11 +90,9 @@ function buildRHEChart() {
                         // Si el otro está visible → ocultar el otro (modo exclusivo)
                         // Si el otro ya estaba oculto → mostrar todos
                         chart.data.datasets.forEach((ds, i) => {
-                            const isPromNov = ds.label === 'Prom. Novillo';
-                            const isPromVac = ds.label === 'Prom. Vaca';
-                            const isNov = ds.label === 'RHE Novillo' || isPromNov;
-                            const isVac = ds.label === 'RHE Vaca'    || isPromVac;
-                            if (onlyOne) {
+                            const isNov = ds.label === 'RHE Novillo' || ds.label === 'Prom. Novillo';
+                            const isVac = ds.label === 'RHE Vaca'    || ds.label === 'Prom. Vaca';
+                            if (!onlyOne) {
                                 chart.setDatasetVisibility(i, true); // restaurar todos
                             } else {
                                 if (isNovillo) chart.setDatasetVisibility(i, isNov);
