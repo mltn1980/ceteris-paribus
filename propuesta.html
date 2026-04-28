@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios Comerciales — ceterisparibus-uy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--surface:#ffffff;--surface2:#efece5;
+  --border:#ddd8ce;--text:#1b1b18;--text2:#4a473f;--muted:#918b80;
+  --green:#2a7235;--green-l:#edf5ef;
+  --blue:#1b5e85;--blue-l:#eaf3f9;
+  --amber:#a07418;--amber-l:#fdf6e6;
+  --red:#8c3030;--red-l:#f9ecec;
+  --purple:#5c4b8a;--purple-l:#f1eef8;
+  --dark:#1b1b18;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15.5px;}
+
+/* HEADER */
+header{background:var(--dark);color:var(--bg);padding:56px 24px 48px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 80%,rgba(42,114,53,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 20%,rgba(27,94,133,0.10) 0%,transparent 50%),repeating-linear-gradient(90deg,transparent 0,transparent 79px,rgba(255,255,255,0.025) 79px,rgba(255,255,255,0.025) 80px);}
+header>*{position:relative;}
+.logo{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,245,240,0.45);margin-bottom:14px;}
+header h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin-bottom:8px;}
+header h1 em{font-style:italic;color:#8cc499;}
+.tagline{font-size:1.05rem;color:rgba(247,245,240,0.6);margin-bottom:28px;font-weight:300;}
+.header-frase{display:inline-block;font-family:'DM Serif Display',serif;font-size:1.15rem;font-style:italic;color:rgba(247,245,240,0.85);border-top:1px solid rgba(255,255,255,0.12);padding-top:20px;max-width:600px;}
+
+/* NAV */
+.back-link{display:block;text-align:center;padding:14px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:0.82rem;color:var(--text2);text-decoration:none;}
+.back-link:hover{background:var(--border);}
+.back-link span{color:var(--green);font-weight:600;}
+
+/* MAIN */
+main{max-width:1000px;margin:0 auto;padding:48px 24px 80px;}
+
+/* INTRO */
+.intro{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--green);border-radius:12px;padding:24px 28px;margin-bottom:48px;}
+.intro p{font-size:0.95rem;color:var(--text2);line-height:1.8;}
+
+/* SECCIÓN */
+.seccion{margin-bottom:48px;}
+.seccion-titulo{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border);}
+.seccion-titulo h2{font-family:'DM Serif Display',serif;font-size:1.45rem;font-weight:400;color:var(--text);}
+.seccion-numero{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:700;color:var(--muted);background:var(--surface2);padding:4px 10px;border-radius:20px;}
+
+/* CARDS DE SERVICIO */
+.servicios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;}
+.servicio-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--border);border-radius:12px;padding:22px;transition:transform 0.2s,box-shadow 0.2s;}
+.servicio-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.07);}
+.servicio-card.verde{border-top-color:var(--green);}
+.servicio-card.azul{border-top-color:var(--blue);}
+.servicio-card.amber{border-top-color:var(--amber);}
+.servicio-card.rojo{border-top-color:var(--red);}
+.servicio-card.purpura{border-top-color:var(--purple);}
+.servicio-tag{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:3px 10px;border-radius:20px;margin-bottom:10px;}
+.servicio-tag.verde{background:var(--green-l);color:var(--green);}
+.servicio-tag.azul{background:var(--blue-l);color:var(--blue);}
+.servicio-tag.amber{background:var(--amber-l);color:var(--amber);}
+.servicio-tag.rojo{background:var(--red-l);color:var(--red);}
+.servicio-tag.purpura{background:var(--purple-l);color:var(--purple);}
+.servicio-nombre{font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:8px;color:var(--text);}
+.servicio-desc{font-size:0.88rem;color:var(--text2);line-height:1.65;}
+
+/* CTA FINAL */
+.cta-box{background:var(--dark);color:var(--bg);border-radius:16px;padding:40px 36px;text-align:center;margin-top:56px;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 100%,rgba(42,114,53,0.2) 0%,transparent 60%),radial-gradient(ellipse at 80% 0%,rgba(27,94,133,0.15) 0%,transparent 60%);}
+.cta-box>*{position:relative;}
+.cta-box h3{font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:10px;}
+.cta-box p{color:rgba(247,245,240,0.65);font-size:0.95rem;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto;}
+.cta-btn{display:inline-block;padding:14px 32px;background:#8cc499;color:var(--dark);border-radius:10px;font-size:0.95rem;font-weight:700;text-decoration:none;transition:opacity 0.2s;font-family:'IBM Plex Sans',sans-serif;}
+.cta-btn:hover{opacity:0.88;}
+.cta-email{display:block;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:rgba(247,245,240,0.45);}
+
+footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;}
+
+@media(max-width:680px){
+  .servicios-grid{grid-template-columns:1fr;}
+  .cta-box{padding:28px 20px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ceterisparibus-uy</div>
+  <h1>Inteligencia Económica <em>Aplicada</em></h1>
+  <p class="tagline">Servicios Comerciales</p>
+  <div class="header-frase">Donde los datos del agro se convierten en decisiones.</div>
+</header>
+
+<a href="/" class="back-link">← Volver al sitio · <span>ceterisparibus-uy.com</span></a>
+
+<main>
+
+  <div class="intro">
+    <p>Cada uno de nuestros servicios está diseñado para transformar datos complejos en insumos concretos para la toma de decisiones en el agronegocio uruguayo y regional.</p>
+  </div>
+
+  <!-- 1. INFORMES Y ANÁLISIS -->
+  <div class="seccion">
+    <div class="seccion-titulo">
+      <span class="seccion-numero">01</span>
+      <h2>Informes y Análisis</h2>
+    </div>
+    <div class="servicios-grid">
+
+      <div class="servicio-card verde">
+        <span class="servicio-tag verde">Suscripción</span>
+        <div class="servicio-nombre">Informe mensual ejecutivo</div>
+        <p class="servicio-desc">Informe con los datos más relevantes del mes: precios, clima, contexto macro y señales de mercado. Con interpretación editorial, no solo datos.</p>
+      </div>
+
+      <div class="servicio-card verde">
+        <span class="servicio-tag verde">A medida</span>
+        <div class="servicio-nombre">Informes personalizados</div>
+        <p class="servicio-desc">Análisis a medida por cultivo, sector o país: tendencias, contexto internacional y proyecciones.</p>
+      </div>
+
+      <div class="servicio-card rojo">
+        <span class="servicio-tag rojo">Alerta</span>
+        <div class="servicio-nombre">Alertas tempranas</div>
+        <p class="servicio-desc">Alertas sobre cambios bruscos en precios determinados, medidas anunciadas y evaluación de impacto.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. ÍNDICES PROPIOS -->
+  <div class="seccion">
+    <div class="seccion-titulo">
+      <span class="seccion-numero">02</span>
+      <h2>Índices Propios</h2>
+    </div>
+    <div class="servicios-grid">
+
+      <div class="servicio-card amber">
+        <span class="servicio-tag amber">Índice</span>
+        <div class="servicio-nombre">Índice de costos del sector</div>
+        <p class="servicio-desc">Indicador a medida del sector para evaluar su evolución e impacto en costos.</p>
+      </div>
+
+      <div class="servicio-card amber">
+        <span class="servicio-tag amber">Índice</span>
+        <div class="servicio-nombre">Índice de rentabilidad por cultivo</div>
+        <p class="servicio-desc">Margen estimado por hectárea según precio de mercado actual versus costo de producción.</p>
+      </div>
+
+      <div class="servicio-card amber">
+        <span class="servicio-tag amber">Índice</span>
+        <div class="servicio-nombre">Índice de competitividad exportadora</div>
+        <p class="servicio-desc">Cruza tipo de cambio, precio internacional y costos internos para evaluar la posición competitiva del agro uruguayo.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. DATOS Y ACCESO -->
+  <div class="seccion">
+    <div class="seccion-titulo">
+      <span class="seccion-numero">03</span>
+      <h2>Datos y Acceso</h2>
+    </div>
+    <div class="servicios-grid">
+
+      <div class="servicio-card azul">
+        <span class="servicio-tag azul">Datos</span>
+        <div class="servicio-nombre">Descarga de datos históricos</div>
+        <p class="servicio-desc">Series de precios, índices y variables macro en formato Excel/CSV limpio, listas para usar.</p>
+      </div>
+
+      <div class="servicio-card azul">
+        <span class="servicio-tag azul">Premium</span>
+        <div class="servicio-nombre">Dashboard privado</div>
+        <p class="servicio-desc">Acceso a una versión personalizada del sitio con más indicadores, informes seleccionados e indicadores a medida.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 4. CONSULTORÍA Y ASESORÍA -->
+  <div class="seccion">
+    <div class="seccion-titulo">
+      <span class="seccion-numero">04</span>
+      <h2>Consultoría y Asesoría</h2>
+    </div>
+    <div class="servicios-grid">
+
+      <div class="servicio-card purpura">
+        <span class="servicio-tag purpura">Consultoría</span>
+        <div class="servicio-nombre">Consultas puntuales</div>
+        <p class="servicio-desc">Respuesta fundamentada a preguntas específicas de mercado en 24–48 horas.</p>
+      </div>
+
+      <div class="servicio-card purpura">
+        <span class="servicio-tag purpura">Consultoría</span>
+        <div class="servicio-nombre">Presentaciones para directorios</div>
+        <p class="servicio-desc">Informe ejecutivo armado para reuniones de inversores, socios o directorio.</p>
+      </div>
+
+      <div class="servicio-card purpura">
+        <span class="servicio-tag purpura">Consultoría</span>
+        <div class="servicio-nombre">Acompañamiento de negociaciones</div>
+        <p class="servicio-desc">Análisis de contexto para compraventa de campo, arrendamiento o contratos de exportación.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>¿Te interesa alguno de estos servicios?</h3>
+    <p>Contanos tu necesidad y te respondemos con una propuesta concreta.</p>
+    <a href="mailto:contacto@ceterisparibus-uy.com" class="cta-btn">Escribinos →</a>
+    <span class="cta-email">contacto@ceterisparibus-uy.com · Montevideo, Uruguay</span>
+  </div>
+
+</main>
+
+<footer>© 2026 ceterisparibus-uy · Los datos presentados son con fines informativos y no constituyen asesoramiento financiero</footer>
+
+</body>
+</html>
