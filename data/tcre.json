@@ -1,33 +1,32 @@
 {
-  "periodo": "Feb-26",
-  "actualizado": "2026-04-25",
+  "periodo": "Mar-26",
+  "actualizado": "2026-04-29",
   "preliminar": true,
   "base": "2019=100",
   "fuente": "BCU",
-  "global": 88.16,
-  "extraregional": 84.03,
-  "regional": 93.38,
-  "argentina": 114.40,
-  "brasil": 77.79,
-  "eeuu": 91.39,
-  "mexico": 110.95,
-  "alemania": 93.46,
-  "espana": 93.05,
-  "china": 76.96,
+  "global": 92.26,
+  "extraregional": 86.93,
+  "regional": 99.11,
+  "argentina": 123.85,
+  "brasil": 81.12,
+  "eeuu": 96.01,
+  "mexico": 112.81,
+  "alemania": 96.12,
+  "espana": 95.73,
+  "china": 79.57,
   "anterior": {
-    "periodo": "Ene-26",
-    "global": 85.73,
-    "extraregional": 82.75,
-    "regional": 89.42
+    "periodo": "Feb-26",
+    "global": 88.16,
+    "extraregional": 84.03,
+    "regional": 93.38
   },
   "mismo_mes_año_anterior": {
-    "periodo": "Feb-25",
-    "global": 92.86,
-    "extraregional": 89.39,
-    "regional": 97.19
+    "periodo": "Mar-25",
+    "global": 91.23,
+    "extraregional": 87.86,
+    "regional": 95.42
   },
   "historico_5a": [
-    { "periodo": "Feb-21", "global": 97.20,  "extraregional": 114.28, "regional": 79.72,  "china": 117.07 },
     { "periodo": "Mar-21", "global": 99.93,  "extraregional": 116.67, "regional": 82.66,  "china": 119.01 },
     { "periodo": "Abr-21", "global": 100.21, "extraregional": 116.09, "regional": 83.68,  "china": 117.54 },
     { "periodo": "May-21", "global": 101.19, "extraregional": 116.63, "regional": 85.03,  "china": 118.17 },
@@ -87,6 +86,7 @@
     { "periodo": "Nov-25", "global": 87.31,  "extraregional": 84.44,  "regional": 90.86,  "china": 76.87  },
     { "periodo": "Dic-25", "global": 86.49,  "extraregional": 84.13,  "regional": 89.38,  "china": 76.63  },
     { "periodo": "Ene-26", "global": 85.73,  "extraregional": 82.75,  "regional": 89.42,  "china": 75.53  },
-    { "periodo": "Feb-26", "global": 88.16,  "extraregional": 84.03,  "regional": 93.38,  "china": 76.96,  "preliminar": true }
+    { "periodo": "Feb-26", "global": 88.16,  "extraregional": 84.03,  "regional": 93.38,  "china": 76.96,  "preliminar": true },
+    { "periodo": "Mar-26", "global": 92.26,  "extraregional": 86.93,  "regional": 99.11,  "china": 79.57,  "preliminar": true }
   ]
 }
