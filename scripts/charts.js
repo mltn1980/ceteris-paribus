@@ -226,6 +226,28 @@ const tcreData = {
     ]
 };
 
+let tcreChartInstance = null;
+
+function setTCRERange(months) {
+    if (!tcreChartInstance) return;
+    const n = months ? months : tcreData.labels.length;
+    const slice = arr => arr.slice(-n);
+    const base100 = Array(n).fill(100);
+    tcreChartInstance.data.labels = slice(tcreData.labels);
+    tcreChartInstance.data.datasets[0].data = slice(tcreData.global);
+    tcreChartInstance.data.datasets[1].data = slice(tcreData.extraregional);
+    tcreChartInstance.data.datasets[2].data = slice(tcreData.regional);
+    tcreChartInstance.data.datasets[3].data = slice(tcreData.china);
+    tcreChartInstance.data.datasets[4].data = base100;
+    const pr = n > 30 ? 0 : 3;
+    [0,1,2,3].forEach(i => tcreChartInstance.data.datasets[i].pointRadius = pr);
+    tcreChartInstance.update();
+    document.querySelectorAll('.tcre-range-btn').forEach(b => {
+        const r = b.dataset.r;
+        b.classList.toggle('active', r === 'all' ? months === null : parseInt(r) === months);
+    });
+}
+
 function createTCREChart() {
     const ctx = document.getElementById('tcre-chart');
     if (!ctx) return;
@@ -233,7 +255,7 @@ function createTCREChart() {
     const base100 = Array(tcreData.labels.length).fill(100);
     const pointRadius = tcreData.labels.length > 30 ? 0 : 3;
 
-    new Chart(ctx, {
+    tcreChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: tcreData.labels,

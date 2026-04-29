@@ -2128,12 +2128,36 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
             </div>
         </div>
 
-        <!-- Gráfico evolución 12 meses -->
-        <h4 class="uru-section-h4 amber">Evolución últimos 5 años (mar-21 · mar-26)</h4>
+        <!-- Gráfico evolución -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+            <h4 class="uru-section-h4 amber" style="margin-bottom:0;">Evolución TCRE</h4>
+            <div id="tcre-range-btns" style="display:flex;gap:6px;">
+                <button onclick="setTCRERange(12)"  class="tcre-range-btn" data-r="12">1A</button>
+                <button onclick="setTCRERange(24)"  class="tcre-range-btn" data-r="24">2A</button>
+                <button onclick="setTCRERange(36)"  class="tcre-range-btn" data-r="36">3A</button>
+                <button onclick="setTCRERange(null)" class="tcre-range-btn active" data-r="all">5A</button>
+            </div>
+        </div>
         <div style="position:relative;height:280px;margin-bottom:8px;">
             <canvas id="tcre-chart"></canvas>
         </div>
         <p class="fuente">Fuente: BCU — Indicadores de Tipo de Cambio Real, base 2019=100. La línea punteada marca el valor base (100 = año 2019). (*) Datos preliminares. Actualizado: abr-26.</p>
+        <style>
+            .tcre-range-btn {
+                padding: 4px 12px;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                background: var(--surface);
+                color: var(--text2);
+                font-family: 'IBM Plex Sans', sans-serif;
+                font-size: 0.78rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+            .tcre-range-btn:hover { background: var(--border); color: var(--text); }
+            .tcre-range-btn.active { background: var(--dark); color: var(--bg); border-color: var(--dark); }
+        </style>
 
     </div>
 
