@@ -25,7 +25,7 @@
 *{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 html{scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15.5px;}
-header{background:var(--dark);color:var(--bg);padding:56px 24px 44px;text-align:center;position:relative;overflow:hidden;}
+header{background:var(--dark);color:var(--bg);padding:24px 24px 20px;text-align:center;position:relative;overflow:hidden;}
 header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 80%,rgba(42,114,53,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 20%,rgba(27,94,133,0.10) 0%,transparent 50%),repeating-linear-gradient(90deg,transparent 0,transparent 79px,rgba(255,255,255,0.025) 79px,rgba(255,255,255,0.025) 80px);}
 header>*{position:relative;}
 .logo{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,245,240,0.45);margin-bottom:12px;}
@@ -269,51 +269,42 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 </head>
 <body>
 <header>
-  <div style="position:absolute;top:14px;right:18px;z-index:10;">
-    <button id="btn-login" onclick="window.netlifyIdentity && window.netlifyIdentity.open()"
-      style="padding:6px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:20px;color:rgba(247,245,240,0.85);font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em;"
-      onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-      Iniciar sesión
-    </button>
-  </div>
-  <a href="#" style="text-decoration:none;color:inherit;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-  <svg viewBox="0 0 80 58" width="80" height="58" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 14px;">
-    <!-- Sol de Mayo simplificado -->
-    <circle cx="16" cy="29" r="6.5" fill="#f0c040"/>
-    <line x1="16" y1="19" x2="16" y2="15" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
-    <line x1="16" y1="39" x2="16" y2="43" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
-    <line x1="6"  y1="29" x2="2"  y2="29" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
-    <line x1="26" y1="29" x2="30" y2="29" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
-    <line x1="9"  y1="22" x2="6"  y2="19" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="23" y1="22" x2="26" y2="19" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="9"  y1="36" x2="6"  y2="39" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="23" y1="36" x2="26" y2="39" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- Signo = -->
-    <line x1="36" y1="21" x2="74" y2="21" stroke="white" stroke-width="5" stroke-linecap="round"/>
-    <line x1="36" y1="37" x2="74" y2="37" stroke="#8cc499" stroke-width="5" stroke-linecap="round"/>
-  </svg>
-  <div class="logo">ceterisparibus-uy</div>
-  <h1>Informes de Mercados<br>Agrícolas, Economía <em>&amp;</em> más</h1>
-  </a>
-  <p class="sub">Análisis consolidados de commodities, economía y mercados agrícolas. Con foco en Uruguay y la región.</p>
-  <div style="margin-top:28px;max-width:1000px;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px 24px;text-align:left;">
-    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(140,196,153,0.9);margin-bottom:10px;">Sobre ceterisparibus-uy</div>
-    <p style="font-size:0.88rem;color:rgba(247,245,240,0.75);line-height:1.7;margin:0 0 8px;">Esta plataforma reúne informes y análisis consolidados sobre mercados agrícolas, commodities y economía, con especial foco en Uruguay y la región. Los reportes se elaboran a partir de fuentes oficiales, sintetizando datos complejos en formatos claros y accesibles.</p>
-    <p style="font-size:0.88rem;color:rgba(247,245,240,0.75);line-height:1.7;margin:0;">Los datos visualizados en esta plataforma tienen un rezago de 2 meses. Con una <strong style="color:#8cc499;">suscripción premium</strong> accedés a los últimos datos disponibles, informes actualizados y herramientas exclusivas para el sector agropecuario. <a href="#" onclick="window.netlifyIdentity && window.netlifyIdentity.open(); return false;" style="color:#8cc499;text-decoration:underline;">Iniciá sesión</a>.</p>
+  <button id="btn-login" onclick="window.netlifyIdentity && window.netlifyIdentity.open()"
+    style="position:absolute;top:14px;right:18px;z-index:10;padding:6px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:20px;color:rgba(247,245,240,0.85);font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em;"
+    onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+    Iniciar sesión
+  </button>
+  <div style="display:flex;align-items:center;gap:28px;max-width:760px;margin:0 auto;text-align:left;">
+    <a href="#" style="text-decoration:none;color:inherit;flex-shrink:0;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+      <svg viewBox="0 0 80 58" width="72" height="52" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 0 10px;">
+        <!-- Sol de Mayo simplificado -->
+        <circle cx="16" cy="29" r="6.5" fill="#f0c040"/>
+        <line x1="16" y1="19" x2="16" y2="15" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="16" y1="39" x2="16" y2="43" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="6"  y1="29" x2="2"  y2="29" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="29" x2="30" y2="29" stroke="#f0c040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="9"  y1="22" x2="6"  y2="19" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="23" y1="22" x2="26" y2="19" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="9"  y1="36" x2="6"  y2="39" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="23" y1="36" x2="26" y2="39" stroke="#f0c040" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Signo = -->
+        <line x1="36" y1="21" x2="74" y2="21" stroke="white" stroke-width="5" stroke-linecap="round"/>
+        <line x1="36" y1="37" x2="74" y2="37" stroke="#8cc499" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <div class="logo" style="text-align:left;">ceterisparibus-uy</div>
+    </a>
+    <h1 style="text-align:left;font-size:clamp(1.5rem,3.2vw,2.4rem);margin:0;">Informes de Mercados<br>Agrícolas, Economía <em>&amp;</em> más</h1>
   </div>
 </header>
-<nav>
-    <a href="#precios">Precios</a>
-    <a href="#clima">Monitor Clima</a>
-    <a href="#ganaderia">Ganadería</a>
-    <a href="#lacteos">Lácteos</a>
-    <a href="#commodities">Por Commodity</a>
-    <a href="#uruguay">Uruguay</a>
-    <a href="#global">Mercados Globales</a>
-    <a href="#productividad">Productividad</a>
-    <a href="#medios">Notas en Medios</a>
-    <a href="#redes">Redes</a>
-</nav>
+<div style="background:var(--bg);border-bottom:1px solid var(--border);padding:20px 24px;">
+  <div style="max-width:900px;margin:0 auto;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;">
+    <div style="flex:1;min-width:240px;">
+      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:8px;">Sobre ceterisparibus-uy</div>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.7;margin:0 0 6px;">Análisis consolidados de commodities, economía y mercados agrícolas, con foco en Uruguay y la región. Elaborados a partir de fuentes oficiales, sintetizando datos complejos en formatos claros y accesibles.</p>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.7;margin:0;">Los datos tienen un rezago de 2 meses. Con una <strong style="color:var(--green);">suscripción premium</strong> accedés a los últimos datos disponibles, informes actualizados y herramientas exclusivas para el sector agropecuario. <a href="#" onclick="window.netlifyIdentity && window.netlifyIdentity.open(); return false;" style="color:var(--green);text-decoration:underline;">Iniciá sesión</a>.</p>
+    </div>
+  </div>
+</div>
 <main>
 
     <!-- PRECIOS & MERCADOS -->
