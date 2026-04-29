@@ -1,0 +1,21 @@
+{
+  "total": 287500,
+  "periodo": "Enero - Febrero 2026",
+  "actualizado": "2026-03-10",
+  "variacion_año": -12.3,
+  "novillo": 135125,
+  "novillo_pct": 47,
+  "vaca": 103500,
+  "vaca_pct": 36,
+  "vaquillona": 46000,
+  "vaquillona_pct": 16,
+  "public": true,
+  "frigorificos": [
+    { "nombre": "Tacuarembó",       "cabezas": 43700,  "porcentaje": 15.2 },
+    { "nombre": "Las Piedras",      "cabezas": 30200,  "porcentaje": 10.5 },
+    { "nombre": "San Jacinto",      "cabezas": 26000,  "porcentaje": 9.0  },
+    { "nombre": "Ontilcor",         "cabezas": 25100,  "porcentaje": 8.7  },
+    { "nombre": "Breeders Packers", "cabezas": 21600,  "porcentaje": 7.5  },
+    { "nombre": "Otros",            "cabezas": 140900, "porcentaje": 49.1 }
+  ]
+}

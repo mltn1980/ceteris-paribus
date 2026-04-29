@@ -2,83 +2,123 @@
 // DATA-LOADER.JS - Carga de datos desde JSON
 // ============================================
 
+// ============================================
+// Utilidades globales (usadas también por Identity callbacks)
+// ============================================
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+}
+
+function setVariacion(id, valor, label) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const positivo = valor > 0;
+    el.textContent = label + ': ' + (positivo ? '▲ +' : '▼ ') + valor + '%';
+    el.style.background = positivo ? '#edf5ef' : '#fceaea';
+    el.style.color = positivo ? '#2a7235' : '#a32d2d';
+}
+
+function ocultarSi(id, condicion) {
+    const el = document.getElementById(id);
+    if (el && condicion) el.style.display = 'none';
+}
+
+async function getPremiumToken() {
+    const nid = window.netlifyIdentity;
+    const user = nid && nid.currentUser && nid.currentUser();
+    if (!user) return null;
+    try { return await user.jwt(); } catch(e) { return null; }
+}
+
+async function fetchINAC(file) {
+    const token = await getPremiumToken();
+    if (token) {
+        try {
+            const r = await fetch('/.netlify/functions/premium?file=' + file, {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            if (r.ok) return r.json();
+        } catch(e) {}
+    }
+    return fetch('data/' + file + '-public.json').then(r => r.json());
+}
+
+function badgeRezago(elId) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const link = document.createElement('a');
+    link.href = '#';
+    link.onclick = e => { e.preventDefault(); window.netlifyIdentity && window.netlifyIdentity.open(); };
+    link.style.cssText = 'margin-left:8px;font-size:0.72rem;font-weight:600;color:var(--amber);text-decoration:none;border:1px solid var(--amber);border-radius:4px;padding:1px 6px;white-space:nowrap;';
+    link.textContent = '⚡ Ver dato actual';
+    el.appendChild(link);
+}
+
+async function cargarNovillo() {
+    const d = await fetchINAC('novillo').catch(() => null);
+    if (!d) return;
+    setText('novillo-valor', d.valor.toLocaleString('es-UY'));
+    setText('novillo-periodo', 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
+    setVariacion('novillo-var', d.variacion, 'vs mes ant');
+    if (d.variacion_año !== undefined) setVariacion('novillo-var-año', d.variacion_año, 'vs año ant');
+    else ocultarSi('novillo-var-año', true);
+    setText('novillo-vh', d.vh.toLocaleString('es-UY'));
+    setVariacion('novillo-vh-var', d.vh_variacion, 'vs mes ant');
+    if (d.vh_variacion_año !== undefined) setVariacion('novillo-vh-var-año', d.vh_variacion_año, 'vs año ant');
+    else ocultarSi('novillo-vh-var-año', true);
+    setText('novillo-vh-pct', d.vh_participacion + '% del total');
+    setText('novillo-vai', d.vai.toLocaleString('es-UY'));
+    setVariacion('novillo-vai-var', d.vai_variacion, 'vs mes ant');
+    if (d.vai_variacion_año !== undefined) setVariacion('novillo-vai-var-año', d.vai_variacion_año, 'vs año ant');
+    else ocultarSi('novillo-vai-var-año', true);
+    setText('novillo-vai-pct', d.vai_participacion + '% del total');
+    if (d.public) badgeRezago('novillo-periodo');
+}
+
+async function cargarFaena() {
+    const d = await fetchINAC('faena').catch(() => null);
+    if (!d) return;
+    setText('faena-total', d.total.toLocaleString('es-UY'));
+    setText('faena-novillo', d.novillo.toLocaleString('es-UY'));
+    setText('faena-novillo-pct', d.novillo_pct + '%');
+    setText('faena-vaca', d.vaca.toLocaleString('es-UY'));
+    setText('faena-vaca-pct', d.vaca_pct + '%');
+    setText('faena-vaquillona', d.vaquillona.toLocaleString('es-UY'));
+    setText('faena-vaquillona-pct', d.vaquillona_pct + '%');
+    setText('faena-periodo', 'Período: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
+    if (d.variacion_año !== undefined) setVariacion('faena-var-año', d.variacion_año, 'vs año ant');
+    else ocultarSi('faena-var-año', true);
+    if (d.public) badgeRezago('faena-periodo');
+
+    const ranking = document.getElementById('frigo-ranking');
+    if (!ranking || !d.frigorificos) return;
+    ranking.textContent = '';
+    d.frigorificos.forEach((f, i) => {
+        const bar = document.createElement('div');
+        bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
+        const label = document.createElement('div');
+        label.style.cssText = 'font-size:0.78rem;font-weight:600;color:var(--text);min-width:120px;';
+        label.textContent = (i + 1) + '. ' + f.nombre;
+        const barContainer = document.createElement('div');
+        barContainer.style.cssText = 'flex:1;background:var(--surface2);border-radius:4px;height:20px;position:relative;overflow:hidden;';
+        const barFill = document.createElement('div');
+        barFill.style.cssText = 'background:var(--red);height:100%;border-radius:4px;transition:width 0.3s;width:' + f.porcentaje + '%';
+        const pct = document.createElement('div');
+        pct.style.cssText = 'font-size:0.75rem;font-weight:600;color:var(--text2);min-width:40px;text-align:right;';
+        pct.textContent = f.porcentaje.toFixed(1) + '%';
+        barContainer.appendChild(barFill);
+        bar.appendChild(label);
+        bar.appendChild(barContainer);
+        bar.appendChild(pct);
+        ranking.appendChild(bar);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
-    // ============================================
-    // Utilidades
-    // ============================================
-
-    function setText(id, value) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-    }
-
-    function setVariacion(id, valor, label) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const positivo = valor > 0;
-        el.textContent = label + ': ' + (positivo ? '▲ +' : '▼ ') + valor + '%';
-        el.style.background = positivo ? '#edf5ef' : '#fceaea';
-        el.style.color = positivo ? '#2a7235' : '#a32d2d';
-    }
-
-    function ocultarSi(id, condicion) {
-        const el = document.getElementById(id);
-        if (el && condicion) el.style.display = 'none';
-    }
-
-    // ============================================
-    // NOVILLO - Datos INAC
-    // ============================================
-    fetch('data/novillo.json')
-        .then(r => r.json())
-        .then(d => {
-            setText('novillo-valor', d.valor.toLocaleString('es-UY'));
-            setText('novillo-periodo', 'Dato: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
-            setVariacion('novillo-var', d.variacion, 'vs mes ant');
-
-            if (d.variacion_año !== undefined) {
-                setVariacion('novillo-var-año', d.variacion_año, 'vs año ant');
-            } else {
-                ocultarSi('novillo-var-año', true);
-            }
-
-            setText('novillo-vh', d.vh.toLocaleString('es-UY'));
-            setVariacion('novillo-vh-var', d.vh_variacion, 'vs mes ant');
-
-            if (d.vh_variacion_año !== undefined) {
-                setVariacion('novillo-vh-var-año', d.vh_variacion_año, 'vs año ant');
-            } else {
-                ocultarSi('novillo-vh-var-año', true);
-            }
-
-            setText('novillo-vh-pct', d.vh_participacion + '% del total');
-            setText('novillo-vai', d.vai.toLocaleString('es-UY'));
-            setVariacion('novillo-vai-var', d.vai_variacion, 'vs mes ant');
-
-            if (d.vai_variacion_año !== undefined) {
-                setVariacion('novillo-vai-var-año', d.vai_variacion_año, 'vs año ant');
-            } else {
-                ocultarSi('novillo-vai-var-año', true);
-            }
-
-            setText('novillo-vai-pct', d.vai_participacion + '% del total');
-        })
-        .catch(() => {
-            // Fallback con datos de marzo 2026
-            setText('novillo-valor', '1.976');
-            setText('novillo-periodo', 'Dato: marzo 2026');
-            setVariacion('novillo-var', 2.3, 'vs mes ant');
-            setVariacion('novillo-var-año', 18.3, 'vs año ant');
-            setText('novillo-vh', '1.608');
-            setVariacion('novillo-vh-var', 0.4, 'vs mes ant');
-            setVariacion('novillo-vh-var-año', 26.6, 'vs año ant');
-            setText('novillo-vh-pct', '81% del total');
-            setText('novillo-vai', '368');
-            setVariacion('novillo-vai-var', 11.2, 'vs mes ant');
-            setVariacion('novillo-vai-var-año', -8.2, 'vs año ant');
-            setText('novillo-vai-pct', '19% del total');
-        });
+    cargarNovillo();
+    cargarFaena();
 
     // ============================================
     // RHE - Contexto de mercado
@@ -169,59 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
             cargarRHECard(fallback);
         });
 
-    // ============================================
-    // FAENA - Datos de faena y frigoríficos
-    // ============================================
-    fetch('data/faena.json')
-        .then(r => r.json())
-        .then(d => {
-            setText('faena-total', d.total.toLocaleString('es-UY'));
-            setText('faena-novillo', d.novillo.toLocaleString('es-UY'));
-            setText('faena-novillo-pct', d.novillo_pct + '%');
-            setText('faena-vaca', d.vaca.toLocaleString('es-UY'));
-            setText('faena-vaca-pct', d.vaca_pct + '%');
-            setText('faena-vaquillona', d.vaquillona.toLocaleString('es-UY'));
-            setText('faena-vaquillona-pct', d.vaquillona_pct + '%');
-            setText('faena-periodo', 'Período: ' + d.periodo + ' · Actualizado: ' + new Date(d.actualizado).toLocaleDateString('es-UY'));
-
-            if (d.variacion_año !== undefined) {
-                setVariacion('faena-var-año', d.variacion_año, 'vs año ant');
-            } else {
-                ocultarSi('faena-var-año', true);
-            }
-
-            const ranking = document.getElementById('frigo-ranking');
-            if (!ranking) return;
-            ranking.textContent = '';
-
-            d.frigorificos.forEach((f, i) => {
-                const bar = document.createElement('div');
-                bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
-
-                const label = document.createElement('div');
-                label.style.cssText = 'font-size:0.78rem;font-weight:600;color:var(--text);min-width:120px;';
-                label.textContent = (i + 1) + '. ' + f.nombre;
-
-                const barContainer = document.createElement('div');
-                barContainer.style.cssText = 'flex:1;background:var(--surface2);border-radius:4px;height:20px;position:relative;overflow:hidden;';
-
-                const barFill = document.createElement('div');
-                barFill.style.cssText = 'background:var(--red);height:100%;border-radius:4px;transition:width 0.3s;width:' + f.porcentaje + '%';
-
-                const pct = document.createElement('div');
-                pct.style.cssText = 'font-size:0.75rem;font-weight:600;color:var(--text2);min-width:40px;text-align:right;';
-                pct.textContent = f.porcentaje.toFixed(1) + '%';
-
-                barContainer.appendChild(barFill);
-                bar.appendChild(label);
-                bar.appendChild(barContainer);
-                bar.appendChild(pct);
-                ranking.appendChild(bar);
-            });
-        })
-        .catch(() => {
-            console.warn('No se pudo cargar data/faena.json');
-        });
 
     // ============================================
     // CLIMA - Monitor Climático desde clima.json
@@ -391,3 +378,26 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(() => { /* datos hardcodeados en HTML como fallback */ });
 
 });
+
+// ============================================
+// NETLIFY IDENTITY — recarga INAC al login/logout
+// ============================================
+if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('login',  () => { cargarNovillo(); cargarFaena(); actualizarBtnLogin(); });
+    window.netlifyIdentity.on('logout', () => { cargarNovillo(); cargarFaena(); actualizarBtnLogin(); });
+    window.netlifyIdentity.on('init',   () => { actualizarBtnLogin(); });
+}
+
+function actualizarBtnLogin() {
+    const btn = document.getElementById('btn-login');
+    if (!btn) return;
+    const nid = window.netlifyIdentity;
+    const user = nid && nid.currentUser && nid.currentUser();
+    if (user) {
+        btn.textContent = user.email || 'Mi cuenta';
+        btn.onclick = () => nid.logout();
+    } else {
+        btn.textContent = 'Iniciar sesión';
+        btn.onclick = () => nid.open();
+    }
+}

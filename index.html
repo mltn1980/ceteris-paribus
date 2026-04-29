@@ -269,6 +269,13 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 </head>
 <body>
 <header>
+  <div style="position:absolute;top:14px;right:18px;z-index:10;">
+    <button id="btn-login" onclick="window.netlifyIdentity && window.netlifyIdentity.open()"
+      style="padding:6px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:20px;color:rgba(247,245,240,0.85);font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em;"
+      onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+      Iniciar sesión
+    </button>
+  </div>
   <a href="#" style="text-decoration:none;color:inherit;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
   <svg viewBox="0 0 80 58" width="80" height="58" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 14px;">
     <!-- Sol de Mayo simplificado -->
@@ -3056,6 +3063,7 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 <!-- ========================================== -->
 <!-- SCRIPTS EXTERNOS (modularizados) -->
 <!-- ========================================== -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="scripts/navigation.js" defer></script>
 <script src="scripts/tabs.js" defer></script>
 <script src="scripts/data-loader.js" defer></script>
