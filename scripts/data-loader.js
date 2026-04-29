@@ -383,7 +383,10 @@ document.addEventListener('DOMContentLoaded', function () {
 // NETLIFY IDENTITY — recarga INAC al login/logout
 // ============================================
 if (window.netlifyIdentity) {
-    window.netlifyIdentity.on('login',  () => { cargarNovillo(); cargarFaena(); actualizarBtnLogin(); });
+    window.netlifyIdentity.on('login',  () => {
+        setTimeout(() => window.netlifyIdentity.close(), 2000);
+        cargarNovillo(); cargarFaena(); actualizarBtnLogin();
+    });
     window.netlifyIdentity.on('logout', () => { cargarNovillo(); cargarFaena(); actualizarBtnLogin(); });
     window.netlifyIdentity.on('init',   () => { actualizarBtnLogin(); });
 }
