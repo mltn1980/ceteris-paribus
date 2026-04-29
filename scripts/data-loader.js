@@ -47,12 +47,30 @@ async function fetchINAC(file) {
 function badgeRezago(elId) {
     const el = document.getElementById(elId);
     if (!el) return;
+
+    const wrapper = document.createElement('span');
+    wrapper.style.cssText = 'position:relative;display:inline-block;margin-left:10px;';
+
     const link = document.createElement('a');
     link.href = '#';
     link.onclick = e => { e.preventDefault(); window.netlifyIdentity && window.netlifyIdentity.open(); };
-    link.style.cssText = 'margin-left:8px;font-size:0.72rem;font-weight:600;color:var(--amber);text-decoration:none;border:1px solid var(--amber);border-radius:4px;padding:1px 6px;white-space:nowrap;';
+    link.style.cssText = 'font-size:0.82rem;font-weight:700;color:var(--amber);text-decoration:none;border:1.5px solid var(--amber);border-radius:6px;padding:3px 10px;white-space:nowrap;background:var(--amber-l);transition:background 0.15s;';
     link.textContent = '⚡ Ver dato actual';
-    el.appendChild(link);
+
+    const tooltip = document.createElement('div');
+    tooltip.style.cssText = 'display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1b1b18;color:#f7f5f0;font-size:0.75rem;font-weight:400;line-height:1.4;padding:8px 12px;border-radius:8px;width:220px;text-align:center;z-index:200;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.25);';
+    tooltip.textContent = 'Dato con rezago. Los suscriptores premium acceden al último dato publicado. Hacé click para iniciar sesión.';
+
+    const arrow = document.createElement('div');
+    arrow.style.cssText = 'position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1b1b18;';
+    tooltip.appendChild(arrow);
+
+    wrapper.onmouseenter = () => { tooltip.style.display = 'block'; link.style.background = '#fdefc8'; };
+    wrapper.onmouseleave = () => { tooltip.style.display = 'none'; link.style.background = 'var(--amber-l)'; };
+
+    wrapper.appendChild(link);
+    wrapper.appendChild(tooltip);
+    el.appendChild(wrapper);
 }
 
 async function cargarNovillo() {
