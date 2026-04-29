@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de Rentabilidad Agropecuaria — Uruguay</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+<style>
+:root{
+  --bg:#f7f5f0;--surface:#ffffff;--surface2:#efece5;
+  --border:#ddd8ce;--text:#1b1b18;--text2:#4a473f;--muted:#918b80;
+  --green:#2a7235;--green-l:#edf5ef;
+  --blue:#1b5e85;--blue-l:#eaf3f9;
+  --amber:#a07418;--amber-l:#fdf6e6;
+  --red:#8c3030;--red-l:#f9ecec;
+  --dark:#1b1b18;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px;}
+
+header{background:var(--dark);color:var(--bg);padding:44px 24px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 80%,rgba(42,114,53,0.15) 0%,transparent 50%),radial-gradient(ellipse at 85% 20%,rgba(27,94,133,0.10) 0%,transparent 50%);}
+header>*{position:relative;}
+.logo{font-family:'IBM Plex Mono',monospace;font-size:0.70rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:rgba(247,245,240,0.45);margin-bottom:10px;}
+header h1{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);line-height:1.15;margin-bottom:8px;}
+header h1 em{font-style:italic;color:#8cc499;}
+header .sub{font-weight:300;color:rgba(247,245,240,0.6);max-width:580px;margin:0 auto;font-size:0.90rem;}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:4px;padding:10px 20px;overflow-x:auto;}
+nav a{white-space:nowrap;padding:7px 16px;border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--text);text-decoration:none;transition:all 0.2s;}
+nav a:hover{background:var(--surface2);}
+nav a.active{background:var(--green);color:#fff;}
+
+main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
+
+.page-header{margin-bottom:24px;}
+.page-header h2{font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--text);margin-bottom:6px;}
+.page-header p{color:var(--text2);font-size:0.9rem;max-width:700px;}
+
+/* Activity selector */
+.act-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+.act-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:8px;border:2px solid var(--border);
+  background:var(--surface);cursor:pointer;
+  font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;
+  color:var(--text2);transition:all 0.18s;
+}
+.act-btn:hover{border-color:#aaa;background:var(--surface2);}
+.act-btn.active{color:#fff;border-color:transparent;}
+.act-btn .icon{font-size:1.1em;}
+
+/* Map container */
+.map-wrap{
+  position:relative;border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:0 4px 20px rgba(0,0,0,0.10);
+  background:#e8e4dc;
+}
+#map{height:540px;width:100%;}
+@media(max-width:640px){#map{height:380px;}}
+
+/* Legend */
+.legend-box{
+  position:absolute;bottom:20px;right:12px;z-index:500;
+  background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);
+  border:1px solid var(--border);border-radius:10px;
+  padding:12px 16px;min-width:150px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.12);
+}
+.legend-title{font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:8px;}
+.legend-bar{height:14px;border-radius:4px;background:linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235);margin-bottom:6px;}
+.legend-labels{display:flex;justify-content:space-between;font-size:0.70rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.legend-na{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+.legend-na-dot{width:12px;height:12px;border-radius:3px;background:#c8c4bc;flex-shrink:0;}
+
+/* Info panel (right sidebar on desktop) */
+.map-info-wrap{display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:start;}
+@media(max-width:820px){.map-info-wrap{grid-template-columns:1fr;}}
+
+.info-panel{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:18px;height:540px;overflow-y:auto;
+}
+@media(max-width:820px){.info-panel{height:auto;max-height:320px;}}
+.info-panel h3{font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:4px;}
+.info-panel .coneat-badge{
+  display:inline-block;padding:2px 10px;border-radius:20px;
+  background:var(--surface2);font-size:0.78rem;font-family:'IBM Plex Mono',monospace;
+  color:var(--text2);margin-bottom:12px;
+}
+.info-panel .hint{
+  color:var(--muted);font-size:0.84rem;text-align:center;
+  margin-top:60px;line-height:1.6;
+}
+.info-panel .hint strong{display:block;font-size:1.1rem;margin-bottom:8px;color:var(--text2);}
+
+.activity-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 12px;border-radius:8px;margin-bottom:6px;
+  border:1px solid var(--border);background:var(--surface2);
+}
+.activity-row.highlighted{background:var(--green-l);border-color:#b0d4b7;}
+.activity-row .act-name{font-size:0.84rem;font-weight:600;color:var(--text);}
+.activity-row .act-rent{font-family:'IBM Plex Mono',monospace;font-size:0.88rem;font-weight:700;}
+.activity-row .act-rent.pos{color:var(--green);}
+.activity-row .act-rent.neg{color:var(--red);}
+.activity-row .act-rent.na{color:var(--muted);}
+
+.dept-stats{margin-bottom:14px;}
+.dept-stat{display:flex;justify-content:space-between;font-size:0.82rem;padding:4px 0;border-bottom:1px solid var(--border);}
+.dept-stat:last-child{border:none;}
+.dept-stat label{color:var(--muted);}
+.dept-stat value{font-family:'IBM Plex Mono',monospace;font-weight:600;}
+
+.section-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin:14px 0 8px;}
+
+/* Mode toggle */
+.mode-toggle{display:flex;gap:8px;margin-bottom:14px;}
+.mode-btn{padding:7px 18px;border-radius:8px;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);transition:all 0.18s;}
+.mode-btn:hover{background:var(--surface2);}
+.mode-btn.active{background:var(--dark);color:#fff;border-color:transparent;}
+
+/* CONEAT zoom hint */
+.zoom-hint{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(27,27,24,0.82);color:rgba(247,245,240,0.9);
+  padding:12px 20px;border-radius:10px;font-size:0.85rem;text-align:center;
+  pointer-events:none;z-index:400;display:none;
+}
+
+/* Loading spinner */
+.map-loading{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,0.92);border:1px solid var(--border);
+  border-radius:8px;padding:6px 14px;font-size:0.78rem;color:var(--muted);
+  z-index:400;display:none;
+}
+
+/* Assumptions */
+.assumptions{
+  margin-top:24px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:16px 20px;
+}
+.assumptions h4{font-size:0.82rem;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;}
+.assumptions p{font-size:0.80rem;color:var(--muted);line-height:1.6;margin-bottom:6px;}
+.assumptions p:last-child{margin-bottom:0;}
+.assumptions strong{color:var(--text2);}
+
+/* Leaflet popup */
+.leaflet-popup-content{font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-width:180px;}
+.leaflet-popup-content h4{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ceterisparibus-uy</div>
+  <h1>Mapa de <em>Rentabilidad</em> Agropecuaria</h1>
+  <p class="sub">Índice de rentabilidad por departamento según actividad, basado en índices CONEAT, arrendamientos de mercado y precios actuales de commodities.</p>
+</header>
+
+<nav>
+  <a href="index.html">← Inicio</a>
+  <a href="#" class="active">Mapa Rentabilidad</a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h2>Seleccioná la actividad</h2>
+    <p>El mapa muestra la rentabilidad estimada sobre el costo de arrendamiento para cada departamento. Verde = mayor rentabilidad.</p>
+  </div>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="modeRent" onclick="setMode('rent')">📊 Rentabilidad por depto.</button>
+    <button class="mode-btn" id="modeCon" onclick="setMode('coneat')">🗺️ Índices CONEAT por padrón</button>
+  </div>
+
+  <div class="act-tabs" id="actTabs"></div>
+
+  <div class="map-info-wrap">
+    <div class="map-wrap">
+      <div id="map"></div>
+      <div class="zoom-hint" id="zoomHint">Acercate al mapa para ver<br>los índices CONEAT por padrón</div>
+      <div class="map-loading" id="mapLoading">Cargando polígonos…</div>
+      <div class="legend-box" id="legendBox">
+        <div class="legend-title" id="legendTitle">Rentabilidad s/renta</div>
+        <div class="legend-bar" id="legendBar"></div>
+        <div class="legend-labels" id="legendLabels"><span>Negativa</span><span>0%</span><span>+200%</span></div>
+        <div class="legend-na"><div class="legend-na-dot"></div><span id="legendNaText">Sin datos / N/A</span></div>
+      </div>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <div class="hint">
+        <strong>🗺️</strong>
+        Hacé clic en un departamento para ver el detalle de rentabilidad por actividad.
+      </div>
+    </div>
+  </div>
+
+  <div class="assumptions">
+    <h4>Supuestos del modelo</h4>
+    <p><strong>CONEAT:</strong> Índice promedio ponderado por área por departamento, fuente DGRN/MGAP (2025). CONEAT 100 = productividad ganadera de referencia.</p>
+    <p><strong>Arrendamientos:</strong> Por departamento y rubro, fuente MGAP-DIEA Cuadro 6, 1er Semestre 2025. Departamentos sin dato (s/d) para una actividad se muestran en gris — indica que esa actividad no es relevante o no tiene mercado de arrendamiento registrado en ese departamento. Soja, Trigo, Maíz, Colza y Girasol usan el arrendamiento de Agricultura secano.</p>
+    <p><strong>Rendimientos:</strong> Escalados linealmente por CONEAT/100 sobre rendimiento base nacional. Ganadería: 100 kg PV/ha × USD 2.50/kg (CONEAT 100). Soja: 2.8 tn/ha × USD 400/tn. Trigo: 3.5 tn/ha × USD 200/tn. Maíz: 6.0 tn/ha × USD 250/tn. Colza: 2.2 tn/ha × USD 521/tn. Girasol: 1.8 tn/ha × USD 457/tn. Lechería: 4,000 L/ha × USD 0.45/L. Arroz: 7 tn/ha × USD 280/tn (fijo).</p>
+    <p><strong>Costos directos:</strong> Ganadería USD 60/ha, Soja USD 622/ha, Trigo USD 940/ha, Maíz USD 1,004/ha, Colza USD 853/ha, Girasol USD 576/ha, Arroz USD 1,400/ha, Lechería USD 800/ha. Fuente: FUCREA/MGAP 2025–2026.</p>
+    <p><strong>Precios:</strong> Cámara Mercantil de Productos del País, 24/04/2026.</p>
+    <p><strong>Rentabilidad = (Margen Bruto − Arrendamiento ref.) / Arrendamiento ref. × 100.</strong> Modelo orientativo; no incluye costos fijos, estructura de capital ni impuestos.</p>
+  </div>
+</main>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+const DEPT = {
+  'Artigas':        { coneat: 77.76  },
+  'Canelones':      { coneat: 136.35 },
+  'Cerro Largo':    { coneat: 80.21  },
+  'Colonia':        { coneat: 150.21 },
+  'Durazno':        { coneat: 96.34  },
+  'Flores':         { coneat: 130.09 },
+  'Florida':        { coneat: 114.92 },
+  'Lavalleja':      { coneat: 86.28  },
+  'Maldonado':      { coneat: 82.14  },
+  'Montevideo':     { coneat: 157.77 },
+  'Paysandú':       { coneat: 106.02 },
+  'Río Negro':      { coneat: 139.49 },
+  'Rivera':         { coneat: 76.07  },
+  'Rocha':          { coneat: 65.77  },
+  'Salto':          { coneat: 88.36  },
+  'San José':       { coneat: 144.49 },
+  'Soriano':        { coneat: 149.92 },
+  'Tacuarembó':     { coneat: 78.28  },
+  'Treinta y Tres': { coneat: 73.34  },
+};
+
+// Arrendamientos por departamento y rubro — Cuadro 6, MGAP-DIEA, 1er Sem. 2025
+// null = s/d → cae al promedio nacional
+const ARR_NAC = { gan: 82, ag: 273, arr: 216, lec: 230 };
+const ARR = {
+  'Artigas':        { gan:  69, ag: null, arr: 218, lec: null },
+  'Canelones':      { gan: 164, ag:  311, arr: null, lec:  233 },
+  'Cerro Largo':    { gan:  84, ag:  153, arr:  190, lec: null },
+  'Colonia':        { gan:  94, ag:  343, arr: null, lec:  261 },
+  'Durazno':        { gan:  98, ag:  206, arr: null, lec:  100 },
+  'Flores':         { gan:  94, ag:  256, arr: null, lec:  167 },
+  'Florida':        { gan: 112, ag:  260, arr: null, lec:  223 },
+  'Lavalleja':      { gan:  81, ag:  142, arr: null, lec: null },
+  'Maldonado':      { gan:  86, ag:  359, arr: null, lec: null },
+  'Montevideo':     { gan: null,ag: null, arr: null, lec: null },
+  'Paysandú':       { gan:  92, ag:  213, arr: null, lec: null },
+  'Río Negro':      { gan:  76, ag:  281, arr: null, lec: null },
+  'Rivera':         { gan:  86, ag:  137, arr: null, lec: null },
+  'Rocha':          { gan:  83, ag:  194, arr:  231, lec: null },
+  'Salto':          { gan:  78, ag:  159, arr:  188, lec: null },
+  'San José':       { gan: 121, ag:  376, arr: null, lec:  241 },
+  'Soriano':        { gan:  96, ag:  297, arr: null, lec:  252 },
+  'Tacuarembó':     { gan:  84, ag:  107, arr:  227, lec: null },
+  'Treinta y Tres': { gan:  71, ag: null, arr:  205, lec: null },
+};
+
+function getArr(actKey, deptName) {
+  const d = ARR[deptName];
+  if (!d) return null;
+  if (actKey === 'ganaderia') return d.gan;
+  if (actKey === 'arroz')     return d.arr;
+  if (actKey === 'lecheria')  return d.lec;
+  return d.ag;
+}
+
+// Departamentos arroceros (tienen infraestructura de riego/agua)
+const ARROZ_DEPTS = new Set(['Treinta y Tres','Cerro Largo','Rocha','Artigas','Salto','Rivera']);
+
+const ACT = {
+  ganaderia: {
+    label:'Ganadería', icon:'🐄', color:'#2a7235',
+    baseRev: 250,  // CONEAT 100 → 100 kg PV × USD 2.50/kg
+    cost: 60,      // sanidad, suplementación, gestión
+    arrRef: 82.7,  // arr nac. ganadería
+    yieldLabel:'Producción est.',
+    yieldUnit:'kg PV/ha',
+    yieldBase: 100,
+    priceUnit: 'USD 2.50/kg PV',
+  },
+  soja: {
+    label:'Soja 1ª', icon:'🫘', color:'#c8963e',
+    baseRev: 1120, cost: 622, arrRef: 329.3,
+    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:2.8, priceUnit:'USD 400/tn',
+  },
+  trigo: {
+    label:'Trigo', icon:'🌾', color:'#a07418',
+    baseRev: 700, cost: 940, arrRef: 329.3,
+    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:3.5, priceUnit:'USD 200/tn',
+  },
+  maiz: {
+    label:'Maíz 1ª', icon:'🌽', color:'#d49017',
+    baseRev: 1500, cost: 1004, arrRef: 329.3,
+    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:6.0, priceUnit:'USD 250/tn',
+  },
+  colza: {
+    label:'Colza', icon:'🌼', color:'#7b6e30',
+    baseRev: 1146, cost: 853, arrRef: 329.3,
+    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:2.2, priceUnit:'USD 521/tn',
+  },
+  girasol: {
+    label:'Girasol', icon:'🌻', color:'#c89000',
+    baseRev: 823, cost: 576, arrRef: 329.3,
+    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:1.8, priceUnit:'USD 457/tn',
+  },
+  arroz: {
+    label:'Arroz', icon:'🍚', color:'#1b5e85',
+    baseRev: 1960, cost: 1400, arrRef: 168.8,
+    fixed: true,   // no escala con CONEAT
+    yieldLabel:'Rendimiento ref.', yieldUnit:'tn/ha', yieldBase:7.0, priceUnit:'USD 280/tn',
+  },
+  lecheria: {
+    label:'Lechería', icon:'🥛', color:'#4a7ab8',
+    baseRev: 1800, cost: 800, arrRef: 222.1,
+    yieldLabel:'Producción est.', yieldUnit:'L/ha', yieldBase:4000, priceUnit:'USD 0.45/L',
+  },
+};
+
+function calcRent(actKey, deptName) {
+  const a = ACT[actKey];
+  const d = DEPT[deptName];
+  if (!d) return null;
+  if (actKey === 'arroz' && !ARROZ_DEPTS.has(deptName)) return null;
+
+  const arr   = getArr(actKey, deptName);
+  if (arr === null) return null;
+  const factor = a.fixed ? 1 : d.coneat / 100;
+  const rev   = factor * a.baseRev;
+  const gm    = rev - a.cost;
+  const rent  = (gm - arr) / arr * 100;
+  const yld   = factor * a.yieldBase;
+  return { rev, gm, rent, yld, arr };
+}
+
+// ── COLOR SCALE ─────────────────────────────────────────────────────────────
+function rentColor(rent) {
+  if (rent === null) return '#c8c4bc';
+  if (rent < -60) return '#8c2020';
+  if (rent < -30) return '#b84040';
+  if (rent < 0)   return '#d87070';
+  if (rent < 30)  return '#e8b830';
+  if (rent < 80)  return '#c8a820';
+  if (rent < 130) return '#6aaa78';
+  if (rent < 200) return '#3d8a50';
+  return '#2a7235';
+}
+
+// ── LEAFLET MAP ──────────────────────────────────────────────────────────────
+let map, geoLayer;
+let currentAct = 'ganaderia';
+let selectedDept = null;
+
+map = L.map('map', {
+  center: [-32.8, -56.2],
+  zoom: 6,
+  zoomControl: true,
+  scrollWheelZoom: false,
+  attributionControl: false,
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap, © CartoDB',
+  maxZoom: 18,
+}).addTo(map);
+
+L.control.attribution({ position:'bottomleft' })
+  .addAttribution('Datos DGRN/MGAP, CONEAT, Cámara Mercantil 2025–2026')
+  .addTo(map);
+
+function deptStyle(feature) {
+  const name = feature.properties.name;
+  const res = calcRent(currentAct, name);
+  const rent = res ? res.rent : null;
+  return {
+    fillColor: rentColor(rent),
+    weight: 1.2,
+    color: '#8a8478',
+    fillOpacity: 0.82,
+  };
+}
+
+function onEachFeature(feature, layer) {
+  layer.on({
+    mouseover(e) {
+      const l = e.target;
+      l.setStyle({ weight: 2.5, color: '#333', fillOpacity: 0.95 });
+      l.bringToFront();
+    },
+    mouseout(e) {
+      if (selectedDept !== feature.properties.name) {
+        geoLayer.resetStyle(e.target);
+      }
+    },
+    click(e) {
+      if (selectedDept) {
+        // reset previous
+        geoLayer.eachLayer(l => {
+          if (l.feature.properties.name === selectedDept) geoLayer.resetStyle(l);
+        });
+      }
+      selectedDept = feature.properties.name;
+      e.target.setStyle({ weight: 3, color: '#1b1b18', fillOpacity: 0.95 });
+      showInfo(feature.properties.name);
+    },
+  });
+}
+
+function loadMap() {
+  fetch('data/uruguay-departamentos.json')
+    .then(r => r.json())
+    .then(data => {
+      geoLayer = L.geoJSON(data, {
+        style: deptStyle,
+        onEachFeature,
+      }).addTo(map);
+    })
+    .catch(err => console.error('Error cargando GeoJSON:', err));
+}
+
+function refreshMapColors() {
+  if (!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    const name = layer.feature.properties.name;
+    if (name !== selectedDept) {
+      geoLayer.resetStyle(layer);
+    } else {
+      const res = calcRent(currentAct, name);
+      const rent = res ? res.rent : null;
+      layer.setStyle({
+        fillColor: rentColor(rent),
+        weight: 3,
+        color: '#1b1b18',
+        fillOpacity: 0.95,
+      });
+    }
+  });
+}
+
+// ── INFO PANEL ───────────────────────────────────────────────────────────────
+function fmt(n, dec=1) {
+  if (n === null || isNaN(n)) return '—';
+  return n.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function fmtPct(n) {
+  if (n === null) return '<span class="act-rent na">N/A</span>';
+  const cls = n >= 0 ? 'pos' : 'neg';
+  const sign = n >= 0 ? '+' : '';
+  return `<span class="act-rent ${cls}">${sign}${fmt(n)}%</span>`;
+}
+
+function showInfo(deptName) {
+  const d = DEPT[deptName];
+  if (!d) return;
+
+  // All activities sorted by rentability
+  const rows = Object.entries(ACT).map(([key, a]) => {
+    const res = calcRent(key, deptName);
+    return { key, a, res };
+  }).sort((x,y) => {
+    const rv = r => (r && r.rent !== null) ? r.rent : -9999;
+    return rv(y.res) - rv(x.res);
+  });
+
+  const bestKey = rows[0].key;
+
+  let html = `
+    <h3>${deptName}</h3>
+    <span class="coneat-badge">CONEAT ≈ ${fmt(d.coneat)}</span>
+    <div class="dept-stats">
+      <div class="dept-stat"><label>Índice CONEAT (prom.)</label><value>${fmt(d.coneat)}</value></div>
+      <div class="dept-stat"><label>Arr. ganadería</label><value>USD ${getArr('ganaderia', deptName)}/ha</value></div>
+      <div class="dept-stat"><label>Arr. ag. secano</label><value>USD ${getArr('soja', deptName)}/ha</value></div>
+    </div>
+    <div class="section-title">Rentabilidad estimada por actividad</div>
+  `;
+
+  for (const {key, a, res} of rows) {
+    const isHL = key === currentAct;
+    const rent = res ? res.rent : null;
+    let detLine = '';
+    if (res) {
+      detLine = `<div style="font-size:0.74rem;color:var(--muted);margin-top:2px;">
+        MB USD ${fmt(res.gm,0)}/ha · Rev USD ${fmt(res.rev,0)}/ha · Arr USD ${fmt(res.arr,0)}/ha
+      </div>`;
+    }
+    html += `
+      <div class="activity-row${isHL ? ' highlighted' : ''}">
+        <div>
+          <div class="act-name">${a.icon} ${a.label}</div>
+          ${detLine}
+        </div>
+        ${fmtPct(rent)}
+      </div>
+    `;
+  }
+
+  html += `<div class="section-title" style="margin-top:16px;">Metodología</div>
+    <p style="font-size:0.77rem;color:var(--muted);line-height:1.5;">
+      Rentabilidad = (MB − Arr.ref.) / Arr.ref. × 100<br>
+      Arr. referencia = promedio nacional por actividad (MGAP 2022–2024).
+    </p>`;
+
+  document.getElementById('infoPanel').innerHTML = html;
+}
+
+// ── ACTIVITY TABS ────────────────────────────────────────────────────────────
+const tabsEl = document.getElementById('actTabs');
+Object.entries(ACT).forEach(([key, a]) => {
+  const btn = document.createElement('button');
+  btn.className = 'act-btn' + (key === currentAct ? ' active' : '');
+  btn.dataset.act = key;
+  btn.innerHTML = `<span class="icon">${a.icon}</span>${a.label}`;
+  if (key === currentAct) btn.style.background = a.color;
+  btn.addEventListener('click', () => {
+    currentAct = key;
+    document.querySelectorAll('.act-btn').forEach(b => {
+      b.classList.remove('active');
+      b.style.background = '';
+      b.style.color = '';
+      b.style.borderColor = '';
+    });
+    btn.classList.add('active');
+    btn.style.background = a.color;
+    btn.style.color = '#fff';
+    btn.style.borderColor = 'transparent';
+    refreshMapColors();
+    if (selectedDept) showInfo(selectedDept);
+  });
+  tabsEl.appendChild(btn);
+});
+// Set initial active button style
+const firstBtn = tabsEl.querySelector('.act-btn.active');
+if (firstBtn) {
+  firstBtn.style.background = ACT[currentAct].color;
+  firstBtn.style.color = '#fff';
+  firstBtn.style.borderColor = 'transparent';
+}
+
+// ── CONEAT MODE ──────────────────────────────────────────────────────────────
+const DGRN_URL = 'https://dgrn.mgap.gub.uy/arcgis/rest/services/CONEAT/IndicesConeat/MapServer/0/query';
+const CONEAT_MIN_ZOOM = 11;
+let coneatLayer = null;
+let currentMode = 'rent';
+let fetchTimer = null;
+
+function coneatColor(idx) {
+  if (!idx && idx !== 0) return '#c8c4bc';
+  if (idx < 40)  return '#8c2020';
+  if (idx < 60)  return '#b84040';
+  if (idx < 80)  return '#d87070';
+  if (idx < 100) return '#e8b830';
+  if (idx < 120) return '#c8a820';
+  if (idx < 150) return '#6aaa78';
+  if (idx < 180) return '#3d8a50';
+  return '#2a7235';
+}
+
+async function fetchConeat() {
+  if (currentMode !== 'coneat') return;
+  const zoom = map.getZoom();
+  const hint = document.getElementById('zoomHint');
+  const loading = document.getElementById('mapLoading');
+
+  if (zoom < CONEAT_MIN_ZOOM) {
+    hint.style.display = 'block';
+    if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
+    return;
+  }
+  hint.style.display = 'none';
+  loading.style.display = 'block';
+
+  const b = map.getBounds();
+  const params = new URLSearchParams({
+    geometry: `${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`,
+    geometryType: 'esriGeometryEnvelope',
+    inSR: '4326',
+    spatialRel: 'esriSpatialRelIntersects',
+    outFields: 'IND_CONEAT,PADRON,DEPTO,AREAHA',
+    returnGeometry: 'true',
+    outSR: '4326',
+    resultRecordCount: '2000',
+    f: 'json'
+  });
+
+  try {
+    const res = await fetch(`${DGRN_URL}?${params}`);
+    const data = await res.json();
+    const geojson = {
+      type: 'FeatureCollection',
+      features: (data.features || []).filter(f => f.geometry && f.geometry.rings).map(f => ({
+        type: 'Feature',
+        properties: f.attributes,
+        geometry: { type: 'Polygon', coordinates: f.geometry.rings }
+      }))
+    };
+
+    // Disolver polígonos adyacentes con mismo índice CONEAT
+    let dissolved;
+    try {
+      dissolved = turf.dissolve(geojson, { propertyName: 'IND_CONEAT' });
+    } catch(e) {
+      dissolved = geojson; // fallback si falla la disolución
+    }
+
+    if (coneatLayer) map.removeLayer(coneatLayer);
+    coneatLayer = L.geoJSON(dissolved, {
+      style: f => ({
+        fillColor: coneatColor(f.properties.IND_CONEAT),
+        weight: 0.8,
+        color: 'rgba(60,60,60,0.35)',
+        fillOpacity: 0.78,
+      }),
+      onEachFeature: (f, layer) => {
+        layer.on({
+          mouseover(e) { e.target.setStyle({ weight: 2, color: '#333', fillOpacity: 0.95 }); e.target.bringToFront(); },
+          mouseout(e)  { if (coneatLayer) coneatLayer.resetStyle(e.target); },
+          click()      { showConeatInfo(f.properties); },
+        });
+      }
+    }).addTo(map);
+  } catch(e) {
+    console.error('Error DGRN:', e);
+  }
+  loading.style.display = 'none';
+}
+
+function showConeatInfo(p) {
+  const idx = p.IND_CONEAT;
+  const color = coneatColor(idx);
+  const label = idx < 60 ? 'Baja productividad' : idx < 100 ? 'Productividad media-baja' : idx < 130 ? 'Productividad media-alta' : 'Alta productividad';
+  document.getElementById('infoPanel').innerHTML = `
+    <h3>Índice CONEAT ${idx ?? '—'}</h3>
+    <span class="coneat-badge" style="background:${color}22;color:${color};border:1px solid ${color}44;">${label}</span>
+    <div class="dept-stats" style="margin-top:12px;">
+      <div class="dept-stat"><label>Índice CONEAT</label><value>${idx ?? '—'}</value></div>
+      <div class="dept-stat"><label>vs. referencia (100)</label><value>${idx ? (idx > 100 ? '+' : '') + (idx - 100).toFixed(0) : '—'}</value></div>
+      <div class="dept-stat"><label>Productividad relativa</label><value>${idx ? (idx).toFixed(0) + '%' : '—'}</value></div>
+    </div>
+    <div class="section-title" style="margin-top:14px;">¿Qué significa?</div>
+    <p style="font-size:0.80rem;color:var(--muted);line-height:1.6;">
+      CONEAT 100 = productividad ganadera de referencia nacional.<br>
+      Un índice de <strong style="color:var(--text);">${idx}</strong> implica que este suelo produce el <strong style="color:var(--text);">${idx}%</strong> de la productividad de referencia. Valores > 100 indican mayor potencial productivo.
+    </p>
+  `;
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeRent').classList.toggle('active', mode === 'rent');
+  document.getElementById('modeCon').classList.toggle('active', mode === 'coneat');
+
+  const actTabs = document.getElementById('actTabs');
+  const hint    = document.getElementById('zoomHint');
+  const bar     = document.getElementById('legendBar');
+  const title   = document.getElementById('legendTitle');
+  const labels  = document.getElementById('legendLabels');
+  const naText  = document.getElementById('legendNaText');
+
+  if (mode === 'rent') {
+    actTabs.style.display = '';
+    hint.style.display = 'none';
+    if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
+    if (geoLayer) map.addLayer(geoLayer);
+    title.textContent  = 'Rentabilidad s/renta';
+    bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
+    labels.innerHTML   = '<span>Negativa</span><span>0%</span><span>+200%</span>';
+    naText.textContent = 'Sin datos / N/A';
+    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Hacé clic en un departamento para ver el detalle de rentabilidad por actividad.</div>';
+  } else {
+    actTabs.style.display = 'none';
+    if (geoLayer) map.removeLayer(geoLayer);
+    title.textContent  = 'Índice CONEAT';
+    bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
+    labels.innerHTML   = '<span>&lt;60</span><span>100</span><span>180+</span>';
+    naText.textContent = 'Sin índice';
+    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Acercate y hacé clic en un padrón para ver su índice CONEAT.</div>';
+    fetchConeat();
+  }
+}
+
+map.on('moveend', () => {
+  if (currentMode === 'coneat') {
+    clearTimeout(fetchTimer);
+    fetchTimer = setTimeout(fetchConeat, 400);
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+loadMap();
+</script>
+</body>
+</html>
