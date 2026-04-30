@@ -458,7 +458,6 @@ function onEachFeature(feature, layer) {
       const l = e.target;
       l.setStyle({ weight: 2.5, color: '#333', fillOpacity: 0.95 });
       l.bringToFront();
-      l.bindTooltip(feature.properties.name, { sticky: true, className: 'dept-tooltip', direction: 'top', offset: [0, -4] }).openTooltip();
     },
     mouseout(e) {
       e.target.closeTooltip();
