@@ -425,6 +425,8 @@ let selectedDept = null;
 map = window._lmap = L.map('map', {
   center: [-32.8, -56.2],
   zoom: 6,
+  minZoom: 5,
+  maxZoom: 18,
   zoomControl: true,
   scrollWheelZoom: false,
   attributionControl: false,
@@ -459,6 +461,7 @@ function onEachFeature(feature, layer) {
       l.bindTooltip(feature.properties.name, { sticky: true, className: 'dept-tooltip', direction: 'top', offset: [0, -4] }).openTooltip();
     },
     mouseout(e) {
+      e.target.closeTooltip();
       if (selectedDept !== feature.properties.name) {
         geoLayer.resetStyle(e.target);
       }
