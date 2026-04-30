@@ -176,8 +176,9 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
   </div>
 
   <div class="mode-toggle">
-    <button class="mode-btn active" id="modeRent" onclick="setMode('rent')">📊 Rentabilidad por depto.</button>
-    <button class="mode-btn" id="modeCon" onclick="setMode('coneat')">🗺️ Índices CONEAT por padrón</button>
+    <button class="mode-btn active" id="modeRent"  onclick="setMode('rent')"  >📊 Rentabilidad por depto.</button>
+    <button class="mode-btn"        id="modeCon"   onclick="setMode('coneat')">🗺️ Índices CONEAT</button>
+    <button class="mode-btn"        id="modeOptim" onclick="setMode('optimo')">🌱 Segmentación productiva</button>
   </div>
 
   <div class="act-tabs" id="actTabs"></div>
@@ -358,7 +359,7 @@ let map, geoLayer;
 let currentAct = 'ganaderia';
 let selectedDept = null;
 
-map = L.map('map', {
+map = window._lmap = L.map('map', {
   center: [-32.8, -56.2],
   zoom: 6,
   zoomControl: true,
@@ -544,7 +545,78 @@ if (firstBtn) {
   firstBtn.style.borderColor = 'transparent';
 }
 
-// ── CONEAT MODE ──────────────────────────────────────────────────────────────
+// ── OPTIMAL CROP MODEL ───────────────────────────────────────────────────────
+const DEPTO_NORM = {
+  'ARTIGAS':'Artigas','CANELONES':'Canelones','CERRO LARGO':'Cerro Largo',
+  'COLONIA':'Colonia','DURAZNO':'Durazno','FLORES':'Flores','FLORIDA':'Florida',
+  'LAVALLEJA':'Lavalleja','MALDONADO':'Maldonado','MONTEVIDEO':'Montevideo',
+  'PAYSANDU':'Paysandú','PAYASANDU':'Paysandú','RIO NEGRO':'Río Negro',
+  'RIVERA':'Rivera','ROCHA':'Rocha','SALTO':'Salto','SAN JOSE':'San José',
+  'SORIANO':'Soriano','TACUAREMBO':'Tacuarembó','TREINTA Y TRES':'Treinta y Tres',
+};
+function normDepto(raw) {
+  if (!raw) return null;
+  const k = raw.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+  return DEPTO_NORM[k] || null;
+}
+
+function calcRentByCONEAT(actKey, coneatIdx, deptName) {
+  const a = ACT[actKey];
+  if (!a || !deptName) return null;
+  if (actKey === 'arroz' && !ARROZ_DEPTS.has(deptName)) return null;
+  const arr = getArr(actKey, deptName);
+  if (arr === null) return null;
+  const factor = a.fixed ? 1 : coneatIdx / 100;
+  const rev = factor * a.baseRev;
+  const gm  = rev - a.cost;
+  const rent = (gm - arr) / arr * 100;
+  return { rev, gm, rent, arr, yld: factor * a.yieldBase };
+}
+
+function optimalCrop(coneatIdx, deptName) {
+  let best = null, bestRent = -Infinity;
+  for (const [key] of Object.entries(ACT)) {
+    const res = calcRentByCONEAT(key, coneatIdx, deptName);
+    if (res && res.rent > bestRent) { bestRent = res.rent; best = { key, res }; }
+  }
+  return best;
+}
+
+function showOptimoInfo(p) {
+  const idx   = p.IND_CONEAT;
+  const depto = normDepto(p.DEPTO) || p.DEPTO;
+  const opt   = optimalCrop(idx, normDepto(p.DEPTO));
+  const a     = opt ? ACT[opt.key] : null;
+  const rows  = Object.entries(ACT).map(([key]) => {
+    const res = calcRentByCONEAT(key, idx, normDepto(p.DEPTO));
+    return { key, a: ACT[key], res };
+  }).sort((x,y) => ((y.res?.rent ?? -9999) - (x.res?.rent ?? -9999)));
+
+  let html = `
+    <h3>CONEAT ${idx ?? '—'}</h3>
+    <span class="coneat-badge" style="background:${a ? ACT[opt.key].color+'22' : '#eee'};color:${a ? ACT[opt.key].color : '#888'};">
+      ${a ? a.icon + ' ' + a.label : 'Sin cultivo viable'}
+    </span>
+    <div class="dept-stats" style="margin-top:10px;">
+      <div class="dept-stat"><label>Departamento</label><value>${depto}</value></div>
+      <div class="dept-stat"><label>Índice CONEAT</label><value>${idx}</value></div>
+      ${opt ? `<div class="dept-stat"><label>Rentabilidad óptima</label><value style="color:${opt.res.rent>=0?'var(--green)':'var(--red)'};">${opt.res.rent>=0?'+':''}${opt.res.rent.toFixed(0)}%</value></div>` : ''}
+    </div>
+    <div class="section-title" style="margin-top:12px;">Ranking por actividad</div>`;
+
+  for (const {key, a, res} of rows) {
+    if (!res) continue;
+    const cls = res.rent >= 0 ? 'pos' : 'neg';
+    const sign = res.rent >= 0 ? '+' : '';
+    html += `<div class="activity-row${key === opt?.key ? ' highlighted' : ''}">
+      <div class="act-name">${a.icon} ${a.label}</div>
+      <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)}%</span>
+    </div>`;
+  }
+  document.getElementById('infoPanel').innerHTML = html;
+}
+
+// ── CONEAT MODE ───────────────────────────────────────────────────────────────
 const DGRN_URL = 'https://dgrn.mgap.gub.uy/arcgis/rest/services/CONEAT/IndicesConeat/MapServer/0/query';
 const CONEAT_MIN_ZOOM = 11;
 let coneatLayer = null;
@@ -564,7 +636,7 @@ function coneatColor(idx) {
 }
 
 async function fetchConeat() {
-  if (currentMode !== 'coneat') return;
+  if (currentMode !== 'coneat' && currentMode !== 'optimo') return;
   const zoom = map.getZoom();
   const hint = document.getElementById('zoomHint');
   const loading = document.getElementById('mapLoading');
@@ -602,27 +674,39 @@ async function fetchConeat() {
       }))
     };
 
-    // Disolver polígonos adyacentes con mismo índice CONEAT
+    // Según modo: disolver por CONEAT o por cultivo óptimo
+    const isOptimo = currentMode === 'optimo';
+
+    if (isOptimo) {
+      geojson.features.forEach(f => {
+        const idx   = f.properties.IND_CONEAT;
+        const depto = normDepto(f.properties.DEPTO);
+        const opt   = optimalCrop(idx, depto);
+        f.properties._optKey = opt ? opt.key : '__none__';
+      });
+    }
+
     let dissolved;
     try {
-      dissolved = turf.dissolve(geojson, { propertyName: 'IND_CONEAT' });
+      dissolved = turf.dissolve(geojson, { propertyName: isOptimo ? '_optKey' : 'IND_CONEAT' });
     } catch(e) {
-      dissolved = geojson; // fallback si falla la disolución
+      dissolved = geojson;
     }
 
     if (coneatLayer) map.removeLayer(coneatLayer);
     coneatLayer = L.geoJSON(dissolved, {
-      style: f => ({
-        fillColor: coneatColor(f.properties.IND_CONEAT),
-        weight: 0.8,
-        color: 'rgba(60,60,60,0.35)',
-        fillOpacity: 0.78,
-      }),
+      style: f => {
+        const p = f.properties;
+        const color = isOptimo
+          ? (p._optKey && ACT[p._optKey] ? ACT[p._optKey].color : '#c8c4bc')
+          : coneatColor(p.IND_CONEAT);
+        return { fillColor: color, weight: 0.8, color: 'rgba(60,60,60,0.3)', fillOpacity: 0.80 };
+      },
       onEachFeature: (f, layer) => {
         layer.on({
-          mouseover(e) { e.target.setStyle({ weight: 2, color: '#333', fillOpacity: 0.95 }); e.target.bringToFront(); },
+          mouseover(e) { e.target.setStyle({ weight: 2.5, color: '#222', fillOpacity: 0.95 }); e.target.bringToFront(); },
           mouseout(e)  { if (coneatLayer) coneatLayer.resetStyle(e.target); },
-          click()      { showConeatInfo(f.properties); },
+          click()      { isOptimo ? showOptimoInfo(f.properties) : showConeatInfo(f.properties); },
         });
       }
     }).addTo(map);
@@ -654,8 +738,9 @@ function showConeatInfo(p) {
 
 function setMode(mode) {
   currentMode = mode;
-  document.getElementById('modeRent').classList.toggle('active', mode === 'rent');
-  document.getElementById('modeCon').classList.toggle('active', mode === 'coneat');
+  document.getElementById('modeRent') .classList.toggle('active', mode === 'rent');
+  document.getElementById('modeCon')  .classList.toggle('active', mode === 'coneat');
+  document.getElementById('modeOptim').classList.toggle('active', mode === 'optimo');
 
   const actTabs = document.getElementById('actTabs');
   const hint    = document.getElementById('zoomHint');
@@ -669,19 +754,36 @@ function setMode(mode) {
     hint.style.display = 'none';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     if (geoLayer) map.addLayer(geoLayer);
-    title.textContent  = 'Rentabilidad s/renta';
+    title.textContent    = 'Rentabilidad s/renta';
     bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
-    labels.innerHTML   = '<span>Negativa</span><span>0%</span><span>+200%</span>';
-    naText.textContent = 'Sin datos / N/A';
+    labels.innerHTML     = '<span>Negativa</span><span>0%</span><span>+200%</span>';
+    naText.textContent   = 'Sin datos / N/A';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Hacé clic en un departamento para ver el detalle de rentabilidad por actividad.</div>';
-  } else {
+
+  } else if (mode === 'coneat') {
     actTabs.style.display = 'none';
     if (geoLayer) map.removeLayer(geoLayer);
-    title.textContent  = 'Índice CONEAT';
+    title.textContent    = 'Índice CONEAT';
     bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
-    labels.innerHTML   = '<span>&lt;60</span><span>100</span><span>180+</span>';
-    naText.textContent = 'Sin índice';
-    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Acercate y hacé clic en un padrón para ver su índice CONEAT.</div>';
+    labels.innerHTML     = '<span>&lt;60</span><span>100</span><span>180+</span>';
+    naText.textContent   = 'Sin índice';
+    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Acercate y hacé clic en una zona para ver su índice CONEAT.</div>';
+    fetchConeat();
+
+  } else if (mode === 'optimo') {
+    actTabs.style.display = 'none';
+    if (geoLayer) map.removeLayer(geoLayer);
+    // Leyenda por cultivo
+    const crops = Object.entries(ACT).map(([k,a]) =>
+      `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
+        <span style="width:10px;height:10px;border-radius:2px;background:${a.color};display:inline-block;"></span>${a.icon}${a.label}
+      </span>`).join('');
+    title.textContent    = 'Cultivo óptimo';
+    bar.style.background = 'none';
+    bar.style.height     = '0';
+    labels.innerHTML     = `<div style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;">${crops}</div>`;
+    naText.textContent   = 'Sin cultivo viable';
+    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Acercate y hacé clic en una zona para ver el cultivo óptimo y el ranking de actividades.</div>';
     fetchConeat();
   }
 }
