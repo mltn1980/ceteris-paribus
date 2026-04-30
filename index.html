@@ -83,6 +83,7 @@ nav{position:sticky;top:0;z-index:90;background:rgba(247,245,240,0.92);backdrop-
 }
 .section-label.collapsible:hover .toggle-text{background:#ffe8cc;}
 .section-label.collapsed .chevron{transform:rotate(-90deg);}
+.collapsible-content.collapsed{display:none;}
 .section-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .section-label h2{font-family:'DM Serif Display',serif;font-size:1.55rem;font-weight:400;margin:0;}
 .section-label span.count{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:500;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:4px;}
@@ -276,7 +277,16 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 <body>
 <script>
 function adjustHeaderOffset(){var h=document.querySelector('header');if(h)document.body.style.paddingTop=h.offsetHeight+'px';}
-window.addEventListener('DOMContentLoaded',adjustHeaderOffset);
+window.addEventListener('DOMContentLoaded',function(){
+  adjustHeaderOffset();
+  document.querySelectorAll('.section-label.collapsible').forEach(function(el){
+    el.classList.add('collapsed');
+    var content=el.nextElementSibling;
+    if(content) content.classList.add('collapsed');
+    var t=el.querySelector('.toggle-text');
+    if(t) t.textContent='▼ Mostrar';
+  });
+});
 window.addEventListener('resize',adjustHeaderOffset);
 </script>
 <header>
