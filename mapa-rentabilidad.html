@@ -381,7 +381,7 @@ function calcWeightedRent(deptName, actKey) {
   const dist = coneatDist[DEPTO_TO_KEY[deptName]];
   if (!dist) return (_rentCache[cacheKey] = null);
 
-  let totalArea = 0, viableArea = 0, wRent = 0;
+  let totalArea = 0, viableArea = 0, wRent = 0, wArr = 0, wRev = 0, wGm = 0;
 
   for (const [idxStr, area] of Object.entries(dist)) {
     const idx = parseFloat(idxStr);
@@ -390,11 +390,17 @@ function calcWeightedRent(deptName, actKey) {
     if (!res) continue;
     viableArea += area;
     wRent += res.rent * area;
+    wArr  += res.arr  * area;
+    wRev  += res.rev  * area;
+    wGm   += res.gm   * area;
   }
 
   if (viableArea === 0) return (_rentCache[cacheKey] = null);
   return (_rentCache[cacheKey] = {
     rent: wRent / viableArea,
+    arr:  wArr  / viableArea,
+    rev:  wRev  / viableArea,
+    gm:   wGm   / viableArea,
     viableArea,
     totalArea,
     viablePct: viableArea / totalArea * 100,
@@ -528,20 +534,25 @@ function showInfo(deptName) {
     const aca = currentAct === 'arroz' ? ARROZ_ACA[deptName] : null;
     html += `
     <div class="dept-stats" style="margin-top:10px;">
-      <div class="dept-stat"><label>Margen neto ponderado</label><value style="color:${rentClr};">${rentSign}${w.rent.toFixed(0)} USD/ha</value></div>
+      <div class="dept-stat"><label>Margen neto ponderado</label><value style="color:${rentClr};font-size:1rem;">${rentSign}${w.rent.toFixed(0)} USD/ha</value></div>
       ${aca ? `
       <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>
       <div class="dept-stat"><label>% producción nacional</label><value>${aca.pct}% de ${ARROZ_TOTAL_HA.toLocaleString()} ha</value></div>
       ` : `
       <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% del depto.)</value></div>
       `}
-      ${arrRef ? `<div class="dept-stat"><label>Arr. referencia (IC100)</label><value>USD ${arrRef}/ha</value></div>` : ''}
     </div>
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:12px;line-height:1.5;">
-      Solo se contabilizan las hectáreas con CONEAT viable para ${a.label}
-      ${a.coneatMin ? `(mín. CONEAT ${a.coneatMin}` : ''}${a.coneatMax ? `–${a.coneatMax}` : a.coneatMin ? '+' : ''}${a.coneatMin ? ')' : ''}.
-      El arrendamiento se escala por CONEAT/100 para reflejar el valor real de cada zona.
-    </p>`;
+
+    <div class="section-title" style="margin-top:14px;">Supuestos del modelo</div>
+    <div class="dept-stats">
+      <div class="dept-stat"><label>Precio</label><value>${a.priceUnit}</value></div>
+      <div class="dept-stat"><label>Rendimiento (IC100)</label><value>${a.yieldBase} ${a.yieldUnit}</value></div>
+      <div class="dept-stat"><label>Ingreso bruto ponderado</label><value>${w.rev.toFixed(0)} USD/ha</value></div>
+      <div class="dept-stat"><label>Costos directos</label><value>${a.cost.toLocaleString()} USD/ha</value></div>
+      <div class="dept-stat"><label>Margen bruto ponderado</label><value>${w.gm.toFixed(0)} USD/ha</value></div>
+      <div class="dept-stat"><label>Arrendamiento ponderado</label><value>${w.arr.toFixed(0)} USD/ha</value></div>
+      ${arrRef ? `<div class="dept-stat"><label>Arr. referencia (IC100)</label><value>${arrRef} USD/ha</value></div>` : ''}
+    </div>`;
   } else {
     const reason = !LECHERIA_DEPTS?.has(deptName) && currentAct === 'lecheria'
       ? 'Este departamento no está en la cuenca lechera.'
