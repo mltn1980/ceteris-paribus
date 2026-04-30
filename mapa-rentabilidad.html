@@ -172,7 +172,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 <main>
   <div class="page-header">
     <h2>Seleccioná la actividad</h2>
-    <p>El mapa muestra la rentabilidad estimada sobre el costo de arrendamiento para cada departamento. Verde = mayor rentabilidad.</p>
+    <p>El mapa muestra el margen neto estimado (ingreso bruto − costos − arrendamiento) en USD/ha para cada departamento. Verde = mayor margen.</p>
   </div>
 
   <div class="mode-toggle">
@@ -191,7 +191,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
       <div class="legend-box" id="legendBox">
         <div class="legend-title" id="legendTitle">Rentabilidad s/renta</div>
         <div class="legend-bar" id="legendBar"></div>
-        <div class="legend-labels" id="legendLabels"><span>Negativa</span><span>0%</span><span>+200%</span></div>
+        <div class="legend-labels" id="legendLabels"><span>Negativo</span><span>0</span><span>+300 USD/ha</span></div>
         <div class="legend-na"><div class="legend-na-dot"></div><span id="legendNaText">Sin datos / N/A</span></div>
       </div>
     </div>
@@ -356,7 +356,7 @@ function calcRent(actKey, deptName) {
   const factor = a.fixed ? 1 : d.coneat / 100;
   const rev   = factor * a.baseRev;
   const gm    = rev - a.cost;
-  const rent  = (gm - arr) / arr * 100;
+  const rent  = gm - arr;
   const yld   = factor * a.yieldBase;
   return { rev, gm, rent, yld, arr };
 }
@@ -404,13 +404,13 @@ function calcWeightedRent(deptName, actKey) {
 // ── COLOR SCALE ─────────────────────────────────────────────────────────────
 function rentColor(rent) {
   if (rent === null) return '#c8c4bc';
-  if (rent < -60) return '#8c2020';
-  if (rent < -30) return '#b84040';
-  if (rent < 0)   return '#d87070';
-  if (rent < 30)  return '#e8b830';
-  if (rent < 80)  return '#c8a820';
-  if (rent < 130) return '#6aaa78';
-  if (rent < 200) return '#3d8a50';
+  if (rent < -200) return '#8c2020';
+  if (rent < -100) return '#b84040';
+  if (rent < 0)    return '#d87070';
+  if (rent < 50)   return '#e8b830';
+  if (rent < 150)  return '#c8a820';
+  if (rent < 300)  return '#6aaa78';
+  if (rent < 500)  return '#3d8a50';
   return '#2a7235';
 }
 
@@ -504,11 +504,11 @@ function fmt(n, dec=1) {
   if (n === null || isNaN(n)) return '—';
   return n.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
-function fmtPct(n) {
+function fmtUsd(n) {
   if (n === null) return '<span class="act-rent na">N/A</span>';
   const cls = n >= 0 ? 'pos' : 'neg';
   const sign = n >= 0 ? '+' : '';
-  return `<span class="act-rent ${cls}">${sign}${fmt(n)}%</span>`;
+  return `<span class="act-rent ${cls}">${sign}${fmt(n, 0)} USD/ha</span>`;
 }
 
 function showInfo(deptName) {
@@ -528,7 +528,7 @@ function showInfo(deptName) {
     const aca = currentAct === 'arroz' ? ARROZ_ACA[deptName] : null;
     html += `
     <div class="dept-stats" style="margin-top:10px;">
-      <div class="dept-stat"><label>Rentabilidad ponderada</label><value style="color:${rentClr};">${rentSign}${w.rent.toFixed(0)}%</value></div>
+      <div class="dept-stat"><label>Margen neto ponderado</label><value style="color:${rentClr};">${rentSign}${w.rent.toFixed(0)} USD/ha</value></div>
       ${aca ? `
       <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>
       <div class="dept-stat"><label>% producción nacional</label><value>${aca.pct}% de ${ARROZ_TOTAL_HA.toLocaleString()} ha</value></div>
@@ -615,7 +615,7 @@ function calcRentByCONEAT(actKey, coneatIdx, deptName) {
   const rev       = factor * a.baseRev;
   const gm        = rev - a.cost;
   const arrScaled = a.fixed ? arr : arr * (coneatIdx / 100);
-  const rent      = (gm - arrScaled) / arrScaled * 100;
+  const rent      = gm - arrScaled;
   return { rev, gm, rent, arr: arrScaled, yld: factor * a.yieldBase };
 }
 
@@ -646,7 +646,7 @@ function showOptimoInfo(p) {
     <div class="dept-stats" style="margin-top:10px;">
       <div class="dept-stat"><label>Departamento</label><value>${depto}</value></div>
       <div class="dept-stat"><label>Índice CONEAT</label><value>${idx}</value></div>
-      ${opt ? `<div class="dept-stat"><label>Rentabilidad óptima</label><value style="color:${opt.res.rent>=0?'var(--green)':'var(--red)'};">${opt.res.rent>=0?'+':''}${opt.res.rent.toFixed(0)}%</value></div>` : ''}
+      ${opt ? `<div class="dept-stat"><label>Margen neto óptimo</label><value style="color:${opt.res.rent>=0?'var(--green)':'var(--red)'};">${opt.res.rent>=0?'+':''}${opt.res.rent.toFixed(0)} USD/ha</value></div>` : ''}
     </div>
     <div class="section-title" style="margin-top:12px;">Ranking por actividad</div>`;
 
@@ -656,7 +656,7 @@ function showOptimoInfo(p) {
     const sign = res.rent >= 0 ? '+' : '';
     html += `<div class="activity-row${key === opt?.key ? ' highlighted' : ''}">
       <div class="act-name">${a.icon} ${a.label}</div>
-      <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)}%</span>
+      <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)} USD/ha</span>
     </div>`;
   }
   document.getElementById('infoPanel').innerHTML = html;
@@ -803,7 +803,7 @@ function setMode(mode) {
     title.textContent    = 'Rentabilidad s/arrendamiento';
     bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
     bar.style.height     = '14px';
-    labels.innerHTML     = '<span>Negativa</span><span>0%</span><span>+200%</span>';
+    labels.innerHTML     = '<span>Negativo</span><span>0</span><span>+300 USD/ha</span>';
     naText.textContent   = 'No viable / sin datos';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Elegí una actividad y hacé clic en un departamento para ver la rentabilidad sobre el área viable por CONEAT.</div>';
     refreshMapColors();
