@@ -1,0 +1,33 @@
+name: Actualizar precios Cámara Mercantil
+
+on:
+  schedule:
+    - cron: '0 11 * * 1,3,5'  # Lun/Mié/Vie a las 11 UTC (8am Uruguay)
+  workflow_dispatch:            # Permite ejecución manual desde GitHub
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install requests openpyxl beautifulsoup4
+
+      - name: Actualizar precios
+        run: python scripts/update-precios.py
+
+      - name: Commit y push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/precios.json
+          git diff --staged --quiet || git commit -m "chore: precios CM actualizados $(date +%Y-%m-%d)"
+          git push
