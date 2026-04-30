@@ -73,6 +73,8 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
   box-shadow:0 2px 12px rgba(0,0,0,0.12);
 }
 .legend-bar{height:14px;border-radius:4px;background:linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235);margin-bottom:5px;}
+.dept-tooltip{background:rgba(27,27,24,0.88)!important;color:#f7f5f0!important;border:none!important;border-radius:6px!important;padding:4px 10px!important;font-family:'IBM Plex Sans',sans-serif;font-size:0.80rem;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.25);}
+.dept-tooltip::before{border-top-color:rgba(27,27,24,0.88)!important;}
 .legend-labels{display:flex;justify-content:space-between;font-size:0.70rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
 
 /* Info panel (right sidebar on desktop) */
@@ -454,6 +456,7 @@ function onEachFeature(feature, layer) {
       const l = e.target;
       l.setStyle({ weight: 2.5, color: '#333', fillOpacity: 0.95 });
       l.bringToFront();
+      l.bindTooltip(feature.properties.name, { sticky: true, className: 'dept-tooltip', direction: 'top', offset: [0, -4] }).openTooltip();
     },
     mouseout(e) {
       if (selectedDept !== feature.properties.name) {
