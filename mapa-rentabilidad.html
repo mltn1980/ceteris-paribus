@@ -395,6 +395,28 @@ const DEPTO_TO_KEY = {
 };
 
 const _rentCache = {};
+
+// Carga precios desde data/precios.json y actualiza ACT dinámicamente
+fetch('data/precios.json')
+  .then(r => r.json())
+  .then(data => {
+    const p = data.precios;
+    const label = `CM ${data.fecha}`;
+    const patch = (key) => {
+      if (!p[key]) return;
+      const a = ACT[key];
+      a.baseRev   = Math.round(p[key].precio * a.yieldBase);
+      a.priceUnit = `USD ${p[key].precio}/tn (${label})`;
+    };
+    ['soja','trigo','maiz','girasol','colza'].forEach(patch);
+    Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
+    if (typeof refreshMapColors === 'function' && currentMode === 'rent') {
+      refreshMapColors();
+      if (selectedDept) showInfo(selectedDept);
+    }
+  })
+  .catch(() => {});
+
 function calcWeightedRent(deptName, actKey) {
   const cacheKey = deptName + '|' + actKey;
   if (_rentCache[cacheKey] !== undefined) return _rentCache[cacheKey];
