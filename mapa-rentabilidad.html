@@ -290,6 +290,29 @@ const ARROZ_ACA = {
 };
 Object.values(ARROZ_ACA).forEach(d => { d.ha = Math.round(ARROZ_TOTAL_HA * d.pct / 100); });
 
+const SOJA_TOTAL_HA = 1384564;
+const SOJA_URUPOV = {
+  'Soriano':        { ha: 328868, pct: 23.8 },
+  'Colonia':        { ha: 194402, pct: 14.0 },
+  'Río Negro':      { ha: 193257, pct: 14.0 },
+  'Paysandú':       { ha: 144943, pct: 10.5 },
+  'San José':       { ha: 102772, pct:  7.4 },
+  'Flores':         { ha:  90696, pct:  6.6 },
+  'Durazno':        { ha:  70921, pct:  5.1 },
+  'Florida':        { ha:  51258, pct:  3.7 },
+  'Rocha':          { ha:  34451, pct:  2.5 },
+  'Treinta y Tres': { ha:  33757, pct:  2.4 },
+  'Cerro Largo':    { ha:  31207, pct:  2.3 },
+  'Tacuarembó':     { ha:  28411, pct:  2.1 },
+  'Canelones':      { ha:  26280, pct:  1.9 },
+  'Lavalleja':      { ha:  23571, pct:  1.7 },
+  'Rivera':         { ha:  10796, pct:  0.8 },
+  'Salto':          { ha:   8543, pct:  0.6 },
+  'Maldonado':      { ha:   5230, pct:  0.4 },
+  'Artigas':        { ha:   4737, pct:  0.3 },
+  'Montevideo':     { ha:    463, pct:  0.03},
+};
+
 // coneatMin/Max: rango de índice CONEAT donde la actividad es agronómicamente viable
 const ACT = {
   ganaderia: {
@@ -548,13 +571,18 @@ function showInfo(deptName) {
 
   if (w) {
     const arrRef = getArr(currentAct, deptName);
-    const aca = currentAct === 'arroz' ? ARROZ_ACA[deptName] : null;
+    const aca  = currentAct === 'arroz' ? ARROZ_ACA[deptName]  : null;
+    const soja = currentAct === 'soja'  ? SOJA_URUPOV[deptName] : null;
     html += `
     <div class="dept-stats" style="margin-top:10px;">
       <div class="dept-stat"><label>Margen neto ponderado</label><value style="color:${rentClr};font-size:1rem;">${rentSign}${w.rent.toFixed(0)} USD/ha</value></div>
       ${aca ? `
       <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>
       <div class="dept-stat"><label>% producción nacional</label><value>${aca.pct}% de ${ARROZ_TOTAL_HA.toLocaleString()} ha</value></div>
+      ` : soja ? `
+      <div class="dept-stat"><label>Área sembrada (URUPOV 24/25)</label><value>${soja.ha.toLocaleString()} ha</value></div>
+      <div class="dept-stat"><label>% producción nacional</label><value>${soja.pct}% de ${SOJA_TOTAL_HA.toLocaleString()} ha</value></div>
+      <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>
       ` : `
       <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>
       `}
