@@ -185,6 +185,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
   <div class="map-info-wrap">
     <div class="map-wrap">
       <div id="map"></div>
+      <div id="deptLabel" style="position:absolute;z-index:600;pointer-events:none;display:none;background:rgba(27,27,24,0.82);color:#f7f5f0;font-family:'IBM Plex Sans',sans-serif;font-size:0.80rem;font-weight:600;padding:4px 10px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.20);"></div>
       <div class="zoom-hint" id="zoomHint">Acercate al mapa para ver<br>los índices CONEAT por padrón</div>
       <div class="map-loading" id="mapLoading">Cargando polígonos…</div>
       <div class="legend-box" id="legendBox">
@@ -458,9 +459,12 @@ function onEachFeature(feature, layer) {
       const l = e.target;
       l.setStyle({ weight: 2.5, color: '#333', fillOpacity: 0.95 });
       l.bringToFront();
+      const lbl = document.getElementById('deptLabel');
+      lbl.textContent = feature.properties.name;
+      lbl.style.display = 'block';
     },
     mouseout(e) {
-      e.target.closeTooltip();
+      document.getElementById('deptLabel').style.display = 'none';
       if (selectedDept !== feature.properties.name) {
         geoLayer.resetStyle(e.target);
       }
@@ -851,6 +855,14 @@ function setMode(mode) {
     fetchConeat();
   }
 }
+
+document.getElementById('map').addEventListener('mousemove', e => {
+  const lbl = document.getElementById('deptLabel');
+  if (lbl.style.display === 'none') return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  lbl.style.left = (e.clientX - rect.left + 12) + 'px';
+  lbl.style.top  = (e.clientY - rect.top  - 32) + 'px';
+});
 
 map.on('moveend', () => {
   if (currentMode === 'coneat') {
