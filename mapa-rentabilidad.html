@@ -268,13 +268,13 @@ function getArr(actKey, deptName) {
   const d = ARR[deptName];
   if (!d) return null;
   if (actKey === 'ganaderia') return d.gan;
-  if (actKey === 'arroz')     return d.arr;
+  if (actKey === 'arroz')     return d.arr ?? ACT.arroz.arrRef; // fallback nacional si dept no tiene dato
   if (actKey === 'lecheria')  return d.lec;
   return d.ag;
 }
 
 // Departamentos arroceros (tienen infraestructura de riego/agua)
-const ARROZ_DEPTS   = new Set(['Treinta y Tres','Cerro Largo','Rocha','Artigas','Salto','Rivera']);
+const ARROZ_DEPTS   = new Set(['Treinta y Tres','Cerro Largo','Rocha','Artigas','Salto','Rivera','Tacuarembó','Lavalleja','Durazno']);
 const LECHERIA_DEPTS = new Set(['Canelones','San José','Colonia','Florida','Soriano','Río Negro','Paysandú']);
 
 // coneatMin/Max: rango de índice CONEAT donde la actividad es agronómicamente viable
@@ -317,9 +317,9 @@ const ACT = {
   },
   arroz: {
     label:'Arroz', icon:'🍚', color:'#1b5e85',
-    baseRev: 1960, cost: 1400, arrRef: 168.8,
+    baseRev: 2520, cost: 2149, arrRef: 168.8,
     fixed: true,
-    yieldLabel:'Rendimiento ref.', yieldUnit:'tn/ha', yieldBase:7.0, priceUnit:'USD 280/tn',
+    yieldLabel:'Rendimiento ref.', yieldUnit:'tn/ha', yieldBase:9.0, priceUnit:'USD 280/tn',
     coneatMin: 60, coneatMax: 110,
   },
   lecheria: {
