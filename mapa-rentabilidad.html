@@ -66,17 +66,14 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 
 /* Legend */
 .legend-box{
-  position:absolute;bottom:20px;right:12px;z-index:500;
+  position:absolute;top:12px;right:12px;z-index:500;
   background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);
   border:1px solid var(--border);border-radius:10px;
-  padding:12px 16px;min-width:150px;
+  padding:10px 14px;min-width:150px;
   box-shadow:0 2px 12px rgba(0,0,0,0.12);
 }
-.legend-title{font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:8px;}
-.legend-bar{height:14px;border-radius:4px;background:linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235);margin-bottom:6px;}
+.legend-bar{height:14px;border-radius:4px;background:linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235);margin-bottom:5px;}
 .legend-labels{display:flex;justify-content:space-between;font-size:0.70rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
-.legend-na{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
-.legend-na-dot{width:12px;height:12px;border-radius:3px;background:#c8c4bc;flex-shrink:0;}
 
 /* Info panel (right sidebar on desktop) */
 .map-info-wrap{display:grid;grid-template-columns:3fr 2fr;gap:16px;align-items:start;}
@@ -189,10 +186,8 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
       <div class="zoom-hint" id="zoomHint">Acercate al mapa para ver<br>los índices CONEAT por padrón</div>
       <div class="map-loading" id="mapLoading">Cargando polígonos…</div>
       <div class="legend-box" id="legendBox">
-        <div class="legend-title" id="legendTitle">Rentabilidad s/renta</div>
         <div class="legend-bar" id="legendBar"></div>
-        <div class="legend-labels" id="legendLabels"><span>Negativo</span><span>0</span><span>+300 USD/ha</span></div>
-        <div class="legend-na"><div class="legend-na-dot"></div><span id="legendNaText">Sin datos / N/A</span></div>
+        <div class="legend-labels" id="legendLabels"><span>−200 USD/ha</span><span>+500 USD/ha</span></div>
       </div>
     </div>
 
@@ -802,46 +797,38 @@ function setMode(mode) {
   const actTabs = document.getElementById('actTabs');
   const hint    = document.getElementById('zoomHint');
   const bar     = document.getElementById('legendBar');
-  const title   = document.getElementById('legendTitle');
   const labels  = document.getElementById('legendLabels');
-  const naText  = document.getElementById('legendNaText');
 
   if (mode === 'rent') {
     actTabs.style.display = '';
     hint.style.display = 'none';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     if (geoLayer) map.addLayer(geoLayer);
-    title.textContent    = 'Rentabilidad s/arrendamiento';
     bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
     bar.style.height     = '14px';
-    labels.innerHTML     = '<span>Negativo</span><span>0</span><span>+300 USD/ha</span>';
-    naText.textContent   = 'No viable / sin datos';
+    labels.innerHTML     = '<span>−200 USD/ha</span><span>+500 USD/ha</span>';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Elegí una actividad y hacé clic en un departamento para ver la rentabilidad sobre el área viable por CONEAT.</div>';
     refreshMapColors();
 
   } else if (mode === 'coneat') {
     actTabs.style.display = 'none';
     if (geoLayer) map.removeLayer(geoLayer);
-    title.textContent    = 'Índice CONEAT';
     bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
-    labels.innerHTML     = '<span>&lt;60</span><span>100</span><span>180+</span>';
-    naText.textContent   = 'Sin índice';
+    bar.style.height     = '14px';
+    labels.innerHTML     = '<span>&lt;60</span><span>180+</span>';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Acercate y hacé clic en una zona para ver su índice CONEAT.</div>';
     fetchConeat();
 
   } else if (mode === 'optimo') {
     actTabs.style.display = 'none';
     if (geoLayer) map.removeLayer(geoLayer);
-    // Leyenda por cultivo
     const crops = Object.entries(ACT).map(([k,a]) =>
       `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
         <span style="width:10px;height:10px;border-radius:2px;background:${a.color};display:inline-block;"></span>${a.icon}${a.label}
       </span>`).join('');
-    title.textContent    = 'Cultivo óptimo';
     bar.style.background = 'none';
     bar.style.height     = '0';
     labels.innerHTML     = `<div style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;">${crops}</div>`;
-    naText.textContent   = 'Sin cultivo viable';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Acercate y hacé clic en una zona para ver el cultivo óptimo y el ranking de actividades.</div>';
     fetchConeat();
   }
