@@ -467,6 +467,7 @@ function onEachFeature(feature, layer) {
       }
     },
     click(e) {
+      e.target.closeTooltip();
       if (selectedDept) {
         // reset previous
         geoLayer.eachLayer(l => {
