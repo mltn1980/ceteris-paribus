@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-04-29",
+  "actualizado": "2026-04-30",
   "alerta": {
-    "activa": false,
-    "tipo": "",
-    "nivel": "",
-    "titulo": "",
-    "descripcion": "",
-    "vigencia": "",
-    "fuente": ""
+    "activa": true,
+    "tipo": "Precipitaciones",
+    "nivel": "Amarillo",
+    "titulo": "Probables precipitaciones y tormentas",
+    "descripcion": "Viernes 1 mayo tarde/noche: nuboso a cubierto con probables precipitaciones y tormentas. Neblinas.",
+    "vigencia": "1 may 2026",
+    "fuente": "INUMET"
   },
   "enso": {
     "fase": "Neutral → El Niño",
