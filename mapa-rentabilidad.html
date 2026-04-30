@@ -187,7 +187,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
       <div class="map-loading" id="mapLoading">Cargando polígonos…</div>
       <div class="legend-box" id="legendBox">
         <div class="legend-bar" id="legendBar"></div>
-        <div class="legend-labels" id="legendLabels"><span>−200 USD/ha</span><span>+500 USD/ha</span></div>
+        <div class="legend-labels" id="legendLabels"><span>−200</span><span>USD/ha</span><span>+500</span></div>
       </div>
     </div>
 
@@ -806,7 +806,7 @@ function setMode(mode) {
     if (geoLayer) map.addLayer(geoLayer);
     bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
     bar.style.height     = '14px';
-    labels.innerHTML     = '<span>−200 USD/ha</span><span>+500 USD/ha</span>';
+    labels.innerHTML     = '<span>−200</span><span>USD/ha</span><span>+500</span>';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Elegí una actividad y hacé clic en un departamento para ver la rentabilidad sobre el área viable por CONEAT.</div>';
     refreshMapColors();
 
