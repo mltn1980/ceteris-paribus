@@ -277,6 +277,21 @@ function getArr(actKey, deptName) {
 const ARROZ_DEPTS   = new Set(['Treinta y Tres','Cerro Largo','Rocha','Artigas','Salto','Rivera','Tacuarembó','Lavalleja','Durazno']);
 const LECHERIA_DEPTS = new Set(['Canelones','San José','Colonia','Florida','Soriano','Río Negro','Paysandú']);
 
+// Datos ACA zafra 2024/2025 — área sembrada por departamento
+const ARROZ_TOTAL_HA = 182874;
+const ARROZ_ACA = {
+  'Treinta y Tres': { pct: 28 },
+  'Cerro Largo':    { pct: 22 },
+  'Rocha':          { pct: 21 },
+  'Artigas':        { pct: 14 },
+  'Tacuarembó':     { pct:  6 },
+  'Salto':          { pct:  4 },
+  'Rivera':         { pct:  2 },
+  'Lavalleja':      { pct:  2 },
+  'Durazno':        { pct:  0.06 },
+};
+Object.values(ARROZ_ACA).forEach(d => { d.ha = Math.round(ARROZ_TOTAL_HA * d.pct / 100); });
+
 // coneatMin/Max: rango de índice CONEAT donde la actividad es agronómicamente viable
 const ACT = {
   ganaderia: {
@@ -510,11 +525,16 @@ function showInfo(deptName) {
 
   if (w) {
     const arrRef = getArr(currentAct, deptName);
+    const aca = currentAct === 'arroz' ? ARROZ_ACA[deptName] : null;
     html += `
     <div class="dept-stats" style="margin-top:10px;">
       <div class="dept-stat"><label>Rentabilidad ponderada</label><value style="color:${rentClr};">${rentSign}${w.rent.toFixed(0)}%</value></div>
-      <div class="dept-stat"><label>Área viable</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% del depto.)</value></div>
-      <div class="dept-stat"><label>Área total dept.</label><value>${(w.totalArea/1000).toFixed(0)} mil ha</value></div>
+      ${aca ? `
+      <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>
+      <div class="dept-stat"><label>% producción nacional</label><value>${aca.pct}% de ${ARROZ_TOTAL_HA.toLocaleString()} ha</value></div>
+      ` : `
+      <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% del depto.)</value></div>
+      `}
       ${arrRef ? `<div class="dept-stat"><label>Arr. referencia (IC100)</label><value>USD ${arrRef}/ha</value></div>` : ''}
     </div>
     <p style="font-size:0.75rem;color:var(--muted);margin-top:12px;line-height:1.5;">
