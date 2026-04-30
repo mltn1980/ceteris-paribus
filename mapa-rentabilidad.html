@@ -486,6 +486,17 @@ function loadMap() {
     .catch(err => console.error('Error cargando GeoJSON:', err));
 }
 
+function updateLegendRange(actKey) {
+  if (document.getElementById('legendBox')?.style.display === 'none') return;
+  const vals = Object.keys(DEPTO_TO_KEY).map(d => calcWeightedRent(d, actKey)?.rent).filter(v => v != null);
+  if (!vals.length) return;
+  const mn = Math.floor(Math.min(...vals) / 10) * 10;
+  const mx = Math.ceil(Math.max(...vals)  / 10) * 10;
+  const sign = v => v > 0 ? '+' : '';
+  const labels = document.getElementById('legendLabels');
+  if (labels) labels.innerHTML = `<span>${sign(mn)}${mn}</span><span>USD/ha</span><span>${sign(mx)}${mx}</span>`;
+}
+
 function refreshMapColors() {
   if (!geoLayer) return;
   geoLayer.eachLayer(layer => {
@@ -498,6 +509,7 @@ function refreshMapColors() {
       layer.setStyle({ fillColor: color, weight: 3, color: '#1b1b18', fillOpacity: 0.95 });
     }
   });
+  updateLegendRange(currentAct);
 }
 
 // ── INFO PANEL ───────────────────────────────────────────────────────────────
