@@ -274,54 +274,59 @@ function getArr(actKey, deptName) {
 }
 
 // Departamentos arroceros (tienen infraestructura de riego/agua)
-const ARROZ_DEPTS = new Set(['Treinta y Tres','Cerro Largo','Rocha','Artigas','Salto','Rivera']);
+const ARROZ_DEPTS   = new Set(['Treinta y Tres','Cerro Largo','Rocha','Artigas','Salto','Rivera']);
+const LECHERIA_DEPTS = new Set(['Canelones','San José','Colonia','Florida','Soriano','Río Negro','Paysandú']);
 
+// coneatMin/Max: rango de índice CONEAT donde la actividad es agronómicamente viable
 const ACT = {
   ganaderia: {
     label:'Ganadería', icon:'🐄', color:'#2a7235',
-    baseRev: 250,  // CONEAT 100 → 100 kg PV × USD 2.50/kg
-    cost: 60,      // sanidad, suplementación, gestión
-    arrRef: 82.7,  // arr nac. ganadería
-    yieldLabel:'Producción est.',
-    yieldUnit:'kg PV/ha',
-    yieldBase: 100,
-    priceUnit: 'USD 2.50/kg PV',
+    baseRev: 250, cost: 60, arrRef: 82.7,
+    yieldLabel:'Producción est.', yieldUnit:'kg PV/ha', yieldBase:100, priceUnit:'USD 2.50/kg PV',
+    coneatMin: 0,
   },
   soja: {
     label:'Soja 1ª', icon:'🫘', color:'#c8963e',
     baseRev: 1120, cost: 622, arrRef: 329.3,
     yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:2.8, priceUnit:'USD 400/tn',
+    coneatMin: 120,
   },
   trigo: {
     label:'Trigo', icon:'🌾', color:'#a07418',
     baseRev: 700, cost: 940, arrRef: 329.3,
     yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:3.5, priceUnit:'USD 200/tn',
+    coneatMin: 100,
   },
   maiz: {
     label:'Maíz 1ª', icon:'🌽', color:'#d49017',
     baseRev: 1500, cost: 1004, arrRef: 329.3,
     yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:6.0, priceUnit:'USD 250/tn',
+    coneatMin: 130,
   },
   colza: {
     label:'Colza', icon:'🌼', color:'#7b6e30',
     baseRev: 1146, cost: 853, arrRef: 329.3,
     yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:2.2, priceUnit:'USD 521/tn',
+    coneatMin: 100,
   },
   girasol: {
     label:'Girasol', icon:'🌻', color:'#c89000',
     baseRev: 823, cost: 576, arrRef: 329.3,
     yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:1.8, priceUnit:'USD 457/tn',
+    coneatMin: 100,
   },
   arroz: {
     label:'Arroz', icon:'🍚', color:'#1b5e85',
     baseRev: 1960, cost: 1400, arrRef: 168.8,
-    fixed: true,   // no escala con CONEAT
+    fixed: true,
     yieldLabel:'Rendimiento ref.', yieldUnit:'tn/ha', yieldBase:7.0, priceUnit:'USD 280/tn',
+    coneatMin: 60, coneatMax: 110,
   },
   lecheria: {
     label:'Lechería', icon:'🥛', color:'#4a7ab8',
     baseRev: 1800, cost: 800, arrRef: 222.1,
     yieldLabel:'Producción est.', yieldUnit:'L/ha', yieldBase:4000, priceUnit:'USD 0.45/L',
+    coneatMin: 80, coneatMax: 130,
   },
 };
 
@@ -353,35 +358,32 @@ const DEPTO_TO_KEY = {
   'Soriano':'SORIANO','Tacuarembó':'TACUAREMBO','Treinta y Tres':'TREINTA Y TRES',
 };
 
-const _weightedRentCache = {};
-function calcWeightedRent(deptName) {
-  if (_weightedRentCache[deptName] !== undefined) return _weightedRentCache[deptName];
-  if (!coneatDist) return (_weightedRentCache[deptName] = null);
+const _rentCache = {};
+function calcWeightedRent(deptName, actKey) {
+  const cacheKey = deptName + '|' + actKey;
+  if (_rentCache[cacheKey] !== undefined) return _rentCache[cacheKey];
+  if (!coneatDist) return (_rentCache[cacheKey] = null);
   const dist = coneatDist[DEPTO_TO_KEY[deptName]];
-  if (!dist) return (_weightedRentCache[deptName] = null);
+  if (!dist) return (_rentCache[cacheKey] = null);
 
-  let totalArea = 0, wRent = 0;
-  const cropArea = {}, cropWRent = {};
+  let totalArea = 0, viableArea = 0, wRent = 0;
 
   for (const [idxStr, area] of Object.entries(dist)) {
     const idx = parseFloat(idxStr);
-    const opt = optimalCrop(idx, deptName);
-    if (!opt) continue;
     totalArea += area;
-    wRent += opt.res.rent * area;
-    cropArea[opt.key]  = (cropArea[opt.key]  || 0) + area;
-    cropWRent[opt.key] = (cropWRent[opt.key] || 0) + opt.res.rent * area;
+    const res = calcRentByCONEAT(actKey, idx, deptName);
+    if (!res) continue;
+    viableArea += area;
+    wRent += res.rent * area;
   }
 
-  if (totalArea === 0) return (_weightedRentCache[deptName] = null);
-  const result = {
-    rent: wRent / totalArea,
+  if (viableArea === 0) return (_rentCache[cacheKey] = null);
+  return (_rentCache[cacheKey] = {
+    rent: wRent / viableArea,
+    viableArea,
     totalArea,
-    topCrops: Object.entries(cropArea)
-      .sort((a,b) => b[1]-a[1])
-      .map(([k,v]) => ({ key: k, pct: v/totalArea*100, avgRent: cropWRent[k]/v }))
-  };
-  return (_weightedRentCache[deptName] = result);
+    viablePct: viableArea / totalArea * 100,
+  });
 }
 
 // ── COLOR SCALE ─────────────────────────────────────────────────────────────
@@ -421,7 +423,7 @@ L.control.attribution({ position:'bottomleft' })
 
 function deptStyle(feature) {
   const name = feature.properties.name;
-  const w = calcWeightedRent(name);
+  const w = calcWeightedRent(name, currentAct);
   return {
     fillColor: rentColor(w ? w.rent : null),
     weight: 1.2,
@@ -472,7 +474,7 @@ function refreshMapColors() {
   if (!geoLayer) return;
   geoLayer.eachLayer(layer => {
     const name = layer.feature.properties.name;
-    const w = calcWeightedRent(name);
+    const w = calcWeightedRent(name, currentAct);
     const color = rentColor(w ? w.rent : null);
     if (name !== selectedDept) {
       layer.setStyle({ fillColor: color, weight: 1.2, color: '#8a8478', fillOpacity: 0.82 });
@@ -495,48 +497,38 @@ function fmtPct(n) {
 }
 
 function showInfo(deptName) {
-  const w = calcWeightedRent(deptName);
-  const rentSign = w && w.rent >= 0 ? '+' : '';
+  const a = ACT[currentAct];
+  const w = calcWeightedRent(deptName, currentAct);
+  const rentSign = w ? (w.rent >= 0 ? '+' : '') : '';
   const rentClr  = w ? (w.rent >= 0 ? 'var(--green)' : 'var(--red)') : 'var(--muted)';
 
   let html = `
     <h3>${deptName}</h3>
-    <span class="coneat-badge" style="color:${rentClr};">
-      Rentabilidad ponderada ${w ? rentSign + w.rent.toFixed(0) + '%' : '—'}
+    <span class="coneat-badge" style="background:${a.color}18;color:${a.color};border:1px solid ${a.color}44;">
+      ${a.icon} ${a.label}
     </span>`;
 
   if (w) {
+    const arrRef = getArr(currentAct, deptName);
     html += `
     <div class="dept-stats" style="margin-top:10px;">
       <div class="dept-stat"><label>Rentabilidad ponderada</label><value style="color:${rentClr};">${rentSign}${w.rent.toFixed(0)}%</value></div>
-      <div class="dept-stat"><label>Área analizada</label><value>${(w.totalArea/1000).toFixed(0)} mil ha</value></div>
-      <div class="dept-stat"><label>Arr. ganadería</label><value>USD ${getArr('ganaderia',deptName)||'—'}/ha</value></div>
-      <div class="dept-stat"><label>Arr. ag. secano</label><value>USD ${getArr('soja',deptName)||'—'}/ha</value></div>
+      <div class="dept-stat"><label>Área viable</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% del depto.)</value></div>
+      <div class="dept-stat"><label>Área total dept.</label><value>${(w.totalArea/1000).toFixed(0)} mil ha</value></div>
+      ${arrRef ? `<div class="dept-stat"><label>Arr. referencia (IC100)</label><value>USD ${arrRef}/ha</value></div>` : ''}
     </div>
-    <div class="section-title" style="margin-top:12px;">Distribución productiva óptima por zona CONEAT</div>`;
-
-    for (const {key, pct, avgRent} of w.topCrops) {
-      const a = ACT[key];
-      const rSign = avgRent >= 0 ? '+' : '';
-      const rClr  = avgRent >= 0 ? 'var(--green)' : 'var(--red)';
-      html += `
-      <div class="activity-row">
-        <div>
-          <div class="act-name">${a.icon} ${a.label}</div>
-          <div style="font-size:0.73rem;color:var(--muted);margin-top:1px;">
-            ${pct.toFixed(0)}% del área
-            <span style="background:${a.color};width:8px;height:8px;border-radius:2px;display:inline-block;margin-left:4px;vertical-align:middle;"></span>
-          </div>
-        </div>
-        <span class="act-rent" style="color:${rClr};">${rSign}${avgRent.toFixed(0)}%</span>
-      </div>`;
-    }
-
-    html += `<p style="font-size:0.75rem;color:var(--muted);margin-top:12px;line-height:1.5;">
-      Rentabilidad ponderada por hectáreas de cada grupo CONEAT. Para cada zona se determina el cultivo óptimo y se calcula su margen sobre el arrendamiento de referencia del departamento.
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:12px;line-height:1.5;">
+      Solo se contabilizan las hectáreas con CONEAT viable para ${a.label}
+      ${a.coneatMin ? `(mín. CONEAT ${a.coneatMin}` : ''}${a.coneatMax ? `–${a.coneatMax}` : a.coneatMin ? '+' : ''}${a.coneatMin ? ')' : ''}.
+      El arrendamiento se escala por CONEAT/100 para reflejar el valor real de cada zona.
     </p>`;
   } else {
-    html += `<p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">Sin datos CONEAT para este departamento.</p>`;
+    const reason = !LECHERIA_DEPTS?.has(deptName) && currentAct === 'lecheria'
+      ? 'Este departamento no está en la cuenca lechera.'
+      : !ARROZ_DEPTS?.has(deptName) && currentAct === 'arroz'
+      ? 'Este departamento no tiene aptitud arrocera.'
+      : `No hay suelos con CONEAT ≥ ${a.coneatMin ?? 0} en este departamento.`;
+    html += `<p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">${reason}</p>`;
   }
 
   document.getElementById('infoPanel').innerHTML = html;
@@ -593,14 +585,18 @@ function normDepto(raw) {
 function calcRentByCONEAT(actKey, coneatIdx, deptName) {
   const a = ACT[actKey];
   if (!a || !deptName) return null;
-  if (actKey === 'arroz' && !ARROZ_DEPTS.has(deptName)) return null;
+  if (actKey === 'arroz'    && !ARROZ_DEPTS.has(deptName))    return null;
+  if (actKey === 'lecheria' && !LECHERIA_DEPTS.has(deptName)) return null;
+  if (coneatIdx < (a.coneatMin ?? 0))                         return null;
+  if (a.coneatMax !== undefined && coneatIdx > a.coneatMax)   return null;
   const arr = getArr(actKey, deptName);
   if (arr === null) return null;
-  const factor = a.fixed ? 1 : coneatIdx / 100;
-  const rev = factor * a.baseRev;
-  const gm  = rev - a.cost;
-  const rent = (gm - arr) / arr * 100;
-  return { rev, gm, rent, arr, yld: factor * a.yieldBase };
+  const factor    = a.fixed ? 1 : coneatIdx / 100;
+  const rev       = factor * a.baseRev;
+  const gm        = rev - a.cost;
+  const arrScaled = a.fixed ? arr : arr * (coneatIdx / 100);
+  const rent      = (gm - arrScaled) / arrScaled * 100;
+  return { rev, gm, rent, arr: arrScaled, yld: factor * a.yieldBase };
 }
 
 function optimalCrop(coneatIdx, deptName) {
@@ -784,12 +780,12 @@ function setMode(mode) {
     hint.style.display = 'none';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     if (geoLayer) map.addLayer(geoLayer);
-    title.textContent    = 'Rentabilidad ponderada CONEAT';
+    title.textContent    = 'Rentabilidad s/arrendamiento';
     bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
     bar.style.height     = '14px';
     labels.innerHTML     = '<span>Negativa</span><span>0%</span><span>+200%</span>';
-    naText.textContent   = 'Sin datos';
-    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Hacé clic en un departamento para ver la distribución productiva óptima por zona CONEAT.</div>';
+    naText.textContent   = 'No viable / sin datos';
+    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Elegí una actividad y hacé clic en un departamento para ver la rentabilidad sobre el área viable por CONEAT.</div>';
     refreshMapColors();
 
   } else if (mode === 'coneat') {
