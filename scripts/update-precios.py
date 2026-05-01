@@ -4,7 +4,11 @@ from openpyxl import load_workbook
 from datetime import date
 from bs4 import BeautifulSoup
 
-CM_URL = "https://www.camaramercantil.com.uy/cereales-y-oleaginosas/"
+CM_URL = "https://camaramercantil.com.uy/cereales-y-oleaginosas/"
+
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
+}
 
 def parse_price(val):
     if val is None:
@@ -18,9 +22,14 @@ def parse_price(val):
     return None
 
 # 1. Encontrar el ultimo xlsx
-page = requests.get(CM_URL, timeout=30)
+page = requests.get(CM_URL, headers=HEADERS, timeout=30)
+print(f"Status: {page.status_code} — URL final: {page.url}")
 soup = BeautifulSoup(page.content, 'html.parser')
-links = sorted({a['href'] for a in soup.find_all('a', href=True) if a['href'].endswith('.xlsx')})
+all_links = [a['href'] for a in soup.find_all('a', href=True)]
+print(f"Total links encontrados: {len(all_links)}")
+xlsx_links = [h for h in all_links if h.lower().endswith('.xlsx')]
+print(f"Links xlsx: {xlsx_links[:5]}")
+links = sorted(set(xlsx_links))
 if not links:
     raise RuntimeError("No se encontraron archivos xlsx en la pagina")
 
@@ -31,7 +40,7 @@ m = re.search(r'(\d{4})\.(\d{2})\.(\d{2})', latest_url)
 fecha = f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else str(date.today())
 
 # 2. Descargar y parsear Excel
-resp = requests.get(latest_url, timeout=60)
+resp = requests.get(latest_url, headers=HEADERS, timeout=60)
 wb = load_workbook(BytesIO(resp.content), read_only=True, data_only=True)
 ws = wb.active
 rows = list(ws.iter_rows(values_only=True))
