@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Precipitación Mensual · ceterisparibus-uy</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: #f5f4f0; color: #2d2a22; }
@@ -18,9 +20,10 @@
   .per-btn.active { background: #1b5e85; color: #fff; border-color: #1b5e85; }
   select { padding: 5px 10px; font-size: 0.82rem; font-family: inherit; border: 1px solid #c8c0b4; border-radius: 20px; background: #f5f4f0; color: #4a473f; cursor: pointer; }
 
-  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 24px; }
-  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
+  /* Grid imágenes */
+  .img-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 20px 24px; }
+  @media (max-width: 900px) { .img-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .img-grid { grid-template-columns: 1fr; } }
   .grid-item { background: #fff; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.09); overflow: hidden; }
   .grid-item .mes-label { font-size: 0.78rem; font-weight: 700; color: #4a473f; padding: 8px 12px 4px; }
   .grid-item img { width: 100%; display: block; }
@@ -29,7 +32,15 @@
   .single-wrap { display: flex; justify-content: center; padding: 24px; }
   .single-wrap img { max-width: 700px; width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
 
-  .fuente { text-align: center; font-size: 0.72rem; color: #aaa; padding: 8px 0 16px; }
+  /* Sección mapa estaciones */
+  .section-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6456; padding: 20px 24px 8px; }
+  #station-map { height: 480px; margin: 0 24px 8px; border-radius: 10px; box-shadow: 0 1px 8px rgba(0,0,0,0.1); }
+  .legend { background: white; padding: 10px 14px; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.15); font-size: 0.72rem; line-height: 1.8; }
+  .legend h4 { font-size: 0.74rem; font-weight: 700; margin-bottom: 4px; }
+  .legend-row { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  .fuente { text-align: center; font-size: 0.72rem; color: #aaa; padding: 8px 0 20px; }
 </style>
 </head>
 <body>
@@ -47,7 +58,6 @@
     <button class="per-btn active" data-tipo="acumulado">Acumulado</button>
     <button class="per-btn" data-tipo="anomalia">Anomalía</button>
   </div>
-
   <div class="ctrl-group">
     <label>Vista:</label>
     <button class="per-btn active" data-vista="grid">Todos los meses</button>
@@ -59,17 +69,20 @@
   </div>
 </div>
 
-<div id="grid-view" class="grid"></div>
+<div id="grid-view" class="img-grid"></div>
 <div id="single-view" class="single-wrap" style="display:none">
   <img id="mapa-single" src="" alt="Mapa de precipitación">
 </div>
-<div class="fuente">Datos: INUMET — Instituto Uruguayo de Meteorología</div>
+<div class="fuente">Mapa interpolado · INUMET 2026</div>
+
+<!-- Mapa estaciones -->
+<div class="section-title">Datos por estación — Marzo 2026 · Anomalía respecto a climatología</div>
+<div id="station-map"></div>
+<div class="fuente">Fuente: Boletín Climático Marzo 2026 · INUMET</div>
 
 <script>
 const BASE = 'https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion';
 
-// URLs hardcodeadas por mes (INUMET no usa un patrón consistente)
-// Agregar nueva entrada cada mes
 const URLS = {
   acumulado: {
     2026: {
@@ -78,9 +91,7 @@ const URLS = {
       3: `${BASE}/2026/acumulado_marzo_2026.png`,
     }
   },
-  anomalia: {
-    2026: {}
-  }
+  anomalia: { 2026: {} }
 };
 
 const MESES_LABELS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -97,29 +108,25 @@ MESES_LABELS.forEach((label, i) => {
   selMes.appendChild(opt);
 });
 
-function getUrl(t, y, m) {
-  return (URLS[t] && URLS[t][y] && URLS[t][y][m]) || null;
-}
+function getUrl(t, y, m) { return (URLS[t]?.[y]?.[m]) || null; }
 
 function drawGrid() {
   const grid = document.getElementById('grid-view');
   grid.innerHTML = '';
-  const yearUrls = (URLS[tipo] && URLS[tipo][anio]) || {};
+  const yearUrls = URLS[tipo]?.[anio] || {};
   const available = Object.keys(yearUrls).map(Number).sort((a,b) => a - b);
-  if (available.length === 0) {
-    grid.innerHTML = '<div style="padding:40px;color:#888;font-size:0.85rem;">No hay mapas disponibles para este año y tipo.</div>';
+  if (!available.length) {
+    grid.innerHTML = '<div style="padding:40px;color:#888;font-size:0.85rem;">No hay mapas disponibles.</div>';
     return;
   }
   available.forEach(m => {
-    const url = yearUrls[m];
     const item = document.createElement('div');
     item.className = 'grid-item';
     item.innerHTML = `
       <div class="mes-label">${MESES_LABELS[m-1]} ${anio}</div>
-      <img src="${url}" alt="${MESES_LABELS[m-1]}" loading="lazy"
+      <img src="${yearUrls[m]}" loading="lazy"
            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <div class="no-data">Sin datos</div>
-    `;
+      <div class="no-data">Sin datos</div>`;
     grid.appendChild(item);
   });
 }
@@ -127,50 +134,104 @@ function drawGrid() {
 function drawSingle() {
   const img = document.getElementById('mapa-single');
   const url = getUrl(tipo, anio, mes);
-  if (url) {
-    img.src = url;
-    img.style.opacity = 1;
-  } else {
-    img.src = '';
-    img.style.opacity = 0.2;
-  }
+  img.src = url || '';
+  img.style.opacity = url ? 1 : 0.2;
 }
 
 function render() {
-  if (vista === 'grid') {
-    document.getElementById('grid-view').style.display = 'grid';
-    document.getElementById('single-view').style.display = 'none';
-    document.getElementById('ctrl-mes').style.display = 'none';
-    drawGrid();
-  } else {
-    document.getElementById('grid-view').style.display = 'none';
-    document.getElementById('single-view').style.display = 'flex';
-    document.getElementById('ctrl-mes').style.display = 'flex';
-    drawSingle();
-  }
+  const isGrid = vista === 'grid';
+  document.getElementById('grid-view').style.display = isGrid ? 'grid' : 'none';
+  document.getElementById('single-view').style.display = isGrid ? 'none' : 'flex';
+  document.getElementById('ctrl-mes').style.display = isGrid ? 'none' : 'flex';
+  isGrid ? drawGrid() : drawSingle();
 }
 
-document.querySelectorAll('[data-tipo]').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('[data-tipo]').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    tipo = this.dataset.tipo;
-    render();
-  });
-});
-
-document.querySelectorAll('[data-vista]').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('[data-vista]').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    vista = this.dataset.vista;
-    render();
-  });
-});
-
+document.querySelectorAll('[data-tipo]').forEach(btn => btn.addEventListener('click', function() {
+  document.querySelectorAll('[data-tipo]').forEach(b => b.classList.remove('active'));
+  this.classList.add('active'); tipo = this.dataset.tipo; render();
+}));
+document.querySelectorAll('[data-vista]').forEach(btn => btn.addEventListener('click', function() {
+  document.querySelectorAll('[data-vista]').forEach(b => b.classList.remove('active'));
+  this.classList.add('active'); vista = this.dataset.vista; render();
+}));
 selMes.addEventListener('change', () => { mes = parseInt(selMes.value); drawSingle(); });
-
 render();
+
+// ── Mapa de estaciones ──────────────────────────────────────────────
+const estaciones = [
+  { nombre: 'Artigas',        lat: -30.40, lon: -56.51, mm: 46.4,  anom: -67.2 },
+  { nombre: 'Carrasco',       lat: -34.84, lon: -56.01, mm: 146.6, anom:  19.4 },
+  { nombre: 'Colonia',        lat: -34.47, lon: -57.84, mm: 109.9, anom: -19.0 },
+  { nombre: 'Durazno',        lat: -33.38, lon: -56.52, mm: 200.9, anom:  82.5 },
+  { nombre: 'Melilla',        lat: -34.79, lon: -56.24, mm: 139.8, anom:  17.4 },
+  { nombre: 'Melo',           lat: -32.37, lon: -54.18, mm: 241.4, anom: 134.3 },
+  { nombre: 'Mercedes',       lat: -33.25, lon: -58.02, mm: 176.0, anom:  28.2 },
+  { nombre: 'Paysandú',       lat: -32.37, lon: -58.08, mm: 117.9, anom: -13.5 },
+  { nombre: 'Prado',          lat: -34.87, lon: -56.18, mm: 126.9, anom:  12.7 },
+  { nombre: 'Rocha',          lat: -34.48, lon: -54.33, mm: 158.2, anom:  21.8 },
+  { nombre: 'Salto',          lat: -31.39, lon: -57.96, mm: 107.4, anom: -27.7 },
+  { nombre: 'Treinta y Tres', lat: -33.23, lon: -54.38, mm: 163.9, anom:  53.4 },
+  { nombre: 'Trinidad',       lat: -33.52, lon: -56.90, mm: 122.6, anom:  -6.1 },
+  { nombre: 'Young',          lat: -32.69, lon: -57.63, mm: 72.0,  anom: -45.1 },
+];
+
+function anomColor(a) {
+  if (a <= -45) return '#7B0000';
+  if (a <= -25) return '#D94040';
+  if (a <= -10) return '#F09050';
+  if (a <   10) return '#D4C040';
+  if (a <   30) return '#70C070';
+  if (a <   70) return '#2080C8';
+  return '#003A8C';
+}
+
+function anomLabel(a) {
+  if (a <= -45) return 'Muy seco (< −45%)';
+  if (a <= -25) return 'Seco (−45 a −25%)';
+  if (a <= -10) return 'Algo seco (−25 a −10%)';
+  if (a <   10) return 'Normal (±10%)';
+  if (a <   30) return 'Algo húmedo (+10 a +30%)';
+  if (a <   70) return 'Húmedo (+30 a +70%)';
+  return 'Muy húmedo (> +70%)';
+}
+
+const smap = L.map('station-map').setView([-32.8, -56.2], 7);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO', maxZoom: 12
+}).addTo(smap);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+  attribution: '', maxZoom: 12, pane: 'shadowPane'
+}).addTo(smap);
+
+estaciones.forEach(e => {
+  const r = Math.max(10, Math.min(28, e.mm / 9));
+  const color = anomColor(e.anom);
+  const sign = e.anom >= 0 ? '+' : '';
+  L.circleMarker([e.lat, e.lon], {
+    radius: r, color: '#fff', weight: 1.5,
+    fillColor: color, fillOpacity: 0.88
+  })
+  .bindTooltip(`<strong>${e.nombre}</strong><br>${e.mm} mm<br>Anomalía: ${sign}${e.anom}%`, { sticky: true })
+  .addTo(smap);
+});
+
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div', 'legend');
+  div.innerHTML = `
+    <h4>Anomalía respecto a climatología</h4>
+    <div class="legend-row"><div class="legend-dot" style="background:#7B0000"></div> Muy seco (< −45%)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#D94040"></div> Seco (−45 a −25%)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#F09050"></div> Algo seco (−25 a −10%)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#D4C040"></div> Normal (±10%)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#70C070"></div> Algo húmedo (+10 a +30%)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#2080C8"></div> Húmedo (+30 a +70%)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#003A8C"></div> Muy húmedo (> +70%)</div>
+    <div style="font-size:0.65rem;color:#aaa;margin-top:4px;">Tamaño ∝ mm acumulados</div>
+  `;
+  return div;
+};
+legend.addTo(smap);
 </script>
 
 </body>
