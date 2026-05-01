@@ -47,10 +47,7 @@
     <button class="per-btn active" data-tipo="acumulado">Acumulado</button>
     <button class="per-btn" data-tipo="anomalia">Anomalía</button>
   </div>
-  <div class="ctrl-group">
-    <label>Año:</label>
-    <select id="sel-anio"></select>
-  </div>
+
   <div class="ctrl-group">
     <label>Vista:</label>
     <button class="per-btn active" data-vista="grid">Todos los meses</button>
@@ -79,34 +76,18 @@ const URLS = {
       1: `${BASE}/2026/mapa%20acum_enero%202026_con%20grilla.png`,
       2: `${BASE}/2026/Mapa_acum_febrero_con%20grilla.png`,
       3: `${BASE}/2026/acumulado_marzo_2026.png`,
-    },
-    2025: {
-      1:  `${BASE}/2025/Mapa_acum_enero2025_con%20grilla.png`,
-      12: `${BASE}/2026/mapa_diciembre2025_grilla.png`,
     }
   },
   anomalia: {
-    2026: {},
-    2025: {}
+    2026: {}
   }
 };
 
 const MESES_LABELS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const ANO_MIN = 2019;
-const ANO_MAX = 2026;
-
 let tipo = 'acumulado';
-let anio = 2026;
+const anio = 2026;
 let mes = 3;
 let vista = 'grid';
-
-const selAnio = document.getElementById('sel-anio');
-for (let y = ANO_MAX; y >= ANO_MIN; y--) {
-  const opt = document.createElement('option');
-  opt.value = y; opt.textContent = y;
-  if (y === anio) opt.selected = true;
-  selAnio.appendChild(opt);
-}
 
 const selMes = document.getElementById('sel-mes');
 MESES_LABELS.forEach((label, i) => {
@@ -187,7 +168,6 @@ document.querySelectorAll('[data-vista]').forEach(btn => {
   });
 });
 
-selAnio.addEventListener('change', () => { anio = parseInt(selAnio.value); render(); });
 selMes.addEventListener('change', () => { mes = parseInt(selMes.value); drawSingle(); });
 
 render();
