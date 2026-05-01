@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balance Hídrico — % Agua Disponible · ceterisparibus-uy</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: #f5f4f0; color: #2d2a22; }
+  header { background: #fff; border-bottom: 2px solid #d6d0c4; padding: 16px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  header h1 { font-size: 1.15rem; font-weight: 700; color: #1a1a18; }
+  header .sub { font-size: 0.8rem; color: #6b6456; margin-top: 2px; }
+  .controls { background: #fff; border-bottom: 1px solid #d6d0c4; padding: 10px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .controls label { font-size: 0.82rem; font-weight: 600; color: #4a473f; }
+  .per-btn { padding: 5px 14px; font-size: 0.8rem; font-weight: 600; border: 1px solid #c8c0b4; border-radius: 20px; background: #f5f4f0; color: #4a473f; cursor: pointer; transition: all 0.15s; }
+  .per-btn:hover { background: #e8f4f0; color: #1b5e85; }
+  .per-btn.active { background: #1b5e85; color: #fff; border-color: #1b5e85; }
+  #status { font-size: 0.78rem; color: #888; margin-left: auto; }
+  #map { height: calc(100vh - 130px); width: 100%; }
+  .legend { background: white; padding: 10px 14px; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.15); font-size: 0.75rem; line-height: 1.6; }
+  .legend h4 { font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; color: #2d2a22; }
+  .legend-row { display: flex; align-items: center; gap: 6px; }
+  .legend-box { width: 18px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .fuente { font-size: 0.7rem; color: #888; margin-top: 6px; border-top: 1px solid #eee; padding-top: 5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🌱 Balance Hídrico — Porcentaje de Agua Disponible (PAD)</h1>
+    <div class="sub">Grilla 30×30 km · INIA GRAS / Catálogo de Datos Abiertos Uruguay</div>
+  </div>
+</header>
+
+<div class="controls">
+  <label>Período:</label>
+  <button class="per-btn" data-col="2026_041">Abr · Dec 1 (1–10)</button>
+  <button class="per-btn active" data-col="2026_042">Abr · Dec 2 (11–20)</button>
+  <button class="per-btn" data-col="2026_031">Mar · Dec 1</button>
+  <button class="per-btn" data-col="2026_032">Mar · Dec 2</button>
+  <button class="per-btn" data-col="2026_033">Mar · Dec 3</button>
+  <button class="per-btn" data-col="2026_030">Mar · Promedio</button>
+  <span id="status">Cargando datos…</span>
+</div>
+
+<div id="map"></div>
+
+<script>
+const CSV_URL = '/data/inia_pad_2026.csv';
+const HALF = 0.1665; // half cell size (~0.333° grid)
+
+// PAD color scale: 0%=red, 50%=yellow, 100%=green
+function padColor(v) {
+  if (v === null || isNaN(v)) return '#cccccc';
+  const pct = Math.max(0, Math.min(100, v));
+  const stops = [
+    [0,   [139, 0,   0  ]],
+    [15,  [220, 50,  50 ]],
+    [30,  [230, 120, 30 ]],
+    [45,  [240, 200, 30 ]],
+    [60,  [160, 210, 80 ]],
+    [75,  [60,  160, 60 ]],
+    [100, [0,   100, 20 ]],
+  ];
+  for (let i = 0; i < stops.length - 1; i++) {
+    const [a, ca] = stops[i];
+    const [b, cb] = stops[i + 1];
+    if (pct >= a && pct <= b) {
+      const t = (pct - a) / (b - a);
+      const r = Math.round(ca[0] + t * (cb[0] - ca[0]));
+      const g = Math.round(ca[1] + t * (cb[1] - ca[1]));
+      const bl = Math.round(ca[2] + t * (cb[2] - ca[2]));
+      return `rgb(${r},${g},${bl})`;
+    }
+  }
+  return `rgb(0,100,20)`;
+}
+
+// Init map centered on Uruguay
+const map = L.map('map', { zoomControl: true }).setView([-32.5, -56], 7);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO', maxZoom: 12
+}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+  attribution: '', maxZoom: 12, pane: 'shadowPane'
+}).addTo(map);
+
+// Legend
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div', 'legend');
+  div.innerHTML = `
+    <h4>% Agua Disponible (PAD)</h4>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(139,0,0)"></div> 0–15% · Muy seco</div>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(220,50,50)"></div> 15–30% · Seco</div>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(230,120,30)"></div> 30–45% · Déficit moderado</div>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(240,200,30)"></div> 45–60% · Normal bajo</div>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(160,210,80)"></div> 60–75% · Normal</div>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(60,160,60)"></div> 75–90% · Bueno</div>
+    <div class="legend-row"><div class="legend-box" style="background:rgb(0,100,20)"></div> 90–100% · Saturado</div>
+    <div class="legend-row"><div class="legend-box" style="background:#ccc"></div> Sin dato</div>
+    <div class="fuente">Fuente: INIA GRAS · catalogodatos.gub.uy</div>
+  `;
+  return div;
+};
+legend.addTo(map);
+
+// State
+let rows = [];
+let cellLayer = L.layerGroup().addTo(map);
+let activeCol = '2026_042';
+
+function drawCells(col) {
+  cellLayer.clearLayers();
+  rows.forEach(r => {
+    const val = parseFloat(r[col]);
+    const lat = parseFloat(r['Latitud']);
+    const lon = parseFloat(r['Longitud']);
+    if (isNaN(lat) || isNaN(lon)) return;
+    const color = padColor(val);
+    const rect = L.rectangle(
+      [[lat - HALF, lon - HALF], [lat + HALF, lon + HALF]],
+      { color: 'none', fillColor: color, fillOpacity: 0.82, weight: 0 }
+    );
+    const label = isNaN(val) ? 'Sin dato' : val.toFixed(1) + '%';
+    rect.bindTooltip(`<strong>${label}</strong><br>Lat ${lat} · Lon ${lon}`, { sticky: true });
+    cellLayer.addLayer(rect);
+  });
+}
+
+// Parse CSV
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  return lines.slice(1).map(line => {
+    const vals = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = vals[i] ? vals[i].trim() : null; });
+    return obj;
+  });
+}
+
+// Load data
+fetch(CSV_URL)
+  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+  .then(text => {
+    rows = parseCSV(text);
+    document.getElementById('status').textContent = `${rows.length} puntos cargados`;
+    drawCells(activeCol);
+  })
+  .catch(err => {
+    document.getElementById('status').textContent = 'Error al cargar: ' + err.message;
+    console.error(err);
+  });
+
+// Period buttons
+document.querySelectorAll('.per-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.per-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    activeCol = this.dataset.col;
+    const colNames = rows.length > 0 ? Object.keys(rows[0]) : [];
+    if (!colNames.includes(activeCol)) {
+      document.getElementById('status').textContent = 'Columna no disponible aún: ' + activeCol;
+      return;
+    }
+    drawCells(activeCol);
+  });
+});
+</script>
+
+</body>
+</html>
