@@ -619,7 +619,26 @@ function buildFamSectorChart(cur) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 }, onClick: () => {} },
+                legend: {
+                    position: 'top',
+                    labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 },
+                    onClick: (e, legendItem, legend) => {
+                        const chart = legend.chart;
+                        const idx = legendItem.datasetIndex;
+                        const ds = chart.data.datasets;
+                        const allNormal = ds.every(d => (d.backgroundColor || '').length <= 7);
+                        if (allNormal) {
+                            ds.forEach((d, i) => {
+                                const base = [d.backgroundColor, d._baseColor || d.backgroundColor][0];
+                                d._baseColor = base;
+                                d.backgroundColor = i === idx ? base : base + '44';
+                            });
+                        } else {
+                            ds.forEach(d => { if (d._baseColor) d.backgroundColor = d._baseColor; });
+                        }
+                        chart.update();
+                    }
+                },
                 datalabels: { display: false },
                 tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${Number(c.raw).toLocaleString('es-UY')} ${d.unit}` } }
             },
