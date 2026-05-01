@@ -286,6 +286,19 @@ function adjustHeaderOffset(){
   document.body.style.paddingTop=hh+'px';
   document.documentElement.style.setProperty('--header-h', hh+'px');
 }
+const PRECIP_URLS = {
+  1: 'https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion/2026/mapa%20acum_enero%202026_con%20grilla.png',
+  2: 'https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion/2026/Mapa_acum_febrero_con%20grilla.png',
+  3: 'https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion/2026/acumulado_marzo_2026.png',
+};
+function setPrecipMes(m) {
+  document.querySelectorAll('[id^="prec-btn-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('prec-btn-' + m).classList.add('active');
+  const img = document.getElementById('precip-map-img');
+  img.style.opacity = 1;
+  img.src = PRECIP_URLS[m];
+}
+
 window.addEventListener('DOMContentLoaded',function(){
   adjustHeaderOffset();
   document.querySelectorAll('.section-label.collapsible').forEach(function(el){
@@ -604,7 +617,24 @@ window.addEventListener('resize',adjustHeaderOffset);
         <span class="toggle-text">▲ Ocultar</span>
     </div>
     <div class="collapsible-content">
-    
+
+    <!-- Mapa de Precipitación INUMET -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:20px;">
+      <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:12px;">🌧️ Precipitación Mensual Acumulada — INUMET</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+        <button onclick="setPrecipMes(1)" id="prec-btn-1" class="per-btn" style="padding:4px 12px;font-size:0.78rem;">Enero</button>
+        <button onclick="setPrecipMes(2)" id="prec-btn-2" class="per-btn" style="padding:4px 12px;font-size:0.78rem;">Febrero</button>
+        <button onclick="setPrecipMes(3)" id="prec-btn-3" class="per-btn active" style="padding:4px 12px;font-size:0.78rem;">Marzo</button>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <img id="precip-map-img" src="https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion/2026/acumulado_marzo_2026.png"
+             alt="Mapa precipitación"
+             style="max-width:560px;width:100%;border-radius:6px;"
+             onerror="this.style.opacity=0.2">
+      </div>
+      <div style="font-size:0.68rem;color:var(--text2);margin-top:8px;text-align:center;">Fuente: INUMET · 2026</div>
+    </div>
+
     <div style="font-size:0.82rem;color:var(--text2);margin-bottom:16px;line-height:1.6;">
         Última actualización: <strong id="clima-fecha-update" style="color:var(--text);">25 de abril de 2026</strong> ·
         Fuentes: <a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;">IRI/Columbia</a>,
