@@ -619,7 +619,7 @@ function buildFamSectorChart(cur) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
+                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 }, onClick: () => {} },
                 datalabels: { display: false },
                 tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${Number(c.raw).toLocaleString('es-UY')} ${d.unit}` } }
             },
