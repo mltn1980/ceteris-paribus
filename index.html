@@ -331,7 +331,7 @@ function setPrecipMes(m) {
   filas.innerHTML = data.map(d => {
     const sign = d.anom >= 0 ? '+' : '';
     const col = anomColorPrecip(d.anom);
-    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);font-size:0.78rem;">
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-radius:5px;margin-bottom:2px;font-size:0.78rem;background:${col}18;">
       <span style="color:var(--text);font-weight:500;">${d.est}</span>
       <span style="color:var(--text2);margin:0 8px;">${d.mm} mm</span>
       <span style="font-weight:700;color:${col};min-width:52px;text-align:right;">${sign}${d.anom}%</span>
