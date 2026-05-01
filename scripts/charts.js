@@ -1072,6 +1072,5 @@ window.addEventListener('load', function() {
         createFinInstitucionesChart();
         buildFamSectorChart('pesos');
         buildEmpSectorChart('pesos');
-        createFinCapUSDChart();
     }
 });
