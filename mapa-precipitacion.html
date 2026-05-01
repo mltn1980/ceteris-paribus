@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Precipitación Mensual · ceterisparibus-uy</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: #f5f4f0; color: #2d2a22; }
+  header { background: #fff; border-bottom: 2px solid #d6d0c4; padding: 16px 24px; }
+  header h1 { font-size: 1.15rem; font-weight: 700; color: #1a1a18; }
+  header .sub { font-size: 0.8rem; color: #6b6456; margin-top: 2px; }
+  .controls { background: #fff; border-bottom: 1px solid #d6d0c4; padding: 10px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .controls label { font-size: 0.82rem; font-weight: 600; color: #4a473f; }
+  .ctrl-group { display: flex; align-items: center; gap: 8px; }
+  .per-btn { padding: 5px 14px; font-size: 0.8rem; font-weight: 600; border: 1px solid #c8c0b4; border-radius: 20px; background: #f5f4f0; color: #4a473f; cursor: pointer; transition: all 0.15s; }
+  .per-btn:hover { background: #e8f4f0; color: #1b5e85; }
+  .per-btn.active { background: #1b5e85; color: #fff; border-color: #1b5e85; }
+  select { padding: 5px 10px; font-size: 0.82rem; font-family: inherit; border: 1px solid #c8c0b4; border-radius: 20px; background: #f5f4f0; color: #4a473f; cursor: pointer; }
+  .map-wrap { display: flex; justify-content: center; padding: 24px; }
+  .map-wrap img { max-width: 100%; max-height: calc(100vh - 160px); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); background: #eee; }
+  .error-msg { text-align: center; padding: 60px 24px; color: #888; font-size: 0.9rem; }
+  .fuente { text-align: center; font-size: 0.72rem; color: #aaa; padding-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🌧️ Precipitación Mensual — Uruguay</h1>
+    <div class="sub">Fuente: INUMET · inumet.gub.uy</div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="ctrl-group">
+    <label>Tipo:</label>
+    <button class="per-btn active" data-tipo="acumulado">Acumulado</button>
+    <button class="per-btn" data-tipo="anomalia">Anomalía</button>
+  </div>
+  <div class="ctrl-group">
+    <label>Año:</label>
+    <select id="sel-anio"></select>
+  </div>
+  <div class="ctrl-group">
+    <label>Mes:</label>
+    <select id="sel-mes"></select>
+  </div>
+</div>
+
+<div class="map-wrap">
+  <img id="mapa" src="" alt="Mapa de precipitación" onerror="this.style.display='none';document.getElementById('err').style.display='block'">
+  <div id="err" class="error-msg" style="display:none">No se encontró el mapa para ese período.</div>
+</div>
+<div class="fuente">Datos: INUMET — Instituto Uruguayo de Meteorología</div>
+
+<script>
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const MESES_LABELS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const ANO_MIN = 2019;
+const ANO_MAX = 2026;
+
+let tipo = 'acumulado';
+let anio = 2026;
+let mes = 3; // 1-indexed
+
+// Populate selects
+const selAnio = document.getElementById('sel-anio');
+for (let y = ANO_MAX; y >= ANO_MIN; y--) {
+  const opt = document.createElement('option');
+  opt.value = y;
+  opt.textContent = y;
+  if (y === anio) opt.selected = true;
+  selAnio.appendChild(opt);
+}
+
+const selMes = document.getElementById('sel-mes');
+MESES_LABELS.forEach((label, i) => {
+  const opt = document.createElement('option');
+  opt.value = i + 1;
+  opt.textContent = label;
+  if (i + 1 === mes) opt.selected = true;
+  selMes.appendChild(opt);
+});
+
+function updateMap() {
+  const img = document.getElementById('mapa');
+  const err = document.getElementById('err');
+  const url = `https://inumet.gub.uy/sites/default/files/mapas-precipitacion/${anio}/${tipo}_${MESES[mes-1]}_${anio}.png`;
+  img.style.display = 'block';
+  err.style.display = 'none';
+  img.src = url + '?t=' + Date.now();
+}
+
+document.querySelectorAll('[data-tipo]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-tipo]').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    tipo = this.dataset.tipo;
+    updateMap();
+  });
+});
+
+selAnio.addEventListener('change', () => { anio = parseInt(selAnio.value); updateMap(); });
+selMes.addEventListener('change', () => { mes = parseInt(selMes.value); updateMap(); });
+
+updateMap();
+</script>
+
+</body>
+</html>
