@@ -17,10 +17,21 @@
   .per-btn:hover { background: #e8f4f0; color: #1b5e85; }
   .per-btn.active { background: #1b5e85; color: #fff; border-color: #1b5e85; }
   select { padding: 5px 10px; font-size: 0.82rem; font-family: inherit; border: 1px solid #c8c0b4; border-radius: 20px; background: #f5f4f0; color: #4a473f; cursor: pointer; }
-  .map-wrap { display: flex; justify-content: center; padding: 24px; }
-  .map-wrap img { max-width: 100%; max-height: calc(100vh - 160px); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); background: #eee; }
-  .error-msg { text-align: center; padding: 60px 24px; color: #888; font-size: 0.9rem; }
-  .fuente { text-align: center; font-size: 0.72rem; color: #aaa; padding-bottom: 16px; }
+
+  /* Grid view */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 24px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
+  .grid-item { background: #fff; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.09); overflow: hidden; }
+  .grid-item .mes-label { font-size: 0.78rem; font-weight: 700; color: #4a473f; padding: 8px 12px 4px; }
+  .grid-item img { width: 100%; display: block; }
+  .grid-item .no-data { font-size: 0.75rem; color: #bbb; padding: 20px; text-align: center; }
+
+  /* Single view */
+  .single-wrap { display: flex; justify-content: center; padding: 24px; }
+  .single-wrap img { max-width: 700px; width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+
+  .fuente { text-align: center; font-size: 0.72rem; color: #aaa; padding: 8px 0 16px; }
 </style>
 </head>
 <body>
@@ -43,14 +54,19 @@
     <select id="sel-anio"></select>
   </div>
   <div class="ctrl-group">
+    <label>Vista:</label>
+    <button class="per-btn active" data-vista="grid">Todos los meses</button>
+    <button class="per-btn" data-vista="single">Un mes</button>
+  </div>
+  <div class="ctrl-group" id="ctrl-mes" style="display:none">
     <label>Mes:</label>
     <select id="sel-mes"></select>
   </div>
 </div>
 
-<div class="map-wrap">
-  <img id="mapa" src="" alt="Mapa de precipitación" onerror="this.style.display='none';document.getElementById('err').style.display='block'">
-  <div id="err" class="error-msg" style="display:none">No se encontró el mapa para ese período.</div>
+<div id="grid-view" class="grid"></div>
+<div id="single-view" class="single-wrap" style="display:none">
+  <img id="mapa-single" src="" alt="Mapa de precipitación" onerror="this.style.opacity=0.2">
 </div>
 <div class="fuente">Datos: INUMET — Instituto Uruguayo de Meteorología</div>
 
@@ -62,9 +78,9 @@ const ANO_MAX = 2026;
 
 let tipo = 'acumulado';
 let anio = 2026;
-let mes = 3; // 1-indexed
+let mes = 4;
+let vista = 'grid';
 
-// Populate selects
 const selAnio = document.getElementById('sel-anio');
 for (let y = ANO_MAX; y >= ANO_MIN; y--) {
   const opt = document.createElement('option');
@@ -83,13 +99,46 @@ MESES_LABELS.forEach((label, i) => {
   selMes.appendChild(opt);
 });
 
-function updateMap() {
-  const img = document.getElementById('mapa');
-  const err = document.getElementById('err');
-  const url = `https://inumet.gub.uy/sites/default/files/mapas-precipitacion/${anio}/${tipo}_${MESES[mes-1]}_${anio}.png`;
-  img.style.display = 'block';
-  err.style.display = 'none';
-  img.src = url + '?t=' + Date.now();
+function imgUrl(m) {
+  return `https://inumet.gub.uy/sites/default/files/mapas-precipitacion/${anio}/${tipo}_${MESES[m-1]}_${anio}.png`;
+}
+
+function drawGrid() {
+  const grid = document.getElementById('grid-view');
+  grid.innerHTML = '';
+  // For current year, only show up to current month; for past years, all 12
+  const maxMes = (anio === ANO_MAX) ? 4 : 12; // April is latest available for 2026
+  for (let m = 1; m <= maxMes; m++) {
+    const item = document.createElement('div');
+    item.className = 'grid-item';
+    item.innerHTML = `
+      <div class="mes-label">${MESES_LABELS[m-1]}</div>
+      <img src="${imgUrl(m)}" alt="${MESES_LABELS[m-1]}" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="no-data" style="display:none">Sin datos</div>
+    `;
+    grid.appendChild(item);
+  }
+}
+
+function drawSingle() {
+  const img = document.getElementById('mapa-single');
+  img.style.opacity = 1;
+  img.src = imgUrl(mes);
+}
+
+function render() {
+  if (vista === 'grid') {
+    document.getElementById('grid-view').style.display = 'grid';
+    document.getElementById('single-view').style.display = 'none';
+    document.getElementById('ctrl-mes').style.display = 'none';
+    drawGrid();
+  } else {
+    document.getElementById('grid-view').style.display = 'none';
+    document.getElementById('single-view').style.display = 'flex';
+    document.getElementById('ctrl-mes').style.display = 'flex';
+    drawSingle();
+  }
 }
 
 document.querySelectorAll('[data-tipo]').forEach(btn => {
@@ -97,14 +146,23 @@ document.querySelectorAll('[data-tipo]').forEach(btn => {
     document.querySelectorAll('[data-tipo]').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
     tipo = this.dataset.tipo;
-    updateMap();
+    render();
   });
 });
 
-selAnio.addEventListener('change', () => { anio = parseInt(selAnio.value); updateMap(); });
-selMes.addEventListener('change', () => { mes = parseInt(selMes.value); updateMap(); });
+document.querySelectorAll('[data-vista]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-vista]').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    vista = this.dataset.vista;
+    render();
+  });
+});
 
-updateMap();
+selAnio.addEventListener('change', () => { anio = parseInt(selAnio.value); render(); });
+selMes.addEventListener('change', () => { mes = parseInt(selMes.value); drawSingle(); });
+
+render();
 </script>
 
 </body>
