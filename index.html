@@ -169,9 +169,9 @@ footer{text-align:center;padding:28px 24px;color:var(--muted);font-size:0.72rem;
 .deuda-tab{flex-shrink:0;text-align:center;padding:10px 16px;font-family:'IBM Plex Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;margin-bottom:-2px;border-radius:6px 6px 0 0;}
 .deuda-tab:hover{color:var(--text);background:var(--surface2);}
 .deuda-tab.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-l);}
-.fam-cur-btn{padding:5px 14px;font-family:'IBM Plex Sans',sans-serif;font-size:0.78rem;font-weight:600;color:var(--text2);background:var(--surface2);border:1px solid var(--border);border-radius:20px;cursor:pointer;transition:all 0.15s;}
-.fam-cur-btn:hover{background:var(--blue-l);color:var(--blue);}
-.fam-cur-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+.fam-cur-btn,.emp-cur-btn{padding:5px 14px;font-family:'IBM Plex Sans',sans-serif;font-size:0.78rem;font-weight:600;color:var(--text2);background:var(--surface2);border:1px solid var(--border);border-radius:20px;cursor:pointer;transition:all 0.15s;}
+.fam-cur-btn:hover,.emp-cur-btn:hover{background:var(--blue-l);color:var(--blue);}
+.fam-cur-btn.active,.emp-cur-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
 
 /* ── ESTADÍSTICAS URUGUAY ── */
 .uru-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
@@ -2603,6 +2603,17 @@ window.addEventListener('resize',adjustHeaderOffset);
             <canvas id="fin-fam-sector-chart"></canvas>
         </div>
         <p id="fin-fam-sector-nota" class="fuente" style="margin-bottom:20px;"></p>
+
+        <h4 class="uru-section-h4 blue">Empresas por sector — Capitales operados (abr-24 · mar-26)</h4>
+        <div style="display:flex;gap:6px;margin-bottom:14px;">
+            <button class="emp-cur-btn active" data-cur="pesos">Pesos ($)</button>
+            <button class="emp-cur-btn" data-cur="ui">UI</button>
+            <button class="emp-cur-btn" data-cur="usd">USD</button>
+        </div>
+        <div style="position:relative;height:300px;margin-bottom:8px;">
+            <canvas id="fin-emp-sector-chart"></canvas>
+        </div>
+        <p id="fin-emp-sector-nota" class="fuente" style="margin-bottom:20px;"></p>
 
         <h4 class="uru-section-h4 blue">Crédito en dólares — Total (abr-24 · mar-26)</h4>
         <div style="position:relative;height:220px;margin-bottom:8px;">

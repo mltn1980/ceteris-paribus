@@ -596,6 +596,97 @@ const famData = {
     }
 };
 
+const empData = {
+    pesos: {
+        unit: 'M$',
+        nota: 'Millones de pesos · Act. Emp. por sector $ · Fuente: BCU / SSF',
+        agro:     [131,93,189,162,112,88,773,1051,697,442,68,495,843,215,161,119,124,123,133,68,279,148,111,161],
+        ind:      [1538,1464,1290,1694,1531,1158,1300,871,2013,1264,1065,1547,1080,1276,1396,1157,951,1192,1096,837,1593,1388,704,1370],
+        com:      [17444,17310,16960,16091,17287,18262,19198,10341,23753,14134,10003,11608,18652,16464,18336,11268,11183,12811,15162,15075,22297,20069,16661,20312]
+    },
+    ui: {
+        unit: 'M UI',
+        nota: 'Millones de UI · Act. Emp. por sector UI · Fuente: BCU / SSF',
+        agro: [3.9,3.6,3.6,1.8,3.1,4.7,10.4,4.2,5,1.7,45.2,3.7,2.9,3.9,1.5,1.5,3.2,3.1,3.6,3.5,5.1,2.7,1.4,2.2],
+        ind:  [6.4,14.9,9.9,8.6,7.8,6.3,23.9,3.8,13,24.6,39.3,14.7,5.5,23.6,24,5.4,19.7,7.2,5,6.7,45.2,4.6,7.4,11.2],
+        com:  [110,181.9,125.6,77.4,114.6,136.4,305.5,129.9,394.6,154.3,79.2,62.3,82.3,350.9,648.8,759.3,245.4,93.4,139.9,79.9,160.7,62.3,36.2,95.4]
+    },
+    usd: {
+        unit: 'M USD',
+        nota: 'Millones de USD · Act. Emp. por sector U$S · Fuente: BCU / SSF',
+        agro: [409,375,424,492,353,423,471,441,529,338,305,312,413,391,505,355,297,403,488,465,519,444,293,479],
+        ind:  [492,292,440,445,454,334,478,442,551,363,330,392,422,448,555,472,462,451,417,419,563,420,405,427],
+        com:  [620,624,488,575,474,547,612,477,706,475,359,468,572,609,604,544,509,632,719,672,726,708,524,694]
+    }
+};
+
+let empSectorChart = null;
+
+function buildEmpSectorChart(cur) {
+    const canvas = document.getElementById('fin-emp-sector-chart');
+    const nota   = document.getElementById('fin-emp-sector-nota');
+    if (!canvas) return;
+    const d = empData[cur];
+    if (empSectorChart) { empSectorChart.destroy(); empSectorChart = null; }
+    if (nota) nota.textContent = d.nota;
+    empSectorChart = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: finMeses,
+            datasets: [
+                { label: 'Agropecuario',         data: d.agro, backgroundColor: '#2a7235', stack: 's' },
+                { label: 'Industria Mfra.',       data: d.ind,  backgroundColor: '#a07418', stack: 's' },
+                { label: 'Comercio y Servicios',  data: d.com,  backgroundColor: '#1b5e85', stack: 's' }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 },
+                    onClick: (e, legendItem, legend) => {
+                        const chart = legend.chart;
+                        const idx = legendItem.datasetIndex;
+                        const ds = chart.data.datasets;
+                        const allNormal = ds.every(d => (d.backgroundColor || '').length <= 7);
+                        if (allNormal) {
+                            ds.forEach((d, i) => {
+                                const base = d._baseColor || d.backgroundColor;
+                                d._baseColor = base;
+                                d.backgroundColor = i === idx ? base : base + '44';
+                            });
+                        } else {
+                            ds.forEach(d => { if (d._baseColor) d.backgroundColor = d._baseColor; });
+                        }
+                        chart.update();
+                    }
+                },
+                datalabels: { display: false },
+                tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${Number(c.raw).toLocaleString('es-UY')} ${d.unit}` } }
+            },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#666' } },
+                y: { stacked: true, grid: { color: '#f0f0f0' }, ticks: { font: { size: 10 }, color: '#666', callback: v => v.toLocaleString('es-UY') } }
+            }
+        }
+    });
+}
+
+(function initEmpSectorButtons() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const btns = document.querySelectorAll('.emp-cur-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                btns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                buildEmpSectorChart(this.dataset.cur);
+            });
+        });
+    });
+})();
+
 let famSectorChart = null;
 
 function buildFamSectorChart(cur) {
@@ -980,6 +1071,7 @@ window.addEventListener('load', function() {
         createFinCreditoUSDChart();
         createFinInstitucionesChart();
         buildFamSectorChart('pesos');
+        buildEmpSectorChart('pesos');
         createFinCapUSDChart();
     }
 });
