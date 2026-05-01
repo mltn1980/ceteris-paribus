@@ -18,16 +18,14 @@
   .per-btn.active { background: #1b5e85; color: #fff; border-color: #1b5e85; }
   select { padding: 5px 10px; font-size: 0.82rem; font-family: inherit; border: 1px solid #c8c0b4; border-radius: 20px; background: #f5f4f0; color: #4a473f; cursor: pointer; }
 
-  /* Grid view */
   .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 24px; }
   @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
   .grid-item { background: #fff; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.09); overflow: hidden; }
   .grid-item .mes-label { font-size: 0.78rem; font-weight: 700; color: #4a473f; padding: 8px 12px 4px; }
   .grid-item img { width: 100%; display: block; }
-  .grid-item .no-data { font-size: 0.75rem; color: #bbb; padding: 20px; text-align: center; }
+  .grid-item .no-data { font-size: 0.75rem; color: #bbb; padding: 20px; text-align: center; display: none; }
 
-  /* Single view */
   .single-wrap { display: flex; justify-content: center; padding: 24px; }
   .single-wrap img { max-width: 700px; width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
 
@@ -66,26 +64,46 @@
 
 <div id="grid-view" class="grid"></div>
 <div id="single-view" class="single-wrap" style="display:none">
-  <img id="mapa-single" src="" alt="Mapa de precipitación" onerror="this.style.opacity=0.2">
+  <img id="mapa-single" src="" alt="Mapa de precipitación">
 </div>
 <div class="fuente">Datos: INUMET — Instituto Uruguayo de Meteorología</div>
 
 <script>
-const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const BASE = 'https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion';
+
+// URLs hardcodeadas por mes (INUMET no usa un patrón consistente)
+// Agregar nueva entrada cada mes
+const URLS = {
+  acumulado: {
+    2026: {
+      1: `${BASE}/2026/mapa%20acum_enero%202026_con%20grilla.png`,
+      2: `${BASE}/2026/Mapa_acum_febrero_con%20grilla.png`,
+      3: `${BASE}/2026/acumulado_marzo_2026.png`,
+    },
+    2025: {
+      1:  `${BASE}/2025/Mapa_acum_enero2025_con%20grilla.png`,
+      12: `${BASE}/2026/mapa_diciembre2025_grilla.png`,
+    }
+  },
+  anomalia: {
+    2026: {},
+    2025: {}
+  }
+};
+
 const MESES_LABELS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const ANO_MIN = 2019;
 const ANO_MAX = 2026;
 
 let tipo = 'acumulado';
 let anio = 2026;
-let mes = 4;
+let mes = 3;
 let vista = 'grid';
 
 const selAnio = document.getElementById('sel-anio');
 for (let y = ANO_MAX; y >= ANO_MIN; y--) {
   const opt = document.createElement('option');
-  opt.value = y;
-  opt.textContent = y;
+  opt.value = y; opt.textContent = y;
   if (y === anio) opt.selected = true;
   selAnio.appendChild(opt);
 }
@@ -93,38 +111,48 @@ for (let y = ANO_MAX; y >= ANO_MIN; y--) {
 const selMes = document.getElementById('sel-mes');
 MESES_LABELS.forEach((label, i) => {
   const opt = document.createElement('option');
-  opt.value = i + 1;
-  opt.textContent = label;
+  opt.value = i + 1; opt.textContent = label;
   if (i + 1 === mes) opt.selected = true;
   selMes.appendChild(opt);
 });
 
-function imgUrl(m) {
-  return `https://inumet.gub.uy/sites/default/files/mapas-precipitacion/${anio}/${tipo}_${MESES[m-1]}_${anio}.png`;
+function getUrl(t, y, m) {
+  return (URLS[t] && URLS[t][y] && URLS[t][y][m]) || null;
 }
 
 function drawGrid() {
   const grid = document.getElementById('grid-view');
   grid.innerHTML = '';
-  // For current year, only show up to current month; for past years, all 12
-  const maxMes = (anio === ANO_MAX) ? 4 : 12; // April is latest available for 2026
-  for (let m = 1; m <= maxMes; m++) {
+  const yearUrls = (URLS[tipo] && URLS[tipo][anio]) || {};
+  const available = Object.keys(yearUrls).map(Number).sort((a,b) => a - b);
+  if (available.length === 0) {
+    grid.innerHTML = '<div style="padding:40px;color:#888;font-size:0.85rem;">No hay mapas disponibles para este año y tipo.</div>';
+    return;
+  }
+  available.forEach(m => {
+    const url = yearUrls[m];
     const item = document.createElement('div');
     item.className = 'grid-item';
     item.innerHTML = `
-      <div class="mes-label">${MESES_LABELS[m-1]}</div>
-      <img src="${imgUrl(m)}" alt="${MESES_LABELS[m-1]}" loading="lazy"
+      <div class="mes-label">${MESES_LABELS[m-1]} ${anio}</div>
+      <img src="${url}" alt="${MESES_LABELS[m-1]}" loading="lazy"
            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <div class="no-data" style="display:none">Sin datos</div>
+      <div class="no-data">Sin datos</div>
     `;
     grid.appendChild(item);
-  }
+  });
 }
 
 function drawSingle() {
   const img = document.getElementById('mapa-single');
-  img.style.opacity = 1;
-  img.src = imgUrl(mes);
+  const url = getUrl(tipo, anio, mes);
+  if (url) {
+    img.src = url;
+    img.style.opacity = 1;
+  } else {
+    img.src = '';
+    img.style.opacity = 0.2;
+  }
 }
 
 function render() {
