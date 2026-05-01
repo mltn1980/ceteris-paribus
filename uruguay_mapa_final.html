@@ -160,7 +160,7 @@
                     <select id="tipoOperacion">
                         <option value="compraventa">Compraventa (USD/ha)</option>
                         <option value="arrendamiento">Arrendamiento (USD/ha/año)</option>
-                        <option value="ambos">Ambos (Compraventa + Arrendamiento)</option>
+                        <option value="cociente">Cociente Arr./Valor Tierra (%)</option>
                     </select>
                 </div>
                 <div class="filter-item">
@@ -322,8 +322,8 @@
                 <div class="instruccion-item">
                     <span class="instruccion-icon">📊</span>
                     <div>
-                        <strong>Vista combinada:</strong>
-                        <p>Muestra el monto total combinado de compraventa + arrendamiento por departamento en millones de dólares.</p>
+                        <strong>Cociente Arr./Valor Tierra:</strong>
+                        <p>Renta anual como porcentaje del valor de la tierra (arrendamiento promedio ÷ precio compraventa × 100). Indica el rendimiento implícito del activo tierra. Mayor cociente = tierra relativamente más barata respecto a la renta.</p>
                     </div>
                 </div>
                 <div class="instruccion-item">
@@ -396,12 +396,12 @@ function gc(p,tp){
             return"#2E7D32";
         }
     }else{
-        if(p<20000)return"#E3F2FD";
-        if(p<40000)return"#90CAF9";
-        if(p<60000)return"#42A5F5";
-        if(p<80000)return"#1E88E5";
-        if(p<100000)return"#1565C0";
-        return"#0D47A1";
+        if(p<2.0)return"#F3E5F5";
+        if(p<2.5)return"#CE93D8";
+        if(p<3.0)return"#AB47BC";
+        if(p<3.5)return"#8E24AA";
+        if(p<4.0)return"#6A1B9A";
+        return"#4A148C";
     }
 }
 
@@ -409,9 +409,7 @@ function gp(d,tp,rb){
     if(!d)return 0;
     if(tp==="compraventa")return d.compraventa.precio;
     if(tp==="arrendamiento")return rb==="promedio"?d.arrendamiento.precio:(d.arrendamiento.rubros[rb]||d.arrendamiento.precio);
-    const montoCompra=d.compraventa.precio*d.compraventa.superficie/1000;
-    const montoArrend=d.arrendamiento.precio*d.arrendamiento.superficie/1000;
-    return montoCompra+montoArrend;
+    return parseFloat((d.arrendamiento.precio/d.compraventa.precio*100).toFixed(2));
 }
 
 function render(){
@@ -475,19 +473,12 @@ function show(n,d){
         }
         h+='<div class="stat"><div class="stat-label">Precios por Rubro (USD/ha/año)</div><div class="rubros-grid">'+rubrosHtml+'</div></div>';
     }else{
-        const totalOps=d.compraventa.operaciones+d.arrendamiento.contratos;
-        const totalSup=d.compraventa.superficie+d.arrendamiento.superficie;
-        const supProm=Math.round(totalSup/totalOps);
-        const montoCompra=Math.round(d.compraventa.precio*d.compraventa.superficie/1000);
-        const montoArrend=Math.round(d.arrendamiento.precio*d.arrendamiento.superficie/1000);
-        const montoTotal=montoCompra+montoArrend;
-        const porcDepto=(totalSup/d.superficieTotal*100).toFixed(2);
-        h='<div class="stat"><div class="stat-label">Total Operaciones</div><div class="stat-value">'+totalOps+'</div></div>';
-        h+='<div class="stat"><div class="stat-label">Superficie Total</div><div class="stat-value">'+totalSup.toLocaleString()+' <span class="stat-unit">ha ('+porcDepto+'% del depto)</span></div></div>';
-        h+='<div class="stat"><div class="stat-label">Monto Total Combinado</div><div class="stat-value">USD '+montoTotal.toLocaleString()+' <span class="stat-unit">mil</span></div></div>';
-        h+='<div class="stat" style="background:#E3F2FD;border-left:4px solid #1976D2;"><div class="stat-label">📊 Desglose por Tipo</div></div>';
-        h+='<div class="stat" style="background:#BBDEFB;"><div class="stat-label">Compraventa</div><div class="stat-value" style="font-size:1.6rem;">'+d.compraventa.superficie.toLocaleString()+' ha • USD '+montoCompra.toLocaleString()+' mil</div></div>';
-        h+='<div class="stat" style="background:#BBDEFB;"><div class="stat-label">Arrendamiento</div><div class="stat-value" style="font-size:1.6rem;">'+d.arrendamiento.superficie.toLocaleString()+' ha • USD '+montoArrend.toLocaleString()+' mil</div></div>';
+        const cociente=(d.arrendamiento.precio/d.compraventa.precio*100).toFixed(2);
+        const aniosRecupero=(d.compraventa.precio/d.arrendamiento.precio).toFixed(1);
+        h='<div class="stat" style="background:#F3E5F5;border-left:4px solid #8E24AA;"><div class="stat-label">Cociente Arr./Valor Tierra</div><div class="stat-value">'+cociente+' <span class="stat-unit">%</span></div></div>';
+        h+='<div class="stat"><div class="stat-label">Valor Tierra (Compraventa)</div><div class="stat-value">USD '+d.compraventa.precio.toLocaleString()+' <span class="stat-unit">/ha</span></div></div>';
+        h+='<div class="stat"><div class="stat-label">Arrendamiento Promedio</div><div class="stat-value">USD '+d.arrendamiento.precio+' <span class="stat-unit">/ha/año</span></div></div>';
+        h+='<div class="stat"><div class="stat-label">Años para recuperar inversión</div><div class="stat-value">'+aniosRecupero+' <span class="stat-unit">años (vía renta)</span></div></div>';
     }
     document.getElementById("statsContainer").innerHTML=h;
 }
@@ -565,12 +556,12 @@ function updateLeg(){
         }
     }else{
         rg=[
-            {label:"< USD 20 mill",color:"#E3F2FD"},
-            {label:"USD 20 - 40 mill",color:"#90CAF9"},
-            {label:"USD 40 - 60 mill",color:"#42A5F5"},
-            {label:"USD 60 - 80 mill",color:"#1E88E5"},
-            {label:"USD 80 - 100 mill",color:"#1565C0"},
-            {label:"> USD 100 mill",color:"#0D47A1"}
+            {label:"< 2,0%",color:"#F3E5F5"},
+            {label:"2,0% – 2,5%",color:"#CE93D8"},
+            {label:"2,5% – 3,0%",color:"#AB47BC"},
+            {label:"3,0% – 3,5%",color:"#8E24AA"},
+            {label:"3,5% – 4,0%",color:"#6A1B9A"},
+            {label:"> 4,0%",color:"#4A148C"}
         ];
     }
     rg.forEach(x=>h+='<div class="legend-item"><div class="legend-color" style="background:'+x.color+'"></div><span>'+x.label+'</span></div>');
@@ -585,13 +576,13 @@ function mostrarTotales(){
         const rubroActual = r==="promedio"?"Promedio General":r.replace("_","-").toUpperCase();
         document.getElementById("statsContainer").innerHTML='<div class="stat"><div class="stat-label">Total Contratos (1er Sem 2025)</div><div class="stat-value">1.251</div></div><div class="stat"><div class="stat-label">Superficie Total</div><div class="stat-value">385.593 <span class="stat-unit">ha</span></div></div><div class="stat"><div class="stat-label">Superficie Promedio</div><div class="stat-value">308 <span class="stat-unit">ha</span></div></div><div class="stat"><div class="stat-label">Monto Total</div><div class="stat-value">USD 50 <span class="stat-unit">millones</span></div></div><div class="stat"><div class="stat-label">Renta Promedio Nacional</div><div class="stat-value">USD 130 <span class="stat-unit">/ha/año</span></div></div>';
     }else{
-        document.getElementById("statsContainer").innerHTML='<div class="stat"><div class="stat-label">Total Operaciones Combinadas</div><div class="stat-value">2.969</div></div><div class="stat"><div class="stat-label">Superficie Total</div><div class="stat-value">644.593 <span class="stat-unit">ha</span></div></div><div class="stat"><div class="stat-label">Monto Total Combinado</div><div class="stat-value">USD 1.132 <span class="stat-unit">millones</span></div></div><div class="stat" style="background:#E3F2FD;border-left:4px solid #1976D2;"><div class="stat-label">📊 Desglose por Tipo</div></div><div class="stat" style="background:#BBDEFB;"><div class="stat-label">Compraventa</div><div class="stat-value" style="font-size:1.8rem;">259.000 ha • USD 1.082 mill</div></div><div class="stat" style="background:#BBDEFB;"><div class="stat-label">Arrendamiento</div><div class="stat-value" style="font-size:1.8rem;">385.593 ha • USD 50 mill</div></div>';
+        document.getElementById("statsContainer").innerHTML='<div class="stat" style="background:#F3E5F5;border-left:4px solid #8E24AA;"><div class="stat-label">Cociente Promedio Nacional</div><div class="stat-value">3,1 <span class="stat-unit">%</span></div></div><div class="stat"><div class="stat-label">Valor Tierra Nacional</div><div class="stat-value">USD 4.178 <span class="stat-unit">/ha (promedio 2025)</span></div></div><div class="stat"><div class="stat-label">Arrendamiento Nacional</div><div class="stat-value">USD 130 <span class="stat-unit">/ha/año (1er sem 2025)</span></div></div><div class="stat"><div class="stat-label">Recupero implícito</div><div class="stat-value">~32 <span class="stat-unit">años vía renta</span></div></div><div class="stat"><div class="stat-label">Rango departamental</div><div class="stat-value">1,8% – 4,1% <span class="stat-unit">(Maldonado – Paysandú)</span></div></div>';
     }
 }
 
 document.getElementById("tipoOperacion").onchange=e=>{
     t=e.target.value;
-    document.getElementById("rubroFilter").disabled=(t==="compraventa"||t==="ambos");
+    document.getElementById("rubroFilter").disabled=(t==="compraventa"||t==="cociente");
     render();
     s=null;
     document.querySelectorAll("#svg-mapa path.selected").forEach(x=>x.classList.remove("selected"));
