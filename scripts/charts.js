@@ -559,6 +559,91 @@ const finActUI = [1099,1065,853,1059,1115,3491,2992,1576,1807,974,1051,1048,990,
 // TC UI->pesos: valores reales DGI (ODS 2023-2025) + interpolación 2025 + datos web DGI ene-mar-26
 const finUITC = [6.00,6.02,6.04,6.07,6.08,6.10,6.12,6.14,6.16,6.18,6.20,6.22,6.24,6.26,6.29,6.31,6.33,6.36,6.38,6.41,6.43,6.42,6.44,6.48];
 
+// Act. Fam. por sector $ (M$) — BCU SSF hoja 11
+const famPesosConsumo = [4025,3557,3073,3756,3959,10247,9385,22657,15125,4789,4774,4307,4179,3994,3871,4013,4112,12570,10485,25814,16717,4790,4282,13559];
+const famPesosAuto    = [0,1,1,1,2,3,2,2,3,1,1,1,1,1,1,2,2,1,2,1,1,8,14,25];
+const famPesosViv     = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+// Act. Fam. por sector UI (M UI) — BCU SSF hoja 12
+const famUIConsumo = [525,472,392,288,293,2782,1905,753,462,282,263,279,273,288,210,263,287,3418,2034,795,453,271,251,5550];
+const famUIAuto    = [44,37,38,224,243,233,253,268,289,265,277,236,231,244,240,278,242,278,313,287,328,285,265,312];
+const famUIViv     = [254,294,261,296,364,320,377,335,406,201,321,279,261,310,349,348,322,354,339,391,533,199,290,336];
+// Act. Fam. por sector USD (M USD) — BCU SSF hoja 13
+const famUSDConsumo = [31,32,32,29,33,37,31,36,38,29,37,37,36,39,42,41,43,45,43,42,47,38,38,51];
+const famUIDAuto    = [0.4,0.5,0.3,0.7,0.9,0.7,0.6,0.9,1.3,0.6,0.7,0.6,0.6,0.5,0.7,1.0,0.7,0.9,0.9,0.6,1.3,0.8,0.7,0.9];
+const famUIDViv     = [0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0];
+
+const famData = {
+    pesos: {
+        unit: 'M$',
+        nota: 'Millones de pesos · Act. Fam. por sector $ · Fuente: BCU / SSF',
+        consumo:  [4025,3557,3073,3756,3959,10247,9385,22657,15125,4789,4774,4307,4179,3994,3871,4013,4112,12570,10485,25814,16717,4790,4282,13559],
+        auto:     [0,1,1,1,2,3,2,2,3,1,1,1,1,1,1,2,2,1,2,1,1,8,14,25],
+        vivienda: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    },
+    ui: {
+        unit: 'M UI',
+        nota: 'Millones de UI · Act. Fam. por sector UI · Fuente: BCU / SSF',
+        consumo:  [525,472,392,288,293,2782,1905,753,462,282,263,279,273,288,210,263,287,3418,2034,795,453,271,251,5550],
+        auto:     [44,37,38,224,243,233,253,268,289,265,277,236,231,244,240,278,242,278,313,287,328,285,265,312],
+        vivienda: [254,294,261,296,364,320,377,335,406,201,321,279,261,310,349,348,322,354,339,391,533,199,290,336]
+    },
+    usd: {
+        unit: 'M USD',
+        nota: 'Millones de USD · Act. Fam. por sector U$S · Fuente: BCU / SSF',
+        consumo:  [31,32,32,29,33,37,31,36,38,29,37,37,36,39,42,41,43,45,43,42,47,38,38,51],
+        auto:     [0.4,0.5,0.3,0.7,0.9,0.7,0.6,0.9,1.3,0.6,0.7,0.6,0.6,0.5,0.7,1.0,0.7,0.9,0.9,0.6,1.3,0.8,0.7,0.9],
+        vivienda: [0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0]
+    }
+};
+
+let famSectorChart = null;
+
+function buildFamSectorChart(cur) {
+    const canvas = document.getElementById('fin-fam-sector-chart');
+    const nota   = document.getElementById('fin-fam-sector-nota');
+    if (!canvas) return;
+    const d = famData[cur];
+    if (famSectorChart) { famSectorChart.destroy(); famSectorChart = null; }
+    if (nota) nota.textContent = d.nota;
+    famSectorChart = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: finMeses,
+            datasets: [
+                { label: 'Consumo',   data: d.consumo,  backgroundColor: '#1b5e85', stack: 's' },
+                { label: 'Automóvil', data: d.auto,     backgroundColor: '#e08c00', stack: 's' },
+                { label: 'Vivienda',  data: d.vivienda, backgroundColor: '#2a7235', stack: 's' }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { font: { size: 12 }, color: '#4a473f', boxWidth: 14 } },
+                datalabels: { display: false },
+                tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${Number(c.raw).toLocaleString('es-UY')} ${d.unit}` } }
+            },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#666' } },
+                y: { stacked: true, grid: { color: '#f0f0f0' }, ticks: { font: { size: 10 }, color: '#666', callback: v => v.toLocaleString('es-UY') } }
+            }
+        }
+    });
+}
+
+(function initFamSectorButtons() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const btns = document.querySelectorAll('.fam-cur-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                btns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                buildFamSectorChart(this.dataset.cur);
+            });
+        });
+    });
+})();
+
 function createFinDepositosChart() {
     const ctx = document.getElementById('fin-depositos-chart');
     if (!ctx) return;
@@ -875,7 +960,7 @@ window.addEventListener('load', function() {
         createFinCreditoPesosChart();
         createFinCreditoUSDChart();
         createFinInstitucionesChart();
-        createFinCapPesosChart();
+        buildFamSectorChart('pesos');
         createFinCapUSDChart();
     }
 });
