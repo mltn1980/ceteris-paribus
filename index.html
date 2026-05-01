@@ -674,7 +674,15 @@ window.addEventListener('resize',adjustHeaderOffset);
              onerror="this.style.opacity=0.2">
         <div id="precip-tabla" style="flex:1;min-width:180px;">
           <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text2);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);">Estación · mm · Anomalía</div>
-          <!-- Marzo 2026 — se actualiza con setPrecipMes() -->
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+            <span style="font-size:0.68rem;background:#b91c1c;color:#fff;border-radius:4px;padding:2px 7px;">Muy seco</span>
+            <span style="font-size:0.68rem;background:#ef4444;color:#fff;border-radius:4px;padding:2px 7px;">Seco</span>
+            <span style="font-size:0.68rem;background:#f97316;color:#fff;border-radius:4px;padding:2px 7px;">Algo seco</span>
+            <span style="font-size:0.68rem;background:#ca8a04;color:#fff;border-radius:4px;padding:2px 7px;">Normal</span>
+            <span style="font-size:0.68rem;background:#16a34a;color:#fff;border-radius:4px;padding:2px 7px;">Algo húmedo</span>
+            <span style="font-size:0.68rem;background:#2563eb;color:#fff;border-radius:4px;padding:2px 7px;">Húmedo</span>
+            <span style="font-size:0.68rem;background:#1e3a8a;color:#fff;border-radius:4px;padding:2px 7px;">Muy húmedo</span>
+          </div>
           <div id="precip-filas"></div>
           <div style="font-size:0.65rem;color:var(--text2);margin-top:10px;">Fuente: Boletín Climático INUMET</div>
         </div>
