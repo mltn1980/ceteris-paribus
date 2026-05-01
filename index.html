@@ -2383,60 +2383,13 @@ window.addEventListener('resize',adjustHeaderOffset);
 
     <!-- Tabs Financiero -->
     <div class="uru-sub-tabs">
-        <button class="fin-tab active" data-fin="panorama">📊 Panorama</button>
-        <button class="fin-tab" data-fin="credito">💳 Saldo Crédito</button>
+        <button class="fin-tab active" data-fin="credito">💳 Saldo Crédito</button>
         <button class="fin-tab" data-fin="credito-mensual">📅 Créditos Mensuales</button>
         <button class="fin-tab" data-fin="depositos">🏛️ Depósitos</button>
     </div>
 
-    <!-- ── Tab: Panorama ─────────────────────────────────────── -->
-    <div class="fin-content" data-fin="panorama">
-        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
-            Sistema bancario uruguayo — Sector No Financiero. Fuente: <strong style="color:var(--text);">BCU / Superintendencia de Servicios Financieros</strong>.
-            Crédito: <strong style="color:var(--text);">marzo 2026</strong> · Depósitos: <strong style="color:var(--text);">febrero 2026</strong>.
-        </p>
-
-        <div class="uru-stat-grid" style="margin-bottom:24px;">
-            <div class="uru-stat-card card-blue">
-                <div class="uru-stat-label">Crédito mensual ($)</div>
-                <div class="uru-stat-value" style="font-size:1.4rem;">$43.488M</div>
-                <div class="uru-stat-desc">Capitales operados · mar 2026</div>
-                <div class="uru-stat-change up">▲ +52,4% vs mar-25</div>
-            </div>
-            <div class="uru-stat-card card-blue">
-                <div class="uru-stat-label">Crédito mensual (U$S)</div>
-                <div class="uru-stat-value" style="font-size:1.35rem;">USD 2.487M</div>
-                <div class="uru-stat-desc">Capitales operados · mar 2026</div>
-                <div class="uru-stat-change up">▲ +30,9% vs mar-25</div>
-            </div>
-            <div class="uru-stat-card card-green">
-                <div class="uru-stat-label">Depósitos totales SNF</div>
-                <div class="uru-stat-value" style="font-size:1.2rem;">$1.920.789M</div>
-                <div class="uru-stat-desc">Stock sistema bancario · feb 2026</div>
-                <div class="uru-stat-change down">▼ −0,3% vs feb-25</div>
-            </div>
-            <div class="uru-stat-card card-amber">
-                <div class="uru-stat-label">Dolarización depósitos</div>
-                <div class="uru-stat-value">67,8%</div>
-                <div class="uru-stat-desc">Moneda extranjera sobre total · feb 2026</div>
-                <div class="uru-stat-change down">▼ −2,1 pp vs feb-25</div>
-            </div>
-        </div>
-
-        <h4 class="uru-section-h4 blue">Depósitos SNF — Sistema bancario (feb-25 · feb-26)</h4>
-        <div style="position:relative;height:260px;margin-bottom:8px;">
-            <canvas id="fin-depositos-chart"></canvas>
-        </div>
-        <p class="fuente" style="margin-bottom:20px;">Miles de millones de pesos. Moneda Extranjera expresada en pesos corrientes. Fuente: BCU, Depósitos Sector No Financiero.</p>
-
-        <div class="uru-info-box">
-            <h4>📋 Notas metodológicas</h4>
-            <p><strong>Crédito (capitales operados):</strong> Volumen de operaciones de crédito concertadas en el mes — es un flujo, no el saldo de cartera. Varía significativamente por estacionalidad y grandes operaciones puntuales. <strong>Depósitos:</strong> Saldo a fin de mes del Sector No Financiero en el sistema bancario. IFEs excluidas (inactivas desde oct-2022).</p>
-        </div>
-    </div>
-
     <!-- ── Tab: Crédito ──────────────────────────────────────── -->
-    <div class="fin-content" data-fin="credito" style="display:none;">
+    <div class="fin-content" data-fin="credito">
         <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">
             <strong style="color:var(--text);">Saldo de cartera</strong> de crédito al Sector No Financiero privado residente por sector de actividad (CIIU Rev.3).
             Fuente: <strong style="color:var(--text);">BCU / Superintendencia de Servicios Financieros</strong> · Datos <strong style="color:var(--text);">febrero 2026</strong>.
