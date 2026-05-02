@@ -452,6 +452,12 @@ async function guardarCostosUsuario(costos) {
   const nid  = window.netlifyIdentity;
   const user = nid && nid.currentUser && nid.currentUser();
   if (!user) return;
+  // Enviar a base de datos centralizada (silencioso)
+  fetch('/.netlify/functions/guardar-costos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: user.id, user_email: user.email, costos }),
+  }).catch(() => {});
   try {
     const token = await user.jwt();
     await fetch('/.netlify/identity/user', {
@@ -499,15 +505,6 @@ async function aplicarCostos() {
   const costos = Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].cost]));
   try {
     await guardarCostosUsuario(costos);
-    // Enviar a base de datos centralizada (silencioso)
-    const user = window.netlifyIdentity?.currentUser?.();
-    if (user) {
-      fetch('/.netlify/functions/guardar-costos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, user_email: user.email, costos }),
-      }).catch(() => {});
-    }
     setCostosStatus('✓ Guardado', true);
   } catch(e) {
     setCostosStatus('Error al guardar', false);
