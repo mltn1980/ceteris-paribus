@@ -180,7 +180,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
     <button class="mode-btn"        id="modeOptim" onclick="setMode('optimo')">🌱 Segmentación productiva</button>
   </div>
 
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+  <div id="padronSearchWrap" style="display:none;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
     <label style="font-size:0.82rem;font-weight:600;color:var(--text2);white-space:nowrap;">🔍 Mi padrón:</label>
     <input id="padronInput" type="number" placeholder="Ej: 12345"
       style="padding:7px 12px;font-size:0.82rem;font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);width:130px;"
@@ -948,15 +948,17 @@ function setMode(mode) {
   document.getElementById('modeCon')  .classList.toggle('active', mode === 'coneat');
   document.getElementById('modeOptim').classList.toggle('active', mode === 'optimo');
 
-  const actTabs   = document.getElementById('actTabs');
-  const hint      = document.getElementById('zoomHint');
-  const bar       = document.getElementById('legendBar');
-  const labels    = document.getElementById('legendLabels');
-  const deptWrap  = document.getElementById('deptFilterWrap');
+  const actTabs      = document.getElementById('actTabs');
+  const hint         = document.getElementById('zoomHint');
+  const bar          = document.getElementById('legendBar');
+  const labels       = document.getElementById('legendLabels');
+  const deptWrap     = document.getElementById('deptFilterWrap');
+  const padronSearch = document.getElementById('padronSearchWrap');
 
   if (mode === 'rent') {
     actTabs.style.display = '';
     deptWrap.style.display = 'none';
+    padronSearch.style.display = 'none';
     hint.style.display = 'none';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     if (geoLayer) map.addLayer(geoLayer);
@@ -969,6 +971,7 @@ function setMode(mode) {
   } else if (mode === 'coneat') {
     actTabs.style.display = 'none';
     deptWrap.style.display = 'flex';
+    padronSearch.style.display = 'flex';
     if (geoLayer) map.removeLayer(geoLayer);
     bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
     bar.style.height     = '14px';
@@ -979,6 +982,7 @@ function setMode(mode) {
   } else if (mode === 'optimo') {
     actTabs.style.display = 'none';
     deptWrap.style.display = 'flex';
+    padronSearch.style.display = 'none';
     if (geoLayer) map.removeLayer(geoLayer);
     const crops = Object.entries(ACT).map(([k,a]) =>
       `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
