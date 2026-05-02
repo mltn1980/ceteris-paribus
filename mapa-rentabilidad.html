@@ -166,6 +166,14 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 <nav>
   <a href="index.html">← Inicio</a>
   <a href="#" class="active">Mapa Rentabilidad</a>
+  <button id="nav-login-btn" onclick="window.netlifyIdentity && window.netlifyIdentity.open()"
+    style="margin-left:auto;padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-family:'IBM Plex Sans',sans-serif;font-size:0.78rem;font-weight:600;color:var(--text);cursor:pointer;">
+    Iniciar sesión
+  </button>
+  <button id="nav-logout-btn" onclick="window.netlifyIdentity && window.netlifyIdentity.logout()"
+    style="display:none;margin-left:auto;padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:var(--green);font-family:'IBM Plex Sans',sans-serif;font-size:0.78rem;font-weight:600;color:#fff;cursor:pointer;">
+    Cerrar sesión
+  </button>
 </nav>
 
 <main>
@@ -1252,10 +1260,24 @@ map.on('moveend', () => {
 </script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
+function updateNavAuth(user) {
+  const loginBtn  = document.getElementById('nav-login-btn');
+  const logoutBtn = document.getElementById('nav-logout-btn');
+  if (!loginBtn || !logoutBtn) return;
+  if (user) {
+    loginBtn.style.display  = 'none';
+    logoutBtn.style.display = 'block';
+    logoutBtn.textContent   = user.email + ' · Salir';
+  } else {
+    loginBtn.style.display  = 'block';
+    logoutBtn.style.display = 'none';
+  }
+}
+
 if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init',  user => { checkCostosAccess(); if (user) cargarCostosUsuario(user); });
-  window.netlifyIdentity.on('login', user => { window.netlifyIdentity.close(); checkCostosAccess(); cargarCostosUsuario(user); });
-  window.netlifyIdentity.on('logout',      () => { checkCostosAccess(); Object.entries(ACT_DEFAULT_COSTS).forEach(([k,v]) => ACT[k].cost = v); Object.keys(_rentCache).forEach(k => delete _rentCache[k]); refreshMapColors(); });
+  window.netlifyIdentity.on('init',  user => { checkCostosAccess(); updateNavAuth(user); if (user) cargarCostosUsuario(user); });
+  window.netlifyIdentity.on('login', user => { window.netlifyIdentity.close(); checkCostosAccess(); updateNavAuth(user); cargarCostosUsuario(user); });
+  window.netlifyIdentity.on('logout',      () => { checkCostosAccess(); updateNavAuth(null); Object.entries(ACT_DEFAULT_COSTS).forEach(([k,v]) => ACT[k].cost = v); Object.keys(_rentCache).forEach(k => delete _rentCache[k]); refreshMapColors(); });
 }
 </script>
 </body>
