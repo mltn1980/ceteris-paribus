@@ -182,11 +182,11 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 
   <div id="padronSearchWrap" style="display:none;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
     <label style="font-size:0.82rem;font-weight:600;color:var(--text2);white-space:nowrap;">🔍 Mi padrón:</label>
-    <input id="padronInput" type="number" placeholder="Ej: 12345"
-      style="padding:7px 12px;font-size:0.82rem;font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);width:130px;"
+    <input id="padronInput" type="number" placeholder="Seleccioná un depto. primero" disabled
+      style="padding:7px 12px;font-size:0.82rem;font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--muted);width:210px;cursor:not-allowed;"
       onkeydown="if(event.key==='Enter') buscarPadron()">
-    <button onclick="buscarPadron()"
-      style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--dark);color:#f7f5f0;cursor:pointer;">
+    <button id="padronBtn" onclick="buscarPadron()" disabled
+      style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--border);color:var(--muted);cursor:not-allowed;">
       Buscar
     </button>
     <span id="padronStatus" style="font-size:0.78rem;color:var(--muted);"></span>
@@ -588,6 +588,25 @@ function onDeptFilterChange(val) {
   }
   const hint = document.getElementById('deptFilterHint');
   if (hint) hint.textContent = val ? 'Clic en un padrón para ver su rentabilidad' : 'Filtrá por depto. para ver padrones individuales';
+
+  // Habilitar/deshabilitar buscador de padrón
+  const input = document.getElementById('padronInput');
+  const btn   = document.getElementById('padronBtn');
+  if (input) {
+    input.disabled = !val;
+    input.placeholder = val ? 'Ej: 12345' : 'Seleccioná un depto. primero';
+    input.style.background  = val ? 'var(--surface)' : 'var(--surface2)';
+    input.style.color       = val ? 'var(--text)'    : 'var(--muted)';
+    input.style.cursor      = val ? 'text'           : 'not-allowed';
+    input.style.width       = val ? '130px'          : '210px';
+  }
+  if (btn) {
+    btn.disabled           = !val;
+    btn.style.background   = val ? 'var(--dark)'   : 'var(--border)';
+    btn.style.color        = val ? '#f7f5f0'        : 'var(--muted)';
+    btn.style.cursor       = val ? 'pointer'        : 'not-allowed';
+  }
+  if (!val) document.getElementById('padronStatus').textContent = '';
 }
 
 function updateLegendRange(actKey) {
