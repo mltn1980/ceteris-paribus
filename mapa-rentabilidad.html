@@ -180,6 +180,18 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
     <button class="mode-btn"        id="modeOptim" onclick="setMode('optimo')">🌱 Segmentación productiva</button>
   </div>
 
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+    <label style="font-size:0.82rem;font-weight:600;color:var(--text2);white-space:nowrap;">🔍 Mi padrón:</label>
+    <input id="padronInput" type="number" placeholder="Ej: 12345"
+      style="padding:7px 12px;font-size:0.82rem;font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);width:130px;"
+      onkeydown="if(event.key==='Enter') buscarPadron()">
+    <button onclick="buscarPadron()"
+      style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--dark);color:#f7f5f0;cursor:pointer;">
+      Buscar
+    </button>
+    <span id="padronStatus" style="font-size:0.78rem;color:var(--muted);"></span>
+  </div>
+
   <div id="deptFilterWrap" style="display:none;margin-bottom:14px;align-items:center;gap:10px;flex-wrap:wrap;">
     <label style="font-size:0.82rem;font-weight:600;color:var(--text2);">Departamento:</label>
     <select id="deptFilter" onchange="onDeptFilterChange(this.value)"
@@ -977,6 +989,68 @@ function setMode(mode) {
     labels.innerHTML     = `<div style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;">${crops}</div>`;
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Acercate y hacé clic en una zona para ver el cultivo óptimo y el ranking de actividades.</div>';
     fetchConeat();
+  }
+}
+
+// ── BÚSQUEDA POR PADRÓN ───────────────────────────────────────────────────────
+let padronLayer = null;
+
+async function buscarPadron() {
+  const num = document.getElementById('padronInput').value.trim();
+  if (!num) return;
+  const status = document.getElementById('padronStatus');
+  status.textContent = 'Buscando…';
+  status.style.color = 'var(--muted)';
+
+  const params = new URLSearchParams({
+    where: `PADRON=${num}`,
+    outFields: 'IND_CONEAT,PADRON,DEPTO,AREAHA',
+    returnGeometry: 'true',
+    outSR: '4326',
+    f: 'json',
+  });
+
+  try {
+    const res  = await fetch(`${DGRN_URL}?${params}`);
+    const data = await res.json();
+    const feat = (data.features || []).find(f => f.geometry && f.geometry.rings);
+
+    if (!feat) {
+      status.textContent = `Padrón ${num} no encontrado.`;
+      status.style.color = 'var(--red)';
+      return;
+    }
+
+    const p = feat.attributes;
+    const geojson = {
+      type: 'Feature',
+      properties: p,
+      geometry: { type: 'Polygon', coordinates: feat.geometry.rings },
+    };
+
+    // Remover capa anterior si existe
+    if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
+
+    padronLayer = L.geoJSON(geojson, {
+      style: {
+        fillColor: coneatColor(p.IND_CONEAT),
+        fillOpacity: 0.85,
+        color: '#1b1b18',
+        weight: 3,
+        dashArray: '6 4',
+      },
+    }).addTo(map);
+
+    map.flyToBounds(padronLayer.getBounds(), { padding: [40, 40], maxZoom: 14 });
+
+    status.textContent = `Padrón ${p.PADRON} · CONEAT ${p.IND_CONEAT} · ${Number(p.AREAHA).toFixed(0)} ha`;
+    status.style.color = 'var(--green)';
+
+    showConeatInfo(p);
+  } catch(e) {
+    status.textContent = 'Error al consultar la API.';
+    status.style.color = 'var(--red)';
+    console.error(e);
   }
 }
 
