@@ -1001,8 +1001,11 @@ async function buscarPadron() {
   status.textContent = 'Buscando…';
   status.style.color = 'var(--muted)';
 
+  const whereClause = selectedDeptFilter
+    ? `PADRON=${num} AND DEPTO='${DEPTO_TO_KEY[selectedDeptFilter]}'`
+    : `PADRON=${num}`;
   const params = new URLSearchParams({
-    where: `PADRON=${num}`,
+    where: whereClause,
     outFields: 'IND_CONEAT,PADRON,DEPTO,AREAHA',
     returnGeometry: 'true',
     outSR: '4326',
