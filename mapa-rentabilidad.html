@@ -203,6 +203,21 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 
   <div class="act-tabs" id="actTabs"></div>
 
+  <!-- Panel costos propios — solo usuarios premium en modo rent -->
+  <div id="costosPropios" style="display:none;margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--surface2);cursor:pointer;" onclick="toggleCostosPanel()">
+      <span style="font-size:0.82rem;font-weight:700;color:var(--text2);">⚙️ Mis costos directos <span style="font-weight:400;color:var(--muted);">(USD/ha)</span></span>
+      <span id="costosPanelToggle" style="font-size:0.75rem;color:var(--muted);font-weight:600;">▼ Editar</span>
+    </div>
+    <div id="costosPanelBody" style="display:none;padding:14px 16px;">
+      <div id="costosGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:14px;"></div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="aplicarCostos()" style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--dark);color:#f7f5f0;cursor:pointer;">Aplicar</button>
+        <button onclick="restaurarCostos()" style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text2);cursor:pointer;">Restaurar defaults</button>
+      </div>
+    </div>
+  </div>
+
   <div class="map-info-wrap">
     <div class="map-wrap">
       <div id="map"></div>
@@ -401,6 +416,66 @@ function calcRent(actKey, deptName) {
   const rent  = gm - arr;
   const yld   = factor * a.yieldBase;
   return { rev, gm, rent, yld, arr };
+}
+
+// ── COSTOS PROPIOS (usuarios premium) ────────────────────────────────────────
+const ACT_DEFAULT_COSTS = Object.fromEntries(Object.entries(ACT).map(([k, a]) => [k, a.cost]));
+
+function buildCostosGrid() {
+  const grid = document.getElementById('costosGrid');
+  if (!grid || grid.children.length) return;
+  Object.entries(ACT).forEach(([key, a]) => {
+    const cell = document.createElement('div');
+    cell.style.cssText = 'display:flex;flex-direction:column;gap:4px;';
+    cell.innerHTML = `
+      <label style="font-size:0.75rem;font-weight:600;color:var(--text2);">${a.icon} ${a.label}</label>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <input id="cost-${key}" type="number" min="0" value="${a.cost}"
+          style="width:90px;padding:5px 8px;font-size:0.82rem;font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);">
+        <span style="font-size:0.72rem;color:var(--muted);">USD/ha</span>
+      </div>
+      <span style="font-size:0.68rem;color:var(--muted);">Default: ${ACT_DEFAULT_COSTS[key]}</span>`;
+    grid.appendChild(cell);
+  });
+}
+
+function toggleCostosPanel() {
+  const body   = document.getElementById('costosPanelBody');
+  const toggle = document.getElementById('costosPanelToggle');
+  const open   = body.style.display === 'none';
+  body.style.display   = open ? 'block' : 'none';
+  toggle.textContent   = open ? '▲ Cerrar' : '▼ Editar';
+  if (open) buildCostosGrid();
+}
+
+function aplicarCostos() {
+  Object.keys(ACT).forEach(key => {
+    const input = document.getElementById('cost-' + key);
+    if (!input) return;
+    const val = parseFloat(input.value);
+    if (!isNaN(val) && val >= 0) ACT[key].cost = val;
+  });
+  Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
+  refreshMapColors();
+  if (selectedDept) showInfo(selectedDept);
+}
+
+function restaurarCostos() {
+  Object.entries(ACT_DEFAULT_COSTS).forEach(([key, cost]) => {
+    ACT[key].cost = cost;
+    const input = document.getElementById('cost-' + key);
+    if (input) input.value = cost;
+  });
+  Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
+  refreshMapColors();
+  if (selectedDept) showInfo(selectedDept);
+}
+
+function checkCostosAccess() {
+  const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+  const panel = document.getElementById('costosPropios');
+  if (!panel) return;
+  panel.style.display = (user && currentMode === 'rent') ? 'block' : 'none';
 }
 
 // ── WEIGHTED RENTABILITY (CONEAT distribution per dept) ─────────────────────
@@ -997,11 +1072,13 @@ function setMode(mode) {
     labels.innerHTML     = '<span>−200</span><span>USD/ha</span><span>+500</span>';
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Elegí una actividad y hacé clic en un departamento para ver la rentabilidad sobre el área viable por CONEAT.</div>';
     refreshMapColors();
+    checkCostosAccess();
 
   } else if (mode === 'coneat') {
     actTabs.style.display = 'none';
     deptWrap.style.display = 'flex';
     padronSearch.style.display = 'flex';
+    document.getElementById('costosPropios').style.display = 'none';
     if (geoLayer) map.removeLayer(geoLayer);
     bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
     bar.style.height     = '14px';
@@ -1013,6 +1090,7 @@ function setMode(mode) {
     actTabs.style.display = 'none';
     deptWrap.style.display = 'flex';
     padronSearch.style.display = 'none';
+    document.getElementById('costosPropios').style.display = 'none';
     if (geoLayer) map.removeLayer(geoLayer);
     const crops = Object.entries(ACT).map(([k,a]) =>
       `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
@@ -1117,6 +1195,14 @@ map.on('moveend', () => {
   } catch(e) { console.warn('coneat-dept-dist.json no disponible:', e); }
   loadMap();
 })();
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init',   () => checkCostosAccess());
+  window.netlifyIdentity.on('login',  () => { window.netlifyIdentity.close(); checkCostosAccess(); });
+  window.netlifyIdentity.on('logout', () => checkCostosAccess());
+}
 </script>
 </body>
 </html>
