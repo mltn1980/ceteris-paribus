@@ -180,6 +180,15 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
     <button class="mode-btn"        id="modeOptim" onclick="setMode('optimo')">🌱 Segmentación productiva</button>
   </div>
 
+  <div id="deptFilterWrap" style="display:none;margin-bottom:14px;align-items:center;gap:10px;flex-wrap:wrap;">
+    <label style="font-size:0.82rem;font-weight:600;color:var(--text2);">Departamento:</label>
+    <select id="deptFilter" onchange="onDeptFilterChange(this.value)"
+      style="padding:6px 12px;font-size:0.82rem;font-family:'IBM Plex Sans',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;">
+      <option value="">Todos los departamentos</option>
+    </select>
+    <span id="deptFilterHint" style="font-size:0.78rem;color:var(--muted);">Filtrá por depto. para ver padrones individuales</span>
+  </div>
+
   <div class="act-tabs" id="actTabs"></div>
 
   <div class="map-info-wrap">
@@ -467,6 +476,8 @@ function rentColor(rent) {
 let map, geoLayer;
 let currentAct = 'ganaderia';
 let selectedDept = null;
+let selectedDeptFilter = '';
+const deptBoundsMap = {};
 
 map = window._lmap = L.map('map', {
   center: [-32.8, -56.2],
@@ -533,12 +544,38 @@ function loadMap() {
   fetch('data/uruguay-departamentos.json')
     .then(r => r.json())
     .then(data => {
+      // Pre-calcular bounds por departamento para el filtro
+      data.features.forEach(f => {
+        const name = f.properties.name;
+        deptBoundsMap[name] = L.geoJSON(f).getBounds();
+      });
+      // Poblar el select
+      const sel = document.getElementById('deptFilter');
+      Object.keys(DEPT).sort().forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        sel.appendChild(opt);
+      });
       geoLayer = L.geoJSON(data, {
         style: deptStyle,
         onEachFeature,
       }).addTo(map);
     })
     .catch(err => console.error('Error cargando GeoJSON:', err));
+}
+
+function onDeptFilterChange(val) {
+  selectedDeptFilter = val;
+  if (val && deptBoundsMap[val]) {
+    map.flyToBounds(deptBoundsMap[val], { padding: [30, 30] });
+  }
+  if (currentMode === 'coneat' || currentMode === 'optimo') {
+    if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
+    clearTimeout(fetchTimer);
+    fetchTimer = setTimeout(fetchConeat, 300);
+  }
+  const hint = document.getElementById('deptFilterHint');
+  if (hint) hint.textContent = val ? 'Clic en un padrón para ver su rentabilidad' : 'Filtrá por depto. para ver padrones individuales';
 }
 
 function updateLegendRange(actKey) {
@@ -774,11 +811,15 @@ async function fetchConeat() {
   loading.style.display = 'block';
 
   const b = map.getBounds();
+  const whereClause = selectedDeptFilter
+    ? `DEPTO='${DEPTO_TO_KEY[selectedDeptFilter]}'`
+    : '1=1';
   const params = new URLSearchParams({
     geometry: `${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`,
     geometryType: 'esriGeometryEnvelope',
     inSR: '4326',
     spatialRel: 'esriSpatialRelIntersects',
+    where: whereClause,
     outFields: 'IND_CONEAT,PADRON,DEPTO,AREAHA',
     returnGeometry: 'true',
     outSR: '4326',
@@ -789,7 +830,7 @@ async function fetchConeat() {
   try {
     const res = await fetch(`${DGRN_URL}?${params}`);
     const data = await res.json();
-    const geojson = {
+    let geojson = {
       type: 'FeatureCollection',
       features: (data.features || []).filter(f => f.geometry && f.geometry.rings).map(f => ({
         type: 'Feature',
@@ -798,33 +839,40 @@ async function fetchConeat() {
       }))
     };
 
-    // Según modo: disolver por CONEAT o por cultivo óptimo
-    const isOptimo = currentMode === 'optimo';
+    // Si hay depto. filtrado: mostrar padrones individuales sin disolver
+    // Si no: disolver por CONEAT o cultivo óptimo para mejor performance
+    const isOptimo     = currentMode === 'optimo';
+    const showPadrones = !!selectedDeptFilter;
 
-    if (isOptimo) {
-      geojson.features.forEach(f => {
-        const idx   = f.properties.IND_CONEAT;
-        const depto = normDepto(f.properties.DEPTO);
-        const opt   = optimalCrop(idx, depto);
-        f.properties._optKey = opt ? opt.key : '__none__';
-      });
-    }
-
-    let dissolved;
-    try {
-      dissolved = turf.dissolve(geojson, { propertyName: isOptimo ? '_optKey' : 'IND_CONEAT' });
-    } catch(e) {
-      dissolved = geojson;
+    if (!showPadrones) {
+      if (isOptimo) {
+        geojson.features.forEach(f => {
+          const idx   = f.properties.IND_CONEAT;
+          const depto = normDepto(f.properties.DEPTO);
+          const opt   = optimalCrop(idx, depto);
+          f.properties._optKey = opt ? opt.key : '__none__';
+        });
+      }
+      try {
+        geojson = turf.dissolve(geojson, { propertyName: isOptimo ? '_optKey' : 'IND_CONEAT' });
+      } catch(e) {}
     }
 
     if (coneatLayer) map.removeLayer(coneatLayer);
-    coneatLayer = L.geoJSON(dissolved, {
+    coneatLayer = L.geoJSON(geojson, {
       style: f => {
         const p = f.properties;
-        const color = isOptimo
-          ? (p._optKey && ACT[p._optKey] ? ACT[p._optKey].color : '#c8c4bc')
-          : coneatColor(p.IND_CONEAT);
-        return { fillColor: color, weight: 0.8, color: 'rgba(60,60,60,0.3)', fillOpacity: 0.80 };
+        let color;
+        if (isOptimo && !showPadrones) {
+          color = (p._optKey && ACT[p._optKey]) ? ACT[p._optKey].color : '#c8c4bc';
+        } else if (isOptimo && showPadrones) {
+          const depto = normDepto(p.DEPTO);
+          const opt   = optimalCrop(p.IND_CONEAT, depto);
+          color = (opt && ACT[opt.key]) ? ACT[opt.key].color : '#c8c4bc';
+        } else {
+          color = coneatColor(p.IND_CONEAT);
+        }
+        return { fillColor: color, weight: showPadrones ? 0.5 : 0.8, color: 'rgba(60,60,60,0.3)', fillOpacity: 0.80 };
       },
       onEachFeature: (f, layer) => {
         layer.on({
@@ -841,23 +889,45 @@ async function fetchConeat() {
 }
 
 function showConeatInfo(p) {
-  const idx = p.IND_CONEAT;
+  const idx   = p.IND_CONEAT;
+  const depto = normDepto(p.DEPTO) || p.DEPTO || '—';
   const color = coneatColor(idx);
   const label = idx < 60 ? 'Baja productividad' : idx < 100 ? 'Productividad media-baja' : idx < 130 ? 'Productividad media-alta' : 'Alta productividad';
-  document.getElementById('infoPanel').innerHTML = `
-    <h3>Índice CONEAT ${idx ?? '—'}</h3>
+
+  // Ranking de rentabilidad por actividad para este CONEAT
+  const rows = Object.entries(ACT).map(([key]) => {
+    const res = calcRentByCONEAT(key, idx, normDepto(p.DEPTO));
+    return { key, a: ACT[key], res };
+  }).sort((x, y) => ((y.res?.rent ?? -9999) - (x.res?.rent ?? -9999)));
+  const opt = rows.find(r => r.res);
+
+  let html = `
+    <h3>${p.PADRON ? 'Padrón ' + p.PADRON : 'CONEAT ' + (idx ?? '—')}</h3>
     <span class="coneat-badge" style="background:${color}22;color:${color};border:1px solid ${color}44;">${label}</span>
-    <div class="dept-stats" style="margin-top:12px;">
+    <div class="dept-stats" style="margin-top:10px;">
+      ${p.PADRON ? `<div class="dept-stat"><label>Padrón</label><value>${p.PADRON}</value></div>` : ''}
+      <div class="dept-stat"><label>Departamento</label><value>${depto}</value></div>
       <div class="dept-stat"><label>Índice CONEAT</label><value>${idx ?? '—'}</value></div>
-      <div class="dept-stat"><label>vs. referencia (100)</label><value>${idx ? (idx > 100 ? '+' : '') + (idx - 100).toFixed(0) : '—'}</value></div>
-      <div class="dept-stat"><label>Productividad relativa</label><value>${idx ? (idx).toFixed(0) + '%' : '—'}</value></div>
+      ${p.AREAHA ? `<div class="dept-stat"><label>Área</label><value>${Number(p.AREAHA).toFixed(0)} ha</value></div>` : ''}
+      <div class="dept-stat"><label>Productividad relativa</label><value>${idx ? idx.toFixed(0) + '%' : '—'}</value></div>
+      ${opt ? `<div class="dept-stat"><label>Mejor actividad</label><value>${opt.a.icon} ${opt.a.label}</value></div>` : ''}
     </div>
-    <div class="section-title" style="margin-top:14px;">¿Qué significa?</div>
-    <p style="font-size:0.80rem;color:var(--muted);line-height:1.6;">
-      CONEAT 100 = productividad ganadera de referencia nacional.<br>
-      Un índice de <strong style="color:var(--text);">${idx}</strong> implica que este suelo produce el <strong style="color:var(--text);">${idx}%</strong> de la productividad de referencia. Valores > 100 indican mayor potencial productivo.
-    </p>
-  `;
+    <div class="section-title" style="margin-top:12px;">Rentabilidad por actividad</div>`;
+
+  const viables = rows.filter(r => r.res);
+  if (viables.length === 0) {
+    html += `<p style="font-size:0.80rem;color:var(--muted);margin-top:8px;">Sin actividades viables para CONEAT ${idx}.</p>`;
+  } else {
+    for (const { key, a, res } of viables) {
+      const cls  = res.rent >= 0 ? 'pos' : 'neg';
+      const sign = res.rent >= 0 ? '+' : '';
+      html += `<div class="activity-row${key === opt?.key ? ' highlighted' : ''}">
+        <div class="act-name">${a.icon} ${a.label}</div>
+        <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)} USD/ha</span>
+      </div>`;
+    }
+  }
+  document.getElementById('infoPanel').innerHTML = html;
 }
 
 function setMode(mode) {
@@ -866,13 +936,15 @@ function setMode(mode) {
   document.getElementById('modeCon')  .classList.toggle('active', mode === 'coneat');
   document.getElementById('modeOptim').classList.toggle('active', mode === 'optimo');
 
-  const actTabs = document.getElementById('actTabs');
-  const hint    = document.getElementById('zoomHint');
-  const bar     = document.getElementById('legendBar');
-  const labels  = document.getElementById('legendLabels');
+  const actTabs   = document.getElementById('actTabs');
+  const hint      = document.getElementById('zoomHint');
+  const bar       = document.getElementById('legendBar');
+  const labels    = document.getElementById('legendLabels');
+  const deptWrap  = document.getElementById('deptFilterWrap');
 
   if (mode === 'rent') {
     actTabs.style.display = '';
+    deptWrap.style.display = 'none';
     hint.style.display = 'none';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     if (geoLayer) map.addLayer(geoLayer);
@@ -884,6 +956,7 @@ function setMode(mode) {
 
   } else if (mode === 'coneat') {
     actTabs.style.display = 'none';
+    deptWrap.style.display = 'flex';
     if (geoLayer) map.removeLayer(geoLayer);
     bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
     bar.style.height     = '14px';
@@ -893,6 +966,7 @@ function setMode(mode) {
 
   } else if (mode === 'optimo') {
     actTabs.style.display = 'none';
+    deptWrap.style.display = 'flex';
     if (geoLayer) map.removeLayer(geoLayer);
     const crops = Object.entries(ACT).map(([k,a]) =>
       `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
