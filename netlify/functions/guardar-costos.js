@@ -3,7 +3,10 @@ const https = require('https');
 function supabaseInsert(url, key, row) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify(row);
-    const parsed = new URL(url + '/rest/v1/costos_usuarios');
+    const baseUrl = url.replace(/\/+$/, '');
+    const fullUrl = baseUrl + '/rest/v1/costos_usuarios';
+    console.log('Supabase URL:', fullUrl);
+    const parsed = new URL(fullUrl);
     const options = {
       hostname: parsed.hostname,
       path: parsed.pathname,
