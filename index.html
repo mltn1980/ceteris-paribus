@@ -295,9 +295,41 @@ const PRECIP_URLS = {
   3: 'https://www.inumet.gub.uy/sites/default/files/mapas-precipitacion/2026/acumulado_marzo_2026.png',
 };
 const PRECIP_DATA = {
+  1: [
+    { est: 'Colonia',        mm:  20.1, anom: -80.2 },
+    { est: 'Young',          mm:  31.5, anom: -77.2 },
+    { est: 'Paysandú',       mm:  35.5, anom: -68.4 },
+    { est: 'Durazno',        mm:  57.3, anom: -46.1 },
+    { est: 'Trinidad',       mm:  48.3, anom: -56.2 },
+    { est: 'Salto',          mm: 128.0, anom: -59.9 },
+    { est: 'Rocha',          mm:  61.5, anom: -38.0 },
+    { est: 'Treinta y Tres', mm:  70.1, anom: -36.2 },
+    { est: 'Melo',           mm:  86.3, anom:  -6.0 },
+    { est: 'Mercedes',       mm:  90.2, anom: -23.3 },
+    { est: 'Prado',          mm:  91.1, anom:  -1.8 },
+    { est: 'Melilla',        mm:  98.6, anom:   4.9 },
+    { est: 'Artigas',        mm: 110.6, anom: -22.5 },
+    { est: 'Carrasco',       mm: 122.5, anom:  30.2 },
+  ],
+  2: [
+    { est: 'Carrasco',       mm:  18.3, anom: -81.0 },
+    { est: 'Melo',           mm:  33.6, anom: -77.0 },
+    { est: 'Rocha',          mm:  44.3, anom: -61.6 },
+    { est: 'Mercedes',       mm:  46.5, anom: -66.7 },
+    { est: 'Trinidad',       mm:  71.5, anom: -49.1 },
+    { est: 'Treinta y Tres', mm:  50.1, anom: -63.9 },
+    { est: 'Melilla',        mm:  57.1, anom: -45.3 },
+    { est: 'Prado',          mm:  65.5, anom: -31.4 },
+    { est: 'Durazno',        mm:  76.7, anom: -44.0 },
+    { est: 'Young',          mm:  80.8, anom: -43.7 },
+    { est: 'Colonia',        mm:  80.1, anom: -34.7 },
+    { est: 'Paysandú',       mm:  91.6, anom: -34.2 },
+    { est: 'Artigas',        mm: 139.7, anom: -10.9 },
+    { est: 'Salto',          mm: 141.5, anom:   1.8 },
+  ],
   3: [
-    { est: 'Artigas',        mm: 46.4,  anom: -67.2 },
-    { est: 'Young',          mm: 72.0,  anom: -45.1 },
+    { est: 'Artigas',        mm:  46.4, anom: -67.2 },
+    { est: 'Young',          mm:  72.0, anom: -45.1 },
     { est: 'Salto',          mm: 107.4, anom: -27.7 },
     { est: 'Colonia',        mm: 109.9, anom: -19.0 },
     { est: 'Paysandú',       mm: 117.9, anom: -13.5 },
@@ -310,7 +342,7 @@ const PRECIP_DATA = {
     { est: 'Mercedes',       mm: 176.0, anom:  28.2 },
     { est: 'Durazno',        mm: 200.9, anom:  82.5 },
     { est: 'Melo',           mm: 241.4, anom: 134.3 },
-  ]
+  ],
 };
 function anomColorPrecip(a) {
   if (a <= -45) return '#b91c1c';
