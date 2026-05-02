@@ -448,7 +448,44 @@ function toggleCostosPanel() {
   if (open) buildCostosGrid();
 }
 
-function aplicarCostos() {
+async function guardarCostosUsuario(costos) {
+  const nid  = window.netlifyIdentity;
+  const user = nid && nid.currentUser && nid.currentUser();
+  if (!user) return;
+  try {
+    const token = await user.jwt();
+    await fetch('/.netlify/identity/user', {
+      method: 'PUT',
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: { costos } }),
+    });
+  } catch(e) { console.warn('No se pudieron guardar los costos:', e); }
+}
+
+function cargarCostosUsuario(user) {
+  const costos = user?.user_metadata?.costos;
+  if (!costos) return;
+  Object.entries(costos).forEach(([key, val]) => {
+    if (ACT[key] && val >= 0) ACT[key].cost = val;
+  });
+  Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
+  // Actualizar inputs si el panel ya está abierto
+  Object.entries(costos).forEach(([key, val]) => {
+    const input = document.getElementById('cost-' + key);
+    if (input) input.value = val;
+  });
+}
+
+function setCostosStatus(msg, ok) {
+  const btn = document.querySelector('#costosPanelBody button');
+  if (!btn) return;
+  const prev = btn.textContent;
+  btn.textContent = msg;
+  btn.style.background = ok ? 'var(--green)' : 'var(--red)';
+  setTimeout(() => { btn.textContent = prev; btn.style.background = 'var(--dark)'; }, 2000);
+}
+
+async function aplicarCostos() {
   Object.keys(ACT).forEach(key => {
     const input = document.getElementById('cost-' + key);
     if (!input) return;
@@ -458,9 +495,17 @@ function aplicarCostos() {
   Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
   refreshMapColors();
   if (selectedDept) showInfo(selectedDept);
+
+  const costos = Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].cost]));
+  try {
+    await guardarCostosUsuario(costos);
+    setCostosStatus('✓ Guardado', true);
+  } catch(e) {
+    setCostosStatus('Error al guardar', false);
+  }
 }
 
-function restaurarCostos() {
+async function restaurarCostos() {
   Object.entries(ACT_DEFAULT_COSTS).forEach(([key, cost]) => {
     ACT[key].cost = cost;
     const input = document.getElementById('cost-' + key);
@@ -469,6 +514,9 @@ function restaurarCostos() {
   Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
   refreshMapColors();
   if (selectedDept) showInfo(selectedDept);
+
+  const costos = Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].cost]));
+  await guardarCostosUsuario(costos);
 }
 
 function checkCostosAccess() {
@@ -1199,9 +1247,9 @@ map.on('moveend', () => {
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
 if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init',   () => checkCostosAccess());
-  window.netlifyIdentity.on('login',  () => { window.netlifyIdentity.close(); checkCostosAccess(); });
-  window.netlifyIdentity.on('logout', () => checkCostosAccess());
+  window.netlifyIdentity.on('init',  user => { checkCostosAccess(); if (user) cargarCostosUsuario(user); });
+  window.netlifyIdentity.on('login', user => { window.netlifyIdentity.close(); checkCostosAccess(); cargarCostosUsuario(user); });
+  window.netlifyIdentity.on('logout',      () => { checkCostosAccess(); Object.entries(ACT_DEFAULT_COSTS).forEach(([k,v]) => ACT[k].cost = v); Object.keys(_rentCache).forEach(k => delete _rentCache[k]); refreshMapColors(); });
 }
 </script>
 </body>
