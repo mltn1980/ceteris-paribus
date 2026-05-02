@@ -207,7 +207,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
     <div class="map-wrap">
       <div id="map"></div>
       <div id="deptLabel" style="position:absolute;z-index:600;pointer-events:none;display:none;background:rgba(27,27,24,0.82);color:#f7f5f0;font-family:'IBM Plex Sans',sans-serif;font-size:0.80rem;font-weight:600;padding:4px 10px;border-radius:6px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.20);"></div>
-      <div class="zoom-hint" id="zoomHint">Acercate al mapa para ver<br>los índices CONEAT por padrón</div>
+
       <div class="map-loading" id="mapLoading">Cargando polígonos…</div>
       <div class="legend-box" id="legendBox">
         <div class="legend-bar" id="legendBar"></div>
@@ -811,15 +811,12 @@ function coneatColor(idx) {
 async function fetchConeat() {
   if (currentMode !== 'coneat' && currentMode !== 'optimo') return;
   const zoom = map.getZoom();
-  const hint = document.getElementById('zoomHint');
   const loading = document.getElementById('mapLoading');
 
   if (zoom < CONEAT_MIN_ZOOM) {
-    hint.style.display = 'block';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     return;
   }
-  hint.style.display = 'none';
   loading.style.display = 'block';
 
   const b = map.getBounds();
@@ -949,7 +946,6 @@ function setMode(mode) {
   document.getElementById('modeOptim').classList.toggle('active', mode === 'optimo');
 
   const actTabs      = document.getElementById('actTabs');
-  const hint         = document.getElementById('zoomHint');
   const bar          = document.getElementById('legendBar');
   const labels       = document.getElementById('legendLabels');
   const deptWrap     = document.getElementById('deptFilterWrap');
@@ -959,7 +955,6 @@ function setMode(mode) {
     actTabs.style.display = '';
     deptWrap.style.display = 'none';
     padronSearch.style.display = 'none';
-    hint.style.display = 'none';
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     if (geoLayer) map.addLayer(geoLayer);
     bar.style.background = 'linear-gradient(to right,#8c3030,#c45050,#e8b040,#5a9e6a,#2a7235)';
