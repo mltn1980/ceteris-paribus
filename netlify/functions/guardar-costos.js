@@ -4,7 +4,7 @@ function supabaseInsert(url, key, row) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify(row);
     const baseUrl = url.replace(/\/+$/, '').replace(/\/rest\/v1$/, '');
-    const fullUrl = baseUrl + '/rest/v1/costos_usuarios';
+    const fullUrl = baseUrl + '/rest/v1/costos_usuarios?on_conflict=user_id';
     console.log('Supabase URL:', fullUrl);
     const parsed = new URL(fullUrl);
     const options = {
