@@ -938,8 +938,23 @@ function showConeatInfo(p) {
       <div class="dept-stat"><label>Índice CONEAT</label><value>${idx ?? '—'}</value></div>
       ${p.AREAHA ? `<div class="dept-stat"><label>Área</label><value>${Number(p.AREAHA).toFixed(0)} ha</value></div>` : ''}
       <div class="dept-stat"><label>Productividad relativa</label><value>${idx ? idx.toFixed(0) + '%' : '—'}</value></div>
-      ${opt ? `<div class="dept-stat"><label>Mejor actividad</label><value>${opt.a.icon} ${opt.a.label}</value></div>` : ''}
     </div>
+
+    ${idx ? `
+    <div style="background:var(--green-l);border:1px solid #b0d4b7;border-radius:10px;padding:12px 14px;margin-top:12px;">
+      <div style="font-size:0.70rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--green);margin-bottom:8px;">🐄 Producción ganadera estimada</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+        <span style="font-size:0.82rem;color:var(--text2);">Producción / ha</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1rem;color:var(--green);">${(idx).toFixed(0)} kg PV/ha</span>
+      </div>
+      ${p.AREAHA ? `
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+        <span style="font-size:0.82rem;color:var(--text2);">Producción total del padrón</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:0.92rem;color:var(--green);">${Math.round(idx * Number(p.AREAHA)).toLocaleString()} kg PV</span>
+      </div>` : ''}
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:6px;border-top:1px solid #b0d4b7;padding-top:6px;">Base: CONEAT 100 = 100 kg PV/ha · Precio ref.: USD 2.80/kg PV (INAC)</div>
+    </div>` : ''}
+
     <div class="section-title" style="margin-top:12px;">Rentabilidad por actividad</div>`;
 
   const viables = rows.filter(r => r.res);
