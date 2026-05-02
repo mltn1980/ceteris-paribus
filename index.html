@@ -990,12 +990,20 @@ window.addEventListener('resize',adjustHeaderOffset);
         
         <!-- PESTAÑA: TIERRAS -->
         <div class="ganaderia-content" data-ganaderia="tierras" style="padding:20px;">
-            <div style="text-align:center;padding:48px 20px;max-width:420px;margin:0 auto;">
+            <!-- Gate: se muestra si no hay sesión -->
+            <div id="tierras-gate" style="text-align:center;padding:48px 20px;max-width:420px;margin:0 auto;">
                 <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
                 <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
                 <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El dashboard de precios y transacciones de tierras está disponible para usuarios con acceso. Iniciá sesión para continuar.</p>
                 <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;margin-bottom:12px;cursor:pointer;font-family:inherit;">Iniciá sesión →</button>
                 <div style="font-size:0.72rem;color:var(--text2);margin-top:8px;">Sin acceso aún? <a href="mailto:contacto@ceterisparibus-uy.com" style="color:var(--red);font-weight:600;">Solicitalo acá</a></div>
+            </div>
+            <!-- Contenido: se muestra si hay sesión activa -->
+            <div id="tierras-content" style="display:none;text-align:center;padding:40px 20px;">
+                <div style="font-size:3rem;margin-bottom:16px;">🗺️</div>
+                <h3 style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--text);margin-bottom:12px;">Mapa de Tierras — Uruguay</h3>
+                <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;">Dashboard interactivo de precios y transacciones de tierras.</p>
+                <a href="uruguay_mapa_final.html" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:var(--red);color:white;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;">Acceder al Dashboard →</a>
             </div>
         </div>
     </div>
@@ -2852,6 +2860,26 @@ window.addEventListener('resize',adjustHeaderOffset);
 <!-- SCRIPTS EXTERNOS (modularizados) -->
 <!-- ========================================== -->
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+function checkTierrasAccess() {
+  const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+  const gate = document.getElementById('tierras-gate');
+  const content = document.getElementById('tierras-content');
+  if (!gate || !content) return;
+  if (user) {
+    gate.style.display = 'none';
+    content.style.display = 'block';
+  } else {
+    gate.style.display = 'block';
+    content.style.display = 'none';
+  }
+}
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('login', () => { window.netlifyIdentity.close(); checkTierrasAccess(); });
+  window.netlifyIdentity.on('logout', checkTierrasAccess);
+  window.netlifyIdentity.on('init', checkTierrasAccess);
+}
+</script>
 <script src="scripts/navigation.js" defer></script>
 <script src="scripts/tabs.js" defer></script>
 <script src="scripts/data-loader.js" defer></script>
