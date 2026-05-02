@@ -829,6 +829,7 @@ function coneatColor(idx) {
 
 async function fetchConeat() {
   if (currentMode !== 'coneat' && currentMode !== 'optimo') return;
+  if (currentMode === 'optimo' && !selectedDeptFilter) return;
   const zoom = map.getZoom();
   const loading = document.getElementById('mapLoading');
 
@@ -1020,8 +1021,12 @@ function setMode(mode) {
     bar.style.background = 'none';
     bar.style.height     = '0';
     labels.innerHTML     = `<div style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;">${crops}</div>`;
-    document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Acercate y hacé clic en una zona para ver el cultivo óptimo y el ranking de actividades.</div>';
-    fetchConeat();
+    if (selectedDeptFilter) {
+      document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Hacé clic en una zona para ver el cultivo óptimo y el ranking de actividades.</div>';
+      fetchConeat();
+    } else {
+      document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Seleccioná un departamento para cargar los padrones.</div>';
+    }
   }
 }
 
