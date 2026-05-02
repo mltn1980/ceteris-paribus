@@ -9,7 +9,7 @@ function supabaseInsert(url, key, row) {
     const parsed = new URL(fullUrl);
     const options = {
       hostname: parsed.hostname,
-      path: parsed.pathname,
+      path: parsed.pathname + parsed.search,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
