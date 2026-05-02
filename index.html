@@ -993,13 +993,23 @@ window.addEventListener('resize',adjustHeaderOffset);
         
         <!-- PESTAÑA: TIERRAS -->
         <div class="ganaderia-content" data-ganaderia="tierras" style="padding:20px;">
-            <!-- Gate: se muestra si no hay sesión -->
-            <div id="tierras-gate" style="text-align:center;padding:48px 20px;max-width:420px;margin:0 auto;">
-                <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
-                <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
-                <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El dashboard de precios y transacciones de tierras está disponible para usuarios con acceso. Iniciá sesión para continuar.</p>
-                <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;margin-bottom:12px;cursor:pointer;font-family:inherit;">Iniciá sesión →</button>
-                <div style="font-size:0.72rem;color:var(--text2);margin-top:8px;">Sin acceso aún? <a href="mailto:contacto@ceterisparibus-uy.com" style="color:var(--red);font-weight:600;">Solicitalo acá</a></div>
+            <!-- Gate: se muestra si no hay sesión o no es premium -->
+            <div id="tierras-gate" style="text-align:center;padding:48px 20px;max-width:440px;margin:0 auto;">
+                <!-- Estado 1: no logueado -->
+                <div id="tierras-gate-anon">
+                    <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
+                    <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
+                    <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El dashboard de precios y transacciones de tierras está disponible para suscriptores. Creá tu cuenta para suscribirte.</p>
+                    <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:inherit;">Crear cuenta / Iniciar sesión →</button>
+                </div>
+                <!-- Estado 2: logueado sin suscripción -->
+                <div id="tierras-gate-sub" style="display:none;">
+                    <div style="font-size:2.4rem;margin-bottom:14px;">⭐</div>
+                    <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Suscribite para acceder</h3>
+                    <p style="font-size:0.85rem;color:var(--text2);margin-bottom:8px;line-height:1.6;">Accedé al dashboard de tierras, mapa de rentabilidad, calculadoras y más.</p>
+                    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:24px;">Suscripción mensual · Cancelás cuando quieras</p>
+                    <a id="tierras-mp-btn" href="#" target="_blank" style="display:inline-block;background:var(--green);color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.92rem;">Suscribirme →</a>
+                </div>
             </div>
             <!-- Contenido: se muestra si hay sesión activa -->
             <div id="tierras-content" style="display:none;text-align:center;padding:40px 20px;">
@@ -1012,13 +1022,23 @@ window.addEventListener('resize',adjustHeaderOffset);
 
         <!-- PESTAÑA: RENTABILIDAD -->
         <div class="ganaderia-content" data-ganaderia="rentabilidad" style="padding:20px;display:none;">
-            <!-- Gate: se muestra si no hay sesión -->
-            <div id="rentabilidad-gate" style="text-align:center;padding:48px 20px;max-width:420px;margin:0 auto;">
-                <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
-                <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
-                <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El mapa de rentabilidad agropecuaria está disponible para usuarios con acceso. Iniciá sesión para continuar.</p>
-                <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;margin-bottom:12px;cursor:pointer;font-family:inherit;">Iniciá sesión →</button>
-                <div style="font-size:0.72rem;color:var(--text2);margin-top:8px;">Sin acceso aún? <a href="mailto:contacto@ceterisparibus-uy.com" style="color:var(--red);font-weight:600;">Solicitalo acá</a></div>
+            <!-- Gate: se muestra si no hay sesión o no es premium -->
+            <div id="rentabilidad-gate" style="text-align:center;padding:48px 20px;max-width:440px;margin:0 auto;">
+                <!-- Estado 1: no logueado -->
+                <div id="rentabilidad-gate-anon">
+                    <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
+                    <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
+                    <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El mapa de rentabilidad agropecuaria está disponible para suscriptores. Creá tu cuenta para suscribirte.</p>
+                    <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:inherit;">Crear cuenta / Iniciar sesión →</button>
+                </div>
+                <!-- Estado 2: logueado sin suscripción -->
+                <div id="rentabilidad-gate-sub" style="display:none;">
+                    <div style="font-size:2.4rem;margin-bottom:14px;">⭐</div>
+                    <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Suscribite para acceder</h3>
+                    <p style="font-size:0.85rem;color:var(--text2);margin-bottom:8px;line-height:1.6;">Accedé al mapa de rentabilidad, dashboard de tierras, calculadoras y más.</p>
+                    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:24px;">Suscripción mensual · Cancelás cuando quieras</p>
+                    <a id="rentabilidad-mp-btn" href="#" target="_blank" style="display:inline-block;background:var(--green);color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.92rem;">Suscribirme →</a>
+                </div>
             </div>
             <!-- Contenido: se muestra si hay sesión activa -->
             <div id="rentabilidad-content" style="display:none;text-align:center;padding:40px 20px;">
@@ -2883,31 +2903,47 @@ window.addEventListener('resize',adjustHeaderOffset);
 <!-- ========================================== -->
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-function checkTierrasAccess() {
-  const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
-  const gate = document.getElementById('tierras-gate');
-  const content = document.getElementById('tierras-content');
+const MP_CHECKOUT = 'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=bb76344bc4194d4a952d7cef3c70d7d4';
+
+function isPremium(user) {
+  return !!(user && user.user_metadata && user.user_metadata.premium === true);
+}
+
+function mpUrl(user) {
+  return user ? MP_CHECKOUT + '&payer_email=' + encodeURIComponent(user.email) : MP_CHECKOUT;
+}
+
+function setGateState(prefix, user) {
+  const gate    = document.getElementById(prefix + '-gate');
+  const content = document.getElementById(prefix + '-content');
+  const anon    = document.getElementById(prefix + '-gate-anon');
+  const sub     = document.getElementById(prefix + '-gate-sub');
+  const btn     = document.getElementById(prefix + '-mp-btn');
   if (!gate || !content) return;
-  if (user) {
-    gate.style.display = 'none';
+  if (isPremium(user)) {
+    gate.style.display    = 'none';
     content.style.display = 'block';
   } else {
-    gate.style.display = 'block';
+    gate.style.display    = 'block';
     content.style.display = 'none';
+    if (user) {
+      anon.style.display = 'none';
+      sub.style.display  = 'block';
+      if (btn) btn.href  = mpUrl(user);
+    } else {
+      anon.style.display = 'block';
+      sub.style.display  = 'none';
+    }
   }
+}
+
+function checkTierrasAccess() {
+  const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+  setGateState('tierras', user);
 }
 function checkRentabilidadAccess() {
   const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
-  const gate = document.getElementById('rentabilidad-gate');
-  const content = document.getElementById('rentabilidad-content');
-  if (!gate || !content) return;
-  if (user) {
-    gate.style.display = 'none';
-    content.style.display = 'block';
-  } else {
-    gate.style.display = 'block';
-    content.style.display = 'none';
-  }
+  setGateState('rentabilidad', user);
 }
 if (window.netlifyIdentity) {
   window.netlifyIdentity.on('login', () => { window.netlifyIdentity.close(); checkTierrasAccess(); checkRentabilidadAccess(); });
