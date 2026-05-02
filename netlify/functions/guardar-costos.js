@@ -16,7 +16,7 @@ function supabaseInsert(url, key, row) {
         'Content-Length': Buffer.byteLength(body),
         'apikey': key,
         'Authorization': 'Bearer ' + key,
-        'Prefer': 'return=minimal',
+        'Prefer': 'resolution=merge-duplicates,return=minimal',
       },
     };
     const req = https.request(options, res => {
