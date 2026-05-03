@@ -2906,7 +2906,10 @@ window.addEventListener('resize',adjustHeaderOffset);
 const MP_CHECKOUT = 'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=bb76344bc4194d4a952d7cef3c70d7d4';
 
 function isPremium(user) {
-  return !!(user && user.user_metadata && user.user_metadata.premium === true);
+  if (!user) return false;
+  const roles = user.app_metadata && user.app_metadata.roles || [];
+  const metaPremium = user.user_metadata && user.user_metadata.premium === true;
+  return roles.includes('premium') || metaPremium;
 }
 
 function mpUrl(user) {
