@@ -628,7 +628,7 @@ function calcWeightedRent(deptName, actKey) {
     gm:   wGm   / viableArea,
     viableArea,
     totalArea,
-    viablePct: viableArea / totalArea * 100,
+    viablePct: viableArea / (censoData?.[deptName]?.total_explotado || totalArea) * 100,
   });
 }
 
