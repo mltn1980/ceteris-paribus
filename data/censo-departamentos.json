@@ -1,4 +1,117 @@
 {
+  "Artigas": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 80",
+    "total_explotado": 1110432,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 954949 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 75584 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 50733 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 15951 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 553 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 14 }
+    }
+  },
+  "Canelones": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 81",
+    "total_explotado": 348061,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 192222 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 30127 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 25253 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 20178 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 5106 }
+    }
+  },
+  "Cerro Largo": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 82",
+    "total_explotado": 1291250,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 980811 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 144768 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 88537 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 52255 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 11013 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 3861 }
+    }
+  },
+  "Colonia": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 83",
+    "total_explotado": 580440,
+    "categorias": {
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 268355 },
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 174629 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 113486 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 1675 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 1643 }
+    }
+  },
+  "Durazno": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 84",
+    "total_explotado": 1028630,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 845876 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 104403 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 28885 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 27408 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 9403 }
+    }
+  },
+  "Flores": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 85",
+    "total_explotado": 440217,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 333639 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 81971 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 15796 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 3121 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 2874 }
+    }
+  },
+  "Florida": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 86",
+    "total_explotado": 1090248,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 726115 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 145126 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 144424 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 50942 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 6205 }
+    }
+  },
+  "Lavalleja": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 87",
+    "total_explotado": 903178,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 739080 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 91762 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 22418 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 14251 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 12601 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 5012 }
+    }
+  },
+  "Maldonado": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 88",
+    "total_explotado": 375654,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 305560 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 23690 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 6922 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 6414 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 5285 }
+    }
+  },
+  "Montevideo": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 89",
+    "total_explotado": 13428,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 1883 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 651 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 344 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 343 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 44 }
+    }
+  },
   "Paysandú": {
     "fuente": "Censo General Agropecuario 2024, Cuadro 90",
     "total_explotado": 1177006,
@@ -8,6 +121,99 @@
       "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 76765 },
       "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 34772 },
       "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 20844 }
+    }
+  },
+  "Río Negro": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 91",
+    "total_explotado": 1055720,
+    "categorias": {
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 377124 },
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 412533 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 227380 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 25132 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 2699 }
+    }
+  },
+  "Rivera": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 92",
+    "total_explotado": 915221,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 593412 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 272871 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 16089 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 8195 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 5623 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 4276 }
+    }
+  },
+  "Rocha": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 93",
+    "total_explotado": 951194,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 753981 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 83356 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 68288 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 22382 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 8818 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 5567 }
+    }
+  },
+  "Salto": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 94",
+    "total_explotado": 1288846,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 1111025 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 57434 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 38348 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 34614 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 9783 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 1178 }
+    }
+  },
+  "San José": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 95",
+    "total_explotado": 461049,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 184762 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 130570 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 103783 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 5729 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 2391 }
+    }
+  },
+  "Soriano": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 96",
+    "total_explotado": 881237,
+    "categorias": {
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 505646 },
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 328605 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 32303 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 3032 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 1674 }
+    }
+  },
+  "Tacuarembó": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 97",
+    "total_explotado": 1411815,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 1157523 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 165885 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 48676 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 14438 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 9196 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 3807 }
+    }
+  },
+  "Treinta y Tres": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 98",
+    "total_explotado": 824123,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 636874 },
+      "arroz":           { "label": "Arroz", "icon": "🍚", "color": "#1b5e85", "ha": 90179 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 51810 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 7323 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 3295 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 1552 }
     }
   }
 }
