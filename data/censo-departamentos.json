@@ -1,0 +1,13 @@
+{
+  "Paysandú": {
+    "fuente": "Censo General Agropecuario 2024, Cuadro 90",
+    "total_explotado": 1177006,
+    "categorias": {
+      "ganaderia_carne": { "label": "Ganadería vacuna", "icon": "🐄", "color": "#2a7235", "ha": 862926 },
+      "cultivos":        { "label": "Cultivos", "icon": "🌾", "color": "#a07418", "ha": 160570 },
+      "forestacion":     { "label": "Forestación", "icon": "🌲", "color": "#4a7a4a", "ha": 76765 },
+      "ovinos":          { "label": "Ovinos", "icon": "🐑", "color": "#8b7355", "ha": 34772 },
+      "lecheria":        { "label": "Lechería", "icon": "🥛", "color": "#4a7ab8", "ha": 20844 }
+    }
+  }
+}

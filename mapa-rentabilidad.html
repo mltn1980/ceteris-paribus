@@ -566,6 +566,16 @@ const DEPTO_TO_KEY = {
   'Soriano':'SORIANO','Tacuarembó':'TACUAREMBO','Treinta y Tres':'TREINTA Y TRES',
 };
 
+// Área total real de cada departamento en ha (INE / DINAMA)
+const DEPTO_HA_TOTAL = {
+  'Artigas':1190400,'Canelones':450400,'Cerro Largo':1395400,
+  'Colonia':608400,'Durazno':1185300,'Flores':504600,'Florida':1007800,
+  'Lavalleja':1038600,'Maldonado':484700,'Montevideo':53000,
+  'Paysandú':1392200,'Río Negro':908800,'Rivera':924400,
+  'Rocha':1084500,'Salto':1428400,'San José':490300,
+  'Soriano':906600,'Tacuarembó':1598000,'Treinta y Tres':937200,
+};
+
 const _rentCache = {};
 
 // Carga precios desde data/precios.json y actualiza ACT dinámicamente
@@ -884,7 +894,39 @@ function showInfo(deptName) {
   }
 
   html += buildBreakdownHtml(deptName);
+  html += buildCensoHtml(deptName);
   document.getElementById('infoPanel').innerHTML = html;
+}
+
+function buildCensoHtml(deptName) {
+  if (!censoData || !censoData[deptName]) return '';
+  const censo = censoData[deptName];
+  const total = censo.total_explotado;
+  const cats = Object.values(censo.categorias).sort((a, b) => b.ha - a.ha);
+
+  let html = `<div class="section-title" style="margin-top:16px;">Uso real (Censo 2024)</div>
+  <div class="breakdown-list">`;
+
+  for (const c of cats) {
+    const pct = c.ha / total * 100;
+    const haStr = c.ha >= 1000 ? `${(c.ha / 1000).toFixed(0)}k ha` : `${c.ha.toLocaleString()} ha`;
+    html += `<div class="breakdown-row">
+      <div class="breakdown-label">${c.icon} ${c.label}</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct.toFixed(1)}%;background:${c.color};"></div></div>
+      <div class="breakdown-rent" style="color:var(--text2)">${pct.toFixed(0)}%</div>
+      <div class="breakdown-area">${haStr}</div>
+    </div>`;
+  }
+
+  const totalStr = (total / 1000).toFixed(0);
+  html += `</div>
+  <p style="font-size:0.70rem;color:var(--muted);margin-top:8px;line-height:1.5;">
+    Total explotado: ${totalStr}k ha. "Cultivos" agrupa cereales, oleaginosos y semilleros
+    (soja, trigo, maíz, colza, girasol) sin desagregación por especie.
+    Fuente: DIEA, ${censo.fuente}.
+  </p>`;
+
+  return html;
 }
 
 // ── ACTIVITY TABS ────────────────────────────────────────────────────────────
@@ -1301,10 +1343,15 @@ map.on('moveend', () => {
 });
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
+let censoData = null;
+
 (async () => {
   try {
     coneatDist = await fetch('data/coneat-dept-dist.json').then(r => r.json());
   } catch(e) { console.warn('coneat-dept-dist.json no disponible:', e); }
+  try {
+    censoData = await fetch('data/censo-departamentos.json').then(r => r.json());
+  } catch(e) { console.warn('censo-departamentos.json no disponible:', e); }
   loadMap();
 })();
 </script>
