@@ -408,7 +408,7 @@ window.addEventListener('resize',adjustHeaderOffset);
       </svg>
     </a>
     <h1 class="header-title" style="text-align:left;font-size:clamp(1.1rem,2.3vw,1.75rem);margin:0;flex:1;order:2;">Informes de Mercados<br>Agrícolas, Economía <em>&amp;</em> más</h1>
-    <button id="btn-login" onclick="window.netlifyIdentity && window.netlifyIdentity.open()"
+    <button id="btn-login" onclick="window.location.href='login.html'"
       style="order:3;flex-shrink:0;padding:6px 16px;background:rgba(140,196,153,0.08);border:1px solid rgba(140,196,153,0.5);border-radius:20px;color:#8cc499;font-family:'IBM Plex Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em;"
       onmouseover="this.style.background='rgba(140,196,153,0.18)'" onmouseout="this.style.background='rgba(140,196,153,0.08)'">
       Iniciar sesión
@@ -420,7 +420,7 @@ window.addEventListener('resize',adjustHeaderOffset);
     <div style="flex:1;min-width:240px;">
       <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:8px;">Sobre ceterisparibus-uy</div>
       <p style="font-size:0.88rem;color:var(--muted);line-height:1.7;margin:0 0 6px;">Análisis consolidados de commodities, economía y mercados agrícolas, con foco en Uruguay y la región. Elaborados a partir de fuentes oficiales, sintetizando datos complejos en formatos claros y accesibles.</p>
-      <p style="font-size:0.88rem;color:var(--muted);line-height:1.7;margin:0;">Los datos tienen un rezago de 2 meses. Con una <strong style="color:var(--green);">suscripción premium</strong> accedés a los últimos datos disponibles, informes actualizados y herramientas exclusivas para el sector agropecuario. <a href="#" onclick="window.netlifyIdentity && window.netlifyIdentity.open(); return false;" style="color:var(--green);text-decoration:underline;">Iniciá sesión</a>.</p>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.7;margin:0;">Los datos tienen un rezago de 2 meses. Con una <strong style="color:var(--green);">suscripción premium</strong> accedés a los últimos datos disponibles, informes actualizados y herramientas exclusivas para el sector agropecuario. <a href="#" href="login.html" style="color:var(--green);text-decoration:underline;">Iniciá sesión</a>.</p>
     </div>
   </div>
 </div>
@@ -1001,7 +1001,7 @@ window.addEventListener('resize',adjustHeaderOffset);
                     <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
                     <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
                     <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El dashboard de precios y transacciones de tierras está disponible para suscriptores. Creá tu cuenta para suscribirte.</p>
-                    <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:inherit;">Crear cuenta / Iniciar sesión →</button>
+                    <button onclick="window.location.href='login.html'" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:inherit;">Crear cuenta / Iniciar sesión →</button>
                 </div>
                 <!-- Estado 2: logueado sin suscripción -->
                 <div id="tierras-gate-sub" style="display:none;">
@@ -1030,7 +1030,7 @@ window.addEventListener('resize',adjustHeaderOffset);
                     <div style="font-size:2.4rem;margin-bottom:14px;">🔒</div>
                     <h3 style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:10px;">Contenido Premium</h3>
                     <p style="font-size:0.85rem;color:var(--text2);margin-bottom:24px;line-height:1.6;">El mapa de rentabilidad agropecuaria está disponible para suscriptores. Creá tu cuenta para suscribirte.</p>
-                    <button onclick="window.netlifyIdentity && window.netlifyIdentity.open()" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:inherit;">Crear cuenta / Iniciar sesión →</button>
+                    <button onclick="window.location.href='login.html'" style="display:inline-block;background:var(--red);color:#fff;padding:11px 28px;border-radius:8px;border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:inherit;">Crear cuenta / Iniciar sesión →</button>
                 </div>
                 <!-- Estado 2: logueado sin suscripción -->
                 <div id="rentabilidad-gate-sub" style="display:none;">

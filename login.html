@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesión · ceterisparibus-uy</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f7f5f0; min-height: 100vh; display: flex; flex-direction: column; }
+header { background: #1b1b18; padding: 18px 24px; text-align: center; }
+header a { color: #8cc499; font-size: 0.85rem; font-weight: 600; text-decoration: none; letter-spacing: 0.05em; }
+.container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 20px; }
+.card { background: #fff; border-radius: 14px; box-shadow: 0 2px 20px rgba(0,0,0,0.10); padding: 40px 36px; max-width: 400px; width: 100%; text-align: center; }
+.card h1 { font-size: 1.4rem; color: #1b1b18; margin-bottom: 8px; }
+.card p { font-size: 0.88rem; color: #6b6456; margin-bottom: 32px; line-height: 1.6; }
+.btn { display: block; width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: inherit; margin-bottom: 12px; transition: opacity 0.2s; }
+.btn:hover { opacity: 0.88; }
+.btn-login { background: #2a7235; color: #fff; }
+.btn-signup { background: #1b1b18; color: #fff; }
+.back { display: block; margin-top: 20px; font-size: 0.82rem; color: #918b80; text-decoration: none; }
+.back:hover { color: #2a7235; }
+#msg { font-size: 0.85rem; color: #2a7235; margin-top: 16px; display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← ceterisparibus-uy</a>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h1>🌾 Acceder</h1>
+    <p>Iniciá sesión o creá tu cuenta para acceder al contenido premium.</p>
+    <button class="btn btn-login" onclick="openLogin()">Iniciar sesión</button>
+    <button class="btn btn-signup" onclick="openSignup()">Crear cuenta nueva</button>
+    <p id="msg">Redirigiendo…</p>
+    <a href="index.html" class="back">← Volver al inicio</a>
+  </div>
+</div>
+
+<script>
+function openLogin() {
+  window.netlifyIdentity && window.netlifyIdentity.open('login');
+}
+function openSignup() {
+  window.netlifyIdentity && window.netlifyIdentity.open('signup');
+}
+
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('login', () => {
+    window.netlifyIdentity.close();
+    document.getElementById('msg').style.display = 'block';
+    setTimeout(() => { window.location.href = 'index.html'; }, 800);
+  });
+}
+</script>
+
+</body>
+</html>
