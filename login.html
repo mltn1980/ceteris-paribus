@@ -18,6 +18,10 @@ header a { color: #8cc499; font-size: 0.85rem; font-weight: 600; text-decoration
 .btn:hover { opacity: 0.88; }
 .btn-login { background: #2a7235; color: #fff; }
 .btn-signup { background: #1b1b18; color: #fff; }
+.btn-google { background: #fff; color: #3c3c3c; border: 1.5px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-google img { width: 20px; height: 20px; }
+.divider { display: flex; align-items: center; gap: 10px; margin: 16px 0; color: #bbb; font-size: 0.8rem; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #eee; }
 .back { display: block; margin-top: 20px; font-size: 0.82rem; color: #918b80; text-decoration: none; }
 .back:hover { color: #2a7235; }
 #msg { font-size: 0.85rem; color: #2a7235; margin-top: 16px; display: none; }
@@ -33,14 +37,27 @@ header a { color: #8cc499; font-size: 0.85rem; font-weight: 600; text-decoration
   <div class="card">
     <h1>🌾 Acceder</h1>
     <p>Iniciá sesión o creá tu cuenta para acceder al contenido premium.</p>
-    <button class="btn btn-login" onclick="openLogin()">Iniciar sesión</button>
-    <button class="btn btn-signup" onclick="openSignup()">Crear cuenta nueva</button>
+    <button class="btn btn-google" onclick="openGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+      Continuar con Google
+    </button>
+    <div class="divider">o</div>
+    <button class="btn btn-login" onclick="openLogin()">Iniciar sesión con email</button>
+    <button class="btn btn-signup" onclick="openSignup()">Crear cuenta con email</button>
     <p id="msg">Redirigiendo…</p>
     <a href="index.html" class="back">← Volver al inicio</a>
   </div>
 </div>
 
 <script>
+function openGoogle() {
+  window.netlifyIdentity && window.netlifyIdentity.open('login');
+  // Esperar que cargue el widget y hacer click en el botón de Google
+  setTimeout(() => {
+    const googleBtn = document.querySelector('[data-provider="google"], .btnGoogle, button[class*="google"]');
+    if (googleBtn) googleBtn.click();
+  }, 500);
+}
 function openLogin() {
   window.netlifyIdentity && window.netlifyIdentity.open('login');
 }
