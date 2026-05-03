@@ -941,9 +941,9 @@ function showInfo(deptName) {
           <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>`;
         if (soja) return `
           <div class="dept-stat"><label>Área sembrada (URUPOV 24/25)</label><value>${soja.ha.toLocaleString()} ha</value></div>
-          ${censoHa ? `<div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}${censoPct ? ` (${censoPct}% del total explotado)` : ''}</value></div>` : ''}`;
+          ${censoHa ? `<div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}</value></div>` : ''}`;
         if (censoHa) return `
-          <div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}${censoPct ? ` (${censoPct}% del total explotado)` : ''}</value></div>`;
+          <div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}</value></div>`;
         return `
           <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>`;
       })()}
