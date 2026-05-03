@@ -150,10 +150,10 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 .assumptions p:last-child{margin-bottom:0;}
 .assumptions strong{color:var(--text2);}
 
-/* Breakdown de distribución de suelos */
+/* Breakdown de rentabilidad por actividad */
 .breakdown-list{margin-top:4px;}
 .breakdown-row{
-  display:grid;grid-template-columns:110px 1fr 34px 68px;
+  display:grid;grid-template-columns:108px 1fr 56px 72px;
   align-items:center;gap:6px;padding:5px 0;
   border-bottom:1px solid var(--border);font-size:0.80rem;
 }
@@ -161,10 +161,8 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 .breakdown-label{font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .breakdown-bar-wrap{height:9px;background:var(--surface2);border-radius:4px;overflow:hidden;}
 .breakdown-bar{height:100%;border-radius:4px;transition:width 0.35s;}
-.breakdown-pct{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:700;text-align:right;}
-.breakdown-ha{font-family:'IBM Plex Mono',monospace;font-size:0.70rem;color:var(--muted);text-align:right;}
-.breakdown-row.noviable .breakdown-label{color:var(--muted);font-weight:400;}
-.breakdown-row.noviable .breakdown-pct{color:var(--muted);}
+.breakdown-rent{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:700;text-align:right;}
+.breakdown-area{font-family:'IBM Plex Mono',monospace;font-size:0.70rem;color:var(--muted);text-align:right;}
 
 /* Leaflet popup */
 .leaflet-popup-content{font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-width:180px;}
@@ -805,48 +803,29 @@ function buildBreakdownHtml(deptName) {
   const dist = coneatDist[DEPTO_TO_KEY[deptName]];
   if (!dist) return '';
 
-  const areaByAct = {};
-  let noViable = 0, totalArea = 0;
+  const rows = Object.entries(ACT)
+    .map(([key, a]) => ({ key, a, w: calcWeightedRent(deptName, key) }))
+    .filter(r => r.w !== null)
+    .sort((a, b) => b.w.rent - a.w.rent);
 
-  for (const [idxStr, area] of Object.entries(dist)) {
-    const idx = parseFloat(idxStr);
-    totalArea += area;
-    const best = optimalCrop(idx, deptName);
-    if (best) {
-      areaByAct[best.key] = (areaByAct[best.key] || 0) + area;
-    } else {
-      noViable += area;
-    }
-  }
+  if (rows.length === 0) return '';
 
-  if (totalArea === 0) return '';
+  const maxAbsRent = Math.max(...rows.map(r => Math.abs(r.w.rent)));
 
-  const rows = Object.entries(areaByAct)
-    .map(([key, area]) => ({ key, area, a: ACT[key] }))
-    .sort((a, b) => b.area - a.area);
-
-  let html = `<div class="section-title" style="margin-top:16px;">Distribución óptima de suelos</div>
+  let html = `<div class="section-title" style="margin-top:16px;">Rentabilidad por actividad</div>
   <div class="breakdown-list">`;
 
-  for (const { key, area, a } of rows) {
-    const pct = area / totalArea * 100;
-    const haStr = area >= 1000 ? `${(area / 1000).toFixed(0)} mil ha` : `${area.toLocaleString()} ha`;
+  for (const { key, a, w } of rows) {
+    const barPct = Math.min(100, Math.abs(w.rent) / maxAbsRent * 100);
+    const barColor = w.rent >= 0 ? a.color : 'var(--red)';
+    const rentSign = w.rent >= 0 ? '+' : '';
+    const rentClr  = w.rent >= 0 ? a.color : 'var(--red)';
+    const haStr = w.viableArea >= 1000 ? `${(w.viableArea / 1000).toFixed(0)}k ha` : `${w.viableArea.toLocaleString()} ha`;
     html += `<div class="breakdown-row">
       <div class="breakdown-label">${a.icon} ${a.label}</div>
-      <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct.toFixed(1)}%;background:${a.color};"></div></div>
-      <div class="breakdown-pct">${pct.toFixed(0)}%</div>
-      <div class="breakdown-ha">${haStr}</div>
-    </div>`;
-  }
-
-  if (noViable > 0) {
-    const pct = noViable / totalArea * 100;
-    const haStr = noViable >= 1000 ? `${(noViable / 1000).toFixed(0)} mil ha` : `${noViable.toLocaleString()} ha`;
-    html += `<div class="breakdown-row noviable">
-      <div class="breakdown-label">— Sin uso viable</div>
-      <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct.toFixed(1)}%;background:#c8b89a;"></div></div>
-      <div class="breakdown-pct">${pct.toFixed(0)}%</div>
-      <div class="breakdown-ha">${haStr}</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${barPct.toFixed(1)}%;background:${barColor};"></div></div>
+      <div class="breakdown-rent" style="color:${rentClr}">${rentSign}${w.rent.toFixed(0)}</div>
+      <div class="breakdown-area">${w.viablePct.toFixed(0)}% · ${haStr}</div>
     </div>`;
   }
 
