@@ -931,14 +931,22 @@ function showInfo(deptName) {
     html += `
     <div class="dept-stats" style="margin-top:10px;">
       <div class="dept-stat"><label>Margen neto ponderado</label><value style="color:${rentClr};font-size:1rem;">${rentSign}${w.rent.toFixed(0)} USD/ha</value></div>
-      ${aca ? `
-      <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>
-      ` : soja ? `
-      <div class="dept-stat"><label>Área sembrada (URUPOV 24/25)</label><value>${soja.ha.toLocaleString()} ha</value></div>
-      <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>
-      ` : `
-      <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>
-      `}
+      ${(() => {
+        const censoKey  = ACT_TO_CENSO[currentAct];
+        const censoHa   = censoKey ? censoData?.[deptName]?.categorias?.[censoKey]?.ha : null;
+        const censoTot  = censoData?.[deptName]?.total_explotado;
+        const censoPct  = (censoHa && censoTot) ? (censoHa / censoTot * 100).toFixed(0) : null;
+        const censoStr  = censoHa >= 1000 ? `${(censoHa/1000).toFixed(0)}k ha` : censoHa?.toLocaleString() + ' ha';
+        if (aca) return `
+          <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>`;
+        if (soja) return `
+          <div class="dept-stat"><label>Área sembrada (URUPOV 24/25)</label><value>${soja.ha.toLocaleString()} ha</value></div>
+          ${censoHa ? `<div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}${censoPct ? ` (${censoPct}% del total explotado)` : ''}</value></div>` : ''}`;
+        if (censoHa) return `
+          <div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}${censoPct ? ` (${censoPct}% del total explotado)` : ''}</value></div>`;
+        return `
+          <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>`;
+      })()}
     </div>
 
     <div class="section-title" style="margin-top:14px;">Supuestos del modelo</div>
