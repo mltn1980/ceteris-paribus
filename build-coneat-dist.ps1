@@ -7,12 +7,14 @@ $depts = @(
   'ROCHA','SALTO','SAN JOSE','SORIANO','TACUAREMBO','TREINTA Y TRES'
 )
 
+$batchSize = 1000   # maxRecordCount del servicio
+
 $result = @{}
 
 foreach ($dept in $depts) {
     Write-Host "Consultando $dept..."
-    $offset   = 0
-    $dist     = @{}
+    $offset    = 0
+    $dist      = @{}
     $totalArea = 0
 
     do {
@@ -21,31 +23,43 @@ foreach ($dept in $depts) {
             outFields         = "IND_CONEAT,AREAHA"
             returnGeometry    = "false"
             resultOffset      = $offset
-            resultRecordCount = 2000
+            resultRecordCount = $batchSize
             f                 = "json"
         }
-        try {
-            $r = Invoke-RestMethod $url -Method Post -Body $body -TimeoutSec 60
-        } catch {
-            Write-Host "  Error: $_"; break
+        $attempt = 0
+        $r = $null
+        while ($attempt -lt 3 -and $r -eq $null) {
+            try {
+                $r = Invoke-RestMethod $url -Method Post -Body $body -TimeoutSec 60
+            } catch {
+                $attempt++
+                Write-Host "  Reintento $attempt (offset $offset)..."
+                Start-Sleep -Seconds 3
+            }
         }
+        if ($r -eq $null) { Write-Host "  FALLO en offset $offset, saltando."; break }
 
         foreach ($f in $r.features) {
             $idx  = [string]$f.attributes.IND_CONEAT
             $area = [double]$f.attributes.AREAHA
-            if ($area -le 0) { $area = 1 }   # fallback: 1 ha si no tiene dato
+            if ($area -le 0) { continue }   # ignorar padrones sin area
 
             if (-not $dist.ContainsKey($idx)) { $dist[$idx] = 0.0 }
             $dist[$idx] += $area
             $totalArea  += $area
         }
 
-        $offset += $r.features.Count
-        if ($r.features.Count -lt 2000) { break }
+        $count   = $r.features.Count
+        $offset += $count
+        Write-Host "  Offset $offset — $count registros — $([math]::Round($totalArea)) ha acumuladas"
+
+        if ($count -lt $batchSize) { break }
 
     } while ($true)
 
-    Write-Host "  $($dist.Count) grupos CONEAT, $([math]::Round($totalArea)) ha totales"
+    $totalRound = [math]::Round($totalArea)
+    $idxCount = $dist.Count
+    Write-Host "  TOTAL ${dept}: $idxCount indices CONEAT, $totalRound ha"
     $result[$dept] = $dist
 }
 
