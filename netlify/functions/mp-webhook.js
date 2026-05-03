@@ -92,11 +92,14 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'ok' };
   }
 
-  // Actualizar metadata del usuario
+  // Actualizar rol y metadata del usuario
   const updateRes = await patch(
     `https://api.netlify.com/api/v1/sites/${SITE_ID}/identity/users/${user.id}`,
     API_TOKEN,
-    { data: { premium: isPaid, premium_since: isPaid ? new Date().toISOString() : null, mp_subscription_id: data.id } }
+    {
+      app_metadata: { roles: isPaid ? ['premium'] : [] },
+      data: { premium: isPaid, premium_since: isPaid ? new Date().toISOString() : null, mp_subscription_id: data.id },
+    }
   );
   console.log('Update usuario:', updateRes.status, updateRes.body);
 
