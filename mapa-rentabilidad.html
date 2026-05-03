@@ -1047,8 +1047,7 @@ function normDepto(raw) {
 function calcRentByCONEAT(actKey, coneatIdx, deptName) {
   const a = ACT[actKey];
   if (!a || !deptName) return null;
-  if (actKey === 'arroz'    && !ARROZ_DEPTS.has(deptName))    return null;
-  if (actKey === 'lecheria' && !(censoData?.[deptName]?.categorias?.lecheria?.ha > 0)) return null;
+  if (actKey === 'arroz' && !ARROZ_DEPTS.has(deptName)) return null;
   if (coneatIdx < (a.coneatMin ?? 0))                         return null;
   if (a.coneatMax !== undefined && coneatIdx > a.coneatMax)   return null;
   const arr = getArr(actKey, deptName);
