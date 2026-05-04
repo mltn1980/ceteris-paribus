@@ -114,8 +114,8 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 .dept-stat{display:flex;justify-content:space-between;font-size:0.82rem;padding:4px 0;border-bottom:1px solid var(--border);}
 .dept-stat:last-child{border:none;}
 .dept-stat{flex-wrap:wrap;}
-.stat-tip{cursor:pointer;font-size:0.7rem;color:var(--muted);margin-left:3px;vertical-align:middle;user-select:none;opacity:0.7;}
-.stat-tip:hover{opacity:1;}
+.stat-tip{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#1b5e85;color:#fff;font-size:0.65rem;font-weight:700;margin-left:4px;vertical-align:middle;user-select:none;line-height:1;flex-shrink:0;}
+.stat-tip:hover{background:#154e72;}
 .stat-tip-text{display:none;width:100%;font-size:0.75rem;color:var(--text2);line-height:1.4;padding:4px 0 2px;font-family:inherit;font-weight:400;}
 .dept-stat.tip-open .stat-tip-text{display:block;}
 .dept-stat.tip-open .stat-tip{opacity:1;color:var(--accent, #1b5e85);}
@@ -1276,10 +1276,10 @@ function showConeatInfo(p) {
         const st = calcConeatStats(dist, idx);
         const diffStr = st ? (st.diffMediana >= 0 ? `+${st.diffMediana}` : `${st.diffMediana}`) + ' vs mediana (' + st.median + ')' : null;
         return `
-          <div class="dept-stat"><label>Ha con CONEAT ≥ ${idx} en depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">ⓘ</span></label><value>${haStr}</value><span class="stat-tip-text">Superficie del departamento con índice CONEAT igual o superior al de este padrón.</span></div>
-          <div class="dept-stat"><label>Posición en depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">ⓘ</span></label><value>Top ${topPct}% · Decil ${st?.decil ?? '—'}</value><span class="stat-tip-text">Top %: hectáreas del departamento con productividad igual o mejor que este padrón. Decil: posición en 10 grupos de igual área (decil 1 = mejores suelos).</span></div>
-          ${diffStr ? `<div class="dept-stat"><label>vs mediana depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">ⓘ</span></label><value>${diffStr}</value><span class="stat-tip-text">Diferencia entre el CONEAT de este padrón y la mediana del departamento. Positivo = supera a más de la mitad de las hectáreas del departamento.</span></div>` : ''}
-          ${st ? `<div class="dept-stat"><label>Varianza depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">ⓘ</span></label><value>${st.variance.toLocaleString()} · σ ${st.stdDev}</value><span class="stat-tip-text">Varianza: dispersión de los índices CONEAT en el departamento. Mayor varianza = suelos más heterogéneos. σ = distancia típica respecto al promedio departamental.</span></div>` : ''}`;
+          <div class="dept-stat"><label>Ha con CONEAT ≥ ${idx} en depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">?</span></label><value>${haStr}</value><span class="stat-tip-text">Superficie del departamento con índice CONEAT igual o superior al de este padrón.</span></div>
+          <div class="dept-stat"><label>Posición en depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">?</span></label><value>Top ${topPct}% · Decil ${st?.decil ?? '—'}</value><span class="stat-tip-text">Top %: hectáreas del departamento con productividad igual o mejor que este padrón. Decil: posición en 10 grupos de igual área (decil 1 = mejores suelos).</span></div>
+          ${diffStr ? `<div class="dept-stat"><label>vs mediana depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">?</span></label><value>${diffStr}</value><span class="stat-tip-text">Diferencia entre el CONEAT de este padrón y la mediana del departamento. Positivo = supera a más de la mitad de las hectáreas del departamento.</span></div>` : ''}
+          ${st ? `<div class="dept-stat"><label>Varianza depto.<span class="stat-tip" onclick="this.closest('.dept-stat').classList.toggle('tip-open')">?</span></label><value>${st.variance.toLocaleString()} · σ ${st.stdDev}</value><span class="stat-tip-text">Varianza: dispersión de los índices CONEAT en el departamento. Mayor varianza = suelos más heterogéneos. σ = distancia típica respecto al promedio departamental.</span></div>` : ''}`;
       })()}
     </div>
     ${(() => {
