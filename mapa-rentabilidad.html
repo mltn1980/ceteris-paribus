@@ -1254,6 +1254,21 @@ function showConeatInfo(p) {
       <div class="dept-stat"><label>Índice CONEAT</label><value>${idx ?? '—'}</value></div>
       ${p.AREAHA ? `<div class="dept-stat"><label>Área</label><value>${Number(p.AREAHA).toFixed(0)} ha</value></div>` : ''}
       <div class="dept-stat"><label>Productividad relativa</label><value>${idx ? idx.toFixed(0) + '%' : '—'}</value></div>
+      ${(() => {
+        if (!idx || !p.DEPTO || !coneatDist) return '';
+        const dist = coneatDist[DEPTO_TO_KEY[normDepto(p.DEPTO)]];
+        if (!dist) return '';
+        let haAbove = 0, totalHa = 0;
+        for (const [ci, ha] of Object.entries(dist)) {
+          if (Number(ci) >= idx) haAbove += ha;
+          totalHa += ha;
+        }
+        const topPct  = Math.round(haAbove / totalHa * 100);
+        const haStr   = haAbove >= 1000 ? `${(haAbove/1000).toFixed(0)}k ha` : Math.round(haAbove).toLocaleString() + ' ha';
+        return `
+          <div class="dept-stat"><label>Ha con CONEAT ≥ ${idx} en depto.</label><value>${haStr}</value></div>
+          <div class="dept-stat"><label>Posición en depto.</label><value>Top ${topPct}%</value></div>`;
+      })()}
     </div>
 
     ${idx ? `
