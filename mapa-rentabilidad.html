@@ -1258,18 +1258,31 @@ function showConeatInfo(p) {
         if (!idx || !p.DEPTO || !coneatDist) return '';
         const dist = coneatDist[DEPTO_TO_KEY[normDepto(p.DEPTO)]];
         if (!dist) return '';
+        // Ha con CONEAT >= padrón
         let haAbove = 0, totalHa = 0;
         for (const [ci, ha] of Object.entries(dist)) {
           if (Number(ci) >= idx) haAbove += ha;
           totalHa += ha;
         }
-        const topPct  = Math.round(haAbove / totalHa * 100);
-        const haStr   = haAbove >= 1000 ? `${(haAbove/1000).toFixed(0)}k ha` : Math.round(haAbove).toLocaleString() + ' ha';
+        const topPct = Math.round(haAbove / totalHa * 100);
+        const haStr  = haAbove >= 1000 ? `${(haAbove/1000).toFixed(0)}k ha` : Math.round(haAbove).toLocaleString() + ' ha';
+        // Estadísticas avanzadas
+        const st = calcConeatStats(dist, idx);
+        const diffStr = st ? (st.diffMediana >= 0 ? `+${st.diffMediana}` : `${st.diffMediana}`) + ' vs mediana (' + st.median + ')' : null;
         return `
           <div class="dept-stat"><label>Ha con CONEAT ≥ ${idx} en depto.</label><value>${haStr}</value></div>
-          <div class="dept-stat"><label>Posición en depto.</label><value>Top ${topPct}%</value></div>`;
+          <div class="dept-stat"><label>Posición en depto.</label><value>Top ${topPct}% · Decil ${st?.decil ?? '—'}</value></div>
+          ${diffStr ? `<div class="dept-stat"><label>vs mediana depto.</label><value>${diffStr}</value></div>` : ''}`;
       })()}
     </div>
+    ${(() => {
+      if (!idx || !p.DEPTO || !coneatDist) return '';
+      const dist = coneatDist[DEPTO_TO_KEY[normDepto(p.DEPTO)]];
+      if (!dist) return '';
+      const st = calcConeatStats(dist, idx);
+      if (!st) return '';
+      return `<div style="margin-top:10px;">${buildBoxPlotSVG(st, idx)}</div>`;
+    })()}
 
     ${idx ? `
     <div style="background:var(--green-l);border:1px solid #b0d4b7;border-radius:10px;padding:12px 14px;margin-top:12px;">
@@ -1361,6 +1374,68 @@ function setMode(mode) {
       document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Seleccioná un departamento para cargar los padrones.</div>';
     }
   }
+}
+
+// ── ESTADÍSTICAS CONEAT POR DEPARTAMENTO ─────────────────────────────────────
+function calcConeatStats(dist, idx) {
+  const sorted = Object.entries(dist)
+    .map(([ci, ha]) => ({ ci: Number(ci), ha }))
+    .filter(x => x.ha > 0)
+    .sort((a, b) => a.ci - b.ci);
+  if (!sorted.length) return null;
+
+  const totalHa = sorted.reduce((s, x) => s + x.ha, 0);
+
+  function wpct(p) {
+    const target = totalHa * p;
+    let cum = 0;
+    for (const { ci, ha } of sorted) {
+      cum += ha;
+      if (cum >= target) return ci;
+    }
+    return sorted[sorted.length - 1].ci;
+  }
+
+  const p10 = wpct(0.10), q1 = wpct(0.25), median = wpct(0.50), q3 = wpct(0.75), p90 = wpct(0.90);
+  const min = sorted[0].ci, max = sorted[sorted.length - 1].ci;
+
+  // Decil del padrón (1=peor, 10=mejor) basado en area acumulada
+  let cumBelow = 0;
+  for (const { ci, ha } of sorted) {
+    if (ci < idx) cumBelow += ha;
+    else break;
+  }
+  const decil = Math.min(10, Math.floor(cumBelow / totalHa * 10) + 1);
+
+  const diffMediana = Math.round(idx - median);
+
+  return { min, max, p10, q1, median, q3, p90, decil, diffMediana };
+}
+
+function buildBoxPlotSVG(stats, idx) {
+  const { min, max, p10, q1, median, q3, p90 } = stats;
+  const W = 210, H = 48, pad = 12;
+  const lo = Math.min(min, idx), hi = Math.max(max, idx);
+  const sc = x => pad + (x - lo) / (hi - lo) * (W - 2 * pad);
+  const midY = 22, boxH = 18;
+  const xQ1 = sc(q1), xQ3 = sc(q3), xMed = sc(median);
+  const xP10 = sc(p10), xP90 = sc(p90), xIdx = sc(idx);
+  const idxColor = coneatColor(idx);
+
+  return `<svg width="${W}" height="${H}" style="display:block;overflow:visible;">
+    <line x1="${xP10}" y1="${midY}" x2="${xQ1}" y2="${midY}" stroke="#bbb" stroke-width="1.5"/>
+    <line x1="${xQ3}" y1="${midY}" x2="${xP90}" y2="${midY}" stroke="#bbb" stroke-width="1.5"/>
+    <line x1="${xP10}" y1="${midY-5}" x2="${xP10}" y2="${midY+5}" stroke="#bbb" stroke-width="1.5"/>
+    <line x1="${xP90}" y1="${midY-5}" x2="${xP90}" y2="${midY+5}" stroke="#bbb" stroke-width="1.5"/>
+    <rect x="${xQ1}" y="${midY - boxH/2}" width="${Math.max(1, xQ3 - xQ1)}" height="${boxH}"
+      fill="#d4e8d4" stroke="#6aaa6a" stroke-width="1.5" rx="2"/>
+    <line x1="${xMed}" y1="${midY - boxH/2}" x2="${xMed}" y2="${midY + boxH/2}"
+      stroke="#2a7235" stroke-width="2.5"/>
+    <circle cx="${xIdx}" cy="${midY}" r="6" fill="${idxColor}" stroke="#fff" stroke-width="2"/>
+    <text x="${xP10}" y="${H-2}" font-size="9" fill="#999" text-anchor="middle">p10</text>
+    <text x="${xMed}" y="${H-2}" font-size="9" fill="#2a7235" text-anchor="middle">med</text>
+    <text x="${xP90}" y="${H-2}" font-size="9" fill="#999" text-anchor="middle">p90</text>
+  </svg>`;
 }
 
 // ── BÚSQUEDA POR PADRÓN ───────────────────────────────────────────────────────
