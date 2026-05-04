@@ -1272,7 +1272,8 @@ function showConeatInfo(p) {
         return `
           <div class="dept-stat"><label>Ha con CONEAT ≥ ${idx} en depto.</label><value>${haStr}</value></div>
           <div class="dept-stat"><label>Posición en depto.</label><value>Top ${topPct}% · Decil ${st?.decil ?? '—'}</value></div>
-          ${diffStr ? `<div class="dept-stat"><label>vs mediana depto.</label><value>${diffStr}</value></div>` : ''}`;
+          ${diffStr ? `<div class="dept-stat"><label>vs mediana depto.</label><value>${diffStr}</value></div>` : ''}
+          ${st ? `<div class="dept-stat"><label>Varianza depto.</label><value>${st.variance.toLocaleString()} · σ ${st.stdDev}</value></div>` : ''}`;
       })()}
     </div>
     ${(() => {
@@ -1409,7 +1410,12 @@ function calcConeatStats(dist, idx) {
 
   const diffMediana = Math.round(idx - median);
 
-  return { min, max, p10, q1, median, q3, p90, decil, diffMediana };
+  // Varianza ponderada por área
+  const mean = sorted.reduce((s, x) => s + x.ci * x.ha, 0) / totalHa;
+  const variance = Math.round(sorted.reduce((s, x) => s + x.ha * Math.pow(x.ci - mean, 2), 0) / totalHa);
+  const stdDev = Math.round(Math.sqrt(variance));
+
+  return { min, max, p10, q1, median, q3, p90, decil, diffMediana, mean: Math.round(mean), variance, stdDev };
 }
 
 function buildBoxPlotSVG(stats, idx) {
