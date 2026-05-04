@@ -932,18 +932,23 @@ function showInfo(deptName) {
     <div class="dept-stats" style="margin-top:10px;">
       <div class="dept-stat"><label>Margen neto ponderado</label><value style="color:${rentClr};font-size:1rem;">${rentSign}${w.rent.toFixed(0)} USD/ha</value></div>
       ${(() => {
-        const censoKey  = ACT_TO_CENSO[currentAct];
-        const censoHa   = censoKey ? censoData?.[deptName]?.categorias?.[censoKey]?.ha : null;
-        const censoTot  = censoData?.[deptName]?.total_explotado;
-        const censoPct  = (censoHa && censoTot) ? (censoHa / censoTot * 100).toFixed(0) : null;
-        const censoStr  = censoHa >= 1000 ? `${(censoHa/1000).toFixed(0)}k ha` : censoHa?.toLocaleString() + ' ha';
+        const censoKey    = ACT_TO_CENSO[currentAct];
+        const censoCat    = censoKey ? censoData?.[deptName]?.categorias?.[censoKey] : null;
+        const censoHa     = censoCat?.ha ?? null;
+        const censoExplot = censoCat?.explot ?? null;
+        const censoTot    = censoData?.[deptName]?.total_explotado;
+        const censoPct    = (censoHa && censoTot) ? (censoHa / censoTot * 100).toFixed(0) : null;
+        const censoHaStr  = censoHa >= 1000 ? `${(censoHa/1000).toFixed(0)}k ha` : censoHa?.toLocaleString() + ' ha';
+        const censoAvg    = (censoExplot && censoHa) ? Math.round(censoHa / censoExplot).toLocaleString() : null;
+        const censoSub    = censoExplot ? `<span style="display:block;font-size:0.75rem;font-weight:400;color:var(--muted);margin-top:2px;">${censoExplot.toLocaleString()} explot. · ${censoAvg} ha/explot.</span>` : '';
+        const censoVal    = `${censoHaStr}${censoSub}`;
         if (aca) return `
           <div class="dept-stat"><label>Área sembrada (ACA 24/25)</label><value>${aca.ha.toLocaleString()} ha</value></div>`;
         if (soja) return `
           <div class="dept-stat"><label>Área sembrada (URUPOV 24/25)</label><value>${soja.ha.toLocaleString()} ha</value></div>
-          ${censoHa ? `<div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}</value></div>` : ''}`;
+          ${censoHa ? `<div class="dept-stat" style="align-items:flex-start;"><label>Área en producción (Censo 2024)</label><value style="text-align:right;">${censoVal}</value></div>` : ''}`;
         if (censoHa) return `
-          <div class="dept-stat"><label>Área en producción (Censo 2024)</label><value>${censoStr}</value></div>`;
+          <div class="dept-stat" style="align-items:flex-start;"><label>Área en producción (Censo 2024)</label><value style="text-align:right;">${censoVal}</value></div>`;
         return `
           <div class="dept-stat"><label>Área viable CONEAT</label><value>${(w.viableArea/1000).toFixed(0)} mil ha (${w.viablePct.toFixed(0)}% depto.)</value></div>`;
       })()}
