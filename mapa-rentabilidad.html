@@ -1270,10 +1270,10 @@ function showConeatInfo(p) {
         const st = calcConeatStats(dist, idx);
         const diffStr = st ? (st.diffMediana >= 0 ? `+${st.diffMediana}` : `${st.diffMediana}`) + ' vs mediana (' + st.median + ')' : null;
         return `
-          <div class="dept-stat"><label>Ha con CONEAT ≥ ${idx} en depto.</label><value>${haStr}</value></div>
-          <div class="dept-stat"><label>Posición en depto.</label><value>Top ${topPct}% · Decil ${st?.decil ?? '—'}</value></div>
-          ${diffStr ? `<div class="dept-stat"><label>vs mediana depto.</label><value>${diffStr}</value></div>` : ''}
-          ${st ? `<div class="dept-stat"><label>Varianza depto.</label><value>${st.variance.toLocaleString()} · σ ${st.stdDev}</value></div>` : ''}`;
+          <div class="dept-stat" title="Superficie total del departamento con índice CONEAT igual o superior al de este padrón."><label>Ha con CONEAT ≥ ${idx} en depto.</label><value>${haStr}</value></div>
+          <div class="dept-stat" title="Top %: porcentaje de hectáreas del departamento con productividad igual o superior a este padrón. Decil: posición en 10 grupos de igual área (decil 1 = los mejores suelos)."><label>Posición en depto.</label><value>Top ${topPct}% · Decil ${st?.decil ?? '—'}</value></div>
+          ${diffStr ? `<div class="dept-stat" title="Diferencia entre el índice CONEAT de este padrón y la mediana del departamento. Positivo significa que el padrón supera a más de la mitad de las hectáreas del departamento."><label>vs mediana depto.</label><value>${diffStr}</value></div>` : ''}
+          ${st ? `<div class="dept-stat" title="Varianza: qué tan dispersos están los índices CONEAT en el departamento. Mayor varianza = suelos más heterogéneos. σ (desviación estándar): distancia típica respecto al promedio departamental."><label>Varianza depto.</label><value>${st.variance.toLocaleString()} · σ ${st.stdDev}</value></div>` : ''}`;
       })()}
     </div>
     ${(() => {
