@@ -1436,9 +1436,10 @@ function buildBoxPlotSVG(stats, idx) {
   const W = 420, H = 95, pad = 20;
   const lo = Math.min(min, idx), hi = Math.max(max, idx);
   const sc = x => pad + (x - lo) / (hi - lo) * (W - 2 * pad);
-  const midY = 42, boxH = 36;
+  const midY = 55, boxH = 30;
   const xQ1 = sc(q1), xQ3 = sc(q3), xMed = sc(median);
   const xP10 = sc(p10), xP90 = sc(p90), xIdx = sc(idx);
+  const lineTop = midY - boxH/2 - 6;
 
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;overflow:visible;">
     <line x1="${xP10}" y1="${midY}" x2="${xQ1}" y2="${midY}" stroke="#bbb" stroke-width="2.5"/>
@@ -1449,13 +1450,13 @@ function buildBoxPlotSVG(stats, idx) {
       fill="#d4e8d4" stroke="#6aaa6a" stroke-width="2.5" rx="4"/>
     <line x1="${xMed}" y1="${midY - boxH/2}" x2="${xMed}" y2="${midY + boxH/2}"
       stroke="#2a7235" stroke-width="3.5"/>
-    <line x1="${xIdx}" y1="${midY - boxH/2 - 8}" x2="${xIdx}" y2="${midY + boxH/2 + 8}"
-      stroke="#1b5e85" stroke-width="3" stroke-dasharray="5 3"/>
-    <circle cx="${xIdx}" cy="${midY}" r="10" fill="#1b5e85" stroke="#fff" stroke-width="3"/>
-    <text x="${xP10}" y="${H-3}" font-size="11" fill="#999" text-anchor="middle">p10</text>
-    <text x="${xMed}" y="${H-3}" font-size="11" fill="#2a7235" text-anchor="middle">med</text>
-    <text x="${xP90}" y="${H-3}" font-size="11" fill="#999" text-anchor="middle">p90</text>
-    <text x="${xIdx}" y="${H-3}" font-size="11" fill="#1b5e85" text-anchor="middle" font-weight="700">${idx}</text>
+    <line x1="${xIdx}" y1="${lineTop}" x2="${xIdx}" y2="${midY + boxH/2 + 6}"
+      stroke="#1b5e85" stroke-width="2.5" stroke-dasharray="5 3"/>
+    <circle cx="${xIdx}" cy="${midY}" r="5" fill="#1b5e85" stroke="#fff" stroke-width="2"/>
+    <text x="${xIdx}" y="${lineTop - 3}" font-size="11" fill="#1b5e85" text-anchor="middle" font-weight="700">${idx}</text>
+    <text x="${xP10}" y="${H-1}" font-size="11" fill="#999" text-anchor="middle">p10</text>
+    <text x="${xMed}" y="${H-1}" font-size="11" fill="#2a7235" text-anchor="middle">med</text>
+    <text x="${xP90}" y="${H-1}" font-size="11" fill="#999" text-anchor="middle">p90</text>
   </svg>`;
 }
 
