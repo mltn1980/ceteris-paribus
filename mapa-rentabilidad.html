@@ -99,7 +99,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 .info-panel .hint strong{display:block;font-size:1.1rem;margin-bottom:8px;color:var(--text2);}
 
 .activity-row{
-  display:flex;justify-content:space-between;align-items:center;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
   padding:9px 12px;border-radius:8px;margin-bottom:6px;
   border:1px solid var(--border);background:var(--surface2);
 }
@@ -1070,6 +1070,11 @@ function normDepto(raw) {
   return DEPTO_NORM[k] || null;
 }
 
+const ACT_TIP_TOGGLE = `onclick="const t=this.closest('.activity-row,.dept-stat');const wasOpen=t.classList.contains('tip-open');document.querySelectorAll('.activity-row.tip-open,.dept-stat.tip-open').forEach(el=>el.classList.remove('tip-open'));if(!wasOpen)t.classList.add('tip-open')"`;
+function actTipHtml(a, res) {
+  return `<span class="stat-tip" ${ACT_TIP_TOGGLE}>?</span><span class="stat-tip-text">Precio: ${a.priceUnit} · Rinde: ${res.yld.toFixed(1)} ${a.yieldUnit}<br>Ingreso: ${Math.round(res.rev)} USD/ha · Costo directo: ${a.cost.toLocaleString()} USD/ha<br>Margen bruto: ${Math.round(res.gm)} USD/ha · Arrendamiento ref.: ${Math.round(res.arr)} USD/ha</span>`;
+}
+
 function calcRentByCONEAT(actKey, coneatIdx, deptName) {
   const a = ACT[actKey];
   if (!a || !deptName) return null;
@@ -1122,7 +1127,7 @@ function showOptimoInfo(p) {
     const cls = res.rent >= 0 ? 'pos' : 'neg';
     const sign = res.rent >= 0 ? '+' : '';
     html += `<div class="activity-row${key === opt?.key ? ' highlighted' : ''}">
-      <div class="act-name">${a.icon} ${a.label}</div>
+      <div class="act-name">${a.icon} ${a.label}${actTipHtml(a, res)}</div>
       <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)} USD/ha</span>
     </div>`;
   }
@@ -1317,7 +1322,7 @@ function showConeatInfo(p) {
       const cls  = res.rent >= 0 ? 'pos' : 'neg';
       const sign = res.rent >= 0 ? '+' : '';
       html += `<div class="activity-row${key === opt?.key ? ' highlighted' : ''}">
-        <div class="act-name">${a.icon} ${a.label}</div>
+        <div class="act-name">${a.icon} ${a.label}${actTipHtml(a, res)}</div>
         <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)} USD/ha</span>
       </div>`;
     }
