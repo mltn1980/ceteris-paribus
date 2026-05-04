@@ -211,6 +211,9 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
       style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--border);color:var(--muted);cursor:not-allowed;">
       Buscar
     </button>
+    <button id="padronClearBtn" onclick="limpiarPadron()" style="display:none;padding:7px 14px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text2);cursor:pointer;">
+      ✕ Limpiar
+    </button>
     <span id="padronStatus" style="font-size:0.78rem;color:var(--muted);"></span>
   </div>
 
@@ -750,6 +753,14 @@ function loadMap() {
 
 function onDeptFilterChange(val) {
   selectedDeptFilter = val;
+  // Resetear modo padrón único al cambiar departamento
+  if (padronOnlyMode) {
+    padronOnlyMode = false;
+    if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
+    document.getElementById('padronInput').value = '';
+    document.getElementById('padronStatus').textContent = '';
+    document.getElementById('padronClearBtn').style.display = 'none';
+  }
   if (val && deptBoundsMap[val]) {
     map.flyToBounds(deptBoundsMap[val], { padding: [30, 30] });
   }
@@ -1343,6 +1354,16 @@ function setMode(mode) {
 
 // ── BÚSQUEDA POR PADRÓN ───────────────────────────────────────────────────────
 let padronLayer = null;
+let padronOnlyMode = false;
+
+function limpiarPadron() {
+  if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
+  padronOnlyMode = false;
+  document.getElementById('padronInput').value = '';
+  document.getElementById('padronStatus').textContent = '';
+  document.getElementById('padronClearBtn').style.display = 'none';
+  if (selectedDeptFilter) fetchConeat();
+}
 
 async function buscarPadron() {
   const num = document.getElementById('padronInput').value.trim();
@@ -1382,6 +1403,10 @@ async function buscarPadron() {
 
     // Remover capa anterior si existe
     if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
+    // Ocultar todos los demás padrones — mostrar solo este
+    if (geoLayer) { map.removeLayer(geoLayer); }
+    padronOnlyMode = true;
+    document.getElementById('padronClearBtn').style.display = 'inline-block';
 
     padronLayer = L.geoJSON(geojson, {
       style: {
@@ -1415,7 +1440,7 @@ document.getElementById('map').addEventListener('mousemove', e => {
 });
 
 map.on('moveend', () => {
-  if (currentMode === 'coneat') {
+  if (currentMode === 'coneat' && !padronOnlyMode) {
     clearTimeout(fetchTimer);
     fetchTimer = setTimeout(fetchConeat, 400);
   }
