@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-05-03",
+  "actualizado": "2026-05-04",
   "alerta": {
-    "activa": true,
-    "tipo": "Tempestades",
-    "nivel": "Alto",
-    "titulo": "Onda de tempestades severas en la región",
-    "descripcion": "Tempestades con lluvias extremas (hasta 200 mm), granizo y vendavales afectando el sur de Brasil. Riesgo de impacto en norte de Uruguay.",
-    "vigencia": "2-3 may 2026",
-    "fuente": "MetSul"
+    "activa": false,
+    "tipo": "",
+    "nivel": "",
+    "titulo": "",
+    "descripcion": "",
+    "vigencia": "",
+    "fuente": ""
   },
   "enso": {
     "fase": "Neutral → El Niño",
