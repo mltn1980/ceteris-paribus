@@ -1420,14 +1420,14 @@ function calcConeatStats(dist, idx) {
 
 function buildBoxPlotSVG(stats, idx) {
   const { min, max, p10, q1, median, q3, p90 } = stats;
-  const W = 310, H = 95, pad = 20;
+  const W = 420, H = 95, pad = 20;
   const lo = Math.min(min, idx), hi = Math.max(max, idx);
   const sc = x => pad + (x - lo) / (hi - lo) * (W - 2 * pad);
   const midY = 42, boxH = 36;
   const xQ1 = sc(q1), xQ3 = sc(q3), xMed = sc(median);
   const xP10 = sc(p10), xP90 = sc(p90), xIdx = sc(idx);
 
-  return `<svg width="${W}" height="${H}" style="display:block;overflow:visible;">
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;overflow:visible;">
     <line x1="${xP10}" y1="${midY}" x2="${xQ1}" y2="${midY}" stroke="#bbb" stroke-width="2.5"/>
     <line x1="${xQ3}" y1="${midY}" x2="${xP90}" y2="${midY}" stroke="#bbb" stroke-width="2.5"/>
     <line x1="${xP10}" y1="${midY-9}" x2="${xP10}" y2="${midY+9}" stroke="#bbb" stroke-width="2.5"/>
