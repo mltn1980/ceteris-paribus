@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-05-04",
+  "actualizado": "2026-05-05",
   "alerta": {
-    "activa": false,
-    "tipo": "",
-    "nivel": "",
-    "titulo": "",
-    "descripcion": "",
-    "vigencia": "",
-    "fuente": ""
+    "activa": true,
+    "tipo": "Tormentas",
+    "nivel": "Naranja",
+    "titulo": "Tormentas fuertes y ciclón extratropical",
+    "descripcion": "Tormentas fuertes (puntualmente severas) y posterior formación de un ciclón extratropical. Precipitaciones y tormentas con vientos de hasta 60 km/h en rachas.",
+    "vigencia": "6-7 may 2026",
+    "fuente": "INUMET"
   },
   "enso": {
     "fase": "Neutral → El Niño",
