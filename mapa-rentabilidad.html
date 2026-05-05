@@ -271,7 +271,7 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
     <p><strong>CONEAT:</strong> Índice promedio ponderado por área por departamento, fuente DGRN/MGAP (2025). CONEAT 100 = productividad ganadera de referencia.</p>
     <p><strong>Arrendamientos:</strong> Por departamento y rubro, fuente MGAP-DIEA Cuadro 6, 1er Semestre 2025. Departamentos sin dato (s/d) para una actividad se muestran en gris — indica que esa actividad no es relevante o no tiene mercado de arrendamiento registrado en ese departamento. Soja, Trigo, Maíz, Colza y Girasol usan el arrendamiento de Agricultura secano.</p>
     <p><strong>Rendimientos:</strong> Escalados linealmente por CONEAT/100 sobre rendimiento base nacional. Ganadería: 100 kg PV/ha × USD 2.80/kg (INAC, sem.17/2026). Soja: 2.8 tn/ha × USD 400/tn. Trigo: 3.5 tn/ha × USD 200/tn. Maíz: 6.0 tn/ha × USD 250/tn. Colza: 2.2 tn/ha × USD 521/tn. Girasol: 1.8 tn/ha × USD 457/tn. Lechería: 3.628 L/ha × USD 0.45/L. Arroz: 7 tn/ha × USD 280/tn (fijo).</p>
-    <p><strong>Costos directos:</strong> Ganadería USD 93/ha (INIA Ficha 42), Soja 1ª USD 1,045/ha, Trigo USD 940/ha, Maíz USD 1,163/ha, Colza USD 827/ha, Girasol USD 576/ha, Arroz USD 1,400/ha, Lechería USD 800/ha. Fuente: Informe Agropecuario FCA–AZGroup abr. 2026.</p>
+    <p><strong>Costos directos:</strong> Ganadería USD 93/ha (INIA Ficha 42), Soja 1ª USD 1,045/ha, Trigo USD 940/ha, Maíz USD 1,163/ha, Colza USD 827/ha, Girasol USD 576/ha, Arroz USD 1,400/ha, Lechería USD 1.011/ha (costo total USD 0,34/L incl. arrendamiento × 3.628 L/ha, menos arr. ref.). Resto: Informe Agropecuario FCA–AZGroup abr. 2026.</p>
     <p><strong>Precios:</strong> Cámara Mercantil de Productos del País, 24/04/2026.</p>
     <p><strong>Rentabilidad = (Margen Bruto − Arrendamiento ref.) / Arrendamiento ref. × 100.</strong> Modelo orientativo; no incluye costos fijos, estructura de capital ni impuestos.</p>
   </div>
@@ -424,7 +424,7 @@ const ACT = {
   },
   lecheria: {
     label:'Lechería', icon:'🥛', color:'#4a7ab8',
-    baseRev: 1800, cost: 800, arrRef: 222.1,
+    baseRev: 1800, cost: 1011, arrRef: 222.1,
     yieldLabel:'Producción est.', yieldUnit:'L/ha', yieldBase:3628, priceUnit:'USD 0.45/L',
     coneatMin: 80, coneatMax: 130,
   },
