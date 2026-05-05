@@ -1388,6 +1388,24 @@ function showConeatInfo(p) {
 }
 
 function setMode(mode) {
+  // Limpiar estado de la sección anterior
+  if (selectedDept && geoLayer) {
+    geoLayer.eachLayer(l => { if (l.feature?.properties?.name === selectedDept) geoLayer.resetStyle(l); });
+    selectedDept = null;
+  }
+  if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
+  if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
+  padronOnlyMode = false;
+  const pi = document.getElementById('padronInput');
+  if (pi) { pi.value = ''; pi.disabled = true; pi.style.cursor = 'not-allowed'; pi.style.color = 'var(--muted)'; }
+  const ps = document.getElementById('padronStatus');
+  if (ps) ps.textContent = '';
+  const plb = document.getElementById('padronLimpiarBtn');
+  if (plb) plb.style.display = 'none';
+  selectedDeptFilter = '';
+  const deptSel = document.getElementById('deptSelect');
+  if (deptSel) deptSel.value = '';
+
   currentMode = mode;
   document.getElementById('modeRent') .classList.toggle('active', mode === 'rent');
   document.getElementById('modeCon')  .classList.toggle('active', mode === 'coneat');
