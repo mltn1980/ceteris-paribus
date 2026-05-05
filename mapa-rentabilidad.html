@@ -217,6 +217,9 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
       style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--border);color:var(--muted);cursor:not-allowed;">
       Buscar
     </button>
+    <button id="padronLimpiarBtn" onclick="limpiarPadron()" style="display:none;padding:7px 14px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text2);cursor:pointer;">
+      ✕ Limpiar
+    </button>
     <span id="padronStatus" style="font-size:0.78rem;color:var(--muted);"></span>
   </div>
 
@@ -1208,6 +1211,7 @@ function coneatColor(idx) {
 async function fetchConeat() {
   if (currentMode !== 'coneat' && currentMode !== 'optimo') return;
   if (currentMode === 'optimo' && !selectedDeptFilter) return;
+  if (padronOnlyMode) return;
   const zoom = map.getZoom();
   const loading = document.getElementById('mapLoading');
 
@@ -1521,6 +1525,7 @@ function limpiarPadron() {
   padronOnlyMode = false;
   document.getElementById('padronInput').value = '';
   document.getElementById('padronStatus').textContent = '';
+  document.getElementById('padronLimpiarBtn').style.display = 'none';
   if (selectedDeptFilter) fetchConeat();
 }
 
@@ -1560,11 +1565,12 @@ async function buscarPadron() {
       geometry: { type: 'Polygon', coordinates: feat.geometry.rings },
     };
 
-    // Remover capa anterior si existe
+    // Remover capas anteriores
     if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
-    // Ocultar todos los demás padrones — mostrar solo este
-    if (geoLayer) { map.removeLayer(geoLayer); }
+    if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
+    if (geoLayer)    { map.removeLayer(geoLayer); }
     padronOnlyMode = true;
+    document.getElementById('padronLimpiarBtn').style.display = 'inline-block';
 
     padronLayer = L.geoJSON(geojson, {
       style: {
