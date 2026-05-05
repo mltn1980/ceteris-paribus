@@ -231,17 +231,24 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
 
   <div class="act-tabs" id="actTabs"></div>
 
-  <!-- Panel costos propios — solo usuarios premium en modo rent -->
+  <!-- Panel parámetros propios — usuarios premium -->
   <div id="costosPropios" style="display:none;margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
     <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--surface2);cursor:pointer;" onclick="toggleCostosPanel()">
-      <span style="font-size:0.82rem;font-weight:700;color:var(--text2);">⚙️ Mis costos directos <span style="font-weight:400;color:var(--muted);">(USD/ha)</span></span>
+      <span style="font-size:0.82rem;font-weight:700;color:var(--text2);">⚙️ Mis parámetros</span>
       <span id="costosPanelToggle" style="font-size:0.75rem;color:var(--muted);font-weight:600;">▼ Editar</span>
     </div>
     <div id="costosPanelBody" style="display:none;padding:14px 16px;">
-      <div id="costosGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:14px;"></div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Costos directos (USD/ha)</div>
+      <div id="costosGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;"></div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Rendimientos base</div>
+      <div id="rindesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;"></div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Precios <span style="font-weight:400;font-size:0.68rem;">(pisa Cámara Mercantil)</span></div>
+      <div id="preciosGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;"></div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Arrendamiento ref. (USD/ha)</div>
+      <div id="arrsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;"></div>
       <div style="display:flex;gap:8px;">
-        <button onclick="aplicarCostos()" style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--dark);color:#f7f5f0;cursor:pointer;">Aplicar</button>
-        <button onclick="restaurarCostos()" style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text2);cursor:pointer;">Restaurar defaults</button>
+        <button onclick="aplicarParametros()" style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:none;border-radius:8px;background:var(--dark);color:#f7f5f0;cursor:pointer;">Aplicar</button>
+        <button onclick="restaurarParametros()" style="padding:7px 18px;font-size:0.82rem;font-weight:600;font-family:'IBM Plex Sans',sans-serif;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text2);cursor:pointer;">Restaurar defaults</button>
       </div>
     </div>
   </div>
@@ -382,50 +389,50 @@ const ACT = {
   ganaderia: {
     label:'Ganadería', icon:'🐄', color:'#2a7235',
     baseRev: 280, cost: 93, arrRef: 82.7,
-    yieldLabel:'Producción est.', yieldUnit:'kg PV/ha', yieldBase:100, priceUnit:'USD 2.80/kg PV (INAC, sem.17/2026)',
+    price: 2.80, yieldLabel:'Producción est.', yieldUnit:'kg PV/ha', yieldBase:100, priceUnit:'USD 2.80/kg PV (INAC, sem.17/2026)',
     coneatMin: 60,
   },
   soja: {
     label:'Soja 1ª', icon:'🫘', color:'#c8963e',
     baseRev: 1120, cost: 1045, arrRef: 329.3,
-    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:2.8, priceUnit:'USD 400/tn',
+    price: 400, yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:2.8, priceUnit:'USD 400/tn',
     coneatMin: 120,
   },
   trigo: {
     label:'Trigo', icon:'🌾', color:'#a07418',
     baseRev: 700, cost: 940, arrRef: 329.3,
-    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:5.04, priceUnit:'USD 200/tn',
+    price: 200, yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:5.04, priceUnit:'USD 200/tn',
     coneatMin: 100,
   },
   maiz: {
     label:'Maíz 1ª', icon:'🌽', color:'#d49017',
     baseRev: 1500, cost: 1163, arrRef: 329.3,
-    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:6.0, priceUnit:'USD 250/tn',
+    price: 250, yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:6.0, priceUnit:'USD 250/tn',
     coneatMin: 130,
   },
   colza: {
     label:'Colza', icon:'🌼', color:'#7b6e30',
     baseRev: 1146, cost: 827, arrRef: 329.3,
-    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:1.75, priceUnit:'USD 521/tn',
+    price: 521, yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:1.75, priceUnit:'USD 521/tn',
     coneatMin: 100,
   },
   girasol: {
     label:'Girasol', icon:'🌻', color:'#c89000',
     baseRev: 823, cost: 576, arrRef: 329.3,
-    yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:1.8, priceUnit:'USD 457/tn',
+    price: 457, yieldLabel:'Rendimiento est.', yieldUnit:'tn/ha', yieldBase:1.8, priceUnit:'USD 457/tn',
     coneatMin: 100,
   },
   arroz: {
     label:'Arroz', icon:'🍚', color:'#1b5e85',
     baseRev: 1989, cost: 2149, arrRef: 168.8,
-    fixed: true,
+    price: 221, fixed: true,
     yieldLabel:'Rendimiento ref.', yieldUnit:'tn/ha', yieldBase:9.0, priceUnit:'USD 221/tn (ACA - 2024/25)',
     coneatMin: 60, coneatMax: 110,
   },
   lecheria: {
     label:'Lechería', icon:'🥛', color:'#4a7ab8',
     baseRev: 1633, cost: 1011, arrRef: 222.1,
-    yieldLabel:'Producción est.', yieldUnit:'L/ha', yieldBase:3628, priceUnit:'USD 0.45/L',
+    price: 0.45, yieldLabel:'Producción est.', yieldUnit:'L/ha', yieldBase:3628, priceUnit:'USD 0.45/L',
     coneatMin: 80, coneatMax: 130,
   },
 };
@@ -457,23 +464,30 @@ const ACT_TO_CENSO = {
   lecheria:   'lecheria',
 };
 
-// ── COSTOS PROPIOS (usuarios premium) ────────────────────────────────────────
-const ACT_DEFAULT_COSTS = Object.fromEntries(Object.entries(ACT).map(([k, a]) => [k, a.cost]));
+// ── PARÁMETROS PROPIOS (usuarios premium) ────────────────────────────────────
+const ACT_DEFAULT_COSTS  = Object.fromEntries(Object.entries(ACT).map(([k,a]) => [k, a.cost]));
+const ACT_DEFAULT_YIELDS = Object.fromEntries(Object.entries(ACT).map(([k,a]) => [k, a.yieldBase]));
+const ACT_DEFAULT_PRICES = Object.fromEntries(Object.entries(ACT).map(([k,a]) => [k, a.price]));
+const ACT_DEFAULT_ARRS   = Object.fromEntries(Object.entries(ACT).map(([k,a]) => [k, a.arrRef]));
 
-function buildCostosGrid() {
-  const grid = document.getElementById('costosGrid');
+function _buildGrid(gridId, field, suffix, step) {
+  const grid = document.getElementById(gridId);
   if (!grid || grid.children.length) return;
   Object.entries(ACT).forEach(([key, a]) => {
+    const defVal = field === 'cost' ? ACT_DEFAULT_COSTS[key]
+                 : field === 'yieldBase' ? ACT_DEFAULT_YIELDS[key]
+                 : field === 'price' ? ACT_DEFAULT_PRICES[key]
+                 : ACT_DEFAULT_ARRS[key];
     const cell = document.createElement('div');
     cell.style.cssText = 'display:flex;flex-direction:column;gap:4px;';
     cell.innerHTML = `
       <label style="font-size:0.75rem;font-weight:600;color:var(--text2);">${a.icon} ${a.label}</label>
       <div style="display:flex;align-items:center;gap:4px;">
-        <input id="cost-${key}" type="number" min="0" value="${a.cost}"
+        <input id="${field}-${key}" type="number" min="0" step="${step}" value="${a[field]}"
           style="width:90px;padding:5px 8px;font-size:0.82rem;font-family:'IBM Plex Mono',monospace;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);">
-        <span style="font-size:0.72rem;color:var(--muted);">USD/ha</span>
+        <span style="font-size:0.72rem;color:var(--muted);">${field === 'yieldBase' ? a.yieldUnit.replace('/ha','') : suffix}</span>
       </div>
-      <span style="font-size:0.68rem;color:var(--muted);">Default: ${ACT_DEFAULT_COSTS[key]}</span>`;
+      <span style="font-size:0.68rem;color:var(--muted);">Def: ${defVal}</span>`;
     grid.appendChild(cell);
   });
 }
@@ -482,42 +496,52 @@ function toggleCostosPanel() {
   const body   = document.getElementById('costosPanelBody');
   const toggle = document.getElementById('costosPanelToggle');
   const open   = body.style.display === 'none';
-  body.style.display   = open ? 'block' : 'none';
-  toggle.textContent   = open ? '▲ Cerrar' : '▼ Editar';
-  if (open) buildCostosGrid();
+  body.style.display = open ? 'block' : 'none';
+  toggle.textContent = open ? '▲ Cerrar' : '▼ Editar';
+  if (open) {
+    _buildGrid('costosGrid',  'cost',      'USD/ha', 1);
+    _buildGrid('rindesGrid',  'yieldBase', '',       0.1);
+    _buildGrid('preciosGrid', 'price',     'USD',    0.01);
+    _buildGrid('arrsGrid',    'arrRef',    'USD/ha', 1);
+  }
 }
 
-async function guardarCostosUsuario(costos) {
+async function guardarParametrosUsuario(params) {
   const nid  = window.netlifyIdentity;
   const user = nid && nid.currentUser && nid.currentUser();
   if (!user) return;
-  // Enviar a base de datos centralizada (silencioso)
   fetch('/.netlify/functions/guardar-costos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id: user.id, user_email: user.email, costos }),
+    body: JSON.stringify({ user_id: user.id, user_email: user.email, costos: params.costos }),
   }).catch(() => {});
   try {
     const token = await user.jwt();
     await fetch('/.netlify/identity/user', {
       method: 'PUT',
       headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: { costos } }),
+      body: JSON.stringify({ data: params }),
     });
-  } catch(e) { console.warn('No se pudieron guardar los costos:', e); }
+  } catch(e) { console.warn('No se pudieron guardar los parámetros:', e); }
 }
 
 function cargarCostosUsuario(user) {
-  const costos = user?.user_metadata?.costos;
-  if (!costos) return;
-  Object.entries(costos).forEach(([key, val]) => {
-    if (ACT[key] && val >= 0) ACT[key].cost = val;
+  const md = user?.user_metadata;
+  if (!md) return;
+  if (md.costos)  Object.entries(md.costos).forEach(([k,v])  => { if (ACT[k] && v >= 0) ACT[k].cost = v; });
+  if (md.rindes)  Object.entries(md.rindes).forEach(([k,v])  => {
+    if (ACT[k] && v > 0) { ACT[k].yieldBase = v; if (!ACT[k]._customPrice) ACT[k].baseRev = Math.round(ACT[k].price * v); }
   });
+  if (md.precios) Object.entries(md.precios).forEach(([k,v]) => {
+    if (ACT[k] && v > 0) { ACT[k].price = v; ACT[k].baseRev = Math.round(v * ACT[k].yieldBase); ACT[k]._customPrice = true; ACT[k].priceUnit = `USD ${v}/${ACT[k].yieldUnit.replace('/ha','')} (usuario)`; }
+  });
+  if (md.arrs)    Object.entries(md.arrs).forEach(([k,v])    => { if (ACT[k] && v >= 0) ACT[k].arrRef = v; });
   Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
-  // Actualizar inputs si el panel ya está abierto
-  Object.entries(costos).forEach(([key, val]) => {
-    const input = document.getElementById('cost-' + key);
-    if (input) input.value = val;
+  ['cost','yieldBase','price','arrRef'].forEach(field => {
+    Object.keys(ACT).forEach(key => {
+      const input = document.getElementById(field + '-' + key);
+      if (input) input.value = ACT[key][field];
+    });
   });
 }
 
@@ -530,38 +554,51 @@ function setCostosStatus(msg, ok) {
   setTimeout(() => { btn.textContent = prev; btn.style.background = 'var(--dark)'; }, 2000);
 }
 
-async function aplicarCostos() {
+async function aplicarParametros() {
   Object.keys(ACT).forEach(key => {
-    const input = document.getElementById('cost-' + key);
-    if (!input) return;
-    const val = parseFloat(input.value);
-    if (!isNaN(val) && val >= 0) ACT[key].cost = val;
+    const cInput = document.getElementById('cost-' + key);
+    const yInput = document.getElementById('yieldBase-' + key);
+    const pInput = document.getElementById('price-' + key);
+    const aInput = document.getElementById('arrRef-' + key);
+    if (cInput) { const v = parseFloat(cInput.value); if (!isNaN(v) && v >= 0) ACT[key].cost = v; }
+    if (yInput) { const v = parseFloat(yInput.value); if (!isNaN(v) && v > 0)  { ACT[key].yieldBase = v; if (!ACT[key]._customPrice) ACT[key].baseRev = Math.round(ACT[key].price * v); } }
+    if (pInput) { const v = parseFloat(pInput.value); if (!isNaN(v) && v > 0)  { ACT[key].price = v; ACT[key].baseRev = Math.round(v * ACT[key].yieldBase); ACT[key]._customPrice = true; ACT[key].priceUnit = `USD ${v}/${ACT[key].yieldUnit.replace('/ha','')} (usuario)`; } }
+    if (aInput) { const v = parseFloat(aInput.value); if (!isNaN(v) && v >= 0) ACT[key].arrRef = v; }
   });
   Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
   refreshMapColors();
   if (selectedDept) showInfo(selectedDept);
-
-  const costos = Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].cost]));
+  const params = {
+    costos: Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].cost])),
+    rindes: Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].yieldBase])),
+    precios: Object.fromEntries(Object.keys(ACT).filter(k => ACT[k]._customPrice).map(k => [k, ACT[k].price])),
+    arrs:   Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].arrRef])),
+  };
   try {
-    await guardarCostosUsuario(costos);
+    await guardarParametrosUsuario(params);
     setCostosStatus('✓ Guardado', true);
   } catch(e) {
     setCostosStatus('Error al guardar', false);
   }
 }
 
-async function restaurarCostos() {
-  Object.entries(ACT_DEFAULT_COSTS).forEach(([key, cost]) => {
-    ACT[key].cost = cost;
-    const input = document.getElementById('cost-' + key);
-    if (input) input.value = cost;
+async function restaurarParametros() {
+  Object.keys(ACT).forEach(key => {
+    ACT[key].cost      = ACT_DEFAULT_COSTS[key];
+    ACT[key].yieldBase = ACT_DEFAULT_YIELDS[key];
+    ACT[key].price     = ACT_DEFAULT_PRICES[key];
+    ACT[key].arrRef    = ACT_DEFAULT_ARRS[key];
+    ACT[key].baseRev   = Math.round(ACT_DEFAULT_PRICES[key] * ACT_DEFAULT_YIELDS[key]);
+    delete ACT[key]._customPrice;
+    ['cost','yieldBase','price','arrRef'].forEach(field => {
+      const input = document.getElementById(field + '-' + key);
+      if (input) input.value = ACT[key][field];
+    });
   });
   Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
   refreshMapColors();
   if (selectedDept) showInfo(selectedDept);
-
-  const costos = Object.fromEntries(Object.keys(ACT).map(k => [k, ACT[k].cost]));
-  await guardarCostosUsuario(costos);
+  await guardarParametrosUsuario({ costos:{}, rindes:{}, precios:{}, arrs:{} });
 }
 
 function checkCostosAccess() {
@@ -604,6 +641,8 @@ fetch('data/precios.json')
     const patch = (key) => {
       if (!p[key]) return;
       const a = ACT[key];
+      if (a._customPrice) return;
+      a.price     = p[key].precio;
       a.baseRev   = Math.round(p[key].precio * a.yieldBase);
       a.priceUnit = `USD ${p[key].precio}/tn (${label})`;
     };
@@ -1584,7 +1623,16 @@ function updateNavAuth(user) {
 if (window.netlifyIdentity) {
   window.netlifyIdentity.on('init',  user => { checkCostosAccess(); updateNavAuth(user); if (user) cargarCostosUsuario(user); });
   window.netlifyIdentity.on('login', user => { window.netlifyIdentity.close(); checkCostosAccess(); updateNavAuth(user); cargarCostosUsuario(user); });
-  window.netlifyIdentity.on('logout',      () => { checkCostosAccess(); updateNavAuth(null); Object.entries(ACT_DEFAULT_COSTS).forEach(([k,v]) => ACT[k].cost = v); Object.keys(_rentCache).forEach(k => delete _rentCache[k]); refreshMapColors(); });
+  window.netlifyIdentity.on('logout', () => {
+    checkCostosAccess(); updateNavAuth(null);
+    Object.keys(ACT).forEach(k => {
+      ACT[k].cost = ACT_DEFAULT_COSTS[k]; ACT[k].yieldBase = ACT_DEFAULT_YIELDS[k];
+      ACT[k].price = ACT_DEFAULT_PRICES[k]; ACT[k].arrRef = ACT_DEFAULT_ARRS[k];
+      ACT[k].baseRev = Math.round(ACT_DEFAULT_PRICES[k] * ACT_DEFAULT_YIELDS[k]);
+      delete ACT[k]._customPrice;
+    });
+    Object.keys(_rentCache).forEach(k => delete _rentCache[k]); refreshMapColors();
+  });
 }
 </script>
 </body>
