@@ -1522,11 +1522,12 @@ let padronOnlyMode = false;
 
 function limpiarPadron() {
   if (padronLayer) { map.removeLayer(padronLayer); padronLayer = null; }
+  if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
   padronOnlyMode = false;
   document.getElementById('padronInput').value = '';
   document.getElementById('padronStatus').textContent = '';
   document.getElementById('padronLimpiarBtn').style.display = 'none';
-  if (selectedDeptFilter) fetchConeat();
+  document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Acercate y hacé clic en una zona para ver su índice CONEAT.</div>';
 }
 
 async function buscarPadron() {
