@@ -606,7 +606,12 @@ async function restaurarParametros() {
   Object.keys(_rentCache).forEach(k => delete _rentCache[k]);
   refreshMapColors();
   if (selectedDept) showInfo(selectedDept);
-  await guardarParametrosUsuario({ costos:{}, rindes:{}, precios:{}, arrs:{} });
+  await guardarParametrosUsuario({
+    costos:  { ...ACT_DEFAULT_COSTS },
+    rindes:  { ...ACT_DEFAULT_YIELDS },
+    precios: {},
+    arrs:    { ...ACT_DEFAULT_ARRS },
+  });
 }
 
 function checkCostosAccess() {
