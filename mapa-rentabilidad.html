@@ -568,7 +568,7 @@ function checkCostosAccess() {
   const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
   const panel = document.getElementById('costosPropios');
   if (!panel) return;
-  panel.style.display = (user && currentMode === 'rent') ? 'block' : 'none';
+  panel.style.display = user ? 'block' : 'none';
 }
 
 // ── WEIGHTED RENTABILITY (CONEAT distribution per dept) ─────────────────────
@@ -1360,7 +1360,7 @@ function setMode(mode) {
     actTabs.style.display = 'none';
     deptWrap.style.display = 'flex';
     padronSearch.style.display = 'flex';
-    document.getElementById('costosPropios').style.display = 'none';
+    checkCostosAccess();
     if (geoLayer) map.removeLayer(geoLayer);
     bar.style.background = 'linear-gradient(to right,#8c2020,#d87070,#e8b830,#6aaa78,#2a7235)';
     bar.style.height     = '14px';
@@ -1372,7 +1372,7 @@ function setMode(mode) {
     actTabs.style.display = 'none';
     deptWrap.style.display = 'flex';
     padronSearch.style.display = 'none';
-    document.getElementById('costosPropios').style.display = 'none';
+    checkCostosAccess();
     if (geoLayer) map.removeLayer(geoLayer);
     const crops = Object.entries(ACT).map(([k,a]) =>
       `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
