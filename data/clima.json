@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-05",
+  "actualizado": "2026-05-06",
   "alerta": {
     "activa": true,
     "tipo": "Tormentas",
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "20 abr 2026",
     "proximo_update": "~20 may 2026",
-    "nota_extra": "Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este — potencial El Niño más intenso que el pronóstico base. Niño 1+2 en +1.8°C, Niño 3 en +0.6°C, Niño 4 en +0.9°C."
+    "nota_extra": "Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este — potencial El Niño más intenso que el pronóstico base. Niño 1+2 en +1.8°C, Niño 3 en +0.6°C, Niño 4 en +0.9°C. MetSul proyecta El Niño excepcional, extremo e histórico."
   },
   "probabilidades": [
     {
@@ -64,7 +64,7 @@
     }
   ],
   "inumet": {
-    "periodo": "Abr-May-Jun 2026",
+    "periodo": "May-Jun-Jul 2026",
     "temperatura": {
       "tendencia": "Superior a normal",
       "pct_superior": 45,
