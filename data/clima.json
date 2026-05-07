@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-05-06",
+  "actualizado": "2026-05-07",
   "alerta": {
     "activa": true,
-    "tipo": "Tormentas",
+    "tipo": "Tormentas y Ciclón",
     "nivel": "Naranja",
-    "titulo": "Tormentas fuertes y ciclón extratropical",
-    "descripcion": "Tormentas fuertes (puntualmente severas) y posterior formación de un ciclón extratropical. Precipitaciones y tormentas con vientos de hasta 60 km/h en rachas.",
-    "vigencia": "6-7 may 2026",
-    "fuente": "INUMET"
+    "titulo": "Ciclón bomba con vendavales y riesgo de tornados",
+    "descripcion": "Frente fría intensa asociada a ciclón bomba. Vendavales con rachas de 60-70 km/h, riesgo de tornados. Precipitaciones y tormentas. Descenso térmico radical.",
+    "vigencia": "7-9 may 2026",
+    "fuente": "INUMET / MetSul"
   },
   "enso": {
     "fase": "Neutral → El Niño",
