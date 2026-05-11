@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-05-10",
+  "actualizado": "2026-05-11",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
-    "titulo": "Ola de frío con temperaturas congelantes",
-    "descripcion": "Reforzo de ar polar intensifica el frío. Marcas congelantes esperadas entre domingo y lunes. Bajas sensaciones térmicas y viento del SW 30-50 km/h con rachas de hasta 60 km/h.",
-    "vigencia": "10-11 may 2026",
+    "titulo": "Ola de frío con marcas congelantes continúa",
+    "descripcion": "Masa de ar polar alcanza 11 estados. Marcas abajo de cero del Sur al Norte de Rio Grande do Sul. Corredor polar abierto traerá secuencia de masas de aire frío. Temperaturas en recuperación gradual desde martes.",
+    "vigencia": "11-13 may 2026",
     "fuente": "INUMET / MetSul"
   },
   "enso": {
