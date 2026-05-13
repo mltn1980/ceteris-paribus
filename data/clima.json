@@ -1,11 +1,11 @@
 {
-  "actualizado": "2026-05-12",
+  "actualizado": "2026-05-13",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
     "titulo": "Ola de frío prolongada con marcas congelantes",
-    "descripcion": "Masa de ar polar alcanza 11 estados con marcas abajo de cero. 25 cidades gaúchas com temperaturas negativas. Corredor polar abierto traerá secuencia de masas de aire frío. Frio vai longe según MetSul.",
+    "descripcion": "Onda de frio entra no sexto dia com até 5ºC abaixo de zero. 25 cidades gaúchas com temperaturas negativas. Corredor polar abierto traerá secuencia de masas de aire frío. Frio vai longe según MetSul.",
     "vigencia": "12-14 may 2026",
     "fuente": "INUMET / MetSul"
   },
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "20 abr 2026",
     "proximo_update": "~20 may 2026",
-    "nota_extra": "Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este — potencial El Niño más intenso que el pronóstico base. Niño 1+2 en +1.8°C, Niño 3 en +0.6°C, Niño 4 en +0.9°C. MetSul proyecta El Niño excepcional, extremo e histórico."
+    "nota_extra": "El Niño es inminente — instalación entre la segunda quincena de mayo y principios de junio. Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este. Niño 1+2 en +1.8°C, Niño 3 en +0.6°C, Niño 4 en +0.9°C. MetSul proyecta El Niño excepcional, extremo e histórico con impactos ya en las próximas semanas."
   },
   "probabilidades": [
     {
