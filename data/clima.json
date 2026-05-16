@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-05-15",
+  "actualizado": "2026-05-16",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
-    "titulo": "Ola de frío prolongada con marcas congelantes",
-    "descripcion": "Quinto día consecutivo con temperaturas bajo cero en Rio Grande do Sul. 25 ciudades gaúchas con mínimas negativas. Corredor polar abierto trae secuencia de masas de aire frío — una atrás de otra. Frio vai longe según MetSul. Heladas agrometeorológicas para viernes 15 en Uruguay.",
-    "vigencia": "12-16 may 2026",
+    "titulo": "Ola de frío prolongada — una semana con marcas congelantes",
+    "descripcion": "Rio Grande do Sul completa una semana con temperaturas bajo cero. Corredor polar abierto con masas de aire frío sucesivas — frio vai longe, frio até o fim do mês según MetSul. Nueva masa polar ingresa el fin de semana con chuva volumosa (hasta 100mm) y temperaturas congelantes. Uruguay: bajas temperaturas persistentes.",
+    "vigencia": "8-20 may 2026",
     "fuente": "INUMET / MetSul"
   },
   "enso": {
