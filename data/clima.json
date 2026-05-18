@@ -1,11 +1,11 @@
 {
-  "actualizado": "2026-05-17",
+  "actualizado": "2026-05-18",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
-    "titulo": "Ola de frío prolongada — una semana con marcas congelantes",
-    "descripcion": "Rio Grande do Sul completa una semana con temperaturas bajo cero. Corredor polar abierto con masas de aire frío sucesivas — frio vai longe, frio até o fim do mês según MetSul. Frente fría este fin de semana con chuva volumosa (hasta 100-150mm en tres estados) y nueva masa polar con temperaturas congelantes. Uruguay: bajas temperaturas persistentes, heladas agrometeorológicas previstas.",
+    "titulo": "Ola de frío prolongada — masa polar derruba temperatura y el frio va a aumentar",
+    "descripcion": "Rio Grande do Sul completa una semana con marcas bajo cero. Corredor polar abierto con masas de aire frío sucesivas — frio vai longe, frio até o fim do mês según MetSul. Nueva massa de ar frio avança pelo Sul do Brasil e trará una sequência de madrugadas gélidas e com formação de geada. Semana de julho em maio para RS. Uruguay: bajas temperaturas persistentes, heladas previstas.",
     "vigencia": "8-31 may 2026",
     "fuente": "INUMET / MetSul"
   },
