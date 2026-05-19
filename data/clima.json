@@ -1,66 +1,66 @@
 {
-  "actualizado": "2026-05-18",
+  "actualizado": "2026-05-19",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
-    "titulo": "Ola de frío prolongada — masa polar derruba temperatura y el frio va a aumentar",
-    "descripcion": "Rio Grande do Sul completa una semana con marcas bajo cero. Corredor polar abierto con masas de aire frío sucesivas — frio vai longe, frio até o fim do mês según MetSul. Nueva massa de ar frio avança pelo Sul do Brasil e trará una sequência de madrugadas gélidas e com formação de geada. Semana de julho em maio para RS. Uruguay: bajas temperaturas persistentes, heladas previstas.",
+    "titulo": "Reforço de ar polar prolonga onda de frio — temperaturas congelantes e geadas",
+    "descripcion": "Rio Grande do Sul registra mínima do ano com quase -5°C. Reforço de ar polar chega entre hoje e amanhã trazendo ar gelado que vai prolongar o frio. Corredor polar aberto com masas de aire frío sucesivas — frio vai longe, até o fim do mês. Uruguay: bajas temperaturas persistentes, heladas agrometeorológicas previstas jueves.",
     "vigencia": "8-31 may 2026",
     "fuente": "INUMET / MetSul"
   },
   "enso": {
     "fase": "Neutral → El Niño",
-    "nino34": 0.5,
+    "nino34": 0.9,
     "nino34_anterior": 0.5,
-    "nino34_semana": "15 abr 2026",
+    "nino34_semana": "13 may 2026",
     "perspectiva_label": "El Niño",
-    "perspectiva_pct": "88–94%",
+    "perspectiva_pct": "97–98%",
     "fuente": "IRI/Columbia",
-    "fuente_fecha": "20 abr 2026",
-    "proximo_update": "~20 may 2026",
-    "nota_extra": "El Niño es inminente — instalación entre la segunda quincena de mayo y principios de junio. Onda Kelvin subsuperficial con anomalías de +5°C avanza hacia el Pacífico Este. Niño 1+2 en +1.8°C, Niño 3 en +0.6°C, Niño 4 en +0.9°C. NOAA eleva probabilidad de El Niño a casi 100%. MetSul proyecta El Niño excepcional, extremo e histórico con impactos ya en las próximas semanas."
+    "fuente_fecha": "19 may 2026",
+    "proximo_update": "~19 jun 2026",
+    "nota_extra": "Pacífico atinge marcas de El Niño pela primeira vez sob novo critério da NOAA. Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera."
   },
   "probabilidades": [
     {
-      "label": "Abr-May-Jun 2026",
-      "actual": true,
-      "el_nino": 70,
-      "neutral": 30,
-      "la_nina": 0,
-      "descripcion": "El Niño ya dominante"
-    },
-    {
       "label": "May-Jun-Jul 2026",
-      "actual": false,
-      "el_nino": 88,
-      "neutral": 12,
+      "actual": true,
+      "el_nino": 98,
+      "neutral": 2,
       "la_nina": 0,
-      "descripcion": "Consolidándose"
+      "descripcion": "El Niño establecido"
     },
     {
       "label": "Jun-Jul-Ago 2026",
       "actual": false,
-      "el_nino": 92,
-      "neutral": 8,
+      "el_nino": 97,
+      "neutral": 3,
       "la_nina": 0,
-      "descripcion": "Establecido — pico de probabilidad"
+      "descripcion": "Continúa con alta confianza"
     },
     {
       "label": "Jul-Ago-Set 2026",
       "actual": false,
-      "el_nino": 94,
-      "neutral": 6,
+      "el_nino": 97,
+      "neutral": 3,
       "la_nina": 0,
-      "descripcion": "Pleno — máxima certeza"
+      "descripcion": "Persistente"
+    },
+    {
+      "label": "Ago-Set-Oct 2026",
+      "actual": false,
+      "el_nino": 98,
+      "neutral": 2,
+      "la_nina": 0,
+      "descripcion": "Máxima certeza"
     },
     {
       "label": "Oct-Nov-Dic 2026",
       "actual": false,
-      "el_nino": 90,
-      "neutral": 9,
-      "la_nina": 1,
-      "descripcion": "Continúa"
+      "el_nino": 97,
+      "neutral": 3,
+      "la_nina": 0,
+      "descripcion": "Continúa fuerte"
     }
   ],
   "inumet": {
