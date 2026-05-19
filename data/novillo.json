@@ -1,15 +1,15 @@
 {
-  "valor": 1976,
-  "periodo": "marzo 2026",
-  "actualizado": "2026-04-18",
-  "variacion": 2.3,
-  "variacion_año": 18.3,
-  "vh": 1608,
-  "vh_participacion": 81,
-  "vh_variacion": 0.4,
-  "vh_variacion_año": 26.6,
-  "vai": 368,
-  "vai_participacion": 19,
-  "vai_variacion": 11.2,
-  "vai_variacion_año": -8.2
+  "valor": 2018,
+  "periodo": "abril 2026",
+  "actualizado": "2026-05-19",
+  "variacion": 2.1,
+  "vh": 1595,
+  "vh_participacion": 79,
+  "vh_variacion": -0.8,
+  "vai": 423,
+  "vai_participacion": 21,
+  "vai_variacion": 14.9,
+  "variacion_año": 20.5,
+  "vh_variacion_año": 23.7,
+  "vai_variacion_año": 9.6
 }
