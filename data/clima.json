@@ -1,11 +1,11 @@
 {
-  "actualizado": "2026-05-20",
+  "actualizado": "2026-05-21",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
     "titulo": "Reforço de ar polar prolonga onda de frio — temperaturas congelantes e geadas",
-    "descripcion": "27 cidades gaúchas registram temperatura abaixo de zero, Grande Porto Alegre com 1°C. Frente fria causa chuva forte no Sudeste enquanto ar polar gela o Sul. Corredor polar aberto com masas de aire frío sucesivas — frio vai longe, até o fim do mês. Uruguay: bajas temperaturas persistentes, heladas agrometeorológicas previstas jueves 21.",
+    "descripcion": "RS completa 15 dias abaixo de zero no ano. Reforço de ar polar e nuvens vão trazer frio o dia todo. Frente fria causa chuva forte no Sudeste enquanto ar polar gela o Sul. Corredor polar aberto com masas de aire frío sucesivas — frio vai longe, até o fim do mês. Uruguay: bajas temperaturas persistentes, heladas agrometeorológicas previstas viernes 22 y sábado 23.",
     "vigencia": "8-31 may 2026",
     "fuente": "INUMET / MetSul"
   },
