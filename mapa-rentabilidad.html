@@ -205,7 +205,6 @@ main{max-width:1080px;margin:0 auto;padding:32px 20px 64px;}
   <div class="mode-toggle">
     <button class="mode-btn active" id="modeRent"  onclick="setMode('rent')"  >📊 Rentabilidad por depto.</button>
     <button class="mode-btn"        id="modeCon"   onclick="setMode('coneat')">🗺️ Índices CONEAT</button>
-    <button class="mode-btn"        id="modeOptim" onclick="setMode('optimo')">🌱 Segmentación productiva</button>
   </div>
 
   <div id="padronSearchWrap" style="display:none;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
@@ -821,7 +820,7 @@ function onDeptFilterChange(val) {
   if (val && deptBoundsMap[val]) {
     map.flyToBounds(deptBoundsMap[val], { padding: [30, 30] });
   }
-  if (currentMode === 'coneat' || currentMode === 'optimo') {
+  if (currentMode === 'coneat') {
     if (coneatLayer) { map.removeLayer(coneatLayer); coneatLayer = null; }
     clearTimeout(fetchTimer);
     fetchTimer = setTimeout(fetchConeat, 300);
@@ -1155,39 +1154,6 @@ function optimalCrop(coneatIdx, deptName) {
   return best;
 }
 
-function showOptimoInfo(p) {
-  const idx   = p.IND_CONEAT;
-  const depto = normDepto(p.DEPTO) || p.DEPTO;
-  const opt   = optimalCrop(idx, normDepto(p.DEPTO));
-  const a     = opt ? ACT[opt.key] : null;
-  const rows  = Object.entries(ACT).map(([key]) => {
-    const res = calcRentByCONEAT(key, idx, normDepto(p.DEPTO));
-    return { key, a: ACT[key], res };
-  }).sort((x,y) => ((y.res?.rent ?? -9999) - (x.res?.rent ?? -9999)));
-
-  let html = `
-    <h3>CONEAT ${idx ?? '—'}</h3>
-    <span class="coneat-badge" style="background:${a ? ACT[opt.key].color+'22' : '#eee'};color:${a ? ACT[opt.key].color : '#888'};">
-      ${a ? a.icon + ' ' + a.label : 'Sin cultivo viable'}
-    </span>
-    <div class="dept-stats" style="margin-top:10px;">
-      <div class="dept-stat"><label>Departamento</label><value>${depto}</value></div>
-      <div class="dept-stat"><label>Índice CONEAT</label><value>${idx}</value></div>
-      ${opt ? `<div class="dept-stat"><label>Margen neto óptimo</label><value style="color:${opt.res.rent>=0?'var(--green)':'var(--red)'};">${opt.res.rent>=0?'+':''}${opt.res.rent.toFixed(0)} USD/ha</value></div>` : ''}
-    </div>
-    <div class="section-title" style="margin-top:12px;">Ranking por actividad</div>`;
-
-  for (const {key, a, res} of rows) {
-    if (!res) continue;
-    const cls = res.rent >= 0 ? 'pos' : 'neg';
-    const sign = res.rent >= 0 ? '+' : '';
-    html += `<div class="activity-row${key === opt?.key ? ' highlighted' : ''}">
-      <div class="act-name">${a.icon} ${a.label}${actTipHtml(a, res)}</div>
-      <span class="act-rent ${cls}">${sign}${res.rent.toFixed(0)} USD/ha</span>
-    </div>`;
-  }
-  document.getElementById('infoPanel').innerHTML = html;
-}
 
 // ── CONEAT MODE ───────────────────────────────────────────────────────────────
 const DGRN_URL = 'https://dgrn.mgap.gub.uy/arcgis/rest/services/CONEAT/IndicesConeat/MapServer/0/query';
@@ -1209,8 +1175,7 @@ function coneatColor(idx) {
 }
 
 async function fetchConeat() {
-  if (currentMode !== 'coneat' && currentMode !== 'optimo') return;
-  if (currentMode === 'optimo' && !selectedDeptFilter) return;
+  if (currentMode !== 'coneat') return;
   if (padronOnlyMode) return;
   const zoom = map.getZoom();
   const loading = document.getElementById('mapLoading');
@@ -1251,45 +1216,25 @@ async function fetchConeat() {
     };
 
     // Si hay depto. filtrado: mostrar padrones individuales sin disolver
-    // Si no: disolver por CONEAT o cultivo óptimo para mejor performance
-    const isOptimo     = currentMode === 'optimo';
     const showPadrones = !!selectedDeptFilter;
 
     if (!showPadrones) {
-      if (isOptimo) {
-        geojson.features.forEach(f => {
-          const idx   = f.properties.IND_CONEAT;
-          const depto = normDepto(f.properties.DEPTO);
-          const opt   = optimalCrop(idx, depto);
-          f.properties._optKey = opt ? opt.key : '__none__';
-        });
-      }
       try {
-        geojson = turf.dissolve(geojson, { propertyName: isOptimo ? '_optKey' : 'IND_CONEAT' });
+        geojson = turf.dissolve(geojson, { propertyName: 'IND_CONEAT' });
       } catch(e) {}
     }
 
     if (coneatLayer) map.removeLayer(coneatLayer);
     coneatLayer = L.geoJSON(geojson, {
       style: f => {
-        const p = f.properties;
-        let color;
-        if (isOptimo && !showPadrones) {
-          color = (p._optKey && ACT[p._optKey]) ? ACT[p._optKey].color : '#c8c4bc';
-        } else if (isOptimo && showPadrones) {
-          const depto = normDepto(p.DEPTO);
-          const opt   = optimalCrop(p.IND_CONEAT, depto);
-          color = (opt && ACT[opt.key]) ? ACT[opt.key].color : '#c8c4bc';
-        } else {
-          color = coneatColor(p.IND_CONEAT);
-        }
+        const color = coneatColor(f.properties.IND_CONEAT);
         return { fillColor: color, weight: showPadrones ? 0.5 : 0.8, color: 'rgba(60,60,60,0.3)', fillOpacity: 0.80 };
       },
       onEachFeature: (f, layer) => {
         layer.on({
           mouseover(e) { e.target.setStyle({ weight: 2.5, color: '#222', fillOpacity: 0.95 }); e.target.bringToFront(); },
           mouseout(e)  { if (coneatLayer) coneatLayer.resetStyle(e.target); },
-          click()      { isOptimo ? showOptimoInfo(f.properties) : showConeatInfo(f.properties); },
+          click()      { showConeatInfo(f.properties); },
         });
       }
     }).addTo(map);
@@ -1407,9 +1352,8 @@ function setMode(mode) {
   if (deptSel) deptSel.value = '';
 
   currentMode = mode;
-  document.getElementById('modeRent') .classList.toggle('active', mode === 'rent');
-  document.getElementById('modeCon')  .classList.toggle('active', mode === 'coneat');
-  document.getElementById('modeOptim').classList.toggle('active', mode === 'optimo');
+  document.getElementById('modeRent').classList.toggle('active', mode === 'rent');
+  document.getElementById('modeCon') .classList.toggle('active', mode === 'coneat');
 
   const actTabs      = document.getElementById('actTabs');
   const bar          = document.getElementById('legendBar');
@@ -1442,25 +1386,6 @@ function setMode(mode) {
     document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🗺️</strong>Acercate y hacé clic en una zona para ver su índice CONEAT.</div>';
     fetchConeat();
 
-  } else if (mode === 'optimo') {
-    actTabs.style.display = 'none';
-    deptWrap.style.display = 'flex';
-    padronSearch.style.display = 'none';
-    checkCostosAccess();
-    if (geoLayer) map.removeLayer(geoLayer);
-    const crops = Object.entries(ACT).map(([k,a]) =>
-      `<span style="display:flex;align-items:center;gap:4px;white-space:nowrap;">
-        <span style="width:10px;height:10px;border-radius:2px;background:${a.color};display:inline-block;"></span>${a.icon}${a.label}
-      </span>`).join('');
-    bar.style.background = 'none';
-    bar.style.height     = '0';
-    labels.innerHTML     = `<div style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;">${crops}</div>`;
-    if (selectedDeptFilter) {
-      document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Hacé clic en una zona para ver el cultivo óptimo y el ranking de actividades.</div>';
-      fetchConeat();
-    } else {
-      document.getElementById('infoPanel').innerHTML = '<div class="hint"><strong>🌱</strong>Seleccioná un departamento para cargar los padrones.</div>';
-    }
   }
 }
 
