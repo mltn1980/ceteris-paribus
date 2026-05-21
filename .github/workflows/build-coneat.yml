@@ -1,0 +1,91 @@
+name: Build CONEAT Distribution
+
+on:
+  workflow_dispatch:  # solo se ejecuta manualmente
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create data folder
+        run: mkdir -Force data
+
+      - name: Run build-coneat-dist.ps1
+        shell: pwsh
+        run: |
+          $url   = "https://dgrn.mgap.gub.uy/arcgis/rest/services/CONEAT/IndicesConeat/MapServer/0/query"
+          $out   = "$env:GITHUB_WORKSPACE\data\coneat-dept-dist.json"
+
+          $depts = @(
+            'ARTIGAS','CANELONES','CERRO LARGO','COLONIA','DURAZNO','FLORES','FLORIDA',
+            'LAVALLEJA','MALDONADO','MONTEVIDEO','PAYSANDU','RIO NEGRO','RIVERA',
+            'ROCHA','SALTO','SAN JOSE','SORIANO','TACUAREMBO','TREINTA Y TRES'
+          )
+
+          $batchSize = 1000
+          $result = @{}
+
+          foreach ($dept in $depts) {
+            Write-Host "Consultando $dept..."
+            $offset    = 0
+            $dist      = @{}
+            $totalArea = 0
+
+            do {
+              $body = @{
+                where             = "DEPTO='$dept'"
+                outFields         = "IND_CONEAT,AREAHA"
+                returnGeometry    = "false"
+                resultOffset      = $offset
+                resultRecordCount = $batchSize
+                f                 = "json"
+              }
+              $attempt = 0
+              $r = $null
+              while ($attempt -lt 3 -and $r -eq $null) {
+                try {
+                  $r = Invoke-RestMethod $url -Method Post -Body $body -TimeoutSec 90
+                } catch {
+                  $attempt++
+                  Write-Host "  Reintento $attempt (offset $offset)..."
+                  Start-Sleep -Seconds 5
+                }
+              }
+              if ($r -eq $null) { Write-Host "  FALLO en offset $offset, saltando."; break }
+
+              foreach ($f in $r.features) {
+                $idx  = [string]$f.attributes.IND_CONEAT
+                $area = [double]$f.attributes.AREAHA
+                if ($area -le 0) { continue }
+                if (-not $dist.ContainsKey($idx)) { $dist[$idx] = 0.0 }
+                $dist[$idx] += $area
+                $totalArea  += $area
+              }
+
+              $count   = $r.features.Count
+              $offset += $count
+              Write-Host "  offset $offset — $count registros — $([math]::Round($totalArea)) ha"
+
+              if ($count -lt $batchSize) { break }
+
+            } while ($true)
+
+            Write-Host "  TOTAL ${dept}: $($dist.Count) indices, $([math]::Round($totalArea)) ha"
+            $result[$dept] = $dist
+          }
+
+          $json = $result | ConvertTo-Json -Depth 5 -Compress
+          [IO.File]::WriteAllText($out, $json, [Text.Encoding]::UTF8)
+          Write-Host "Guardado en $out"
+
+      - name: Commit and push coneat-dept-dist.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/coneat-dept-dist.json
+          git commit -m "chore: build coneat-dept-dist.json via Actions"
+          git push
