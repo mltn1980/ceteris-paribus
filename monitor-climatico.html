@@ -1,0 +1,2048 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitor Climático — Uruguay · ceterisparibus</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font:   'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --mono:   'IBM Plex Mono', 'Courier New', monospace;
+  --serif:  'Libre Baskerville', Georgia, serif;
+  --accent: #00D191;
+  --accent-l: #FBBC44;
+  --ink:    rgba(232,244,240,0.95);
+  --ink2:   rgba(139,191,176,0.85);
+  --rule:   rgba(0,209,145,0.14);
+}
+
+body {
+  font-family: var(--font);
+  min-height: 100vh;
+  transition: background 1.8s ease;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== FONDOS DINÁMICOS ===== */
+body.wx-sunny {
+  background:
+    linear-gradient(to bottom, rgba(3,12,25,0.52) 0%, rgba(3,12,25,0.18) 38%, rgba(3,12,25,0.50) 100%),
+    url("bg-sunny.jpg") 30% center/cover no-repeat;
+}
+body.wx-partly-cloudy {
+  background:
+    radial-gradient(ellipse at 65% 12%, rgba(150,195,255,0.07) 0%, transparent 48%),
+    linear-gradient(160deg, #080f1a 0%, #101e32 35%, #192a46 65%, #102038 100%);
+}
+body.wx-cloudy {
+  background:
+    linear-gradient(to bottom, rgba(5,8,12,0.55) 0%, rgba(5,8,12,0.20) 40%, rgba(5,8,12,0.52) 100%),
+    url("bg-cloudy.jpg") 30% center/cover no-repeat;
+}
+body.wx-fog {
+  background: linear-gradient(160deg, #101418 0%, #1a2028 50%, #22292e 100%);
+}
+body.wx-drizzle, body.wx-rain {
+  background: url("bg-rain.jpg") 30% center/cover no-repeat;
+}
+body.wx-drizzle::before, body.wx-rain::before, body.wx-heavy-rain::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+body.wx-drizzle::before    { background: linear-gradient(to bottom, rgba(8,14,22,0.48) 0%, rgba(8,14,22,0.18) 45%, rgba(8,14,22,0.52) 100%); }
+body.wx-rain::before       { background: linear-gradient(to bottom, rgba(5,10,18,0.56) 0%, rgba(5,10,18,0.26) 45%, rgba(5,10,18,0.58) 100%); }
+body.wx-heavy-rain::before { background: linear-gradient(to bottom, rgba(3,6,14,0.66) 0%, rgba(3,6,14,0.36) 45%, rgba(3,6,14,0.68) 100%); }
+body.wx-heavy-rain {
+  background: url("bg-heavy-rain.jpg") 30% center/cover no-repeat;
+}
+body.wx-storm {
+  background: url("bg-storm.jpg") 30% center/cover no-repeat;
+  animation: storm-flash 7s infinite;
+}
+body.wx-storm::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(2,0,10,0.72) 0%, rgba(2,0,10,0.40) 45%, rgba(2,0,10,0.75) 100%);
+}
+body.wx-snow {
+  background: linear-gradient(160deg, #080f1e 0%, #0f1c35 40%, #162340 100%);
+}
+body.wx-night-clear {
+  background: url("bg-night.jpg") center/auto 95% no-repeat; background-color: #01030c;
+}
+body.wx-night-clear::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(1,3,12,0.55) 0%, rgba(1,3,12,0.22) 45%, rgba(1,3,12,0.58) 100%);
+}
+body.wx-night-cloudy {
+  background: linear-gradient(160deg, #1a1a2e 0%, #252550 50%, #2d2d5e 100%);
+}
+
+@keyframes storm-flash {
+  0%, 85%, 92%, 98%, 100% { filter: brightness(1); }
+  87%, 95% { filter: brightness(1.4); }
+}
+
+/* ===== ÍCONO SOL SVG ===== */
+.sun-svg { width: 0.82em; height: 0.82em; overflow: visible; display: block; }
+.sun-rays { animation: sun-spin 28s linear infinite; transform-origin: 32px 32px; }
+.sun-halo { animation: sun-pulse 3.8s ease-in-out infinite; transform-origin: 32px 32px; }
+@keyframes sun-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sun-pulse {
+  0%, 100% { opacity: 0.28; transform: scale(1); }
+  50%       { opacity: 0.60; transform: scale(1.10); }
+}
+
+/* ===== CANVAS ===== */
+#wx-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== LAYOUT ===== */
+.page { position: relative; z-index: 1; min-height: 100vh; }
+
+/* ===== HEADER ===== */
+header {
+  padding: 13px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+header::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-l), transparent);
+}
+.brand { font-family: var(--mono); font-size: 0.80rem; font-weight: 500; color: rgba(255,255,255,0.95); text-decoration: none; letter-spacing: 0.16em; text-transform: uppercase; }
+.brand span { opacity: 0.45; font-weight: 400; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.header-title { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.18em; }
+.refresh-btn {
+  padding: 6px 14px; font-family: var(--mono); font-size: 0.70rem; font-weight: 500;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  background: rgba(0,209,145,0.12); color: var(--accent);
+  border: 1px solid rgba(0,209,145,0.35); border-radius: 3px; cursor: pointer;
+  transition: all 0.2s;
+}
+.refresh-btn:hover { background: rgba(0,209,145,0.22); color: #fff; border-color: var(--accent); }
+.refresh-btn.spinning { animation: spin 0.7s linear infinite; cursor: default; }
+.last-updated {
+  font-family: var(--mono); font-size: 0.67rem; color: rgba(139,191,176,0.55);
+  display: flex; align-items: center; gap: 5px;
+}
+.last-updated .lu-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.next-update {
+  font-family: var(--mono); font-size: 0.63rem; color: rgba(139,191,176,0.30);
+}
+
+/* ===== CONTROLS ===== */
+.controls-bar {
+  padding: 12px 24px;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  background: rgba(0,0,0,0.22);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.dept-select {
+  padding: 7px 32px 7px 14px;
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+  background: rgba(0,0,0,0.30) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2300D191' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+  color: var(--ink); border: 1px solid rgba(0,209,145,0.28); border-radius: 2px;
+  cursor: pointer; outline: none; appearance: none; min-width: 190px;
+}
+.dept-select option { background: #081714; color: white; }
+.dept-select:focus { border-color: var(--accent); }
+
+.var-toggles { display: flex; flex-wrap: wrap; gap: 7px; }
+.var-btn {
+  padding: 5px 12px; font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.18); border-radius: 2px;
+  background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.45);
+  cursor: pointer; transition: all 0.2s; user-select: none;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.var-btn.active { background: rgba(0,209,145,0.14); color: var(--accent); border-color: rgba(0,209,145,0.40); }
+.var-btn:hover { background: rgba(0,209,145,0.09); color: rgba(232,244,240,0.85); border-color: rgba(0,209,145,0.28); }
+
+/* ===== MAIN ===== */
+main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+
+/* ===== CURRENT HERO ===== */
+.current-hero {
+  background: rgba(0,0,0,0.14);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 30px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+  position: relative; overflow: hidden;
+}
+.current-hero > * { position: relative; z-index: 1; }
+.current-hero::before {
+  content: ''; position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+}
+/* Efectos en hero (mismas animaciones que fc-day) */
+#currentHero[data-fx="snow"]::before {
+  background: radial-gradient(circle, rgba(210,235,255,0.45) 1px, transparent 1px);
+  background-size: 18px 18px;
+  animation: fx-snow 4s linear infinite;
+}
+#currentHero[data-fx="cloudy"]::before {
+  background: linear-gradient(90deg, transparent, rgba(170,190,230,0.06), transparent);
+  background-size: 200% 100%;
+  animation: fx-cloud 8s ease-in-out infinite;
+}
+#currentHero[data-fx="fog"]::before {
+  background: linear-gradient(0deg,
+    rgba(200,215,230,0.10) 0%, rgba(200,215,230,0.03) 50%,
+    rgba(200,215,230,0.10) 100%);
+  animation: fx-fog 4s ease-in-out infinite alternate;
+}
+.cur-left { display: flex; flex-direction: column; gap: 6px; }
+.cur-cond { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.20em; }
+.cur-temp { font-family: var(--serif); font-size: 5.5rem; font-weight: 700; color: white; line-height: 1; }
+.cur-temp sup { font-size: 2.2rem; vertical-align: super; opacity: 0.7; }
+.cur-feels { font-family: var(--mono); font-size: 0.80rem; color: var(--ink2); margin-top: 2px; }
+.cur-loc { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: white; margin-top: 10px; }
+.cur-dt { font-family: var(--mono); font-size: 0.72rem; color: rgba(139,191,176,0.55); margin-top: 2px; }
+.cur-icon { font-size: 7.5rem; line-height: 1; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4)); }
+.quick-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  margin-top: 20px; padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+.qs { text-align: center; }
+.qs-lbl { font-family: var(--mono); font-size: 0.63rem; color: var(--ink2); text-transform: uppercase; letter-spacing: 0.14em; }
+.qs-val { font-family: var(--mono); font-size: 1.05rem; font-weight: 500; color: white; margin-top: 4px; }
+
+/* ===== FORECAST STRIP ===== */
+.strip-wrap { }
+.sec-lbl {
+  font-family: var(--mono); font-size: 0.67rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.20em;
+  color: var(--accent); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-lbl::before { content: ''; width: 18px; height: 1px; background: var(--accent); flex-shrink: 0; }
+.forecast-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+.fc-day {
+  background: rgba(0,0,0,0.18); backdrop-filter: blur(5px);
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 14px 8px; text-align: center; transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.fc-day > * { position: relative; z-index: 1; }
+.fc-day:first-child { background: rgba(0,209,145,0.12); border-color: rgba(0,209,145,0.38); }
+.fc-day:hover { background: rgba(0,209,145,0.08); }
+
+/* ── Efectos climáticos en cards ── */
+.fc-day::before {
+  content: ''; position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+}
+/* canvas de lluvia dentro de cards */
+.fx-rain-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; border-radius: 2px;
+}
+/* Tormenta: destello CSS + canvas de lluvia */
+.fc-day[data-fx="storm"],
+#currentHero[data-fx="storm"] { animation: fx-lightning 7s ease-in-out infinite; }
+@keyframes fx-lightning {
+  0%,87%,91%,96%,100% { filter: none; }
+  88%,89% { filter: brightness(1.9) drop-shadow(0 0 10px rgba(255,255,160,0.90)); }
+  93%,94% { filter: brightness(1.5) drop-shadow(0 0 6px rgba(255,255,160,0.55)); }
+}
+
+/* Nieve */
+.fc-day[data-fx="snow"]::before {
+  background: radial-gradient(circle, rgba(210,235,255,0.55) 1px, transparent 1px);
+  background-size: 13px 13px;
+  animation: fx-snow 4s linear infinite;
+}
+@keyframes fx-snow {
+  from { background-position: 0 -5px; }
+  to   { background-position: 5px 45px; }
+}
+
+/* Nublado — drift de luz difusa */
+.fc-day[data-fx="cloudy"]::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(170,190,230,0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: fx-cloud 6s ease-in-out infinite;
+}
+@keyframes fx-cloud {
+  0%,100% { background-position: -200% 0; }
+  50%     { background-position:  200% 0; }
+}
+
+/* Parcialmente nublado — shimmer suave */
+.fc-day[data-fx="partly-cloudy"]::before {
+  background: linear-gradient(125deg, rgba(255,215,100,0.06) 0%, transparent 55%);
+  animation: fx-partly 5s ease-in-out infinite alternate;
+}
+@keyframes fx-partly {
+  from { opacity: 0.3; }
+  to   { opacity: 1.0; }
+}
+
+/* Niebla — pulso suave */
+.fc-day[data-fx="fog"]::before {
+  background: linear-gradient(0deg,
+    rgba(200,215,230,0.14) 0%, rgba(200,215,230,0.04) 50%,
+    rgba(200,215,230,0.14) 100%);
+  animation: fx-fog 3.5s ease-in-out infinite alternate;
+}
+@keyframes fx-fog {
+  from { opacity: 0.3; transform: scaleX(0.92); }
+  to   { opacity: 1.0; transform: scaleX(1.0); }
+}
+.fc-name { font-family: var(--mono); font-size: 0.63rem; font-weight: 500; color: var(--ink2); text-transform: uppercase; letter-spacing: 0.12em; }
+.fc-icon { font-size: 1.9rem; margin: 6px 0; display: block; }
+.fc-max { font-family: var(--mono); font-size: 1rem; font-weight: 500; color: white; }
+.fc-min { font-family: var(--mono); font-size: 0.82rem; color: var(--ink2); }
+.fc-precip { font-family: var(--mono); font-size: 0.63rem; color: #74b9ff; margin-top: 5px; }
+
+/* ===== CHART ===== */
+.chart-box {
+  background: rgba(0,0,0,0.28); backdrop-filter: blur(14px);
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 18px 22px;
+}
+.chart-wrap { position: relative; height: 210px; }
+
+/* ===== VAR CARDS ===== */
+.vars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px; }
+.vcard {
+  background: rgba(0,0,0,0.18); backdrop-filter: blur(5px);
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 18px 20px; transition: opacity 0.25s;
+  position: relative;
+}
+.vcard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0.5; }
+.vcard.hidden { display: none; }
+.vc-icon { display: flex; margin-bottom: 8px; color: var(--accent); opacity: 0.80; }
+.vc-icon svg { width: 20px; height: 20px; }
+.var-btn svg { width: 13px; height: 13px; vertical-align: middle; margin-right: 3px; flex-shrink: 0; }
+.vc-label { font-family: var(--mono); font-size: 0.63rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 10px; }
+.vc-val { font-family: var(--serif); font-size: 2.0rem; font-weight: 700; color: white; line-height: 1; }
+.vc-val span { font-family: var(--mono); font-size: 0.82rem; font-weight: 400; color: var(--ink2); }
+.vc-sub { font-family: var(--mono); font-size: 0.70rem; color: var(--ink2); margin-top: 8px; line-height: 1.5; }
+.vc-bar { height: 3px; background: rgba(0,209,145,0.12); border-radius: 1px; margin-top: 12px; overflow: hidden; }
+.vc-bar-fill { height: 100%; border-radius: 1px; transition: width 1.2s ease; background: var(--accent); }
+
+/* Wind compass */
+.wind-row { display: flex; align-items: center; gap: 10px; }
+.compass { width: 44px; height: 44px; position: relative; flex-shrink: 0; }
+.compass-ring { width: 44px; height: 44px; border: 2px solid rgba(255,255,255,0.25); border-radius: 50%; position: absolute; }
+.compass-needle { position: absolute; top: 50%; left: 50%; width: 2px; height: 18px; background: linear-gradient(to bottom, #ff6b6b 50%, rgba(255,255,255,0.4) 50%); transform-origin: bottom center; border-radius: 2px 2px 0 0; margin-left: -1px; margin-top: -18px; transition: transform 1s ease; }
+.compass-center { position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: white; border-radius: 50%; transform: translate(-50%, -50%); }
+
+/* UV colors */
+.uv-low { background: #00b894; }
+.uv-mod { background: #fdcb6e; }
+.uv-high { background: #e17055; }
+.uv-extreme { background: #9b27af; }
+
+/* Soil moisture indicator */
+.soil-indicator { display: flex; gap: 4px; margin-top: 8px; }
+.soil-bar-seg { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.15); }
+.soil-bar-seg.active { background: #a29bfe; }
+
+/* ===== ENSO ===== */
+.enso-wrap {
+  background: rgba(0,0,0,0.28); backdrop-filter: blur(14px);
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 20px 24px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+  transition: border-color 0.8s, background 0.8s;
+}
+.enso-wrap.phase-nino  { border-color: rgba(255,120,40,0.40);  background: rgba(255,120,40,0.07); }
+.enso-wrap.phase-nina  { border-color: rgba(60,150,255,0.40);   background: rgba(60,150,255,0.07); }
+.enso-wrap.phase-neutral { border-color: rgba(0,209,145,0.25); background: rgba(0,209,145,0.04); }
+.enso-wrap.hidden { display: none; }
+
+.enso-badge { text-align: center; min-width: 110px; flex-shrink: 0; }
+.enso-badge-icon { font-size: 2.6rem; line-height: 1; }
+.enso-badge-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 700; margin-top: 5px; }
+.enso-badge-oni  { font-family: var(--mono); font-size: 0.70rem; color: var(--ink2); margin-top: 4px; }
+.enso-badge-oni strong { color: white; font-size: 0.85rem; }
+.enso-badge-seas { font-family: var(--mono); font-size: 0.60rem; color: rgba(139,191,176,0.40); margin-top: 2px; }
+
+.enso-body { flex: 1; min-width: 200px; }
+.enso-desc { font-size: 0.82rem; color: var(--ink2); line-height: 1.60; margin-bottom: 14px; }
+.enso-chart-lbl { font-family: var(--mono); font-size: 0.60rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-bottom: 6px; }
+.enso-chart { position: relative; height: 64px; display: flex; align-items: center; gap: 3px; }
+.enso-zero-line { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0,209,145,0.25); }
+.enso-col { flex: 1; height: 100%; position: relative; display: flex; align-items: center; cursor: default; }
+.enso-col-bar { position: absolute; left: 0; right: 0; border-radius: 1px; min-height: 3px; transition: opacity 0.2s; }
+.enso-col:hover .enso-col-bar { opacity: 0.75; }
+.enso-col-lbl { position: absolute; bottom: -14px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 0.52rem; color: rgba(139,191,176,0.35); }
+
+.enso-links { text-align: center; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+.enso-btn {
+  display: block; padding: 7px 14px; border-radius: 2px;
+  font-family: var(--mono); font-size: 0.67rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; line-height: 1.4;
+  border: 1px solid rgba(0,209,145,0.28); background: rgba(0,209,145,0.08);
+  color: var(--accent); transition: background 0.2s; white-space: nowrap;
+}
+.enso-btn:hover { background: rgba(0,209,145,0.18); color: white; border-color: rgba(0,209,145,0.55); }
+.enso-src { font-family: var(--mono); font-size: 0.58rem; color: rgba(139,191,176,0.30); line-height: 1.7; text-align: center; }
+
+/* ===== ENSO HISTÓRICO (spaghetti chart) ===== */
+.enso-hist {
+  width: 100%; margin-top: 10px; padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.enso-hist-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+}
+.enso-hist-title {
+  font-family: var(--mono); font-size: 0.67rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent);
+  display: flex; align-items: center; gap: 8px;
+}
+.enso-hist-title::before { content: ''; width: 14px; height: 1px; background: var(--accent); flex-shrink: 0; }
+.enso-hist-title span { color: rgba(139,191,176,0.35); font-weight: 400; margin-left: 4px; }
+.enso-hist-filters { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.ehf {
+  padding: 3px 10px; border-radius: 2px; font-family: var(--mono); font-size: 0.63rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; border: 1px solid transparent;
+  background: transparent;
+  transition: all 0.18s;
+}
+
+/* ── El Niño: rojos/naranjas ── */
+.ehf[data-f="nino-strong"] { color: #e07060; border-color: rgba(192,57,43,0.55); background: rgba(192,57,43,0.10); }
+.ehf[data-f="nino-mod"]    { color: #f09050; border-color: rgba(230,100,30,0.50); background: rgba(230,100,30,0.09); }
+.ehf[data-f="nino-weak"]   { color: #f0b840; border-color: rgba(255,185,60,0.45); background: rgba(255,185,60,0.07); }
+
+.ehf[data-f="nino-strong"]:hover { color: #ff8878; border-color: rgba(192,57,43,0.90); background: rgba(192,57,43,0.22); }
+.ehf[data-f="nino-mod"]:hover    { color: #ffaa68; border-color: rgba(230,100,30,0.85); background: rgba(230,100,30,0.20); }
+.ehf[data-f="nino-weak"]:hover   { color: #ffd060; border-color: rgba(255,185,60,0.80); background: rgba(255,185,60,0.17); }
+
+.ehf.active[data-f="nino-strong"] { color: #ff9080; border-color: rgba(192,57,43,1);   background: rgba(192,57,43,0.30); }
+.ehf.active[data-f="nino-mod"]    { color: #ffb07c; border-color: rgba(230,100,30,0.95); background: rgba(230,100,30,0.28); }
+.ehf.active[data-f="nino-weak"]   { color: #fbcc60; border-color: rgba(255,185,60,0.90); background: rgba(255,185,60,0.22); }
+
+/* ── La Niña: azules ── */
+.ehf[data-f="nina-strong"] { color: #6090d8; border-color: rgba(21,101,192,0.60); background: rgba(21,101,192,0.11); }
+.ehf[data-f="nina-mod"]    { color: #74b9ff; border-color: rgba(41,128,185,0.55); background: rgba(41,128,185,0.10); }
+.ehf[data-f="nina-weak"]   { color: #90c8f0; border-color: rgba(130,195,255,0.45); background: rgba(130,195,255,0.07); }
+
+.ehf[data-f="nina-strong"]:hover { color: #80aaf0; border-color: rgba(21,101,192,0.90); background: rgba(21,101,192,0.24); }
+.ehf[data-f="nina-mod"]:hover    { color: #90d0ff; border-color: rgba(41,128,185,0.85); background: rgba(41,128,185,0.22); }
+.ehf[data-f="nina-weak"]:hover   { color: #aadcff; border-color: rgba(130,195,255,0.80); background: rgba(130,195,255,0.17); }
+
+.ehf.active[data-f="nina-strong"] { color: #88bbff; border-color: rgba(21,101,192,1);    background: rgba(21,101,192,0.30); }
+.ehf.active[data-f="nina-mod"]    { color: #90d0ff; border-color: rgba(41,128,185,0.95); background: rgba(41,128,185,0.28); }
+.ehf.active[data-f="nina-weak"]   { color: #b0e0ff; border-color: rgba(130,195,255,0.90); background: rgba(130,195,255,0.22); }
+
+/* ── Año actual ── */
+.ehf[data-f="current"]        { color: rgba(255,255,255,0.60); border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.06); }
+.ehf[data-f="current"]:hover  { color: white; border-color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.14); }
+.ehf.active[data-f="current"] { color: white; border-color: rgba(255,255,255,0.90); background: rgba(255,255,255,0.18); }
+.ehf-group { display: flex; align-items: center; gap: 4px; }
+.ehf-group-label { font-family: var(--mono); font-size: 0.58rem; color: rgba(139,191,176,0.35); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.10em; white-space: nowrap; margin-right: 1px; }
+/* Año list */
+.enso-year-list {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--ink2); line-height: 1.8;
+  margin-bottom: 10px; padding: 8px 14px;
+  background: rgba(0,209,145,0.04); border-radius: 2px;
+  border-left: 2px solid rgba(0,209,145,0.25);
+}
+.yl-label { font-weight: 500; color: var(--accent); margin-right: 6px; }
+/* Hover tooltip sobre canvas */
+.enso-year-tip {
+  position: absolute; pointer-events: none;
+  background: rgba(4,16,12,0.95); border: 1px solid rgba(0,209,145,0.22);
+  border-radius: 3px; padding: 5px 10px;
+  font-family: var(--mono); font-size: 0.68rem; color: white;
+  white-space: nowrap; z-index: 20; backdrop-filter: blur(8px);
+}
+.enso-hist-legend {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;
+  font-family: var(--mono); font-size: 0.60rem; color: rgba(139,191,176,0.45); align-items: center;
+}
+.ehl-dot { width: 10px; height: 10px; border-radius: 1px; display: inline-block; flex-shrink: 0; }
+.ehl-item { display: flex; align-items: center; gap: 4px; }
+.ehl-current { font-family: var(--mono); color: rgba(232,244,240,0.85); font-weight: 500; font-size: 0.63rem; }
+.enso-hist-canvas-wrap { position: relative; height: 310px; }
+.enso-hist-note {
+  font-family: var(--mono); font-size: 0.57rem; color: rgba(139,191,176,0.25); text-align: center; margin-top: 8px;
+}
+
+/* How-to explanation */
+.enso-howto {
+  background: rgba(0,209,145,0.04); border-radius: 2px;
+  padding: 14px 16px; margin-bottom: 12px;
+  border-left: 2px solid rgba(0,209,145,0.28);
+}
+.enso-howto-title {
+  font-family: var(--mono); font-size: 0.63rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.16em; color: var(--accent); margin-bottom: 8px;
+}
+.enso-howto-body {
+  font-size: 0.80rem; color: var(--ink2); line-height: 1.68;
+}
+.howto-nino { color: #ffb07c; font-weight: 700; }
+.howto-nina { color: #90d0ff; font-weight: 700; }
+
+/* Impact grid */
+.enso-impact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px;
+}
+@media (max-width: 560px) { .enso-impact-grid { grid-template-columns: 1fr; } }
+.enso-impact {
+  border-radius: 10px; padding: 13px 14px;
+  font-size: 0.78rem; line-height: 1.60;
+}
+.enso-impact-nino {
+  background: rgba(230,100,30,0.10); border: 1px solid rgba(255,150,60,0.22);
+}
+.enso-impact-nina {
+  background: rgba(41,128,185,0.10); border: 1px solid rgba(80,180,255,0.22);
+}
+.impact-hdr {
+  font-family: var(--serif); font-size: 0.82rem; font-weight: 700; margin-bottom: 7px; color: white;
+}
+.impact-body { font-size: 0.78rem; color: var(--ink2); }
+
+/* ===== ALERTS ===== */
+.alerts-box {
+  background: rgba(200,60,60,0.15); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,100,100,0.28); border-radius: 14px;
+  padding: 16px 20px; display: flex; align-items: center; gap: 16px;
+}
+.alerts-icon { font-size: 1.6rem; flex-shrink: 0; }
+.alerts-body { flex: 1; }
+.alerts-title { font-family: var(--serif); font-size: 0.88rem; font-weight: 700; color: white; }
+.alerts-sub { font-family: var(--mono); font-size: 0.68rem; color: rgba(139,191,176,0.55); margin-top: 3px; }
+.alerts-link {
+  padding: 7px 16px; background: rgba(200,60,60,0.30); color: #ff9090;
+  text-decoration: none; border-radius: 2px;
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid rgba(255,100,100,0.30); white-space: nowrap; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.alerts-link:hover { background: rgba(200,60,60,0.50); color: white; }
+
+/* ===== LOADING / ERROR ===== */
+.loading-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.loading-overlay.on { opacity: 1; pointer-events: all; }
+.spinner { width: 46px; height: 46px; border: 3px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.error-box {
+  background: rgba(200,60,60,0.2); border: 1px solid rgba(200,60,60,0.4);
+  border-radius: 12px; padding: 14px 18px; color: rgba(255,255,255,0.88);
+  font-size: 0.84rem; display: none;
+}
+.error-box.show { display: block; }
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center; padding: 18px 24px;
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em;
+  color: rgba(139,191,176,0.30); border-top: 1px solid var(--rule);
+  background: rgba(0,0,0,0.20);
+}
+footer a { color: rgba(0,209,145,0.45); text-decoration: none; }
+footer a:hover { color: var(--accent); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 760px) {
+  .forecast-strip { grid-template-columns: repeat(4,1fr); }
+  .current-hero { grid-template-columns: 1fr; }
+  .cur-icon { font-size: 4rem; }
+  .quick-stats { grid-template-columns: repeat(2,1fr); }
+  main { padding: 14px 16px; gap: 16px; }
+}
+@media (max-width: 420px) {
+  .forecast-strip { grid-template-columns: repeat(3,1fr); }
+  .controls-bar { padding: 12px 16px; }
+}
+</style>
+</head>
+<body class="wx-cloudy">
+
+<canvas id="wx-canvas"></canvas>
+
+<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
+
+<div class="page">
+
+  <header>
+    <a href="index.html" class="brand">ceterisparibus <span>· uy</span></a>
+    <div class="header-right">
+      <span class="header-title">Monitor Climático</span>
+      <div class="last-updated" id="lastUpdated" style="display:none">
+        <div class="lu-dot"></div>
+        <span id="luText">—</span>
+        <span class="next-update" id="nextUpdate"></span>
+      </div>
+      <button class="refresh-btn" id="refreshBtn" onclick="reloadCurrent()">↻ Actualizar</button>
+    </div>
+  </header>
+
+  <div class="controls-bar">
+    <select class="dept-select" id="deptSelect">
+      <option value="Montevideo">📍 Montevideo</option>
+      <option value="Artigas">Artigas</option>
+      <option value="Canelones">Canelones</option>
+      <option value="Cerro Largo">Cerro Largo</option>
+      <option value="Colonia">Colonia</option>
+      <option value="Durazno">Durazno</option>
+      <option value="Flores">Flores</option>
+      <option value="Florida">Florida</option>
+      <option value="Lavalleja">Lavalleja</option>
+      <option value="Maldonado">Maldonado</option>
+      <option value="Paysandú">Paysandú</option>
+      <option value="Río Negro">Río Negro</option>
+      <option value="Rivera">Rivera</option>
+      <option value="Rocha">Rocha</option>
+      <option value="Salto">Salto</option>
+      <option value="San José">San José</option>
+      <option value="Soriano">Soriano</option>
+      <option value="Tacuarembó">Tacuarembó</option>
+      <option value="Treinta y Tres">Treinta y Tres</option>
+    </select>
+    <div class="var-toggles" id="varToggles">
+      <button class="var-btn active" data-var="precipitacion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><line x1="16" y1="14" x2="16" y2="20"/><line x1="8" y1="14" x2="8" y2="20"/><line x1="12" y1="16" x2="12" y2="22"/></svg> Precipitación</button>
+      <button class="var-btn active" data-var="viento"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg> Viento</button>
+      <button class="var-btn active" data-var="humedad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3.1-5.4L12 5l-3.9 4.6C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg> Humedad</button>
+      <button class="var-btn active" data-var="uv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/></svg> UV</button>
+      <button class="var-btn active" data-var="nubosidad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg> Nubosidad</button>
+      <button class="var-btn active" data-var="presion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.34 19a10 10 0 1 1 17.32 0"/><path d="m12 14 3.5-4.5"/></svg> Presión</button>
+      <button class="var-btn active" data-var="et0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg> ET₀</button>
+      <button class="var-btn active" data-var="suelo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m6.08 9.5-3.5 1.6a1 1 0 0 0 0 1.81l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9a1 1 0 0 0 0-1.83l-3.5-1.59"/></svg> Suelo</button>
+      <button class="var-btn active" data-var="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 22H2"/><path d="M16 18a4 4 0 0 0-8 0"/><path d="M12 2v2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="m8 6 4-4 4 4"/></svg> Sol</button>
+      <button class="var-btn active" data-var="enso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> ENSO</button>
+      <button class="var-btn active" data-var="temprank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg> Extremos UY</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="error-box" id="errorBox">No se pudo obtener el pronóstico. Verificá tu conexión e intentá de nuevo.</div>
+
+    <!-- CONDICIONES ACTUALES -->
+    <div class="current-hero" id="currentHero">
+      <canvas id="hero-fx-canvas" class="fx-rain-canvas" width="900" height="220" style="display:none;opacity:0.65;"></canvas>
+      <div class="cur-left">
+        <div class="cur-cond" id="curCond">Cargando pronóstico…</div>
+        <div class="cur-temp" id="curTemp">--<sup>°C</sup></div>
+        <div class="cur-feels" id="curFeels">Sensación térmica: --°C</div>
+        <div class="cur-loc" id="curLoc">—</div>
+        <div class="cur-dt" id="curDt">—</div>
+        <div class="quick-stats">
+          <div class="qs"><div class="qs-lbl">Máx</div><div class="qs-val" id="qsMax">--°</div></div>
+          <div class="qs"><div class="qs-lbl">Mín</div><div class="qs-val" id="qsMin">--°</div></div>
+          <div class="qs"><div class="qs-lbl">Lluvia hoy</div><div class="qs-val" id="qsPrecip">-- mm</div></div>
+          <div class="qs"><div class="qs-lbl">Viento máx</div><div class="qs-val" id="qsWind">-- km/h</div></div>
+        </div>
+      </div>
+      <div class="cur-icon" id="curIcon">⛅</div>
+    </div>
+
+    <!-- 7 DÍAS -->
+    <div class="strip-wrap">
+      <div class="sec-lbl">Pronóstico 7 días</div>
+      <div class="forecast-strip" id="forecastStrip"></div>
+    </div>
+
+    <!-- GRÁFICO 24H -->
+    <div class="chart-box" id="chartBox">
+      <div class="sec-lbl">Próximas 24 horas — Temperatura y Precipitación</div>
+      <div class="chart-wrap"><canvas id="hourlyChart"></canvas></div>
+    </div>
+
+    <!-- VARIABLES DETALLADAS -->
+    <div>
+      <div class="sec-lbl">Variables detalladas</div>
+      <div class="vars-grid" id="varsGrid">
+
+        <div class="vcard" id="card-precipitacion">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><line x1="16" y1="14" x2="16" y2="20"/><line x1="8" y1="14" x2="8" y2="20"/><line x1="12" y1="16" x2="12" y2="22"/></svg></div>
+          <div class="vc-label">Precipitación</div>
+          <div class="vc-val" id="vc-prec">-- <span>mm</span></div>
+          <div class="vc-sub" id="vc-prec-sub">Probabilidad: --%</div>
+          <div class="vc-bar"><div class="vc-bar-fill" id="vc-prec-bar" style="width:0%;background:#74b9ff;"></div></div>
+        </div>
+
+        <div class="vcard" id="card-viento">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></div>
+          <div class="vc-label">Viento</div>
+          <div class="wind-row">
+            <div class="compass">
+              <div class="compass-ring"></div>
+              <div class="compass-needle" id="vc-needle"></div>
+              <div class="compass-center"></div>
+            </div>
+            <div>
+              <div class="vc-val" id="vc-wind">-- <span>km/h</span></div>
+              <div class="vc-sub" id="vc-wind-sub">Dir: -- · Ráfagas: -- km/h</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vcard" id="card-humedad">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3.1-5.4L12 5l-3.9 4.6C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></div>
+          <div class="vc-label">Humedad relativa</div>
+          <div class="vc-val" id="vc-hum">-- <span>%</span></div>
+          <div class="vc-sub" id="vc-hum-sub">Punto de rocío: --°C</div>
+          <div class="vc-bar"><div class="vc-bar-fill" id="vc-hum-bar" style="width:0%;background:#a29bfe;"></div></div>
+        </div>
+
+        <div class="vcard" id="card-uv">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/></svg></div>
+          <div class="vc-label">Índice UV</div>
+          <div class="vc-val" id="vc-uv">--</div>
+          <div class="vc-sub" id="vc-uv-sub">Riesgo: --</div>
+          <div class="vc-bar"><div class="vc-bar-fill" id="vc-uv-bar" style="width:0%;"></div></div>
+        </div>
+
+        <div class="vcard" id="card-nubosidad">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg></div>
+          <div class="vc-label">Nubosidad</div>
+          <div class="vc-val" id="vc-cloud">-- <span>%</span></div>
+          <div class="vc-sub">Cobertura de nubes total</div>
+          <div class="vc-bar"><div class="vc-bar-fill" id="vc-cloud-bar" style="width:0%;background:#b2bec3;"></div></div>
+        </div>
+
+        <div class="vcard" id="card-presion">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.34 19a10 10 0 1 1 17.32 0"/><path d="m12 14 3.5-4.5"/></svg></div>
+          <div class="vc-label">Presión atmosférica</div>
+          <div class="vc-val" id="vc-pres">-- <span>hPa</span></div>
+          <div class="vc-sub" id="vc-pres-sub">—</div>
+        </div>
+
+        <div class="vcard" id="card-et0">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+          <div class="vc-label">Evapotranspiración ET₀</div>
+          <div class="vc-val" id="vc-et0">-- <span>mm/día</span></div>
+          <div class="vc-sub">Penman-Monteith FAO-56</div>
+        </div>
+
+        <div class="vcard" id="card-suelo">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m6.08 9.5-3.5 1.6a1 1 0 0 0 0 1.81l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9a1 1 0 0 0 0-1.83l-3.5-1.59"/></svg></div>
+          <div class="vc-label">Suelo (0–1 cm)</div>
+          <div class="vc-val" id="vc-soilt">-- <span>°C</span></div>
+          <div class="vc-sub" id="vc-soilm">Humedad: --</div>
+          <div class="soil-indicator" id="soil-segs"></div>
+        </div>
+
+        <div class="vcard" id="card-sol">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 22H2"/><path d="M16 18a4 4 0 0 0-8 0"/><path d="M12 2v2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="m8 6 4-4 4 4"/></svg></div>
+          <div class="vc-label">Amanecer / Atardecer</div>
+          <div class="vc-val" id="vc-sunrise">-- <span>amanecer</span></div>
+          <div class="vc-sub" id="vc-sunset">Atardecer: --</div>
+        </div>
+
+        <div class="vcard" id="card-temprank">
+          <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></div>
+          <div class="vc-label">Extremos nacionales</div>
+          <div class="vc-val" id="vc-cold-temp"><span style="font-size:1rem;font-family:var(--mono);color:var(--ink2);">—</span></div>
+          <div class="vc-sub" id="vc-cold-dept" style="margin-top:2px;">Consultando departamentos…</div>
+          <div style="margin-top:10px;border-top:1px solid var(--rule);padding-top:8px;" id="vc-warm-row" style="display:none;">
+            <div class="vc-sub" id="vc-warm-dept" style="color:var(--accent-l);"></div>
+          </div>
+          <div class="vc-bar" style="margin-top:10px;"><div class="vc-bar-fill" id="vc-cold-bar" style="width:0%;background:#74b9ff;"></div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ENSO -->
+    <div>
+      <div class="sec-lbl">Fenómeno ENSO — El Niño / La Niña · Pacífico</div>
+      <div class="enso-wrap" id="card-enso">
+        <div class="enso-badge">
+          <div class="enso-badge-icon" id="enso-icon">🌊</div>
+          <div class="enso-badge-name" id="enso-phase">Cargando…</div>
+          <div class="enso-badge-oni" id="enso-oni">ONI: —</div>
+          <div class="enso-badge-seas" id="enso-seas">—</div>
+        </div>
+        <div class="enso-body">
+          <div class="enso-desc" id="enso-desc">Obteniendo índice ONI…</div>
+          <div class="enso-chart-lbl">Índice ONI — últimas 10 estaciones (Niño 3.4 SST anomalía)</div>
+          <div class="enso-chart" id="enso-chart">
+            <div class="enso-zero-line"></div>
+          </div>
+        </div>
+        <div class="enso-links">
+          <a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" class="enso-btn">Pronóstico<br>IRI/Columbia →</a>
+          <a href="https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml" target="_blank" class="enso-btn">Boletín<br>NOAA CPC →</a>
+          <div class="enso-src">Datos: NOAA CPC<br>Índice ONI (Niño 3.4)<br>Ref: IRI/Columbia Univ.<br><span id="oni-live-badge" style="font-size:0.58rem;color:rgba(255,255,255,0.25);">○ cargando…</span></div>
+        </div>
+
+        <!-- ===== HISTÓRICO ONI ===== -->
+        <div class="enso-hist" id="enso-hist">
+          <div class="enso-hist-hdr">
+            <div class="enso-hist-title">Evolución Histórica ONI por Año <span>1950–2026</span></div>
+            <div class="enso-hist-filters">
+              <div class="ehf-group">
+                <span class="ehf-group-label">El Niño</span>
+                <button class="ehf nino" data-f="nino-strong" onclick="filterENSOHist('nino-strong')">Fuerte</button>
+                <button class="ehf nino" data-f="nino-mod"    onclick="filterENSOHist('nino-mod')">Mod.</button>
+                <button class="ehf nino" data-f="nino-weak"   onclick="filterENSOHist('nino-weak')">Débil</button>
+              </div>
+              <div class="ehf-group">
+                <span class="ehf-group-label">La Niña</span>
+                <button class="ehf nina" data-f="nina-strong" onclick="filterENSOHist('nina-strong')">Fuerte</button>
+                <button class="ehf nina" data-f="nina-mod"    onclick="filterENSOHist('nina-mod')">Mod.</button>
+                <button class="ehf nina" data-f="nina-weak"   onclick="filterENSOHist('nina-weak')">Débil</button>
+              </div>
+              <button class="ehf current" data-f="current" onclick="filterENSOHist('current')">★ 2026</button>
+            </div>
+          </div>
+          <!-- Lista dinámica de años visibles -->
+          <div id="enso-year-list" class="enso-year-list" style="display:none;"></div>
+
+          <!-- Cómo leer el gráfico -->
+          <div class="enso-howto">
+            <div class="enso-howto-title">¿Qué muestra este gráfico?</div>
+            <div class="enso-howto-body">
+              Cada línea representa un año completo (enero a diciembre). El eje vertical muestra el <strong>Índice ONI</strong> — la anomalía de temperatura superficial del mar en el Pacífico central (región Niño 3.4), en grados Celsius respecto al promedio histórico.
+              <br><br>
+              Las líneas punteadas marcan los <strong>umbrales NOAA</strong>: por encima de <span class="howto-nino">+0.5°C</span> el año entra en zona El Niño (naranja/rojo), por debajo de <span class="howto-nina">−0.5°C</span> en La Niña (azul). Cuanto más alejado del cero, más intenso el evento.
+              <br><br>
+              <strong>Cómo usarlo:</strong> Usá los filtros para aislar solo los años El Niño o La Niña. Con <em>"Año actual"</em> el resto queda de fondo grisado para comparar con la trayectoria de 2026.
+            </div>
+          </div>
+
+          <div class="enso-hist-legend">
+            <div class="ehl-item"><span class="ehl-dot" style="background:#c0392b"></span>El Niño fuerte (≥+1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:#e67e22"></span>El Niño mod. (+1.0/+1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:rgba(255,185,65,0.8)"></span>El Niño débil (+0.5/+1.0)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:#1565c0"></span>La Niña fuerte (≤−1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:#2980b9"></span>La Niña mod. (−1.0/−1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:rgba(130,195,255,0.8)"></span>La Niña débil (−0.5/−1.0)</div>
+            <div class="ehl-item ehl-current">━ 2026</div>
+          </div>
+          <div class="enso-hist-canvas-wrap" style="position:relative;">
+            <canvas id="enso-hist-chart"></canvas>
+            <div id="enso-year-tip" class="enso-year-tip" style="display:none;"></div>
+          </div>
+          <div class="enso-hist-note">Índice ONI (anomalía °C Niño 3.4 SST) · Fuente: NOAA CPC · 77 años (1950–2026)</div>
+
+          <!-- Impacto en Uruguay -->
+          <div class="enso-impact-grid">
+            <div class="enso-impact enso-impact-nino">
+              <div class="impact-hdr">🟠 El Niño en Uruguay</div>
+              <div class="impact-body">
+                <strong>Lluvias por encima del promedio</strong>, especialmente en primavera–verano (Oct–Feb). Favorece la recarga de acuíferos y reduce el riesgo de sequía. Positivo para cultivos de secano (soja, maíz) si no genera excesos hídricos. Inviernos más cálidos de lo normal.
+              </div>
+            </div>
+            <div class="enso-impact enso-impact-nina">
+              <div class="impact-hdr">🔵 La Niña en Uruguay</div>
+              <div class="impact-body">
+                <strong>Mayor riesgo de sequía y déficit hídrico</strong>. Inviernos más fríos con mayor riesgo de heladas tardías. Impacto negativo en ganadería (menor disponibilidad de pasto) y en cultivos por estrés hídrico. Veranos calurosos y secos, con impacto en forestación y ganadería.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ALERTAS INUMET -->
+    <div class="alerts-box">
+      <div class="alerts-icon">⚠️</div>
+      <div class="alerts-body">
+        <div class="alerts-title">Alertas Meteorológicas Oficiales — INUMET</div>
+        <div class="alerts-sub">Instituto Uruguayo de Meteorología · Datos de pronóstico: Open-Meteo (modelo ECMWF)</div>
+      </div>
+      <a href="https://www.inumet.gub.uy/clima/alertas-meteorologicas" target="_blank" class="alerts-link">Ver alertas →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    Pronóstico: <a href="https://open-meteo.com" target="_blank">Open-Meteo</a> (ECMWF / ERA5) ·
+    Alertas oficiales: <a href="https://inumet.gub.uy" target="_blank">INUMET</a> ·
+    <a href="index.html">← Inicio</a>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// ===== CANVAS LLUVIA EN CARDS =====
+let cardRainCancels = [];
+function clearCardRains() {
+  cardRainCancels.forEach(fn => fn());
+  cardRainCancels = [];
+}
+
+function startRainCanvas(canvas, type) {
+  if (!canvas) return;
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const cfg = {
+    'storm':       { n: 26, spd: 8.0, len: [10,20], op: [0.20,0.45], lw: 0.95 },
+    'heavy-rain':  { n: 17, spd: 6.0, len: [ 9,17], op: [0.16,0.36], lw: 0.82 },
+    'rain':        { n: 11, spd: 4.8, len: [ 7,14], op: [0.13,0.28], lw: 0.75 },
+    'drizzle':     { n:  6, spd: 2.6, len: [ 4, 8], op: [0.10,0.22], lw: 0.60 },
+  }[type];
+  if (!cfg) return;
+  const drops = Array.from({ length: cfg.n }, () => ({
+    x:   Math.random() * (W + 30),
+    y:   Math.random() * H,
+    len: cfg.len[0] + Math.random() * (cfg.len[1] - cfg.len[0]),
+    spd: cfg.spd * (0.65 + Math.random() * 0.70),
+    op:  cfg.op[0]  + Math.random() * (cfg.op[1]  - cfg.op[0]),
+  }));
+  let active = true;
+  function draw() {
+    if (!active) return;
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(160,215,255,1)';
+    ctx.lineWidth = cfg.lw;
+    for (const p of drops) {
+      ctx.globalAlpha = p.op;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x - p.len * 0.19, p.y + p.len);
+      ctx.stroke();
+      p.y += p.spd;
+      p.x -= p.spd * 0.17;
+      if (p.y > H + p.len) { p.y = -p.len - 2; p.x = Math.random() * (W + 30); }
+      if (p.x < -15)        { p.x = W + 10;     p.y = Math.random() * H; }
+    }
+    ctx.restore();
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+  cardRainCancels.push(() => { active = false; });
+}
+
+const RAIN_FX = new Set(['rain','heavy-rain','drizzle','storm']);
+
+// ===== EFECTOS CLIMÁTICOS =====
+function wxFx(code) {
+  if ([95,96,99].includes(code))                         return 'storm';
+  if ([65,82].includes(code))                            return 'heavy-rain';
+  if ([51,53,55].includes(code))                         return 'drizzle';
+  if ([61,63,80,81].includes(code))                      return 'rain';
+  if ([71,73,75,77,85,86].includes(code))                return 'snow';
+  if ([45,48].includes(code))                            return 'fog';
+  if (code === 3)                                        return 'cloudy';
+  if (code === 2)                                        return 'partly-cloudy';
+  return 'clear';
+}
+
+// ===== DEPARTAMENTOS =====
+const DEPTS = {
+  'Montevideo':    { lat: -34.9011, lon: -56.1645 },
+  'Artigas':       { lat: -30.4005, lon: -56.4771 },
+  'Canelones':     { lat: -34.5231, lon: -56.2836 },
+  'Cerro Largo':   { lat: -32.3667, lon: -54.1667 },
+  'Colonia':       { lat: -34.4619, lon: -57.8396 },
+  'Durazno':       { lat: -33.3833, lon: -56.5167 },
+  'Flores':        { lat: -33.5298, lon: -56.8851 },
+  'Florida':       { lat: -34.0975, lon: -56.2128 },
+  'Lavalleja':     { lat: -34.3714, lon: -55.2381 },
+  'Maldonado':     { lat: -34.9011, lon: -54.9595 },
+  'Paysandú':      { lat: -32.3214, lon: -58.0756 },
+  'Río Negro':     { lat: -33.2333, lon: -58.0167 },
+  'Rivera':        { lat: -30.9054, lon: -55.5507 },
+  'Rocha':         { lat: -34.4833, lon: -54.3333 },
+  'Salto':         { lat: -31.3833, lon: -57.9667 },
+  'San José':      { lat: -34.3433, lon: -56.7126 },
+  'Soriano':       { lat: -33.5348, lon: -58.0257 },
+  'Tacuarembó':    { lat: -31.7143, lon: -55.9763 },
+  'Treinta y Tres':{ lat: -33.2333, lon: -54.3833 }
+};
+
+// ===== WMO CODES =====
+const WMO = {
+  0:  { label:'Cielo despejado',              icon:'☀️',  bg:'sunny' },
+  1:  { label:'Mayormente despejado',          icon:'🌤️', bg:'sunny' },
+  2:  { label:'Parcialmente nublado',          icon:'⛅',  bg:'partly-cloudy' },
+  3:  { label:'Nublado',                       icon:'☁️',  bg:'cloudy' },
+  45: { label:'Neblina',                       icon:'🌫️', bg:'fog' },
+  48: { label:'Neblina con escarcha',          icon:'🌫️', bg:'fog' },
+  51: { label:'Llovizna leve',                 icon:'🌦️', bg:'drizzle' },
+  53: { label:'Llovizna moderada',             icon:'🌦️', bg:'drizzle' },
+  55: { label:'Llovizna intensa',              icon:'🌦️', bg:'drizzle' },
+  61: { label:'Lluvia leve',                   icon:'🌧️', bg:'rain' },
+  63: { label:'Lluvia moderada',               icon:'🌧️', bg:'rain' },
+  65: { label:'Lluvia intensa',                icon:'🌧️', bg:'heavy-rain' },
+  71: { label:'Nevada leve',                   icon:'🌨️', bg:'snow' },
+  73: { label:'Nevada',                        icon:'❄️',  bg:'snow' },
+  75: { label:'Nevada intensa',                icon:'❄️',  bg:'snow' },
+  77: { label:'Granizo fino',                  icon:'🌨️', bg:'snow' },
+  80: { label:'Chubascos leves',               icon:'🌦️', bg:'rain' },
+  81: { label:'Chubascos',                     icon:'🌧️', bg:'rain' },
+  82: { label:'Chubascos fuertes',             icon:'⛈️', bg:'heavy-rain' },
+  85: { label:'Nieve en chubascos',            icon:'🌨️', bg:'snow' },
+  86: { label:'Nieve fuerte en chubascos',     icon:'❄️',  bg:'snow' },
+  95: { label:'Tormenta eléctrica',            icon:'⛈️', bg:'storm' },
+  96: { label:'Tormenta con granizo',          icon:'⛈️', bg:'storm' },
+  99: { label:'Tormenta con granizo fuerte',   icon:'⛈️', bg:'storm' }
+};
+const getWMO = code => WMO[code] || { label:'Condición desconocida', icon:'🌡️', bg:'cloudy' };
+
+// ===== HELPERS =====
+const DIRS = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+const degToDir = deg => DIRS[Math.round(deg / 22.5) % 16];
+const pad2 = n => String(n).padStart(2,'0');
+
+// ===== SVG ICONS =====
+function sunSVG() {
+  return `<svg class="sun-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 18px rgba(255,210,60,0.55))">
+    <circle class="sun-halo" cx="32" cy="32" r="19" fill="none" stroke="rgba(255,218,80,0.28)" stroke-width="5"/>
+    <g class="sun-rays">
+      <line x1="32" y1="4"  x2="32" y2="12" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="32" y1="52" x2="32" y2="60" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4"  y1="32" x2="12" y2="32" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="52" y1="32" x2="60" y2="32" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="11" y1="11" x2="17" y2="17" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="47" y1="47" x2="53" y2="53" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="53" y1="11" x2="47" y2="17" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="17" y1="47" x2="11" y2="53" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <circle cx="32" cy="32" r="11" fill="#ffe066"/>
+    <circle cx="32" cy="32" r="9"  fill="#ffd54f"/>
+  </svg>`;
+}
+
+function moonSVG() {
+  return `<svg viewBox="0 0 64 64" width="0.82em" height="0.82em" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 0 12px rgba(140,180,255,0.45))">
+    <path d="M38 10 a22 22 0 1 0 0 44 a17 17 0 1 1 0-44z" fill="#b0c8f8"/>
+  </svg>`;
+}
+
+function uvRisk(v) {
+  if (v < 3) return { label:'Bajo', cls:'uv-low' };
+  if (v < 6) return { label:'Moderado', cls:'uv-mod' };
+  if (v < 8) return { label:'Alto', cls:'uv-high' };
+  return { label:'Muy alto / Extremo', cls:'uv-extreme' };
+}
+
+function soilDesc(m3) {
+  if (m3 < 0.10) return 'Muy seco';
+  if (m3 < 0.20) return 'Seco';
+  if (m3 < 0.30) return 'Normal';
+  if (m3 < 0.40) return 'Húmedo';
+  return 'Muy húmedo / Saturado';
+}
+
+function currentHourUY(hourlyTimes) {
+  // Get current time in America/Montevideo
+  const nowStr = new Date().toLocaleString('sv-SE', { timeZone: 'America/Montevideo' });
+  // Format: "2025-05-22 14:00:00"
+  const target = nowStr.slice(0, 13).replace(' ', 'T'); // "2025-05-22T14"
+  let idx = hourlyTimes.findIndex(t => t.slice(0, 13) >= target);
+  return Math.max(0, idx > 0 ? idx - 1 : idx);
+}
+
+// ===== BACKGROUND & ANIMATION =====
+const BG_CLASSES = ['wx-sunny','wx-partly-cloudy','wx-cloudy','wx-fog','wx-drizzle','wx-rain','wx-heavy-rain','wx-storm','wx-snow','wx-night-clear','wx-night-cloudy'];
+
+let animId = null;
+let particles = [];
+
+function setBackground(bg, isNight) {
+  document.body.classList.remove(...BG_CLASSES);
+  let cls;
+  if (isNight) {
+    cls = (bg === 'sunny' || bg === 'partly-cloudy') ? 'wx-night-clear' : 'wx-night-cloudy';
+  } else {
+    cls = 'wx-' + bg;
+  }
+  document.body.classList.add(cls);
+  startAnim(bg, isNight);
+}
+
+const canvas = document.getElementById('wx-canvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function startAnim(bg, isNight) {
+  if (animId) cancelAnimationFrame(animId);
+  particles = [];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (bg === 'rain' || bg === 'heavy-rain' || bg === 'drizzle' || bg === 'storm') {
+    const count = bg === 'heavy-rain' || bg === 'storm' ? 220 : bg === 'rain' ? 130 : 55;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        len: 10 + Math.random() * 18,
+        speed: 8 + Math.random() * 7,
+        op: 0.1 + Math.random() * 0.35
+      });
+    }
+    animRain();
+  } else if (bg === 'snow') {
+    for (let i = 0; i < 110; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: 1.5 + Math.random() * 3.5,
+        speed: 0.4 + Math.random() * 1.5,
+        drift: (Math.random() - 0.5) * 0.5,
+        op: 0.25 + Math.random() * 0.55
+      });
+    }
+    animSnow();
+  } else if (isNight && (bg === 'sunny' || bg === 'partly-cloudy')) {
+    drawStars();
+  }
+}
+
+function animRain() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.strokeStyle = 'rgba(190,220,255,1)';
+  ctx.lineWidth = 1;
+  for (const p of particles) {
+    ctx.globalAlpha = p.op;
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x - p.len * 0.18, p.y + p.len);
+    ctx.stroke();
+    p.y += p.speed;
+    p.x -= p.speed * 0.18;
+    if (p.y > canvas.height + 20) {
+      p.y = -p.len;
+      p.x = Math.random() * canvas.width;
+    }
+  }
+  ctx.restore();
+  animId = requestAnimationFrame(animRain);
+}
+
+function animSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.fillStyle = 'white';
+  for (const p of particles) {
+    ctx.globalAlpha = p.op;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    p.y += p.speed;
+    p.x += p.drift;
+    if (p.y > canvas.height + 10) {
+      p.y = -p.r;
+      p.x = Math.random() * canvas.width;
+    }
+  }
+  ctx.restore();
+  animId = requestAnimationFrame(animSnow);
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.fillStyle = 'white';
+  for (let i = 0; i < 180; i++) {
+    ctx.globalAlpha = 0.2 + Math.random() * 0.65;
+    ctx.beginPath();
+    ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height * 0.75, 0.4 + Math.random() * 1.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// ===== CHART =====
+let chart = null;
+function renderChart(hourly, ci) {
+  const labels = [], temps = [], precips = [], precipProbs = [];
+  const end = Math.min(ci + 25, hourly.time.length);
+  for (let i = ci; i < end; i++) {
+    labels.push(hourly.time[i].slice(11, 16));
+    temps.push(hourly.temperature_2m[i]);
+    precips.push(hourly.precipitation[i] ?? 0);
+    precipProbs.push(hourly.precipitation_probability[i] ?? 0);
+  }
+  if (chart) chart.destroy();
+  chart = new Chart(document.getElementById('hourlyChart'), {
+    data: {
+      labels,
+      datasets: [
+        {
+          type: 'line', label: 'Temperatura (°C)', data: temps,
+          borderColor: 'rgba(255,210,80,0.9)', backgroundColor: 'rgba(255,210,80,0.08)',
+          borderWidth: 2.5, pointRadius: 2.5, pointBackgroundColor: 'rgba(255,210,80,0.9)',
+          fill: true, tension: 0.42, yAxisID: 'yT', order: 1
+        },
+        {
+          type: 'bar', label: 'Precipitación (mm)', data: precips,
+          backgroundColor: 'rgba(90,170,255,0.45)', borderColor: 'rgba(90,170,255,0.7)',
+          borderWidth: 1, yAxisID: 'yP', order: 2
+        },
+        {
+          type: 'line', label: 'Prob. lluvia (%)', data: precipProbs,
+          borderColor: 'rgba(130,200,255,0.65)', backgroundColor: 'transparent',
+          borderWidth: 1.5, borderDash: [4,3], pointRadius: 0,
+          tension: 0.4, yAxisID: 'yProb', order: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: 'rgba(255,255,255,0.65)', font: { size: 10, family: "'IBM Plex Sans', sans-serif" }, boxWidth: 14, padding: 14 } },
+        tooltip: {
+          backgroundColor: 'rgba(10,20,40,0.85)', borderColor: 'rgba(255,255,255,0.15)', borderWidth: 1,
+          titleColor: 'rgba(255,255,255,0.85)', bodyColor: 'rgba(255,255,255,0.7)', padding: 10
+        }
+      },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,0.55)', font: { size: 10 }, maxTicksLimit: 13 }, grid: { color: 'rgba(255,255,255,0.06)' } },
+        yT: { position: 'left', ticks: { color: 'rgba(255,210,80,0.75)', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.06)' } },
+        yP: { position: 'right', min: 0, ticks: { color: 'rgba(90,170,255,0.75)', font: { size: 10 } }, grid: { drawOnChartArea: false } },
+        yProb: { display: false, min: 0, max: 100 }
+      }
+    }
+  });
+}
+
+// ===== RENDER =====
+function renderWeather(data, dept) {
+  const { current, hourly, daily } = data;
+  const ci = currentHourUY(hourly.time);
+  const wmo = getWMO(current.weather_code);
+
+  // Night detection
+  const sunrise = new Date(daily.sunrise[0]);
+  const sunset = new Date(daily.sunset[0]);
+  const nowUY = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Montevideo' }));
+  const isNight = nowUY < sunrise || nowUY > sunset;
+
+  setBackground(wmo.bg, isNight);
+
+  // Efecto climático en el hero
+  const heroFx = wxFx(current.weather_code);
+  const heroEl = document.getElementById('currentHero');
+  heroEl.dataset.fx = heroFx;
+  const heroCv = document.getElementById('hero-fx-canvas');
+  if (heroCv) {
+    if (RAIN_FX.has(heroFx)) {
+      heroCv.style.display = '';
+      heroCv.width  = heroEl.offsetWidth  || 900;
+      heroCv.height = heroEl.offsetHeight || 220;
+      startRainCanvas(heroCv, heroFx);
+    } else {
+      heroCv.style.display = 'none';
+    }
+  }
+
+  // Current
+  document.getElementById('curCond').textContent = wmo.label;
+  document.getElementById('curTemp').innerHTML = `${Math.round(current.temperature_2m)}<sup>°C</sup>`;
+  document.getElementById('curFeels').textContent = `Sensación térmica: ${Math.round(current.apparent_temperature)}°C`;
+  document.getElementById('curLoc').textContent = dept + ', Uruguay';
+  const iconEl = document.getElementById('curIcon');
+  if (isNight && (wmo.bg === 'sunny' || wmo.bg === 'partly-cloudy')) {
+    iconEl.innerHTML = moonSVG();
+  } else if (wmo.bg === 'sunny') {
+    iconEl.innerHTML = sunSVG();
+  } else {
+    iconEl.textContent = wmo.icon;
+  }
+
+  const dtStr = new Date().toLocaleDateString('es-UY', { timeZone: 'America/Montevideo', weekday: 'long', day: 'numeric', month: 'long' });
+  const tmStr = new Date().toLocaleTimeString('es-UY', { timeZone: 'America/Montevideo', hour: '2-digit', minute: '2-digit' });
+  document.getElementById('curDt').textContent = dtStr + ' · ' + tmStr;
+
+  // Quick stats
+  document.getElementById('qsMax').textContent = Math.round(daily.temperature_2m_max[0]) + '°';
+  document.getElementById('qsMin').textContent = Math.round(daily.temperature_2m_min[0]) + '°';
+  document.getElementById('qsPrecip').textContent = (daily.precipitation_sum[0] ?? 0).toFixed(1) + ' mm';
+  document.getElementById('qsWind').textContent = Math.round(daily.wind_speed_10m_max[0]) + ' km/h';
+
+  // 7-day
+  clearCardRains();
+  const strip = document.getElementById('forecastStrip');
+  strip.innerHTML = '';
+  const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  for (let i = 0; i < 7; i++) {
+    const d  = new Date(daily.time[i] + 'T12:00');
+    const w  = getWMO(daily.weather_code[i]);
+    const pp = daily.precipitation_probability_max[i] ?? 0;
+    const fx = wxFx(daily.weather_code[i]);
+    const rainCv = RAIN_FX.has(fx)
+      ? `<canvas class="fx-rain-canvas" width="120" height="140" style="opacity:0.62;"></canvas>`
+      : '';
+    strip.innerHTML += `<div class="fc-day" data-fx="${fx}">${rainCv}
+      <div class="fc-name">${i === 0 ? 'Hoy' : dayNames[d.getDay()]}</div>
+      <span class="fc-icon">${w.icon}</span>
+      <div class="fc-max">${Math.round(daily.temperature_2m_max[i])}°</div>
+      <div class="fc-min">${Math.round(daily.temperature_2m_min[i])}°</div>
+      <div class="fc-precip">${pp}% 💧</div>
+    </div>`;
+  }
+  // Arrancar canvas de lluvia en cada card
+  document.querySelectorAll('.fc-day .fx-rain-canvas').forEach(cv => {
+    startRainCanvas(cv, cv.closest('.fc-day').dataset.fx);
+  });
+
+  // Chart
+  renderChart(hourly, ci);
+
+  // Variable cards
+  // Precipitación
+  const precAmt = (current.precipitation ?? 0).toFixed(1);
+  const precProb = hourly.precipitation_probability[ci] ?? 0;
+  document.getElementById('vc-prec').innerHTML = `${precAmt} <span>mm</span>`;
+  document.getElementById('vc-prec-sub').textContent = `Probabilidad actual: ${precProb}%`;
+  document.getElementById('vc-prec-bar').style.width = precProb + '%';
+
+  // Viento
+  document.getElementById('vc-wind').innerHTML = `${Math.round(current.wind_speed_10m)} <span>km/h</span>`;
+  const dir = current.wind_direction_10m;
+  document.getElementById('vc-wind-sub').textContent = `${degToDir(dir)} (${dir}°) · Ráfagas: ${Math.round(current.wind_gusts_10m)} km/h`;
+  // Needle: 0° = N = top, rotate clockwise. Arrow points to where wind comes FROM (meteorological convention).
+  document.getElementById('vc-needle').style.transform = `rotate(${dir}deg)`;
+
+  // Humedad
+  const hum = current.relative_humidity_2m;
+  const dew = (hourly.dewpoint_2m[ci] ?? '--');
+  document.getElementById('vc-hum').innerHTML = `${hum} <span>%</span>`;
+  document.getElementById('vc-hum-sub').textContent = `Punto de rocío: ${typeof dew === 'number' ? dew.toFixed(1) : '--'}°C`;
+  document.getElementById('vc-hum-bar').style.width = hum + '%';
+
+  // UV
+  const uv = hourly.uv_index[ci] ?? 0;
+  const uvR = uvRisk(uv);
+  document.getElementById('vc-uv').textContent = uv.toFixed(1);
+  document.getElementById('vc-uv-sub').textContent = `Riesgo: ${uvR.label}`;
+  const uvBar = document.getElementById('vc-uv-bar');
+  uvBar.style.width = Math.min(uv / 12 * 100, 100) + '%';
+  uvBar.className = 'vc-bar-fill ' + uvR.cls;
+
+  // Nubosidad
+  const cloud = current.cloud_cover;
+  document.getElementById('vc-cloud').innerHTML = `${cloud} <span>%</span>`;
+  document.getElementById('vc-cloud-bar').style.width = cloud + '%';
+
+  // Presión
+  const pres = Math.round(current.surface_pressure);
+  document.getElementById('vc-pres').innerHTML = `${pres} <span>hPa</span>`;
+  document.getElementById('vc-pres-sub').textContent =
+    pres > 1020 ? '↑ Alta presión — buen tiempo' :
+    pres > 1013 ? '→ Presión estable' :
+    pres > 1000 ? '↓ Presión moderada' : '↓↓ Baja presión — tiempo inestable';
+
+  // ET0
+  const et0 = (daily.et0_fao_evapotranspiration[0] ?? 0).toFixed(1);
+  document.getElementById('vc-et0').innerHTML = `${et0} <span>mm/día</span>`;
+
+  // Suelo
+  const soilT = hourly.soil_temperature_0cm[ci];
+  const soilM = hourly.soil_moisture_0_to_1cm[ci];
+  document.getElementById('vc-soilt').innerHTML = soilT !== undefined && soilT !== null
+    ? `${soilT.toFixed(1)} <span>°C</span>` : `-- <span>°C</span>`;
+  if (soilM !== undefined && soilM !== null) {
+    const pct = Math.round(soilM * 100);
+    document.getElementById('vc-soilm').textContent = `Humedad: ${pct}% vol. — ${soilDesc(soilM)}`;
+    const segs = document.getElementById('soil-segs');
+    segs.innerHTML = '';
+    const filled = Math.round(soilM / 0.5 * 10);
+    for (let i = 0; i < 10; i++) {
+      const s = document.createElement('div');
+      s.className = 'soil-bar-seg' + (i < filled ? ' active' : '');
+      segs.appendChild(s);
+    }
+  }
+
+  // Sol
+  const srTime = sunrise.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' });
+  const ssTime = sunset.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('vc-sunrise').innerHTML = `${srTime} <span>amanecer</span>`;
+  document.getElementById('vc-sunset').textContent = `Atardecer: ${ssTime}`;
+}
+
+// ===== ENSO =====
+// Datos ONI embebidos — Fuente: NOAA CPC (oni.ascii.txt)
+// NOAA no permite fetch desde browser (sin CORS). Actualizar este array mensualmente.
+const ONI_EMBEDDED = [
+  { seas:'JFM 2025', val:-0.24 },
+  { seas:'FMA 2025', val:-0.06 },
+  { seas:'MAM 2025', val: 0.02 },
+  { seas:'AMJ 2025', val:-0.02 },
+  { seas:'MJJ 2025', val:-0.04 },
+  { seas:'JJA 2025', val:-0.14 },
+  { seas:'JAS 2025', val:-0.28 },
+  { seas:'ASO 2025', val:-0.40 },
+  { seas:'SON 2025', val:-0.51 },
+  { seas:'OND 2025', val:-0.55 },
+  { seas:'NDJ 2025', val:-0.54 },
+  { seas:'DJF 2026', val:-0.37 },
+  { seas:'JFM 2026', val:-0.15 },
+  { seas:'FMA 2026', val: 0.11 }
+];
+const ONI_DATA_DATE = 'may 2026'; // última actualización del array
+
+// ===== DATASET HISTÓRICO ONI 1950-2026 (NOAA CPC, actualizado may 2026) =====
+// Cada año: [Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic]
+// Valores = anomalía ONI (Niño 3.4 SST, promedio móvil 3 meses centrado)
+const ONI_HIST = {
+  1950: [-1.53,-1.34,-1.16,-1.18,-1.07,-0.85,-0.54,-0.42,-0.39,-0.44,-0.60,-0.80],
+  1951: [-0.82,-0.54,-0.17,0.18,0.36,0.58,0.70,0.89,0.99,1.15,1.04,0.81],
+  1952: [0.53,0.37,0.34,0.29,0.20,0.00,-0.08,0.00,0.15,0.10,0.04,0.15],
+  1953: [0.40,0.60,0.63,0.66,0.75,0.77,0.75,0.73,0.78,0.84,0.84,0.81],
+  1954: [0.76,0.47,-0.05,-0.41,-0.54,-0.50,-0.64,-0.84,-0.90,-0.77,-0.73,-0.66],
+  1955: [-0.68,-0.62,-0.69,-0.80,-0.79,-0.72,-0.68,-0.75,-1.09,-1.42,-1.67,-1.47],
+  1956: [-1.11,-0.76,-0.63,-0.54,-0.52,-0.51,-0.57,-0.55,-0.46,-0.42,-0.43,-0.43],
+  1957: [-0.25,0.06,0.41,0.72,0.92,1.11,1.25,1.32,1.33,1.39,1.53,1.74],
+  1958: [1.81,1.66,1.27,0.93,0.74,0.64,0.57,0.43,0.39,0.44,0.50,0.61],
+  1959: [0.61,0.62,0.52,0.33,0.20,-0.07,-0.18,-0.28,-0.09,-0.03,0.05,-0.04],
+  1960: [-0.10,-0.10,-0.07,0.03,0.02,0.03,0.13,0.24,0.27,0.20,0.12,0.05],
+  1961: [0.04,0.03,0.04,0.09,0.23,0.27,0.14,-0.13,-0.30,-0.26,-0.19,-0.16],
+  1962: [-0.24,-0.22,-0.20,-0.26,-0.28,-0.20,-0.04,-0.07,-0.11,-0.22,-0.31,-0.43],
+  1963: [-0.40,-0.15,0.15,0.27,0.31,0.52,0.86,1.14,1.22,1.29,1.37,1.31],
+  1964: [1.07,0.62,0.12,-0.33,-0.58,-0.58,-0.60,-0.66,-0.76,-0.80,-0.82,-0.78],
+  1965: [-0.59,-0.28,-0.07,0.18,0.46,0.83,1.22,1.54,1.85,1.98,1.97,1.72],
+  1966: [1.37,1.17,0.98,0.66,0.35,0.24,0.24,0.12,-0.05,-0.10,-0.18,-0.30],
+  1967: [-0.41,-0.48,-0.53,-0.45,-0.24,0.00,0.05,-0.16,-0.30,-0.38,-0.34,-0.44],
+  1968: [-0.64,-0.74,-0.62,-0.44,-0.04,0.28,0.58,0.53,0.45,0.55,0.73,0.98],
+  1969: [1.13,1.09,0.95,0.77,0.61,0.43,0.36,0.51,0.79,0.86,0.81,0.63],
+  1970: [0.51,0.34,0.29,0.19,0.04,-0.30,-0.63,-0.76,-0.77,-0.74,-0.86,-1.15],
+  1971: [-1.36,-1.38,-1.12,-0.85,-0.73,-0.74,-0.80,-0.77,-0.82,-0.85,-0.96,-0.90],
+  1972: [-0.71,-0.35,0.06,0.41,0.67,0.92,1.13,1.37,1.58,1.84,2.09,2.12],
+  1973: [1.84,1.25,0.54,-0.10,-0.54,-0.87,-1.11,-1.28,-1.45,-1.71,-1.95,-2.03],
+  1974: [-1.84,-1.55,-1.23,-1.03,-0.91,-0.77,-0.53,-0.37,-0.41,-0.61,-0.75,-0.64],
+  1975: [-0.54,-0.57,-0.65,-0.73,-0.83,-0.98,-1.13,-1.20,-1.37,-1.43,-1.55,-1.65],
+  1976: [-1.56,-1.17,-0.73,-0.47,-0.28,-0.05,0.18,0.35,0.62,0.81,0.86,0.85],
+  1977: [0.71,0.64,0.34,0.23,0.21,0.34,0.35,0.42,0.57,0.73,0.81,0.79],
+  1978: [0.69,0.42,0.06,-0.18,-0.31,-0.29,-0.36,-0.42,-0.42,-0.29,-0.08,0.00],
+  1979: [0.03,0.07,0.20,0.28,0.23,0.05,0.04,0.17,0.33,0.45,0.52,0.64],
+  1980: [0.59,0.46,0.34,0.38,0.48,0.46,0.25,0.03,-0.07,0.02,0.11,-0.01],
+  1981: [-0.26,-0.50,-0.47,-0.37,-0.26,-0.29,-0.30,-0.25,-0.16,-0.13,-0.15,-0.08],
+  1982: [-0.05,0.07,0.19,0.47,0.66,0.72,0.79,1.07,1.58,1.97,2.18,2.23],
+  1983: [2.18,1.92,1.54,1.29,1.06,0.72,0.31,-0.08,-0.46,-0.81,-1.00,-0.91],
+  1984: [-0.60,-0.42,-0.34,-0.43,-0.51,-0.45,-0.30,-0.16,-0.24,-0.56,-0.92,-1.14],
+  1985: [-1.04,-0.85,-0.77,-0.78,-0.78,-0.63,-0.49,-0.46,-0.40,-0.35,-0.27,-0.36],
+  1986: [-0.49,-0.47,-0.31,-0.20,-0.12,-0.04,0.22,0.44,0.71,0.94,1.14,1.22],
+  1987: [1.23,1.19,1.06,0.95,0.97,1.22,1.51,1.70,1.65,1.48,1.25,1.11],
+  1988: [0.81,0.54,0.14,-0.31,-0.88,-1.30,-1.30,-1.11,-1.19,-1.48,-1.80,-1.85],
+  1989: [-1.69,-1.43,-1.08,-0.83,-0.58,-0.40,-0.31,-0.27,-0.24,-0.22,-0.16,-0.05],
+  1990: [0.14,0.21,0.28,0.29,0.29,0.31,0.33,0.38,0.39,0.35,0.40,0.41],
+  1991: [0.41,0.26,0.22,0.26,0.45,0.64,0.73,0.64,0.62,0.79,1.21,1.53],
+  1992: [1.71,1.63,1.48,1.29,1.06,0.73,0.37,0.09,-0.13,-0.25,-0.28,-0.13],
+  1993: [0.09,0.30,0.50,0.67,0.70,0.57,0.32,0.25,0.15,0.10,0.04,0.06],
+  1994: [0.06,0.07,0.17,0.31,0.42,0.41,0.44,0.43,0.55,0.74,1.01,1.09],
+  1995: [0.96,0.72,0.53,0.30,0.14,-0.03,-0.24,-0.54,-0.81,-0.97,-1.00,-0.98],
+  1996: [-0.90,-0.75,-0.59,-0.39,-0.31,-0.30,-0.27,-0.32,-0.35,-0.40,-0.45,-0.49],
+  1997: [-0.50,-0.36,-0.10,0.28,0.75,1.22,1.60,1.90,2.14,2.33,2.40,2.39],
+  1998: [2.24,1.93,1.44,0.99,0.45,-0.13,-0.78,-1.12,-1.31,-1.35,-1.48,-1.57],
+  1999: [-1.55,-1.30,-1.07,-0.98,-1.02,-1.04,-1.10,-1.11,-1.16,-1.26,-1.46,-1.65],
+  2000: [-1.66,-1.41,-1.07,-0.81,-0.71,-0.64,-0.55,-0.51,-0.55,-0.63,-0.75,-0.74],
+  2001: [-0.68,-0.52,-0.44,-0.34,-0.25,-0.12,-0.08,-0.13,-0.19,-0.29,-0.35,-0.31],
+  2002: [-0.15,0.03,0.09,0.20,0.43,0.65,0.79,0.86,1.01,1.21,1.31,1.14],
+  2003: [0.92,0.63,0.38,-0.04,-0.26,-0.16,0.08,0.21,0.26,0.29,0.35,0.35],
+  2004: [0.37,0.31,0.23,0.17,0.17,0.28,0.47,0.64,0.70,0.67,0.66,0.69],
+  2005: [0.64,0.58,0.45,0.43,0.29,0.11,-0.06,-0.14,-0.11,-0.29,-0.57,-0.84],
+  2006: [-0.85,-0.77,-0.57,-0.37,-0.14,-0.03,0.10,0.30,0.54,0.77,0.94,0.94],
+  2007: [0.66,0.22,-0.12,-0.32,-0.38,-0.47,-0.56,-0.81,-1.07,-1.34,-1.50,-1.60],
+  2008: [-1.64,-1.52,-1.29,-1.01,-0.84,-0.61,-0.37,-0.23,-0.24,-0.35,-0.55,-0.73],
+  2009: [-0.85,-0.79,-0.61,-0.33,0.01,0.28,0.45,0.58,0.71,1.01,1.36,1.56],
+  2010: [1.50,1.22,0.84,0.35,-0.17,-0.66,-1.05,-1.35,-1.56,-1.64,-1.64,-1.54],
+  2011: [-1.31,-1.04,-0.80,-0.62,-0.46,-0.37,-0.43,-0.58,-0.79,-0.96,-1.02,-0.92],
+  2012: [-0.72,-0.57,-0.46,-0.36,-0.17,0.06,0.30,0.41,0.41,0.31,0.13,-0.10],
+  2013: [-0.29,-0.29,-0.21,-0.19,-0.27,-0.34,-0.35,-0.28,-0.21,-0.13,-0.10,-0.15],
+  2014: [-0.28,-0.32,-0.14,0.15,0.31,0.23,0.10,0.11,0.28,0.54,0.71,0.77],
+  2015: [0.69,0.61,0.65,0.81,1.02,1.25,1.57,1.91,2.21,2.47,2.64,2.75],
+  2016: [2.63,2.28,1.71,1.05,0.49,0.00,-0.31,-0.50,-0.58,-0.64,-0.60,-0.45],
+  2017: [-0.19,-0.02,0.18,0.31,0.40,0.39,0.19,-0.07,-0.34,-0.60,-0.77,-0.86],
+  2018: [-0.77,-0.71,-0.57,-0.39,-0.13,0.06,0.14,0.27,0.53,0.81,0.97,0.92],
+  2019: [0.89,0.86,0.84,0.77,0.64,0.52,0.33,0.19,0.23,0.39,0.58,0.66],
+  2020: [0.64,0.63,0.53,0.30,0.01,-0.23,-0.36,-0.53,-0.85,-1.12,-1.20,-1.08],
+  2021: [-0.91,-0.79,-0.71,-0.55,-0.39,-0.30,-0.35,-0.45,-0.63,-0.76,-0.91,-0.87],
+  2022: [-0.82,-0.79,-0.86,-0.95,-0.90,-0.78,-0.76,-0.87,-0.97,-0.94,-0.85,-0.71],
+  2023: [-0.54,-0.29,-0.02,0.27,0.57,0.84,1.12,1.37,1.60,1.83,1.99,2.06],
+  2024: [1.92,1.62,1.26,0.82,0.49,0.22,0.08,-0.07,-0.17,-0.21,-0.30,-0.42],
+  2025: [-0.45,-0.24,-0.06,0.02,-0.02,-0.04,-0.14,-0.28,-0.40,-0.51,-0.55,-0.54],
+  2026: [-0.37,-0.15,0.11,null,null,null,null,null,null,null,null,null],
+};
+
+const ENSO_PHASES = {
+  strong_nino: { label:'El Niño Fuerte', icon:'🔴', cls:'phase-nino',    color:'#ff6b35', desc:'Lluvias muy por encima del promedio en Uruguay. Alta probabilidad de excesos hídricos en primavera-verano.' },
+  nino:        { label:'El Niño',        icon:'🟠', cls:'phase-nino',    color:'#ff9f43', desc:'Tendencia a precipitaciones superiores al promedio en Uruguay, especialmente en primavera. Favorece buenos rindes agrícolas.' },
+  neutral:     { label:'Fase Neutra',    icon:'⚪', cls:'phase-neutral', color:'#a8e6cf', desc:'Condiciones dentro de la variabilidad climática normal para Uruguay. Sin señal dominante de El Niño ni La Niña.' },
+  nina:        { label:'La Niña',        icon:'🔵', cls:'phase-nina',    color:'#74b9ff', desc:'Tendencia a déficit de lluvias en Uruguay. Mayor riesgo de sequía. Monitorear disponibilidad hídrica para cultivos.' },
+  strong_nina: { label:'La Niña Fuerte', icon:'🔷', cls:'phase-nina',    color:'#48dbfb', desc:'Sequía severa probable en Uruguay. Déficit hídrico significativo. Impacto alto en ganadería y cultivos.' },
+};
+
+function getENSOPhase(oni) {
+  if (oni >= 1.5)  return ENSO_PHASES.strong_nino;
+  if (oni >= 0.5)  return ENSO_PHASES.nino;
+  if (oni <= -1.5) return ENSO_PHASES.strong_nina;
+  if (oni <= -0.5) return ENSO_PHASES.nina;
+  return ENSO_PHASES.neutral;
+}
+
+function renderENSOCard(data, latestIRI) {
+  const latest = data[data.length - 1];
+  // Si IRI trae un valor más reciente, usarlo como indicador adicional
+  const displayVal = (latestIRI !== null && latestIRI !== undefined) ? latestIRI : latest.val;
+  const phase = getENSOPhase(displayVal);
+  const card = document.getElementById('card-enso');
+  card.className = 'enso-wrap ' + phase.cls;
+  document.getElementById('enso-icon').textContent  = phase.icon;
+  document.getElementById('enso-phase').textContent = phase.label;
+  document.getElementById('enso-phase').style.color = phase.color;
+  document.getElementById('enso-oni').innerHTML =
+    `ONI: <strong>${displayVal >= 0 ? '+' : ''}${displayVal.toFixed(2)}°C</strong>`;
+  const seasLabel = latestIRI !== null ? 'Niño3.4 reciente (IRI)' : latest.seas;
+  document.getElementById('enso-seas').textContent = seasLabel + ' · datos: NOAA CPC';
+  document.getElementById('enso-desc').textContent = phase.desc;
+
+  // Chart
+  const chart = document.getElementById('enso-chart');
+  chart.innerHTML = '<div class="enso-zero-line"></div>';
+  const maxAbs = Math.max(0.6, ...data.map(e => Math.abs(e.val)));
+  data.forEach(e => {
+    const col = document.createElement('div');
+    col.className = 'enso-col';
+    col.title = `${e.seas}: ${e.val >= 0 ? '+' : ''}${e.val.toFixed(2)}°C`;
+    const bar = document.createElement('div');
+    bar.className = 'enso-col-bar';
+    const pct = Math.abs(e.val) / maxAbs * 46;
+    if (e.val >= 0) {
+      bar.style.cssText = `bottom:50%;height:${pct}%;background:${e.val >= 0.5 ? '#ff9f43' : 'rgba(255,200,100,0.4)'};`;
+    } else {
+      bar.style.cssText = `top:50%;height:${pct}%;background:${e.val <= -0.5 ? '#74b9ff' : 'rgba(130,190,255,0.4)'};`;
+    }
+    const lbl = document.createElement('div');
+    lbl.className = 'enso-col-lbl';
+    lbl.textContent = e.seas.slice(0, 3);
+    col.appendChild(bar); col.appendChild(lbl); chart.appendChild(col);
+  });
+
+  // Spaghetti chart histórico
+  buildENSOHistChart();
+}
+
+async function loadENSO() {
+  // Intentar obtener el valor más reciente de IRI (tiene CORS)
+  let latestIRI = null;
+  try {
+    const r = await fetch('https://iridl.ldeo.columbia.edu/SOURCES/.Indices/.nino/.EXTENDED/.NINO34/T/last%2014/VALUES/data.tsv');
+    const t = await r.text();
+    const vals = t.trim().split('\n').map(Number).filter(v => !isNaN(v));
+    if (vals.length > 0) latestIRI = +vals[vals.length - 1].toFixed(2);
+  } catch(e) { /* IRI no disponible, usar solo datos embebidos */ }
+  renderENSOCard(ONI_EMBEDDED, latestIRI);
+}
+
+// ===== SPAGHETTI CHART HISTÓRICO ONI =====
+let ensoHistChart = null;
+
+function classifyONIYear(vals) {
+  const real = vals.filter(v => v !== null && v !== undefined);
+  if (!real.length) return { type:'neutral', strength:'neutral', color:'rgba(180,180,180,0.10)', width:0.8 };
+  const maxV = Math.max(...real);
+  const minV = Math.min(...real);
+  if (maxV >= 1.5) return { type:'nino', strength:'strong', color:'rgba(192,57,43,0.85)',  width:1.7 };
+  if (maxV >= 1.0) return { type:'nino', strength:'mod',    color:'rgba(230,100,30,0.75)', width:1.3 };
+  if (maxV >= 0.5) return { type:'nino', strength:'weak',   color:'rgba(255,185,60,0.45)', width:1.0 };
+  if (minV <=-1.5) return { type:'nina', strength:'strong', color:'rgba(21,101,192,0.85)',  width:1.7 };
+  if (minV <=-1.0) return { type:'nina', strength:'mod',    color:'rgba(41,128,185,0.75)', width:1.3 };
+  if (minV <=-0.5) return { type:'nina', strength:'weak',   color:'rgba(130,195,255,0.45)',width:1.0 };
+  return { type:'neutral', strength:'neutral', color:'rgba(180,180,180,0.10)', width:0.7 };
+}
+
+function buildENSOHistChart() {
+  const MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const currentYear = new Date().getFullYear();
+  const years = Object.keys(ONI_HIST).map(Number).sort((a,b) => a - b);
+
+  // Datasets: primero líneas de referencia, luego años
+  const datasets = [];
+
+  // Línea cero
+  datasets.push({ label:'__zero', data:Array(12).fill(0),
+    borderColor:'rgba(255,255,255,0.10)', borderWidth:1, pointRadius:0, tension:0, fill:false });
+  // Umbral +0.5
+  datasets.push({ label:'__th_nino', data:Array(12).fill(0.5),
+    borderColor:'rgba(255,150,60,0.28)', borderWidth:1, borderDash:[4,4], pointRadius:0, tension:0, fill:false });
+  // Umbral -0.5
+  datasets.push({ label:'__th_nina', data:Array(12).fill(-0.5),
+    borderColor:'rgba(90,180,255,0.28)', borderWidth:1, borderDash:[4,4], pointRadius:0, tension:0, fill:false });
+  // Umbral +1.5
+  datasets.push({ label:'__th_nino2', data:Array(12).fill(1.5),
+    borderColor:'rgba(255,100,40,0.18)', borderWidth:1, borderDash:[2,6], pointRadius:0, tension:0, fill:false });
+  // Umbral -1.5
+  datasets.push({ label:'__th_nina2', data:Array(12).fill(-1.5),
+    borderColor:'rgba(50,130,255,0.18)', borderWidth:1, borderDash:[2,6], pointRadius:0, tension:0, fill:false });
+
+  // Un dataset por año
+  years.forEach(yr => {
+    const raw = ONI_HIST[yr];
+    const isCurrent = yr === currentYear;
+    const cls = classifyONIYear(raw);
+    const color = isCurrent ? 'rgba(255,255,255,0.96)' : cls.color;
+    const width = isCurrent ? 2.8 : cls.width;
+    datasets.push({
+      label: String(yr),
+      data: raw,
+      borderColor: color,
+      borderWidth: width,
+      pointRadius: isCurrent ? 3 : 0,
+      pointHoverRadius: 0,
+      pointBackgroundColor: 'white',
+      tension: 0.35,
+      fill: false,
+      order: isCurrent ? 99 : 1,
+      yearType: cls.type,
+      yearStrength: cls.strength,
+      isCurrent,
+      _color: color,
+      _width: width
+    });
+  });
+
+  // Plugin: etiquetas de año al final de cada línea (solo cuando ≤15 visibles)
+  const yearLabelPlugin = {
+    id: 'oniYearLabels',
+    afterDraw(chart) {
+      const vis = chart.data.datasets.filter(d => !d.label.startsWith('__') && !d.hidden);
+      if (vis.length > 15) return;
+      const ctx2 = chart.ctx;
+      ctx2.save();
+      ctx2.font = 'bold 9px IBM Plex Mono, monospace';
+      ctx2.textAlign = 'left';
+      vis.forEach(ds => {
+        const actualIdx = chart.data.datasets.indexOf(ds);
+        const meta = chart.getDatasetMeta(actualIdx);
+        // Último punto no nulo
+        let lastPt = null;
+        for (let i = ds.data.length - 1; i >= 0; i--) {
+          if (ds.data[i] !== null && ds.data[i] !== undefined && meta.data[i]) {
+            lastPt = meta.data[i]; break;
+          }
+        }
+        if (!lastPt) return;
+        ctx2.fillStyle = ds.borderColor.replace(/[\d.]+\)$/, '0.9)');
+        ctx2.fillText(ds.label, lastPt.x + 5, lastPt.y + 3);
+      });
+      ctx2.restore();
+    }
+  };
+
+  const canvas = document.getElementById('enso-hist-chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (ensoHistChart) { ensoHistChart.destroy(); ensoHistChart = null; }
+
+  ensoHistChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: MONTHS, datasets },
+    plugins: [yearLabelPlugin],
+    options: {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'nearest', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      },
+      scales: {
+        x: {
+          grid: { color:'rgba(255,255,255,0.05)' },
+          ticks: { color:'rgba(255,255,255,0.55)', font:{ size:11 } }
+        },
+        y: {
+          min: -3, max: 3,
+          grid: { color:'rgba(255,255,255,0.05)' },
+          ticks: {
+            color: 'rgba(255,255,255,0.55)', font:{ size:11 },
+            callback: v => `${v >= 0 ? '+' : ''}${v.toFixed(1)}`
+          }
+        }
+      }
+    }
+  });
+
+  // Hover: tooltip con año más cercano
+  const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const tip = document.getElementById('enso-year-tip');
+  canvas.addEventListener('mousemove', e => {
+    if (!tip) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const yScale = ensoHistChart.scales.y;
+    const yVal = yScale.getValueForPixel(my);
+
+    // Encontrar mes más cercano en x usando los metadatos del primer dataset no-ref
+    let refMeta = null;
+    for (let i = 0; i < ensoHistChart.data.datasets.length; i++) {
+      const ds = ensoHistChart.data.datasets[i];
+      if (!ds.label.startsWith('__')) { refMeta = ensoHistChart.getDatasetMeta(i); break; }
+    }
+    let monthIdx = 0, minXDist = Infinity;
+    if (refMeta) {
+      refMeta.data.forEach((pt, i) => {
+        const d = Math.abs(pt.x - mx);
+        if (d < minXDist) { minXDist = d; monthIdx = i; }
+      });
+    }
+
+    // Dataset cuya línea esté más cerca en Y
+    let nearest = null, minDist = Infinity;
+    ensoHistChart.data.datasets.forEach(ds => {
+      if (ds.label.startsWith('__') || ds.hidden) return;
+      const v = ds.data[monthIdx];
+      if (v === null || v === undefined) return;
+      const dist = Math.abs(v - yVal);
+      if (dist < minDist) { minDist = dist; nearest = { ds, v }; }
+    });
+    if (nearest && minDist < 0.5) {
+      const sign = nearest.v >= 0 ? '+' : '';
+      tip.innerHTML = `<strong>${nearest.ds.label}</strong> · ${MONTHS_ES[monthIdx]}: ${sign}${nearest.v.toFixed(2)}°C`;
+      tip.style.display = 'block';
+      tip.style.left = (mx + 14) + 'px';
+      tip.style.top  = (my - 22) + 'px';
+    } else {
+      tip.style.display = 'none';
+    }
+  });
+  canvas.addEventListener('mouseleave', () => { if (tip) tip.style.display = 'none'; });
+}
+
+function filterENSOHist(type) {
+  if (!ensoHistChart) return;
+
+  // Toggle: click en activo → desactiva
+  const btn = document.querySelector(`.ehf[data-f="${type}"]`);
+  const wasActive = btn?.classList.contains('active');
+  document.querySelectorAll('.ehf').forEach(b => b.classList.remove('active'));
+  const active = wasActive ? null : type;
+  if (active) btn?.classList.add('active');
+
+  // Parsear tipo y fortaleza: 'nino-strong' → ['nino','strong']
+  const parts = active ? active.split('-') : [];
+  const fType     = parts[0] || null;          // 'nino' | 'nina' | 'current'
+  const fStrength = parts[1] || null;           // 'strong' | 'mod' | 'weak' | null
+
+  ensoHistChart.data.datasets.forEach(ds => {
+    if (ds.label.startsWith('__')) return;
+
+    if (!active) {
+      ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width;
+
+    } else if (fType === 'current') {
+      if (ds.isCurrent) {
+        ds.hidden = false; ds.borderColor = 'rgba(255,255,255,0.97)'; ds.borderWidth = 3;
+      } else {
+        ds.hidden = false; ds.borderColor = 'rgba(200,200,200,0.07)'; ds.borderWidth = 0.6;
+      }
+
+    } else {
+      // filtro por tipo + fortaleza opcional
+      const matchType     = ds.yearType === fType;
+      const matchStrength = !fStrength || ds.yearStrength === fStrength;
+      const matches = matchType && matchStrength;
+
+      if (matches) {
+        ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width + 0.2;
+      } else if (ds.isCurrent) {
+        ds.hidden = false; ds.borderColor = 'rgba(255,255,255,0.55)'; ds.borderWidth = 1.8;
+      } else {
+        ds.hidden = true;
+      }
+    }
+  });
+
+  ensoHistChart.update();
+  updateENSOYearList(active, fType, fStrength);
+}
+
+function updateENSOYearList(active, fType, fStrength) {
+  const el = document.getElementById('enso-year-list');
+  if (!el || !ensoHistChart) return;
+  if (!active || active === 'current') { el.style.display = 'none'; return; }
+
+  const visible = ensoHistChart.data.datasets
+    .filter(d => !d.label.startsWith('__') && !d.hidden && !d.isCurrent)
+    .map(d => d.label).sort((a,b) => +a - +b);
+
+  if (!visible.length) { el.style.display = 'none'; return; }
+
+  const typeLabel = fType === 'nino' ? 'El Niño' : 'La Niña';
+  const strLabel = { strong:'Fuerte', mod:'Moderado', weak:'Débil' }[fStrength] || '';
+  el.style.display = 'block';
+  el.innerHTML = `<span class="yl-label">${typeLabel} ${strLabel} (${visible.length} años):</span> ${visible.join(' · ')}`;
+}
+
+// ===== AUTO-REFRESH (cada 30 min) =====
+const AUTO_REFRESH_MS = 30 * 60 * 1000; // 30 minutos
+let lastFetchTime = null;
+let autoRefreshTimer = null;
+let countdownTimer = null;
+
+function updateLastUpdatedUI() {
+  if (!lastFetchTime) return;
+  const el = document.getElementById('lastUpdated');
+  const luText = document.getElementById('luText');
+  const nextUpd = document.getElementById('nextUpdate');
+  el.style.display = 'flex';
+
+  const diffSec = Math.floor((Date.now() - lastFetchTime) / 1000);
+  const minsAgo = Math.floor(diffSec / 60);
+  luText.textContent = minsAgo < 1 ? 'Ahora mismo' : `Hace ${minsAgo} min`;
+
+  const secsToNext = Math.max(0, AUTO_REFRESH_MS / 1000 - diffSec);
+  const minsToNext = Math.ceil(secsToNext / 60);
+  nextUpd.textContent = `· próx. en ${minsToNext} min`;
+}
+
+function scheduleAutoRefresh() {
+  if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
+  if (countdownTimer) clearInterval(countdownTimer);
+
+  autoRefreshTimer = setTimeout(() => {
+    reloadCurrent();
+  }, AUTO_REFRESH_MS);
+
+  // Actualizar el contador cada 30 segundos
+  countdownTimer = setInterval(updateLastUpdatedUI, 30000);
+}
+
+// ===== FETCH =====
+let lastDept = 'Montevideo';
+async function loadWeather(dept) {
+  lastDept = dept;
+  document.getElementById('loading').classList.add('on');
+  document.getElementById('errorBox').classList.remove('show');
+  const btn = document.getElementById('refreshBtn');
+  if (btn) btn.classList.add('spinning');
+  const { lat, lon } = DEPTS[dept];
+  const url = 'https://api.open-meteo.com/v1/forecast?'
+    + `latitude=${lat}&longitude=${lon}&timezone=America%2FMontevideo`
+    + '&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation'
+    + '&hourly=temperature_2m,relative_humidity_2m,dewpoint_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,soil_temperature_0cm,soil_moisture_0_to_1cm,et0_fao_evapotranspiration'
+    + '&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,uv_index_max,sunrise,sunset,et0_fao_evapotranspiration'
+    + '&forecast_days=7';
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    renderWeather(data, dept);
+    lastFetchTime = Date.now();
+    updateLastUpdatedUI();
+    scheduleAutoRefresh();
+  } catch (e) {
+    document.getElementById('errorBox').classList.add('show');
+    console.error('Open-Meteo error:', e);
+  } finally {
+    document.getElementById('loading').classList.remove('on');
+    const btn = document.getElementById('refreshBtn');
+    if (btn) btn.classList.remove('spinning');
+  }
+}
+
+function reloadCurrent() { loadWeather(lastDept); }
+
+// ===== VARIABLE TOGGLES =====
+document.querySelectorAll('.var-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('active');
+    const card = document.getElementById('card-' + btn.dataset.var);
+    if (card) {
+      // enso-wrap uses .hidden too, vcard uses display:none via .hidden
+      card.classList.toggle('hidden', !btn.classList.contains('active'));
+    }
+  });
+});
+
+// ===== DEPT CHANGE =====
+document.getElementById('deptSelect').addEventListener('change', function () {
+  loadWeather(this.value);
+});
+
+// ===== ONI LIVE UPDATE =====
+// Intenta bajar datos frescos de NOAA via proxies CORS. Si falla → usa datos embebidos.
+async function loadLiveONI() {
+  const NOAA_URL = 'https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt';
+  const PROXIES = [
+    `https://corsproxy.io/?url=${encodeURIComponent(NOAA_URL)}`,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(NOAA_URL)}`
+  ];
+
+  const seasToMonth = {DJF:0,JFM:1,FMA:2,MAM:3,AMJ:4,MJJ:5,JJA:6,JAS:7,ASO:8,SON:9,OND:10,NDJ:11};
+  const seasonOrder = ['DJF','JFM','FMA','MAM','AMJ','MJJ','JJA','JAS','ASO','SON','OND','NDJ'];
+
+  function parseONI(text) {
+    const result = {};
+    text.split('\n').forEach(line => {
+      const p = line.trim().split(/\s+/);
+      if (p.length >= 4 && seasToMonth[p[0]] !== undefined) {
+        const yr = parseInt(p[1]), anom = parseFloat(p[3]);
+        if (isNaN(yr) || isNaN(anom)) return;
+        if (!result[yr]) result[yr] = Array(12).fill(null);
+        result[yr][seasToMonth[p[0]]] = anom;
+      }
+    });
+    return result;
+  }
+
+  for (const proxy of PROXIES) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 10000);
+      const r = await fetch(proxy, { signal: ctrl.signal });
+      clearTimeout(t);
+      if (!r.ok) continue;
+      const text = await r.text();
+      if (!text.includes('DJF') || !text.includes('ANOM')) continue;
+
+      const fresh = parseONI(text);
+      if (Object.keys(fresh).length < 50) continue; // sanity check
+
+      // Actualizar ONI_HIST en memoria
+      Object.assign(ONI_HIST, fresh);
+
+      // Actualizar ONI_EMBEDDED con las últimas 14 estaciones del dato fresco
+      const allSeasons = [];
+      Object.keys(fresh).map(Number).sort((a,b)=>a-b).forEach(yr => {
+        seasonOrder.forEach((s, mi) => {
+          const v = fresh[yr][mi];
+          if (v !== null && v !== undefined) {
+            allSeasons.push({ seas: `${s} ${yr}`, val: v });
+          }
+        });
+      });
+      const recent = allSeasons.slice(-14);
+      if (recent.length >= 5) {
+        ONI_EMBEDDED.splice(0, ONI_EMBEDDED.length, ...recent);
+      }
+
+      // Badge: datos en vivo
+      const badge = document.getElementById('oni-live-badge');
+      if (badge) {
+        const now = new Date();
+        const mes = now.toLocaleDateString('es-UY', { month: 'short', year: 'numeric' });
+        badge.textContent = `● ONI actualizado: ${mes}`;
+        badge.style.color = '#00d2a0';
+      }
+
+      // Reconstruir spaghetti chart con datos frescos
+      if (ensoHistChart) {
+        const activeBtn = document.querySelector('.ehf.active')?.dataset?.f || null;
+        buildENSOHistChart();
+        if (activeBtn) filterENSOHist(activeBtn);
+      }
+
+      // Refrescar el card ENSO actual con el nuevo ONI_EMBEDDED
+      const iriBadge = document.getElementById('oni-live-badge');
+      if (typeof loadENSO === 'function') loadENSO();
+
+      return true;
+    } catch(e) { /* probar siguiente proxy */ }
+  }
+
+  // Falló todo → usar datos embebidos, mostrar fecha de los datos
+  const badge = document.getElementById('oni-live-badge');
+  if (badge) {
+    badge.textContent = `○ ONI embebido: ${ONI_DATA_DATE}`;
+    badge.style.color = 'rgba(255,255,255,0.28)';
+  }
+  return false;
+}
+
+// ===== EXTREMOS NACIONALES (temperatura mín/máx en todos los depts) =====
+async function loadTempRankUY() {
+  const depts = Object.keys(DEPTS);
+  const lats  = depts.map(d => DEPTS[d].lat).join(',');
+  const lons  = depts.map(d => DEPTS[d].lon).join(',');
+  const url   = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}`
+              + `&current=temperature_2m,weather_code&timezone=America%2FMontevideo`;
+  try {
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const arr  = Array.isArray(data) ? data : [data];
+
+    let cold = { dept: '', temp: Infinity };
+    let warm = { dept: '', temp: -Infinity };
+    arr.forEach((r, i) => {
+      const t = r?.current?.temperature_2m;
+      if (t === undefined || t === null) return;
+      if (t < cold.temp) cold = { dept: depts[i], temp: t };
+      if (t > warm.temp) warm = { dept: depts[i], temp: t };
+    });
+
+    if (cold.dept === '') return; // no data
+
+    // Actualizar card
+    const valEl  = document.getElementById('vc-cold-temp');
+    const deptEl = document.getElementById('vc-cold-dept');
+    const warmEl = document.getElementById('vc-warm-dept');
+    const barEl  = document.getElementById('vc-cold-bar');
+
+    if (valEl)  valEl.innerHTML  = `${cold.temp.toFixed(1)} <span>°C</span>`;
+    if (deptEl) deptEl.innerHTML = `<span style="color:rgba(116,185,255,0.85)">↓ más frío:</span> ${cold.dept}`;
+    if (warmEl) warmEl.innerHTML = `<span style="color:rgba(251,188,68,0.75)">↑ más cálido:</span> ${warm.dept} · ${warm.temp.toFixed(1)}°C`;
+    const warmRow = document.getElementById('vc-warm-row');
+    if (warmRow) warmRow.style.display = '';
+
+    // Barra: mapea de -5°C (0%) a 40°C (100%)
+    if (barEl) {
+      const pct = Math.max(0, Math.min(100, ((cold.temp + 5) / 45) * 100));
+      barEl.style.width = pct + '%';
+    }
+  } catch (e) {
+    const deptEl = document.getElementById('vc-cold-dept');
+    if (deptEl) deptEl.textContent = 'No disponible';
+    console.error('TempRank error:', e);
+  }
+}
+
+// ===== INIT =====
+loadWeather('Montevideo');
+loadENSO();
+loadLiveONI();    // intenta actualizar datos ONI de NOAA en segundo plano
+loadTempRankUY(); // extremos de temperatura en los 19 departamentos
+</script>
+</body>
+</html>
