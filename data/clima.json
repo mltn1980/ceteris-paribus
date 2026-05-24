@@ -1,11 +1,11 @@
 {
-  "actualizado": "2026-05-22",
+  "actualizado": "2026-05-24",
   "alerta": {
     "activa": true,
     "tipo": "Ola de frío",
     "nivel": "Amarillo",
-    "titulo": "Frio não dá trégua e segue abaixo de zero — heladas agrometeorológicas",
-    "descripcion": "Frio não dá trégua e segue abaixo de zero. RS completou 15 dias abaixo de zero no ano. Corredor polar aberto com masas de aire frío sucesivas — frio vai longe, até o fim do mês. Uruguay: bajas temperaturas persistentes, heladas agrometeorológicas previstas sábado 23, neblinas y bancos de niebla.",
+    "titulo": "Frio não dá trégua e segue abaixo de zero — neblinas y bancos de niebla",
+    "descripcion": "Frio não dá trégua e segue abaixo de zero. RS completó 15 días abaixo de zero no año. Corredor polar aberto con masas de aire frío sucesivas — frio vai longe, até o fim do mês. Uruguay: neblinas y bancos de niebla persistentes, temperaturas bajas. Chuva avança neste fim de semana com baixa pressão afectando Sul y Sudeste.",
     "vigencia": "8-31 may 2026",
     "fuente": "INUMET / MetSul"
   },
