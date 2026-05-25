@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-05-24",
+  "actualizado": "2026-05-25",
   "alerta": {
     "activa": true,
-    "tipo": "Ola de frío",
+    "tipo": "Lluvias y tormentas",
     "nivel": "Amarillo",
-    "titulo": "Frio não dá trégua e segue abaixo de zero — neblinas y bancos de niebla",
-    "descripcion": "Frio não dá trégua e segue abaixo de zero. RS completó 15 días abaixo de zero no año. Corredor polar aberto con masas de aire frío sucesivas — frio vai longe, até o fim do mês. Uruguay: neblinas y bancos de niebla persistentes, temperaturas bajas. Chuva avança neste fim de semana com baixa pressão afectando Sul y Sudeste.",
-    "vigencia": "8-31 may 2026",
+    "titulo": "Chuva avança com baixa pressão e risco de granizo",
+    "descripcion": "Áreas de instabilidade se formam no Sul do Brasil por um centro de baixa pressão. Chuva avança nas próximas horas com risco de granizo. Uruguay: neblinas y bancos de niebla persistentes, temperaturas bajas (8-18°C). Frio não dá trégua — corredor polar aberto con masas de aire frío sucesivas hasta fin de mes.",
+    "vigencia": "25-27 may 2026",
     "fuente": "INUMET / MetSul"
   },
   "enso": {
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "19 may 2026",
     "proximo_update": "~19 jun 2026",
-    "nota_extra": "El Niño começa a se formar nas profundezas do Oceano Pacífico. Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera."
+    "nota_extra": "El Niño começa a se formar nas profundezas do Oceano Pacífico. Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño de 2026-2027 será diferente del último y va a sorprender."
   },
   "probabilidades": [
     {
