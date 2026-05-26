@@ -1,15 +1,15 @@
 {
-  "periodo": "26-2 may 2026",
-  "rhe_novillo": 0.991,
-  "rhe_vaca": 0.898,
-  "precio_export": 5.622,
-  "precio_novillo": 5.569,
-  "precio_vaca": 5.047,
-  "actualizado": "2026-05-12",
+  "periodo": "10-16 may 2026",
+  "rhe_novillo": 0.898,
+  "rhe_vaca": 0.831,
+  "precio_export": 6.284,
+  "precio_novillo": 5.645,
+  "precio_vaca": 5.221,
+  "actualizado": "2026-05-26",
   "periodo_año_ant": "prom. may 2025",
-  "export_var_a": 11.7,
-  "novillo_var_a": 19.6,
-  "vaca_var_a": 15.8,
-  "rhe_nov_var_a": 6.5,
-  "rhe_vac_var_a": 3.2
+  "export_var_a": 24.8,
+  "novillo_var_a": 21.2,
+  "vaca_var_a": 19.8,
+  "rhe_nov_var_a": -2.7,
+  "rhe_vac_var_a": -3.5
 }
