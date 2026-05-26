@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-05-25",
+  "actualizado": "2026-05-26",
   "alerta": {
     "activa": true,
-    "tipo": "Lluvias y tormentas",
-    "nivel": "Amarillo",
-    "titulo": "Chuva avança com baixa pressão e risco de granizo",
-    "descripcion": "Áreas de instabilidade se formam no Sul do Brasil por um centro de baixa pressão. Chuva avança nas próximas horas com risco de granizo. Uruguay: neblinas y bancos de niebla persistentes, temperaturas bajas (8-18°C). Frio não dá trégua — corredor polar aberto con masas de aire frío sucesivas hasta fin de mes.",
-    "vigencia": "25-27 may 2026",
+    "tipo": "Granizo y tormentas",
+    "nivel": "Naranja",
+    "titulo": "Granizo atinge três estados do Sul com danos",
+    "descripcion": "Temporais com granizo atingiram nas últimas horas diversas localidades do Rio Grande do Sul, Santa Catarina e Paraná com danos e suspensão de aulas. Ciclone no Atlântico afeta a região. Uruguay: neblinas y bancos de niebla persistentes, temperaturas bajas (7-17°C). El Niño Costeiro atinge intensidade muito forte no Oeste da América do Sul.",
+    "vigencia": "26-28 may 2026",
     "fuente": "INUMET / MetSul"
   },
   "enso": {
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "19 may 2026",
     "proximo_update": "~19 jun 2026",
-    "nota_extra": "El Niño começa a se formar nas profundezas do Oceano Pacífico. Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño de 2026-2027 será diferente del último y va a sorprender."
+    "nota_extra": "El Niño começa a se formar nas profundezas do Oceano Pacífico. Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño de 2026-2027 será diferente del último y va a sorprender. El Niño Costeiro atinge intensidade muito forte no Peru e Equador."
   },
   "probabilidades": [
     {
