@@ -1,21 +1,17 @@
 {
-  "fecha": "2026-05-27",
+  "fecha": "2026-05-29",
   "fuente": "Cámara Mercantil de Productos del País",
   "precios": {
-    "trigo": {
-      "precio": 200,
-      "desc": "Zafra nueva - Mvd."
-    },
     "maiz": {
       "precio": 247,
       "desc": "Grado II disponible - Mvd."
     },
     "girasol": {
-      "precio": 455,
+      "precio": 466,
       "desc": "Industria zafra nueva - Mvd."
     },
     "soja": {
-      "precio": 400,
+      "precio": 410,
       "desc": "Industria zafra nueva - Mvd."
     }
   }
