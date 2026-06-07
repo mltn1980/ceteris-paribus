@@ -140,13 +140,18 @@ header::before {
 .refresh-btn:hover { background: rgba(0,209,145,0.22); color: #fff; border-color: var(--accent); }
 .refresh-btn.spinning { animation: spin 0.7s linear infinite; cursor: default; }
 .last-updated {
-  font-family: var(--mono); font-size: 0.67rem; color: rgba(139,191,176,0.55);
-  display: flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 0.66rem;
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(0,209,145,0.07); border: 1px solid rgba(0,209,145,0.22);
+  border-radius: 3px; padding: 4px 10px;
 }
 .last-updated .lu-dot {
   width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
   animation: pulse-dot 2s ease-in-out infinite;
 }
+.last-updated .lu-label { color: rgba(139,191,176,0.50); }
+.last-updated .lu-time  { color: var(--accent); font-weight: 600; letter-spacing: 0.04em; }
+.last-updated .lu-next  { color: rgba(139,191,176,0.35); font-size: 0.60rem; }
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.4; transform: scale(0.7); }
@@ -631,8 +636,9 @@ footer a:hover { color: var(--accent); }
       <span class="header-title">Monitor Climático</span>
       <div class="last-updated" id="lastUpdated" style="display:none">
         <div class="lu-dot"></div>
-        <span id="luText">—</span>
-        <span class="next-update" id="nextUpdate"></span>
+        <span class="lu-label">Actualizado</span>
+        <span class="lu-time" id="luText">—</span>
+        <span class="lu-next" id="nextUpdate"></span>
       </div>
       <button class="refresh-btn" id="refreshBtn" onclick="reloadCurrent()">↻ Actualizar</button>
     </div>
@@ -1919,11 +1925,12 @@ function updateLastUpdatedUI() {
 
   const diffSec = Math.floor((Date.now() - lastFetchTime) / 1000);
   const minsAgo = Math.floor(diffSec / 60);
-  luText.textContent = minsAgo < 1 ? 'Ahora mismo' : `Hace ${minsAgo} min`;
+  const timeStr = lastFetchTime.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' });
+  luText.textContent = minsAgo < 1 ? `${timeStr} (ahora)` : `${timeStr} (hace ${minsAgo} min)`;
 
   const secsToNext = Math.max(0, AUTO_REFRESH_MS / 1000 - diffSec);
   const minsToNext = Math.ceil(secsToNext / 60);
-  nextUpd.textContent = `· próx. en ${minsToNext} min`;
+  nextUpd.textContent = `· próx. ${minsToNext} min`;
 }
 
 function scheduleAutoRefresh() {
