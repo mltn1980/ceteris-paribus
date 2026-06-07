@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -618,7 +618,117 @@ footer a:hover { color: var(--accent); }
     </div>
   </header>
 
-  <div class="controls-bar">
+
+  </div>
+
+  <main>
+    <div class="error-box" id="errorBox">No se pudo obtener el pronóstico. Verificá tu conexión e intentá de nuevo.</div>
+
+    <!-- ENSO -->
+    <div>
+      <div class="sec-lbl">Fenómeno ENSO — El Niño / La Niña · Pacífico</div>
+      <div class="enso-wrap" id="card-enso">
+        <div class="enso-badge">
+          <div class="enso-badge-icon" id="enso-icon">🌊</div>
+          <div class="enso-badge-name" id="enso-phase">Cargando…</div>
+          <div class="enso-badge-oni" id="enso-oni">ONI: —</div>
+          <div class="enso-badge-seas" id="enso-seas">—</div>
+        </div>
+        <div class="enso-body">
+          <div class="enso-desc" id="enso-desc">Obteniendo índice ONI…</div>
+          <div class="enso-chart-lbl">Índice ONI — últimas 10 estaciones (Niño 3.4 SST anomalía)</div>
+          <div class="enso-chart" id="enso-chart">
+            <div class="enso-zero-line"></div>
+          </div>
+        </div>
+        <div class="enso-links">
+          <a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" class="enso-btn">Pronóstico<br>IRI/Columbia →</a>
+          <a href="https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml" target="_blank" class="enso-btn">Boletín<br>NOAA CPC →</a>
+          <div class="enso-src">Datos: NOAA CPC<br>Índice ONI (Niño 3.4)<br>Ref: IRI/Columbia Univ.<br><span id="oni-live-badge" style="font-size:0.58rem;color:rgba(255,255,255,0.25);">○ cargando…</span></div>
+        </div>
+
+        <!-- ===== HISTÓRICO ONI ===== -->
+        <div class="enso-hist" id="enso-hist">
+          <div class="enso-hist-hdr">
+            <div class="enso-hist-title">Evolución Histórica ONI por Año <span>1950–2026</span></div>
+            <div class="enso-hist-filters">
+              <div class="ehf-group">
+                <span class="ehf-group-label">El Niño</span>
+                <button class="ehf nino" data-f="nino-strong" onclick="filterENSOHist('nino-strong')">Fuerte</button>
+                <button class="ehf nino" data-f="nino-mod"    onclick="filterENSOHist('nino-mod')">Mod.</button>
+                <button class="ehf nino" data-f="nino-weak"   onclick="filterENSOHist('nino-weak')">Débil</button>
+              </div>
+              <div class="ehf-group">
+                <span class="ehf-group-label">La Niña</span>
+                <button class="ehf nina" data-f="nina-strong" onclick="filterENSOHist('nina-strong')">Fuerte</button>
+                <button class="ehf nina" data-f="nina-mod"    onclick="filterENSOHist('nina-mod')">Mod.</button>
+                <button class="ehf nina" data-f="nina-weak"   onclick="filterENSOHist('nina-weak')">Débil</button>
+              </div>
+              <button class="ehf current" data-f="current" onclick="filterENSOHist('current')">★ 2026</button>
+            </div>
+          </div>
+          <!-- Lista dinámica de años visibles -->
+          <div id="enso-year-list" class="enso-year-list" style="display:none;"></div>
+
+          <!-- Cómo leer el gráfico -->
+          <div class="enso-howto">
+            <div class="enso-howto-title">¿Qué muestra este gráfico?</div>
+            <div class="enso-howto-body">
+              Cada línea representa un año completo (enero a diciembre). El eje vertical muestra el <strong>Índice ONI</strong> — la anomalía de temperatura superficial del mar en el Pacífico central (región Niño 3.4), en grados Celsius respecto al promedio histórico.
+              <br><br>
+              Las líneas punteadas marcan los <strong>umbrales NOAA</strong>: por encima de <span class="howto-nino">+0.5°C</span> el año entra en zona El Niño (naranja/rojo), por debajo de <span class="howto-nina">−0.5°C</span> en La Niña (azul). Cuanto más alejado del cero, más intenso el evento.
+              <br><br>
+              <strong>Cómo usarlo:</strong> Usá los filtros para aislar solo los años El Niño o La Niña. Con <em>"Año actual"</em> el resto queda de fondo grisado para comparar con la trayectoria de 2026.
+            </div>
+          </div>
+
+          <div class="enso-hist-legend">
+            <div class="ehl-item"><span class="ehl-dot" style="background:#c0392b"></span>El Niño fuerte (≥+1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:#e67e22"></span>El Niño mod. (+1.0/+1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:rgba(255,185,65,0.8)"></span>El Niño débil (+0.5/+1.0)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:#1565c0"></span>La Niña fuerte (≤−1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:#2980b9"></span>La Niña mod. (−1.0/−1.5)</div>
+            <div class="ehl-item"><span class="ehl-dot" style="background:rgba(130,195,255,0.8)"></span>La Niña débil (−0.5/−1.0)</div>
+            <div class="ehl-item ehl-current">━ 2026</div>
+          </div>
+          <div class="enso-hist-canvas-wrap" style="position:relative;">
+            <canvas id="enso-hist-chart"></canvas>
+            <div id="enso-year-tip" class="enso-year-tip" style="display:none;"></div>
+          </div>
+          <div class="enso-hist-note">Índice ONI (anomalía °C Niño 3.4 SST) · Fuente: NOAA CPC · 77 años (1950–2026)</div>
+
+          <!-- Impacto en Uruguay -->
+          <div class="enso-impact-grid">
+            <div class="enso-impact enso-impact-nino">
+              <div class="impact-hdr">🟠 El Niño en Uruguay</div>
+              <div class="impact-body">
+                <strong>Lluvias por encima del promedio</strong>, especialmente en primavera–verano (Oct–Feb). Favorece la recarga de acuíferos y reduce el riesgo de sequía. Positivo para cultivos de secano (soja, maíz) si no genera excesos hídricos. Inviernos más cálidos de lo normal.
+              </div>
+            </div>
+            <div class="enso-impact enso-impact-nina">
+              <div class="impact-hdr">🔵 La Niña en Uruguay</div>
+              <div class="impact-body">
+                <strong>Mayor riesgo de sequía y déficit hídrico</strong>. Inviernos más fríos con mayor riesgo de heladas tardías. Impacto negativo en ganadería (menor disponibilidad de pasto) y en cultivos por estrés hídrico. Veranos calurosos y secos, con impacto en forestación y ganadería.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ALERTAS INUMET -->
+    <div class="alerts-box">
+      <div class="alerts-icon">⚠️</div>
+      <div class="alerts-body">
+        <div class="alerts-title">Alertas Meteorológicas Oficiales — INUMET</div>
+        <div class="alerts-sub">Instituto Uruguayo de Meteorología · Datos de pronóstico: Open-Meteo (modelo ECMWF)</div>
+      </div>
+      <a href="https://www.inumet.gub.uy/clima/alertas-meteorologicas" target="_blank" class="alerts-link">Ver alertas →</a>
+    </div>
+
+  
+<div class="controls-bar">
     <select class="dept-select" id="deptSelect">
       <option value="Montevideo">📍 Montevideo</option>
       <option value="Artigas">Artigas</option>
@@ -653,12 +763,8 @@ footer a:hover { color: var(--accent); }
       <button class="var-btn active" data-var="enso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> ENSO</button>
       <button class="var-btn active" data-var="temprank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg> Extremos UY</button>
     </div>
-  </div>
 
-  <main>
-    <div class="error-box" id="errorBox">No se pudo obtener el pronóstico. Verificá tu conexión e intentá de nuevo.</div>
-
-    <!-- CONDICIONES ACTUALES -->
+        <!-- CONDICIONES ACTUALES -->
     <div class="current-hero" id="currentHero">
       <canvas id="hero-fx-canvas" class="fx-rain-canvas" width="900" height="220" style="display:none;opacity:0.65;"></canvas>
       <div class="cur-left">
@@ -785,110 +891,7 @@ footer a:hover { color: var(--accent); }
       </div>
     </div>
 
-    <!-- ENSO -->
-    <div>
-      <div class="sec-lbl">Fenómeno ENSO — El Niño / La Niña · Pacífico</div>
-      <div class="enso-wrap" id="card-enso">
-        <div class="enso-badge">
-          <div class="enso-badge-icon" id="enso-icon">🌊</div>
-          <div class="enso-badge-name" id="enso-phase">Cargando…</div>
-          <div class="enso-badge-oni" id="enso-oni">ONI: —</div>
-          <div class="enso-badge-seas" id="enso-seas">—</div>
-        </div>
-        <div class="enso-body">
-          <div class="enso-desc" id="enso-desc">Obteniendo índice ONI…</div>
-          <div class="enso-chart-lbl">Índice ONI — últimas 10 estaciones (Niño 3.4 SST anomalía)</div>
-          <div class="enso-chart" id="enso-chart">
-            <div class="enso-zero-line"></div>
-          </div>
-        </div>
-        <div class="enso-links">
-          <a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" class="enso-btn">Pronóstico<br>IRI/Columbia →</a>
-          <a href="https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml" target="_blank" class="enso-btn">Boletín<br>NOAA CPC →</a>
-          <div class="enso-src">Datos: NOAA CPC<br>Índice ONI (Niño 3.4)<br>Ref: IRI/Columbia Univ.<br><span id="oni-live-badge" style="font-size:0.58rem;color:rgba(255,255,255,0.25);">○ cargando…</span></div>
-        </div>
-
-        <!-- ===== HISTÓRICO ONI ===== -->
-        <div class="enso-hist" id="enso-hist">
-          <div class="enso-hist-hdr">
-            <div class="enso-hist-title">Evolución Histórica ONI por Año <span>1950–2026</span></div>
-            <div class="enso-hist-filters">
-              <div class="ehf-group">
-                <span class="ehf-group-label">El Niño</span>
-                <button class="ehf nino" data-f="nino-strong" onclick="filterENSOHist('nino-strong')">Fuerte</button>
-                <button class="ehf nino" data-f="nino-mod"    onclick="filterENSOHist('nino-mod')">Mod.</button>
-                <button class="ehf nino" data-f="nino-weak"   onclick="filterENSOHist('nino-weak')">Débil</button>
-              </div>
-              <div class="ehf-group">
-                <span class="ehf-group-label">La Niña</span>
-                <button class="ehf nina" data-f="nina-strong" onclick="filterENSOHist('nina-strong')">Fuerte</button>
-                <button class="ehf nina" data-f="nina-mod"    onclick="filterENSOHist('nina-mod')">Mod.</button>
-                <button class="ehf nina" data-f="nina-weak"   onclick="filterENSOHist('nina-weak')">Débil</button>
-              </div>
-              <button class="ehf current" data-f="current" onclick="filterENSOHist('current')">★ 2026</button>
-            </div>
-          </div>
-          <!-- Lista dinámica de años visibles -->
-          <div id="enso-year-list" class="enso-year-list" style="display:none;"></div>
-
-          <!-- Cómo leer el gráfico -->
-          <div class="enso-howto">
-            <div class="enso-howto-title">¿Qué muestra este gráfico?</div>
-            <div class="enso-howto-body">
-              Cada línea representa un año completo (enero a diciembre). El eje vertical muestra el <strong>Índice ONI</strong> — la anomalía de temperatura superficial del mar en el Pacífico central (región Niño 3.4), en grados Celsius respecto al promedio histórico.
-              <br><br>
-              Las líneas punteadas marcan los <strong>umbrales NOAA</strong>: por encima de <span class="howto-nino">+0.5°C</span> el año entra en zona El Niño (naranja/rojo), por debajo de <span class="howto-nina">−0.5°C</span> en La Niña (azul). Cuanto más alejado del cero, más intenso el evento.
-              <br><br>
-              <strong>Cómo usarlo:</strong> Usá los filtros para aislar solo los años El Niño o La Niña. Con <em>"Año actual"</em> el resto queda de fondo grisado para comparar con la trayectoria de 2026.
-            </div>
-          </div>
-
-          <div class="enso-hist-legend">
-            <div class="ehl-item"><span class="ehl-dot" style="background:#c0392b"></span>El Niño fuerte (≥+1.5)</div>
-            <div class="ehl-item"><span class="ehl-dot" style="background:#e67e22"></span>El Niño mod. (+1.0/+1.5)</div>
-            <div class="ehl-item"><span class="ehl-dot" style="background:rgba(255,185,65,0.8)"></span>El Niño débil (+0.5/+1.0)</div>
-            <div class="ehl-item"><span class="ehl-dot" style="background:#1565c0"></span>La Niña fuerte (≤−1.5)</div>
-            <div class="ehl-item"><span class="ehl-dot" style="background:#2980b9"></span>La Niña mod. (−1.0/−1.5)</div>
-            <div class="ehl-item"><span class="ehl-dot" style="background:rgba(130,195,255,0.8)"></span>La Niña débil (−0.5/−1.0)</div>
-            <div class="ehl-item ehl-current">━ 2026</div>
-          </div>
-          <div class="enso-hist-canvas-wrap" style="position:relative;">
-            <canvas id="enso-hist-chart"></canvas>
-            <div id="enso-year-tip" class="enso-year-tip" style="display:none;"></div>
-          </div>
-          <div class="enso-hist-note">Índice ONI (anomalía °C Niño 3.4 SST) · Fuente: NOAA CPC · 77 años (1950–2026)</div>
-
-          <!-- Impacto en Uruguay -->
-          <div class="enso-impact-grid">
-            <div class="enso-impact enso-impact-nino">
-              <div class="impact-hdr">🟠 El Niño en Uruguay</div>
-              <div class="impact-body">
-                <strong>Lluvias por encima del promedio</strong>, especialmente en primavera–verano (Oct–Feb). Favorece la recarga de acuíferos y reduce el riesgo de sequía. Positivo para cultivos de secano (soja, maíz) si no genera excesos hídricos. Inviernos más cálidos de lo normal.
-              </div>
-            </div>
-            <div class="enso-impact enso-impact-nina">
-              <div class="impact-hdr">🔵 La Niña en Uruguay</div>
-              <div class="impact-body">
-                <strong>Mayor riesgo de sequía y déficit hídrico</strong>. Inviernos más fríos con mayor riesgo de heladas tardías. Impacto negativo en ganadería (menor disponibilidad de pasto) y en cultivos por estrés hídrico. Veranos calurosos y secos, con impacto en forestación y ganadería.
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ALERTAS INUMET -->
-    <div class="alerts-box">
-      <div class="alerts-icon">⚠️</div>
-      <div class="alerts-body">
-        <div class="alerts-title">Alertas Meteorológicas Oficiales — INUMET</div>
-        <div class="alerts-sub">Instituto Uruguayo de Meteorología · Datos de pronóstico: Open-Meteo (modelo ECMWF)</div>
-      </div>
-      <a href="https://www.inumet.gub.uy/clima/alertas-meteorologicas" target="_blank" class="alerts-link">Ver alertas →</a>
-    </div>
-
-  </main>
+    </main>
 
   <footer>
     Pronóstico: <a href="https://open-meteo.com" target="_blank">Open-Meteo</a> (ECMWF / ERA5) ·
