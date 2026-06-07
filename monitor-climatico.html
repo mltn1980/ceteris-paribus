@@ -417,6 +417,17 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
 .enso-col-bar { position: absolute; left: 0; right: 0; border-radius: 1px; min-height: 3px; transition: opacity 0.2s; }
 .enso-col:hover .enso-col-bar { opacity: 0.75; }
 .enso-col-lbl { position: absolute; bottom: -14px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 0.52rem; color: rgba(139,191,176,0.35); }
+.enso-mini-tip {
+  display: none; position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%); z-index: 20;
+  background: rgba(8,18,32,0.96); border: 1px solid var(--rule);
+  border-radius: 4px; padding: 7px 12px; white-space: nowrap;
+  font-family: var(--mono); font-size: 0.68rem; line-height: 1.6;
+  pointer-events: none; box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+}
+.enso-mini-tip .tip-seas  { color: rgba(139,191,176,0.6); font-size: 0.60rem; text-transform: uppercase; letter-spacing: 0.10em; }
+.enso-mini-tip .tip-val   { font-size: 0.88rem; font-weight: 600; }
+.enso-mini-tip .tip-label { font-size: 0.64rem; margin-top: 1px; }
 
 .enso-links { text-align: center; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
 .enso-btn {
@@ -1544,7 +1555,6 @@ function renderENSOCard(data, latestIRI) {
   data.forEach(e => {
     const col = document.createElement('div');
     col.className = 'enso-col';
-    col.title = `${e.seas}: ${e.val >= 0 ? '+' : ''}${e.val.toFixed(2)}°C`;
     const bar = document.createElement('div');
     bar.className = 'enso-col-bar';
     const pct = Math.abs(e.val) / maxAbs * 46;
@@ -1553,6 +1563,24 @@ function renderENSOCard(data, latestIRI) {
     } else {
       bar.style.cssText = `top:50%;height:${pct}%;background:${e.val <= -0.5 ? '#74b9ff' : 'rgba(130,190,255,0.4)'};`;
     }
+
+    // Tooltip propio
+    const tipStatus = e.val >= 1.5 ? { txt: 'El Niño fuerte', col: '#ff7043' }
+                    : e.val >= 1.0 ? { txt: 'El Niño moderado', col: '#ff9f43' }
+                    : e.val >= 0.5 ? { txt: 'El Niño débil', col: '#fbcc60' }
+                    : e.val <= -1.5 ? { txt: 'La Niña fuerte', col: '#5b9bff' }
+                    : e.val <= -1.0 ? { txt: 'La Niña moderada', col: '#74b9ff' }
+                    : e.val <= -0.5 ? { txt: 'La Niña débil', col: '#90d0ff' }
+                    : { txt: 'Neutro', col: 'rgba(139,191,176,0.7)' };
+    const tip = document.createElement('div');
+    tip.className = 'enso-mini-tip';
+    tip.innerHTML = `<div class="tip-seas">${e.seas}</div>`
+      + `<div class="tip-val" style="color:${tipStatus.col}">${e.val >= 0 ? '+' : ''}${e.val.toFixed(2)}°C</div>`
+      + `<div class="tip-label" style="color:${tipStatus.col}">${tipStatus.txt}</div>`;
+    col.appendChild(tip);
+    col.addEventListener('mouseenter', () => { tip.style.display = 'block'; });
+    col.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+
     const lbl = document.createElement('div');
     lbl.className = 'enso-col-lbl';
     lbl.textContent = e.seas.slice(0, 3);
