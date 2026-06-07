@@ -1650,7 +1650,7 @@ function buildENSOHistChart() {
     const isCurrent = yr === currentYear;
     const cls = classifyONIYear(raw);
     const color = isCurrent ? 'rgba(255,255,255,0.96)' : cls.color;
-    const width = isCurrent ? 2.8 : cls.width;
+    const width = isCurrent ? 1.4 : cls.width;
     datasets.push({
       label: String(yr),
       data: raw,
@@ -1817,7 +1817,7 @@ function applyENSOFilter() {
       // 2026 siempre visible, destacado si 'current' está activo
       ds.hidden = false;
       ds.borderColor = showCurrent ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.30)';
-      ds.borderWidth = showCurrent ? 2.8 : 1;
+      ds.borderWidth = showCurrent ? 1.4 : 0.8;
 
     } else if (hasTypeFilter && matchesType) {
       ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width + 0.2;
