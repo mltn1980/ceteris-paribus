@@ -1965,7 +1965,7 @@ async function loadWeather(dept) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     renderWeather(data, dept);
-    lastFetchTime = Date.now();
+    lastFetchTime = new Date();
     updateLastUpdatedUI();
     scheduleAutoRefresh();
   } catch (e) {
