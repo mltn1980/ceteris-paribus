@@ -1763,71 +1763,86 @@ function buildENSOHistChart() {
     }
   });
   canvas.addEventListener('mouseleave', () => { if (tip) tip.style.display = 'none'; });
+
+  // Estado por defecto: nino-strong + 2026 activos
+  ['nino-strong', 'current'].forEach(f => {
+    const b = document.querySelector(`.ehf[data-f="${f}"]`);
+    if (b) b.classList.add('active');
+  });
+  applyENSOFilter();
 }
 
-function filterENSOHist(type) {
+function applyENSOFilter() {
   if (!ensoHistChart) return;
 
-  // Toggle: click en activo → desactiva
-  const btn = document.querySelector(`.ehf[data-f="${type}"]`);
-  const wasActive = btn?.classList.contains('active');
-  document.querySelectorAll('.ehf').forEach(b => b.classList.remove('active'));
-  const active = wasActive ? null : type;
-  if (active) btn?.classList.add('active');
-
-  // Parsear tipo y fortaleza: 'nino-strong' → ['nino','strong']
-  const parts = active ? active.split('-') : [];
-  const fType     = parts[0] || null;          // 'nino' | 'nina' | 'current'
-  const fStrength = parts[1] || null;           // 'strong' | 'mod' | 'weak' | null
+  // Recoger todos los filtros activos
+  const activeFilters = new Set(
+    [...document.querySelectorAll('.ehf.active')].map(b => b.dataset.f)
+  );
+  const showCurrent  = activeFilters.has('current');
+  // Filtros de tipo/fortaleza (sin 'current')
+  const typeFilters  = [...activeFilters].filter(f => f !== 'current');
+  const hasTypeFilter = typeFilters.length > 0;
+  const noFilters    = activeFilters.size === 0;
 
   ensoHistChart.data.datasets.forEach(ds => {
     if (ds.label.startsWith('__')) return;
 
-    if (!active) {
+    // ¿Coincide con algún filtro de tipo?
+    const matchesType = hasTypeFilter && typeFilters.some(f => {
+      const [ft, fs] = f.split('-');
+      return ds.yearType === ft && (!fs || ds.yearStrength === fs);
+    });
+
+    if (noFilters) {
+      // Sin filtro: mostrar todo
       ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width;
 
-    } else if (fType === 'current') {
-      if (ds.isCurrent) {
-        ds.hidden = false; ds.borderColor = 'rgba(255,255,255,0.97)'; ds.borderWidth = 3;
-      } else {
-        ds.hidden = false; ds.borderColor = 'rgba(200,200,200,0.07)'; ds.borderWidth = 0.6;
-      }
+    } else if (ds.isCurrent) {
+      // 2026 siempre visible, destacado si 'current' está activo
+      ds.hidden = false;
+      ds.borderColor = showCurrent ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.30)';
+      ds.borderWidth = showCurrent ? 2.8 : 1;
+
+    } else if (hasTypeFilter && matchesType) {
+      ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width + 0.2;
+
+    } else if (!hasTypeFilter && showCurrent) {
+      // Solo 'current' activo → resto muy tenue
+      ds.hidden = false; ds.borderColor = 'rgba(200,200,200,0.06)'; ds.borderWidth = 0.5;
+
+    } else if (hasTypeFilter && !matchesType) {
+      ds.hidden = true;
 
     } else {
-      // filtro por tipo + fortaleza opcional
-      const matchType     = ds.yearType === fType;
-      const matchStrength = !fStrength || ds.yearStrength === fStrength;
-      const matches = matchType && matchStrength;
-
-      if (matches) {
-        ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width + 0.2;
-      } else if (ds.isCurrent) {
-        ds.hidden = false; ds.borderColor = 'rgba(255,255,255,0.55)'; ds.borderWidth = 1.8;
-      } else {
-        ds.hidden = true;
-      }
+      ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = ds._width;
     }
   });
 
   ensoHistChart.update();
-  updateENSOYearList(active, fType, fStrength);
+
+  // Lista de años visibles
+  const el = document.getElementById('enso-year-list');
+  if (el) {
+    if (!hasTypeFilter) { el.style.display = 'none'; return; }
+    const visible = ensoHistChart.data.datasets
+      .filter(d => !d.label.startsWith('__') && !d.hidden && !d.isCurrent)
+      .map(d => d.label).sort((a,b) => +a - +b);
+    if (!visible.length) { el.style.display = 'none'; return; }
+    const labels = typeFilters.map(f => {
+      const [ft, fs] = f.split('-');
+      return (ft === 'nino' ? 'El Niño' : 'La Niña') + ' ' + ({strong:'Fuerte',mod:'Mod.',weak:'Débil'}[fs]||'');
+    }).join(' + ');
+    el.style.display = 'block';
+    el.innerHTML = `<span class="yl-label">${labels} (${visible.length} años):</span> ${visible.join(' · ')}`;
+  }
 }
 
-function updateENSOYearList(active, fType, fStrength) {
-  const el = document.getElementById('enso-year-list');
-  if (!el || !ensoHistChart) return;
-  if (!active || active === 'current') { el.style.display = 'none'; return; }
-
-  const visible = ensoHistChart.data.datasets
-    .filter(d => !d.label.startsWith('__') && !d.hidden && !d.isCurrent)
-    .map(d => d.label).sort((a,b) => +a - +b);
-
-  if (!visible.length) { el.style.display = 'none'; return; }
-
-  const typeLabel = fType === 'nino' ? 'El Niño' : 'La Niña';
-  const strLabel = { strong:'Fuerte', mod:'Moderado', weak:'Débil' }[fStrength] || '';
-  el.style.display = 'block';
-  el.innerHTML = `<span class="yl-label">${typeLabel} ${strLabel} (${visible.length} años):</span> ${visible.join(' · ')}`;
+function filterENSOHist(type) {
+  if (!ensoHistChart) return;
+  const btn = document.querySelector(`.ehf[data-f="${type}"]`);
+  if (btn) btn.classList.toggle('active');
+  applyENSOFilter();
 }
 
 // ===== AUTO-REFRESH (cada 30 min) =====
