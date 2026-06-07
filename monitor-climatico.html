@@ -455,35 +455,21 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
   transition: all 0.18s;
 }
 
-/* ── El Niño: rojos/naranjas ── */
-.ehf[data-f="nino-strong"] { color: #e07060; border-color: rgba(192,57,43,0.55); background: rgba(192,57,43,0.10); }
-.ehf[data-f="nino-mod"]    { color: #f09050; border-color: rgba(230,100,30,0.50); background: rgba(230,100,30,0.09); }
-.ehf[data-f="nino-weak"]   { color: #f0b840; border-color: rgba(255,185,60,0.45); background: rgba(255,185,60,0.07); }
+/* ── Inactivo: todos gris ── */
+.ehf:not(.active) { color: rgba(160,170,175,0.45); border-color: rgba(160,170,175,0.18); background: rgba(160,170,175,0.05); }
+.ehf:not(.active):hover { color: rgba(200,210,215,0.75); border-color: rgba(200,210,215,0.35); background: rgba(200,210,215,0.09); }
 
-.ehf[data-f="nino-strong"]:hover { color: #ff8878; border-color: rgba(192,57,43,0.90); background: rgba(192,57,43,0.22); }
-.ehf[data-f="nino-mod"]:hover    { color: #ffaa68; border-color: rgba(230,100,30,0.85); background: rgba(230,100,30,0.20); }
-.ehf[data-f="nino-weak"]:hover   { color: #ffd060; border-color: rgba(255,185,60,0.80); background: rgba(255,185,60,0.17); }
-
-.ehf.active[data-f="nino-strong"] { color: #ff9080; border-color: rgba(192,57,43,1);   background: rgba(192,57,43,0.30); }
+/* ── Activo El Niño: rojos/naranjas ── */
+.ehf.active[data-f="nino-strong"] { color: #ff9080; border-color: rgba(192,57,43,1);    background: rgba(192,57,43,0.30); }
 .ehf.active[data-f="nino-mod"]    { color: #ffb07c; border-color: rgba(230,100,30,0.95); background: rgba(230,100,30,0.28); }
 .ehf.active[data-f="nino-weak"]   { color: #fbcc60; border-color: rgba(255,185,60,0.90); background: rgba(255,185,60,0.22); }
 
-/* ── La Niña: azules ── */
-.ehf[data-f="nina-strong"] { color: #6090d8; border-color: rgba(21,101,192,0.60); background: rgba(21,101,192,0.11); }
-.ehf[data-f="nina-mod"]    { color: #74b9ff; border-color: rgba(41,128,185,0.55); background: rgba(41,128,185,0.10); }
-.ehf[data-f="nina-weak"]   { color: #90c8f0; border-color: rgba(130,195,255,0.45); background: rgba(130,195,255,0.07); }
-
-.ehf[data-f="nina-strong"]:hover { color: #80aaf0; border-color: rgba(21,101,192,0.90); background: rgba(21,101,192,0.24); }
-.ehf[data-f="nina-mod"]:hover    { color: #90d0ff; border-color: rgba(41,128,185,0.85); background: rgba(41,128,185,0.22); }
-.ehf[data-f="nina-weak"]:hover   { color: #aadcff; border-color: rgba(130,195,255,0.80); background: rgba(130,195,255,0.17); }
-
+/* ── Activo La Niña: azules ── */
 .ehf.active[data-f="nina-strong"] { color: #88bbff; border-color: rgba(21,101,192,1);    background: rgba(21,101,192,0.30); }
 .ehf.active[data-f="nina-mod"]    { color: #90d0ff; border-color: rgba(41,128,185,0.95); background: rgba(41,128,185,0.28); }
 .ehf.active[data-f="nina-weak"]   { color: #b0e0ff; border-color: rgba(130,195,255,0.90); background: rgba(130,195,255,0.22); }
 
-/* ── Año actual ── */
-.ehf[data-f="current"]        { color: rgba(255,255,255,0.60); border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.06); }
-.ehf[data-f="current"]:hover  { color: white; border-color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.14); }
+/* ── Activo Año actual ── */
 .ehf.active[data-f="current"] { color: white; border-color: rgba(255,255,255,0.90); background: rgba(255,255,255,0.18); }
 .ehf-group { display: flex; align-items: center; gap: 4px; }
 .ehf-group-label { font-family: var(--mono); font-size: 0.58rem; color: rgba(139,191,176,0.35); font-weight: 500;
