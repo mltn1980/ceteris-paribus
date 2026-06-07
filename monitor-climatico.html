@@ -1712,12 +1712,14 @@ function buildENSOHistChart() {
       responsive: true,
       maintainAspectRatio: false,
       interaction: { mode: 'nearest', intersect: false },
+      layout: { padding: { left: 10, right: 18, top: 8, bottom: 4 } },
       plugins: {
         legend: { display: false },
         tooltip: { enabled: false }
       },
       scales: {
         x: {
+          offset: true,
           grid: { color:'rgba(255,255,255,0.05)' },
           ticks: { color:'rgba(255,255,255,0.55)', font:{ size:11 } }
         },
