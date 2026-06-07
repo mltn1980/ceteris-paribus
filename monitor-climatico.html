@@ -194,8 +194,8 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
   backdrop-filter: blur(6px);
   border: 1px solid var(--rule);
   border-radius: 4px;
-  padding: 16px 24px;
-  display: block;
+  padding: 12px 20px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
   position: relative; overflow: hidden;
 }
 .current-hero > * { position: relative; z-index: 1; }
@@ -220,22 +220,27 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
     rgba(200,215,230,0.10) 100%);
   animation: fx-fog 4s ease-in-out infinite alternate;
 }
-.cur-left { display: flex; flex-direction: column; gap: 4px; }
-.cur-cond { font-family: var(--mono); font-size: 0.68rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.20em; }
-.cur-temp { font-family: var(--serif); font-size: 3.2rem; font-weight: 700; color: white; line-height: 1; }
-.cur-temp sup { font-size: 1.3rem; vertical-align: super; opacity: 0.7; }
-.cur-feels { font-family: var(--mono); font-size: 0.74rem; color: var(--ink2); margin-top: 1px; }
-.cur-loc { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: white; margin-top: 6px; }
-.cur-dt { font-family: var(--mono); font-size: 0.68rem; color: rgba(139,191,176,0.55); margin-top: 1px; }
+/* bloque temp+condición */
+.cur-left { display: flex; align-items: baseline; gap: 10px; flex-shrink: 0; }
+.cur-cond { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.18em; }
+.cur-temp { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: white; line-height: 1; }
+.cur-temp sup { font-size: 1rem; vertical-align: super; opacity: 0.7; }
+/* bloque ubicación+fecha — crece para ocupar espacio central */
+.cur-meta { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 140px; }
+.cur-feels { font-family: var(--mono); font-size: 0.68rem; color: var(--ink2); }
+.cur-loc { font-family: var(--mono); font-size: 0.80rem; font-weight: 600; color: white; }
+.cur-dt { font-family: var(--mono); font-size: 0.63rem; color: rgba(139,191,176,0.45); }
 .cur-icon { display: none; }
+/* stats en línea a la derecha */
 .quick-stats {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-  margin-top: 12px; padding-top: 12px;
-  border-top: 1px solid var(--rule);
+  display: flex; gap: 0; flex-shrink: 0;
+  border-left: 1px solid var(--rule);
+  padding-left: 16px;
 }
-.qs { text-align: center; }
-.qs-lbl { font-family: var(--mono); font-size: 0.60rem; color: var(--ink2); text-transform: uppercase; letter-spacing: 0.14em; }
-.qs-val { font-family: var(--mono); font-size: 0.90rem; font-weight: 500; color: white; margin-top: 3px; }
+.qs { text-align: center; padding: 0 14px; border-right: 1px solid var(--rule); }
+.qs:last-child { border-right: none; padding-right: 0; }
+.qs-lbl { font-family: var(--mono); font-size: 0.56rem; color: var(--ink2); text-transform: uppercase; letter-spacing: 0.12em; }
+.qs-val { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: white; margin-top: 2px; }
 
 /* ===== FORECAST STRIP ===== */
 .strip-wrap { }
@@ -754,19 +759,21 @@ footer a:hover { color: var(--accent); }
     <div class="current-hero" id="currentHero">
       <canvas id="hero-fx-canvas" class="fx-rain-canvas" width="900" height="220" style="display:none;opacity:0.65;"></canvas>
       <div class="cur-left">
-        <div class="cur-cond" id="curCond">Cargando pronóstico…</div>
+        <div class="cur-cond" id="curCond">Cargando…</div>
         <div class="cur-temp" id="curTemp">--<sup>°C</sup></div>
-        <div class="cur-feels" id="curFeels">Sensación térmica: --°C</div>
-        <div class="cur-loc" id="curLoc">—</div>
-        <div class="cur-dt" id="curDt">—</div>
-        <div class="quick-stats">
-          <div class="qs"><div class="qs-lbl">Máx</div><div class="qs-val" id="qsMax">--°</div></div>
-          <div class="qs"><div class="qs-lbl">Mín</div><div class="qs-val" id="qsMin">--°</div></div>
-          <div class="qs"><div class="qs-lbl">Lluvia hoy</div><div class="qs-val" id="qsPrecip">-- mm</div></div>
-          <div class="qs"><div class="qs-lbl">Viento máx</div><div class="qs-val" id="qsWind">-- km/h</div></div>
-        </div>
       </div>
-      <div class="cur-icon" id="curIcon">⛅</div>
+      <div class="cur-meta">
+        <div class="cur-loc" id="curLoc">—</div>
+        <div class="cur-feels" id="curFeels">Sensación: --°C</div>
+        <div class="cur-dt" id="curDt">—</div>
+      </div>
+      <div class="quick-stats">
+        <div class="qs"><div class="qs-lbl">Máx</div><div class="qs-val" id="qsMax">--°</div></div>
+        <div class="qs"><div class="qs-lbl">Mín</div><div class="qs-val" id="qsMin">--°</div></div>
+        <div class="qs"><div class="qs-lbl">Lluvia hoy</div><div class="qs-val" id="qsPrecip">-- mm</div></div>
+        <div class="qs"><div class="qs-lbl">Viento máx</div><div class="qs-val" id="qsWind">-- km/h</div></div>
+      </div>
+      <div class="cur-icon" id="curIcon" style="display:none"></div>
     </div>
 
     <!-- 7 DÍAS -->
