@@ -251,11 +251,11 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
   display: flex; align-items: center; gap: 10px;
 }
 .sec-lbl::before { content: ''; width: 18px; height: 1px; background: var(--accent); flex-shrink: 0; }
-.forecast-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+.forecast-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
 .fc-day {
   background: rgba(0,0,0,0.18); backdrop-filter: blur(5px);
   border: 1px solid var(--rule); border-radius: 3px;
-  padding: 14px 8px; text-align: center; transition: background 0.2s;
+  padding: 8px 6px; text-align: center; transition: background 0.2s;
   position: relative; overflow: hidden;
 }
 .fc-day > * { position: relative; z-index: 1; }
@@ -324,11 +324,11 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
   from { opacity: 0.3; transform: scaleX(0.92); }
   to   { opacity: 1.0; transform: scaleX(1.0); }
 }
-.fc-name { font-family: var(--mono); font-size: 0.63rem; font-weight: 500; color: var(--ink2); text-transform: uppercase; letter-spacing: 0.12em; }
-.fc-icon { font-size: 1.9rem; margin: 6px 0; display: block; }
-.fc-max { font-family: var(--mono); font-size: 1rem; font-weight: 500; color: white; }
-.fc-min { font-family: var(--mono); font-size: 0.82rem; color: var(--ink2); }
-.fc-precip { font-family: var(--mono); font-size: 0.63rem; color: #74b9ff; margin-top: 5px; }
+.fc-name { font-family: var(--mono); font-size: 0.60rem; font-weight: 500; color: var(--ink2); text-transform: uppercase; letter-spacing: 0.12em; }
+.fc-icon { display: none; }
+.fc-max { font-family: var(--mono); font-size: 0.92rem; font-weight: 600; color: white; margin-top: 5px; }
+.fc-min { font-family: var(--mono); font-size: 0.75rem; color: var(--ink2); }
+.fc-precip { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; color: #74b9ff; margin-top: 5px; }
 
 /* ===== CHART ===== */
 .chart-box {
@@ -1307,10 +1307,9 @@ function renderWeather(data, dept) {
       : '';
     strip.innerHTML += `<div class="fc-day" data-fx="${fx}">${rainCv}
       <div class="fc-name">${i === 0 ? 'Hoy' : dayNames[d.getDay()]}</div>
-      <span class="fc-icon">${w.icon}</span>
       <div class="fc-max">${Math.round(daily.temperature_2m_max[i])}°</div>
       <div class="fc-min">${Math.round(daily.temperature_2m_min[i])}°</div>
-      <div class="fc-precip">${pp}% 💧</div>
+      <div class="fc-precip">${pp}% lluvia</div>
     </div>`;
   }
   // Arrancar canvas de lluvia en cada card
