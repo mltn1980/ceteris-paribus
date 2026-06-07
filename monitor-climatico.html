@@ -772,6 +772,8 @@ footer a:hover { color: var(--accent); }
         <div class="qs"><div class="qs-lbl">Mín</div><div class="qs-val" id="qsMin">--°</div></div>
         <div class="qs"><div class="qs-lbl">Lluvia hoy</div><div class="qs-val" id="qsPrecip">-- mm</div></div>
         <div class="qs"><div class="qs-lbl">Viento máx</div><div class="qs-val" id="qsWind">-- km/h</div></div>
+        <div class="qs qs-cold" id="hero-cold-qs" style="display:none"><div class="qs-lbl">↓ más frío</div><div class="qs-val" id="hero-cold-val" style="color:#74b9ff;font-size:0.72rem">—</div></div>
+        <div class="qs qs-warm" id="hero-warm-qs" style="display:none"><div class="qs-lbl">↑ más cálido</div><div class="qs-val" id="hero-warm-val" style="color:#fbbc44;font-size:0.72rem">—</div></div>
       </div>
       <div class="cur-icon" id="curIcon" style="display:none"></div>
     </div>
@@ -2020,6 +2022,16 @@ async function loadTempRankUY() {
     if (warmEl) warmEl.innerHTML = `<span style="color:rgba(251,188,68,0.75)">↑ más cálido:</span> ${warm.dept} · ${warm.temp.toFixed(1)}°C`;
     const warmRow = document.getElementById('vc-warm-row');
     if (warmRow) warmRow.style.display = '';
+
+    // Actualizar hero bar
+    const heroColdVal = document.getElementById('hero-cold-val');
+    const heroWarmVal = document.getElementById('hero-warm-val');
+    const heroColdQs  = document.getElementById('hero-cold-qs');
+    const heroWarmQs  = document.getElementById('hero-warm-qs');
+    if (heroColdVal) heroColdVal.textContent = `${cold.dept} · ${cold.temp.toFixed(1)}°`;
+    if (heroWarmVal) heroWarmVal.textContent = `${warm.dept} · ${warm.temp.toFixed(1)}°`;
+    if (heroColdQs)  heroColdQs.style.display  = '';
+    if (heroWarmQs)  heroWarmQs.style.display  = '';
 
     // Barra: mapea de -5°C (0%) a 40°C (100%)
     if (barEl) {
