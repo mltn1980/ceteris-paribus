@@ -493,6 +493,14 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
   border-left: 2px solid rgba(0,209,145,0.25);
 }
 .yl-label { font-weight: 500; color: var(--accent); margin-right: 6px; }
+.yl-year {
+  display: inline-block; cursor: pointer;
+  padding: 1px 6px; border-radius: 2px; margin: 1px 2px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.yl-year:hover { color: white; border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); }
+.yl-year.selected { color: white; border-color: rgba(255,255,255,0.70); background: rgba(255,255,255,0.16); font-weight: 600; }
 /* Hover tooltip sobre canvas */
 .enso-year-tip {
   position: absolute; pointer-events: none;
@@ -1789,8 +1797,39 @@ function buildENSOHistChart() {
   applyENSOFilter();
 }
 
+let selectedENSOYear = null;
+
+function highlightSingleYear(yr) {
+  if (!ensoHistChart) return;
+  // Toggle
+  if (selectedENSOYear === yr) {
+    selectedENSOYear = null;
+    document.querySelectorAll('.yl-year').forEach(c => c.classList.remove('selected'));
+    applyENSOFilter();
+    return;
+  }
+  selectedENSOYear = yr;
+  document.querySelectorAll('.yl-year').forEach(c => {
+    c.classList.toggle('selected', c.dataset.yr === String(yr));
+  });
+  // Mostrar solo el año seleccionado + 2026 tenue
+  ensoHistChart.data.datasets.forEach(ds => {
+    if (ds.label.startsWith('__')) return;
+    if (ds.label === String(yr)) {
+      ds.hidden = false; ds.borderColor = ds._color; ds.borderWidth = 1.8;
+    } else if (ds.isCurrent) {
+      ds.hidden = false; ds.borderColor = 'rgba(255,255,255,0.22)'; ds.borderWidth = 0.8;
+    } else {
+      ds.hidden = true;
+    }
+  });
+  ensoHistChart.update();
+}
+
 function applyENSOFilter() {
   if (!ensoHistChart) return;
+  selectedENSOYear = null;
+  document.querySelectorAll('.yl-year').forEach(c => c.classList.remove('selected'));
 
   // Recoger todos los filtros activos
   const activeFilters = new Set(
@@ -1851,7 +1890,10 @@ function applyENSOFilter() {
       return (ft === 'nino' ? 'El Niño' : 'La Niña') + ' ' + ({strong:'Fuerte',mod:'Mod.',weak:'Débil'}[fs]||'');
     }).join(' + ');
     el.style.display = 'block';
-    el.innerHTML = `<span class="yl-label">${labels} (${visible.length} años):</span> ${visible.join(' · ')}`;
+    const chips = visible.map(y =>
+      `<span class="yl-year" data-yr="${y}" onclick="highlightSingleYear('${y}')">${y}</span>`
+    ).join('');
+    el.innerHTML = `<span class="yl-label">${labels} (${visible.length} años):</span>${chips}`;
   }
 }
 
