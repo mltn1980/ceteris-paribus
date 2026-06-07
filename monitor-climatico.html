@@ -422,6 +422,8 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
 .enso-col-bar { position: absolute; left: 0; right: 0; border-radius: 1px; min-height: 3px; transition: opacity 0.2s; }
 .enso-col:hover .enso-col-bar { opacity: 0.75; }
 .enso-col-lbl { position: absolute; bottom: -14px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 0.52rem; color: rgba(139,191,176,0.35); }
+.enso-col-current { background: rgba(255,255,255,0.06); border-radius: 2px; outline: 1px solid rgba(255,255,255,0.25); }
+.enso-col-current .enso-col-lbl { color: white; font-size: 0.58rem; }
 .enso-mini-tip {
   display: none; position: absolute; bottom: calc(100% + 10px); left: 50%;
   transform: translateX(-50%); z-index: 20;
@@ -1566,9 +1568,10 @@ function renderENSOCard(data, latestIRI) {
   const chart = document.getElementById('enso-chart');
   chart.innerHTML = '<div class="enso-zero-line"></div>';
   const maxAbs = Math.max(0.6, ...data.map(e => Math.abs(e.val)));
-  data.forEach(e => {
+  data.forEach((e, idx) => {
+    const isLatest = idx === data.length - 1;
     const col = document.createElement('div');
-    col.className = 'enso-col';
+    col.className = 'enso-col' + (isLatest ? ' enso-col-current' : '');
     const bar = document.createElement('div');
     bar.className = 'enso-col-bar';
     const pct = Math.abs(e.val) / maxAbs * 46;
@@ -1597,7 +1600,7 @@ function renderENSOCard(data, latestIRI) {
 
     const lbl = document.createElement('div');
     lbl.className = 'enso-col-lbl';
-    lbl.textContent = e.seas.slice(0, 3);
+    lbl.textContent = isLatest ? '▲' : e.seas.slice(0, 3);
     col.appendChild(bar); col.appendChild(lbl); chart.appendChild(col);
   });
 
