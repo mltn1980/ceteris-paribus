@@ -330,6 +330,19 @@ main { padding: 22px 24px; max-width: 1200px; margin: 0 auto; display: flex; fle
 .fc-min { font-family: var(--mono); font-size: 0.75rem; color: var(--ink2); }
 .fc-precip { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; color: #74b9ff; margin-top: 5px; }
 
+/* ===== PANORAMA NACIONAL ===== */
+.panorama-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.pano-card {
+  background: rgba(0,0,0,0.18); backdrop-filter: blur(5px);
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 14px 18px; display: flex; align-items: center; gap: 14px;
+}
+.pano-icon { font-size: 1.6rem; flex-shrink: 0; opacity: 0.85; }
+.pano-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pano-lbl  { font-family: var(--mono); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink2); }
+.pano-dept { font-family: var(--mono); font-size: 0.88rem; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pano-val  { font-family: var(--mono); font-size: 0.72rem; }
+
 /* ===== CHART ===== */
 .chart-box {
   background: rgba(0,0,0,0.28); backdrop-filter: blur(14px);
@@ -776,6 +789,12 @@ footer a:hover { color: var(--accent); }
         <div class="qs qs-warm" id="hero-warm-qs" style="display:none"><div class="qs-lbl">↑ más cálido</div><div class="qs-val" id="hero-warm-val" style="color:#fbbc44;font-size:0.72rem">—</div></div>
       </div>
       <div class="cur-icon" id="curIcon" style="display:none"></div>
+    </div>
+
+    <!-- PANORAMA NACIONAL 24H -->
+    <div class="strip-wrap" id="panoramaWrap" style="display:none">
+      <div class="sec-lbl">Panorama nacional — próximas 24 h</div>
+      <div class="panorama-strip" id="panoramaStrip"></div>
     </div>
 
     <!-- 7 DÍAS -->
@@ -1993,7 +2012,9 @@ async function loadTempRankUY() {
   const lats  = depts.map(d => DEPTS[d].lat).join(',');
   const lons  = depts.map(d => DEPTS[d].lon).join(',');
   const url   = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}`
-              + `&current=temperature_2m,weather_code&timezone=America%2FMontevideo`;
+              + `&current=temperature_2m,weather_code`
+              + `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum`
+              + `&timezone=America%2FMontevideo&forecast_days=2`;
   try {
     const res  = await fetch(url);
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -2002,11 +2023,16 @@ async function loadTempRankUY() {
 
     let cold = { dept: '', temp: Infinity };
     let warm = { dept: '', temp: -Infinity };
+    let rain = { dept: '', mm: -1 };
     arr.forEach((r, i) => {
-      const t = r?.current?.temperature_2m;
+      const t    = r?.current?.temperature_2m;
+      const tmax = r?.daily?.temperature_2m_max?.[0];
+      const tmin = r?.daily?.temperature_2m_min?.[0];
+      const prec = r?.daily?.precipitation_sum?.[0] ?? 0;
       if (t === undefined || t === null) return;
-      if (t < cold.temp) cold = { dept: depts[i], temp: t };
-      if (t > warm.temp) warm = { dept: depts[i], temp: t };
+      if (t < cold.temp) cold = { dept: depts[i], temp: t, tmin: tmin ?? t };
+      if (t > warm.temp) warm = { dept: depts[i], temp: t, tmax: tmax ?? t };
+      if (prec > rain.mm) rain = { dept: depts[i], mm: prec };
     });
 
     if (cold.dept === '') return; // no data
@@ -2032,6 +2058,38 @@ async function loadTempRankUY() {
     if (heroWarmVal) heroWarmVal.textContent = `${warm.dept} · ${warm.temp.toFixed(1)}°`;
     if (heroColdQs)  heroColdQs.style.display  = '';
     if (heroWarmQs)  heroWarmQs.style.display  = '';
+
+    // Panorama nacional 24h — 3 cards
+    const panoWrap  = document.getElementById('panoramaWrap');
+    const panoStrip = document.getElementById('panoramaStrip');
+    if (panoStrip) {
+      panoStrip.innerHTML = `
+        <div class="pano-card">
+          <div class="pano-icon">🌧️</div>
+          <div class="pano-body">
+            <div class="pano-lbl">Mayor lluvia estimada</div>
+            <div class="pano-dept">${rain.dept}</div>
+            <div class="pano-val" style="color:#74b9ff">${rain.mm > 0 ? rain.mm.toFixed(1) + ' mm hoy' : 'Sin lluvia prevista'}</div>
+          </div>
+        </div>
+        <div class="pano-card">
+          <div class="pano-icon" style="filter:hue-rotate(30deg)">🌡️</div>
+          <div class="pano-body">
+            <div class="pano-lbl">Mayor calor</div>
+            <div class="pano-dept">${warm.dept}</div>
+            <div class="pano-val" style="color:#fbbc44">${warm.temp.toFixed(1)}°C actual · máx ${(warm.tmax??warm.temp).toFixed(1)}°</div>
+          </div>
+        </div>
+        <div class="pano-card">
+          <div class="pano-icon">❄️</div>
+          <div class="pano-body">
+            <div class="pano-lbl">Mayor frío</div>
+            <div class="pano-dept">${cold.dept}</div>
+            <div class="pano-val" style="color:#a8d8ff">${cold.temp.toFixed(1)}°C actual · mín ${(cold.tmin??cold.temp).toFixed(1)}°</div>
+          </div>
+        </div>`;
+      if (panoWrap) panoWrap.style.display = '';
+    }
 
     // Barra: mapea de -5°C (0%) a 40°C (100%)
     if (barEl) {
