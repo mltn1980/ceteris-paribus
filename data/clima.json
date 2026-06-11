@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-06-10",
+  "actualizado": "2026-06-11",
   "alerta": {
-    "activa": false,
-    "tipo": "",
-    "nivel": "",
-    "titulo": "",
-    "descripcion": "",
-    "vigencia": "",
-    "fuente": ""
+    "activa": true,
+    "tipo": "Frío extremo",
+    "nivel": "Amarillo",
+    "titulo": "Masa de aire polar con temperaturas hasta -5°C",
+    "descripcion": "Llegada de masa de aire frío de origen polar durante el fin de semana con días de marcas negativas y formación de geada. Temperaturas hasta 5°C bajo cero en la región.",
+    "vigencia": "12-15 jun 2026",
+    "fuente": "MetSul"
   },
   "enso": {
     "fase": "El Niño",
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "19 may 2026",
     "proximo_update": "~19 jun 2026",
-    "nota_extra": "El Niño ganha força e anúncio da NOAA é iminente. Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño de 2026-2027 será diferente del último y va a sorprender. El Niño Costeiro atinge intensidade muito forte no Peru e Equador — ameaça repetir desastre de 1997-1998. Nível do mar sobe muito e aponta para um grande evento de El Niño. Fenômeno vai intensificar o El Niño e aumentar a chuva no Brasil (OMJ). Começa o El Niño que vai mudar o clima do Brasil e do planeta. Super El Niño pode elevar risco de fome em várias regiões do planeta. Especialista da NOAA se diz espantado com a transição do El Niño. Semana terá dois ciclones com chuva frequente e pouco frio. São Paulo deve se preparar para episódio de muita chuva fora de época. Trégua da chuva será muito breve no Rio Grande do Sul. Episódio de chuva vai atingir 11 estados com volumes de até 100 mm. El Niño provoca grandes terremotos? Ciência tem trabalhos técnicos muito divergentes."
+    "nota_extra": "NOAA anuncia oficialmente el começo del El Niño 2026-2027 (11 jun). Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. Ar frio chega no fim semana e trará dias com até 5°C abaixo de zero. Formação de ciclone afeta três regiões do Brasil. El Niño Costeiro atinge intensidade muito forte no Peru e Equador. Nível do mar sobe muito e aponta para um grande evento de El Niño. Fenômeno vai intensificar o El Niño e aumentar a chuva no Brasil (OMJ). Super El Niño pode elevar risco de fome em várias regiões do planeta. Calor extremo, tempestades e raios devem marcar a Copa do Mundo. Episódio de chuva vai atingir 11 estados com volumes de até 100 mm."
   },
   "probabilidades": [
     {
