@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-06-13",
+  "actualizado": "2026-06-14",
   "alerta": {
     "activa": true,
     "tipo": "Frío extremo",
     "nivel": "Amarillo",
-    "titulo": "Masa de aire polar con temperaturas hasta -5°C",
-    "descripcion": "Llegada de masa de aire frío de origen polar durante el fin de semana con días de marcas negativas y formación de heladas. Temperaturas hasta 5°C bajo cero en la región. Ciclone extratropical en formación con vientos superiores a 100 km/h en mar abierto.",
-    "vigencia": "12-15 jun 2026",
-    "fuente": "MetSul"
+    "titulo": "Semana de madrugadas con mucho frío y heladas",
+    "descripcion": "Masa de aire polar trae una secuencia de días con temperaturas muy bajas, marcas negativas y formación de heladas. Temperaturas mínimas de 0°C a 2°C con heladas agrometeorológicas. Ciclón extratropical con vientos superiores a 100 km/h en mar abierto.",
+    "vigencia": "14-16 jun 2026",
+    "fuente": "MetSul/INUMET"
   },
   "enso": {
     "fase": "El Niño",
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "19 may 2026",
     "proximo_update": "~19 jun 2026",
-    "nota_extra": "NOAA anuncia oficialmente el comienzo del El Niño 2026-2027 (11 jun). Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. Ar frio chega no fim semana e trará dias com até 5°C abaixo de zero. Formação de ciclone afeta três regiões do Brasil. El Niño Costero alcanza intensidad muy fuerte en Perú y Ecuador. Nivel del mar sube mucho y apunta a un gran evento de El Niño. OMJ va a intensificar el El Niño y aumentar la lluvia en Brasil. Super El Niño puede elevar riesgo de hambre en varias regiones del planeta. Calor extremo, tormentas y rayos deben marcar la Copa del Mundo."
+    "nota_extra": "NOAA anuncia oficialmente el comienzo del El Niño 2026-2027 (11 jun). Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. Semana de madrugadas muy frías con hasta 5°C bajo cero en la región. Formación de ciclón afecta tres regiones del Brasil. El Niño Costero alcanza intensidad muy fuerte en Perú y Ecuador. Nivel del mar sube mucho y apunta a un gran evento de El Niño. OMJ va a intensificar el El Niño y aumentar la lluvia en Brasil. Super El Niño puede elevar riesgo de hambre en varias regiones del planeta."
   },
   "probabilidades": [
     {
