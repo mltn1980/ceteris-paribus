@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-06-10",
+  "fecha": "2026-06-12",
   "fuente": "Cámara Mercantil de Productos del País",
   "precios": {
     "maiz": {
@@ -11,7 +11,7 @@
       "desc": "Industria zafra nueva - Mvd."
     },
     "soja": {
-      "precio": 390,
+      "precio": 380,
       "desc": "Industria zafra nueva - Mvd."
     }
   }
