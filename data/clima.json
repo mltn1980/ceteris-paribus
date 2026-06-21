@@ -1,11 +1,11 @@
 {
-  "actualizado": "2026-06-20",
+  "actualizado": "2026-06-21",
   "alerta": {
     "activa": true,
     "tipo": "Frío extremo",
     "nivel": "Naranja",
     "titulo": "Masa de ar polar más fuerte del año en el inicio del invierno",
-    "descripcion": "Intensa masa de aire frío llegará en los próximos días trayendo frío extremo en el comienzo del invierno. Rio Grande do Sul completa cinco días seguidos bajo cero. Heladas agrometeorológicas previstas para el sábado. Prepárese para temperaturas de hasta -8°C.",
+    "descripcion": "Intensa masa de aire frío llegará en los próximos días trayendo frío extremo en el comienzo del invierno. Rio Grande do Sul completa cinco días seguidos bajo cero. Heladas agrometeorológicas previstas para el domingo. Prepárese para temperaturas de hasta -8°C.",
     "vigencia": "18-22 jun 2026",
     "fuente": "MetSul/INUMET"
   },
