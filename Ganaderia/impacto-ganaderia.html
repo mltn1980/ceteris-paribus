@@ -4,717 +4,686 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Impacto Económico de la Ganadería — Uruguay</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#08111A;--bg2:#0a1520;--bg3:#0d1a24;--bg4:#111f2c;
-  --card:#0d1a24;--paper:#111f2c;
-  --bord:rgba(59,130,246,0.1);--bord2:rgba(59,130,246,0.18);
-  --green:#4ADE80;--gdim:rgba(74,222,128,0.08);
-  --amber:#FBBC44;--adim:rgba(251,188,68,0.08);
-  --red:#F87171;--rdim:rgba(248,113,113,0.08);
-  --blue:#3B82F6;--accent:#3B82F6;
-  --purple:#A78BFA;--teal:#2DD4BF;--coral:#FB923C;
-  --white:#E8F4F0;--ink:#E8F4F0;--ink2:#8BB0D4;--muted:#4A6A8A;
-  --g1:#8BB0D4;--g2:#4A6A8A;--g3:#2A4A6A;
+:root {
+  --bg:       #0a0f0d;
+  --bg2:      #0e1510;
+  --card:     #131d15;
+  --card2:    #162019;
+  --border:   rgba(0,255,136,0.08);
+  --border2:  rgba(255,255,255,0.06);
+  --mint:     #00e87a;
+  --mint-dim: rgba(0,232,122,0.12);
+  --gold:     #f5a623;
+  --red:      #ff4d4d;
+  --red-dim:  rgba(255,77,77,0.10);
+  --teal:     #2DD4BF;
+  --amber:    #FBBC44;
+  --purple:   #A78BFA;
+  --coral:    #FB923C;
+  --blue:     #60A5FA;
+  --lime:     #84CC16;
+  --white:    #f0f4f1;
+  --muted:    #6b7d70;
+  --muted2:   #4a5c50;
+  --text:     #c8d8cc;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.72;min-width:320px;}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; font-size:18px; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:18px; line-height:1.6; overflow-x:hidden; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-thumb { background:var(--mint-dim); border-radius:2px; }
 
-nav{position:sticky;top:0;z-index:100;background:rgba(8,17,26,0.97);border-bottom:1px solid var(--bord);height:56px;backdrop-filter:blur(8px);}
-.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-b{width:32px;height:32px;border-radius:4px;background:var(--amber);color:#08111A;font-weight:700;font-size:10px;font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;}
-.logo-n{font-weight:500;font-size:15px;}
-.nav-r{font-size:12px;color:var(--g1);display:flex;align-items:center;gap:16px;}
-.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.25);border-radius:3px;padding:3px 10px;font-size:10px;color:var(--teal);font-weight:500;font-family:'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;}
-.pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+/* ── SIDENAV ── */
+.sidenav { position:fixed; left:0; top:0; bottom:0; width:128px; background:var(--bg2); border-right:1px solid var(--border); display:flex; flex-direction:column; align-items:stretch; padding:1.4rem 0.7rem; gap:0.3rem; z-index:100; }
+.sidenav-brand { display:flex; align-items:center; gap:0.5rem; padding:0 0.4rem 1.2rem; margin-bottom:0.6rem; border-bottom:1px solid var(--border); text-decoration:none; }
+.sidenav-logo { width:30px; height:30px; border-radius:7px; background:var(--mint); display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:900; color:var(--bg); flex-shrink:0; }
+.sidenav-brandtxt { font-weight:800; font-size:0.82rem; color:var(--white); line-height:1.1; }
+.sn-item { display:flex; align-items:center; gap:0.6rem; padding:0.6rem 0.7rem; cursor:pointer; border-radius:8px; text-decoration:none; transition:background 0.2s; }
+.sn-item:hover { background:var(--mint-dim); }
+.sn-item.active { background:var(--mint-dim); }
+.sn-badge { font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:700; color:var(--mint); letter-spacing:0.02em; min-width:26px; text-align:center; flex-shrink:0; }
+.sn-label { font-size:0.82rem; color:var(--muted); font-weight:500; white-space:nowrap; }
+.sn-item.active .sn-label { color:var(--white); }
+.sn-sep { height:1px; background:var(--border); margin:0.4rem 0.4rem; }
 
-.hero{background:radial-gradient(ellipse 70% 50% at 50% -5%,rgba(45,212,191,0.06) 0%,transparent 65%),var(--bg);padding:3rem 2rem 2.5rem;border-bottom:1px solid var(--bord);}
-.hero-inner{max-width:1100px;margin:0 auto;}
-.hero-tag{display:inline-flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--teal);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.25rem;}
-.hero-tag::before{content:'';width:28px;height:1px;background:var(--teal);}
-h1{font-family:'Libre Baskerville',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;margin-bottom:.8rem;}
-h1 .g{color:var(--teal);font-style:italic;font-weight:400;}
-h1 .a{color:var(--ink2);font-weight:300;}
-.hero-desc{font-size:15px;color:var(--ink2);font-weight:300;max-width:700px;line-height:1.75;}
-.method-tag{display:inline-block;margin-top:.8rem;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;}
+.layout { margin-left:128px; }
 
-.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem;}
-.sec{display:flex;align-items:baseline;gap:10px;margin:2.5rem 0 1.25rem;padding-bottom:.6rem;border-bottom:1px solid var(--bord);}
-.sec h2{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;}
-.sec span{font-size:14px;color:var(--ink2);font-weight:300;}
-.sec.teal h2{color:var(--teal);}
-.sec.amber h2{color:var(--amber);}
-.sec.blue h2{color:var(--blue);}
-.sec.green h2{color:var(--green);}
+/* ── HERO ── */
+.hero { padding:4rem 4rem 3rem; position:relative; overflow:hidden; background:radial-gradient(ellipse 60% 50% at 80% 50%, rgba(0,232,122,0.04), transparent 60%), var(--bg); }
+.hero::before { content:''; position:absolute; inset:0; z-index:0; background-image:linear-gradient(rgba(0,232,122,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,122,0.02) 1px,transparent 1px); background-size:48px 48px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent 100%); }
+.hero-content { position:relative; z-index:1; }
+.eyebrow { display:inline-flex; align-items:center; gap:0.5rem; background:var(--mint-dim); border:1px solid rgba(0,232,122,0.2); border-radius:100px; padding:0.3rem 0.9rem; font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:500; color:var(--mint); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.5rem; }
+.eyebrow-dot { width:5px; height:5px; border-radius:50%; background:var(--mint); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+.hero-title { font-size:clamp(2.2rem,4.5vw,3.8rem); font-weight:900; line-height:1.0; letter-spacing:-0.03em; margin-bottom:1rem; }
+.hero-sub { font-size:0.97rem; color:var(--muted); max-width:64ch; line-height:1.75; margin-bottom:2rem; }
 
-/* KPI row */
-.krow{display:grid;gap:1px;background:var(--bord);border:1px solid var(--bord);border-radius:12px;overflow:hidden;margin-bottom:1.5rem;}
-.krow.k4{grid-template-columns:repeat(4,1fr);}
-@media(max-width:700px){.krow{grid-template-columns:repeat(2,1fr)!important;}}
-.kpi{background:var(--card);padding:1.1rem 1.3rem;}
-.kl{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px;}
-.kv{font-family:'Libre Baskerville',serif;font-size:1.75rem;font-weight:700;line-height:1;letter-spacing:-.02em;}
-.kv.t{color:var(--teal);}
-.kv.a{color:var(--amber);}
-.kv.g{color:var(--green);}
-.kv.b{color:var(--blue);}
-.ks{font-size:14px;color:var(--ink2);font-weight:300;margin-top:4px;}
-.ktag{display:inline-block;margin-top:5px;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:2px 7px;border-radius:2px;letter-spacing:.06em;}
-.ktag.tl{background:rgba(45,212,191,0.08);color:var(--teal);}
-.ktag.am{background:var(--adim);color:var(--amber);}
-.ktag.gn{background:var(--gdim);color:var(--green);}
+/* ── KPI ROW ── */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-top:2.5rem; }
+.kpi-card { background:var(--card); padding:1.4rem 1.2rem; transition:background 0.2s; }
+.kpi-card:hover { background:var(--card2); }
+.kpi-val { font-size:1.85rem; font-weight:800; line-height:1; letter-spacing:-0.02em; margin-bottom:0.2rem; }
+.kpi-val.mint  { color:var(--mint); }
+.kpi-val.teal  { color:var(--teal); }
+.kpi-val.amber { color:var(--amber); }
+.kpi-val.gold  { color:var(--gold); }
+.kpi-val.blue  { color:var(--blue); }
+.kpi-val.white { color:var(--white); }
+.kpi-label { font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.3rem; }
+.kpi-note { font-size:0.88rem; color:var(--muted2); line-height:1.5; }
+.kpi-tag { display:inline-block; margin-top:0.4rem; font-family:'JetBrains Mono',monospace; font-size:0.72rem; padding:2px 8px; border-radius:100px; }
+.kpi-tag.mint  { background:var(--mint-dim); color:var(--mint); border:1px solid rgba(0,232,122,0.2); }
+.kpi-tag.amber { background:rgba(251,188,68,0.1); color:var(--amber); border:1px solid rgba(251,188,68,0.2); }
 
-/* Card base */
-.cbox{background:var(--card);border:1px solid var(--bord);border-radius:12px;padding:1.4rem;margin-bottom:1.25rem;}
-.cnote{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);margin-top:10px;line-height:1.6;}
+/* ── SECTIONS ── */
+section { padding:4rem 4rem; border-top:1px solid var(--border); }
+.section-tag { font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--mint); margin-bottom:0.5rem; display:block; }
+.section-title { font-size:clamp(1.6rem,2.3vw,2.2rem); font-weight:800; line-height:1.1; letter-spacing:-0.02em; color:var(--white); margin-bottom:0.6rem; }
+.section-sub { font-size:1.02rem; color:var(--muted); max-width:64ch; line-height:1.75; margin-bottom:2.5rem; }
 
-/* Tabla cadena */
-.cadena-table{width:100%;border-collapse:collapse;font-size:14px;}
-.cadena-table thead th{background:var(--bg4);padding:8px 10px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--bord2);}
-.cadena-table thead th:not(:first-child){text-align:right;}
-.cadena-table tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);}
-.cadena-table tbody tr:hover{background:rgba(255,255,255,0.02);}
-.cadena-table td{padding:10px 10px;vertical-align:middle;}
-.ct-name{font-size:15px;font-weight:500;color:var(--ink);}
-.ct-sub{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);margin-top:2px;}
-.ct-num{font-family:'IBM Plex Mono',monospace;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
-.ct-bar-wrap{display:flex;align-items:center;gap:8px;justify-content:flex-end;}
-.ct-bar{height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,0.07);width:80px;flex-shrink:0;}
-.ct-bar-fill{height:100%;border-radius:2px;}
-.ct-mult{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--amber);text-align:right;white-space:nowrap;}
-.ct-gen{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;text-align:right;white-space:nowrap;}
-.total-row td{border-top:1px solid var(--bord2);padding-top:12px;font-weight:600;}
+/* ── CHART WRAPPER ── */
+.chart-wrapper { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.4rem 1.4rem 1.1rem; margin-bottom:1.8rem; overflow:hidden; }
+.chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.1rem; gap:1rem; flex-wrap:wrap; }
+.chart-title { font-size:1.04rem; font-weight:700; color:var(--white); }
+.chart-title span { color:var(--muted); font-weight:400; font-size:0.9rem; margin-left:0.5rem; }
+.chart-legend { display:flex; gap:1rem; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; align-items:center; margin-top:1rem; }
+.legend-item { display:flex; align-items:center; gap:0.35rem; }
+.legend-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
 
-/* Tooltip de cálculo en tabla */
-.calc-tip{position:relative;cursor:default;}
-.calc-tip::after{
-  content:attr(data-tip);
-  position:absolute;
-  bottom:calc(100% + 8px);
-  right:0;
-  background:#0d1a24;
-  border:1px solid rgba(45,212,191,0.3);
-  border-radius:6px;
-  padding:7px 11px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:13px;
-  font-weight:400;
-  color:var(--ink2);
-  white-space:nowrap;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity .15s;
-  z-index:50;
-  box-shadow:0 4px 16px rgba(0,0,0,.5);
+/* ── PROSE / INFO BOXES ── */
+.info-box { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:1.3rem 1.8rem; font-size:0.98rem; color:var(--muted); line-height:1.8; margin-bottom:1.8rem; }
+.info-box strong { color:var(--text); }
+.info-box .mint { color:var(--mint); font-weight:600; }
+.highlight { background:var(--mint-dim); border:1px solid rgba(0,232,122,0.18); border-radius:12px; padding:1.3rem 1.8rem; margin:1.5rem 0; font-size:1.02rem; color:var(--text); line-height:1.8; }
+.highlight strong { color:var(--mint); }
+.method-box { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:1.5rem 2rem; font-size:0.98rem; color:var(--muted); line-height:1.85; }
+.method-box strong { color:var(--text); }
+.method-box ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem; }
+.method-box li { padding-left:1.4rem; position:relative; }
+.method-box li::before { content:'·'; position:absolute; left:0; color:var(--mint); }
+
+/* ── PROSE BLOCK (informe ejecutivo) ── */
+.prose { display:flex; flex-direction:column; gap:1.4rem; border-left:2px solid rgba(0,232,122,0.18); padding-left:1.8rem; }
+.prose p { font-size:1rem; color:var(--muted); line-height:1.9; }
+.prose p strong { color:var(--text); font-weight:600; }
+
+/* ── TABLA CADENA ── */
+.table-wrap { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:1rem; }
+.cadena-table { width:100%; border-collapse:collapse; font-size:0.94rem; }
+.cadena-table thead th { background:var(--card2); padding:0.7rem 1rem; text-align:left; font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--mint); border-bottom:1px solid var(--border); }
+.cadena-table thead th:not(:first-child) { text-align:right; }
+.cadena-table tbody tr { border-bottom:1px solid var(--border2); transition:background 0.15s; }
+.cadena-table tbody tr:hover { background:var(--card2); }
+.cadena-table td { padding:0.7rem 1rem; vertical-align:middle; }
+.ct-name { font-size:0.96rem; font-weight:600; color:var(--white); }
+.ct-num { font-family:'JetBrains Mono',monospace; font-size:0.94rem; text-align:right; white-space:nowrap; }
+.ct-bar-wrap { display:flex; align-items:center; gap:8px; justify-content:flex-end; }
+.ct-bar { height:4px; border-radius:2px; background:rgba(255,255,255,0.06); width:80px; flex-shrink:0; overflow:hidden; }
+.ct-bar-fill { height:100%; border-radius:2px; }
+.ct-mult { font-family:'JetBrains Mono',monospace; font-size:0.94rem; color:var(--gold); text-align:right; white-space:nowrap; }
+.ct-gen { font-family:'JetBrains Mono',monospace; font-size:1rem; font-weight:700; text-align:right; white-space:nowrap; color:var(--mint); }
+.total-row td { background:var(--card2); border-top:1px solid var(--border); font-weight:700; }
+.calc-tip { position:relative; cursor:default; }
+.calc-tip::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 8px); right:0; background:var(--card2); border:1px solid rgba(0,232,122,0.25); border-radius:6px; padding:7px 11px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--text); white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; z-index:50; box-shadow:0 4px 16px rgba(0,0,0,.5); }
+.calc-tip:hover::after { opacity:1; }
+.table-note { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted2); line-height:1.65; margin-bottom:1.5rem; }
+
+/* ── BAR CHART HISTÓRICO ── */
+.bar-chart-area { overflow-x:auto; padding-bottom:0.5rem; }
+.bar-chart { display:flex; gap:10px; align-items:flex-end; height:340px; padding:0 4px; }
+.bar-year { display:flex; flex-direction:column; align-items:center; gap:0; flex:1; min-width:90px; cursor:pointer; position:relative; }
+.bar-year:hover .bar-col { filter:brightness(1.15); }
+.bar-col { display:flex; flex-direction:column; justify-content:flex-end; align-items:stretch; width:100%; border-radius:4px 4px 0 0; overflow:hidden; position:relative; }
+.bar-mip { background:rgba(0,232,122,0.1); border:1px dashed rgba(0,232,122,0.3); border-bottom:none; border-radius:4px 4px 0 0; flex-shrink:0; }
+.bar-expo { display:flex; flex-direction:column; justify-content:flex-end; align-items:stretch; gap:1px; }
+.bar-seg { width:100%; }
+.bar-label-top { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--mint); letter-spacing:0.04em; margin-bottom:3px; text-align:center; white-space:nowrap; }
+.bar-label-expo { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); text-align:center; white-space:nowrap; margin-bottom:2px; }
+.bar-label-year { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted2); letter-spacing:0.06em; margin-top:8px; text-align:center; }
+
+/* ── CHART TOOLTIP FLOTANTE ── */
+.chart-tooltip { position:fixed; z-index:200; background:var(--card2); border:1px solid rgba(0,232,122,0.25); border-radius:10px; padding:0.75rem 1rem; pointer-events:none; opacity:0; transition:opacity .15s; min-width:220px; box-shadow:0 8px 32px rgba(0,0,0,.6); }
+.chart-tooltip.visible { opacity:1; }
+.ctt-year { font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:600; letter-spacing:.15em; color:var(--mint); margin-bottom:8px; }
+.ctt-row { display:flex; justify-content:space-between; gap:16px; padding:3px 0; border-bottom:1px solid var(--border2); font-size:0.88rem; }
+.ctt-row:last-child { border-bottom:none; }
+.ctt-lb { color:var(--muted); }
+.ctt-vl { font-family:'JetBrains Mono',monospace; color:var(--text); white-space:nowrap; }
+.ctt-div { border-top:1px solid rgba(0,232,122,0.15); margin:6px 0 5px; }
+.ctt-total { display:flex; justify-content:space-between; gap:16px; font-size:0.94rem; padding-top:3px; }
+.ctt-total .ctt-lb { color:var(--white); font-weight:600; }
+.ctt-total .ctt-vl { color:var(--mint); font-weight:700; font-family:'JetBrains Mono',monospace; }
+
+/* ── HORIZONTAL BARS ── */
+.hbar-list { display:flex; flex-direction:column; gap:8px; width:100%; }
+.hbar-row { display:flex; align-items:center; gap:10px; width:100%; }
+.hbar-label { font-size:0.92rem; color:var(--muted); width:220px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hbar-track { flex:1; height:7px; background:rgba(255,255,255,0.05); border-radius:4px; overflow:hidden; }
+.hbar-fill { height:100%; border-radius:4px; }
+.hbar-val { font-family:'JetBrains Mono',monospace; font-size:0.84rem; color:var(--text); text-align:right; flex-shrink:0; white-space:nowrap; }
+
+/* ── CAMPO VS INDUSTRIA ── */
+.split-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border-radius:12px; overflow:hidden; margin-bottom:1.5rem; }
+.split-card { background:var(--card); padding:1.4rem 1.6rem; }
+.split-label { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.7rem; }
+.split-val { font-family:'JetBrains Mono',monospace; font-size:2.2rem; font-weight:700; line-height:1; margin-bottom:0.3rem; }
+.split-sub { font-size:0.88rem; color:var(--muted); margin-bottom:0.7rem; }
+.split-usd { font-family:'JetBrains Mono',monospace; font-size:0.94rem; color:var(--muted); }
+.split-pct { color:var(--muted2); font-size:0.78rem; margin-left:0.3rem; }
+.split-bar-wrap { display:flex; height:12px; border-radius:6px; overflow:hidden; margin:1.2rem 0 0.5rem; }
+.split-axis { display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); }
+.etapas-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem; }
+.etapa-label { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.9rem; }
+
+/* ── EFECTO GRID ── */
+.efecto-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px; }
+.efecto-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem 1.2rem; transition:background 0.2s; }
+.efecto-card:hover { background:var(--card2); }
+.ef-sector { font-size:0.96rem; font-weight:700; color:var(--white); margin-bottom:3px; }
+.ef-sub { font-size:0.82rem; color:var(--muted); margin-bottom:10px; line-height:1.5; }
+.ef-bar { height:3px; border-radius:2px; background:rgba(255,255,255,0.06); margin-bottom:8px; overflow:hidden; }
+.ef-bar-fill { height:100%; border-radius:2px; }
+.ef-usd { font-family:'JetBrains Mono',monospace; font-size:1.2rem; font-weight:700; color:var(--mint); }
+.ef-millon { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted2); margin-top:2px; }
+
+/* ── IMPACTO AÑOS GRID ── */
+.anios-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1px; background:var(--border); border-radius:12px; overflow:hidden; }
+.anio-card { background:var(--card); padding:1.1rem 1.2rem; transition:background 0.2s; }
+.anio-card:hover { background:var(--card2); }
+.anio-year { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--muted); letter-spacing:0.15em; margin-bottom:0.5rem; }
+.anio-val { font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:700; color:var(--mint); line-height:1; }
+.anio-sub { font-size:0.78rem; color:var(--muted); margin-top:0.3rem; }
+.anio-bar { height:3px; background:rgba(255,255,255,0.05); border-radius:2px; margin-top:0.7rem; overflow:hidden; }
+.anio-bar-fill { height:100%; border-radius:2px; background:var(--mint); }
+.anio-expo { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted2); margin-top:0.4rem; }
+
+/* ── FOOTER ── */
+.footer { padding:2rem 4rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted2); }
+
+/* ── RESPONSIVE ── */
+@media (max-width:960px) {
+  .sidenav { display:none; }
+  .layout { margin-left:0; }
+  .hero, section { padding:2.5rem 1.5rem; }
+  .kpi-row { grid-template-columns:1fr 1fr; }
+  .split-grid, .etapas-grid { grid-template-columns:1fr; }
+  .hbar-label { width:150px; }
+  .footer { padding:1.5rem; flex-direction:column; gap:0.5rem; text-align:center; }
 }
-.calc-tip:hover::after{opacity:1;}
-
-/* Dot indicator */
-.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;display:inline-block;margin-right:6px;}
-
-/* Serie histórica — CSS bars */
-.chart-wrap{overflow-x:auto;padding-bottom:.5rem;position:relative;}
-.bar-chart{display:flex;gap:10px;align-items:flex-end;height:340px;padding:0 4px;}
-.bar-year{display:flex;flex-direction:column;align-items:center;gap:0;flex:1;min-width:90px;cursor:pointer;position:relative;}
-.bar-year:hover .bar-col{filter:brightness(1.12);}
-.bar-col{display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;width:100%;border-radius:4px 4px 0 0;overflow:hidden;position:relative;}
-.bar-mip{background:rgba(45,212,191,0.15);border:1px dashed rgba(45,212,191,0.35);border-bottom:none;border-radius:4px 4px 0 0;}
-.bar-expo{display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;width:100%;gap:1px;}
-.bar-seg{width:100%;}
-.bar-label-top{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--teal);letter-spacing:.04em;margin-bottom:3px;text-align:center;white-space:nowrap;}
-.bar-label-expo{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);letter-spacing:.04em;text-align:center;white-space:nowrap;margin-bottom:2px;}
-.bar-label-year{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);letter-spacing:.06em;margin-top:6px;text-align:center;}
-.chart-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:1rem;}
-.cl-item{display:flex;align-items:center;gap:6px;font-size:15px;color:var(--ink2);font-weight:300;}
-.cl-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
-/* Tooltip flotante */
-.chart-tooltip{position:fixed;z-index:200;background:#0d1a24;border:1px solid rgba(45,212,191,0.3);border-radius:8px;padding:10px 13px;pointer-events:none;opacity:0;transition:opacity .15s;min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.5);}
-.chart-tooltip.visible{opacity:1;}
-.ctt-year{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.15em;color:var(--teal);margin-bottom:7px;}
-.ctt-row{display:flex;justify-content:space-between;gap:16px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;}
-.ctt-row:last-child{border-bottom:none;}
-.ctt-lb{color:var(--ink2);font-weight:300;}
-.ctt-vl{font-family:'IBM Plex Mono',monospace;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
-.ctt-div{border-top:1px solid rgba(45,212,191,0.2);margin:6px 0 5px;}
-.ctt-total{display:flex;justify-content:space-between;gap:16px;font-size:14px;padding-top:3px;}
-.ctt-total .ctt-lb{color:var(--ink);font-weight:500;}
-.ctt-total .ctt-vl{color:var(--green);font-weight:700;font-family:'IBM Plex Mono',monospace;font-size:15px;}
-
-/* Efectos cadena */
-.efecto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
-.efecto-card{background:var(--bg4);border:1px solid var(--bord);border-radius:8px;padding:.9rem 1rem;}
-.ef-sector{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:4px;}
-.ef-sub{font-size:13px;color:var(--ink2);font-weight:300;margin-bottom:8px;}
-.ef-bar{height:3px;border-radius:2px;background:rgba(255,255,255,0.07);margin-bottom:6px;overflow:hidden;}
-.ef-bar-fill{height:100%;border-radius:2px;}
-.ef-val{display:flex;justify-content:space-between;align-items:baseline;}
-.ef-pct{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--teal);}
-.ef-usd{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);}
-
-/* Comparativo barras horizontales */
-.hbar-list{display:flex;flex-direction:column;gap:8px;width:100%;}
-.hbar-row{display:flex;align-items:center;gap:10px;width:100%;}
-.hbar-label{font-size:15px;color:var(--ink2);font-weight:300;width:210px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.hbar-track{flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
-.hbar-fill{height:100%;border-radius:4px;}
-.hbar-val{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink2);text-align:right;flex-shrink:0;white-space:nowrap;}
-
-/* Info box */
-.infobox{background:rgba(45,212,191,0.04);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.25rem;}
-.infobox-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem;}
-.infobox-body{font-size:15px;color:var(--ink2);font-weight:300;line-height:1.8;}
-.infobox-body strong{color:var(--ink);font-weight:500;}
-
-/* Selector año */
-.year-sel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
-.ybtn{padding:5px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--bg4);border:1px solid var(--bord2);border-radius:3px;color:var(--ink2);cursor:pointer;transition:all .15s;letter-spacing:.06em;}
-.ybtn:hover{border-color:rgba(45,212,191,0.3);color:var(--g1);}
-.ybtn.active{background:rgba(45,212,191,0.08);border-color:rgba(45,212,191,0.35);color:var(--teal);}
-
-/* Metodologia */
-.meto{background:var(--bg3);border:1px solid var(--bord);border-radius:10px;padding:1.2rem 1.4rem;}
-.meto-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2);margin-bottom:.8rem;}
-.meto ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
-.meto li{font-size:15px;color:var(--ink2);font-weight:300;line-height:1.7;padding-left:1.2rem;position:relative;}
-.meto li::before{content:'·';position:absolute;left:0;color:var(--teal);}
-
-footer{border-top:1px solid var(--bord);padding:1.5rem 2rem;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);line-height:1.7;max-width:1100px;margin:0 auto;letter-spacing:.04em;}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">
-      <div class="logo-b">CP</div>
-      <span class="logo-n">ceterisparibus</span>
-    </div>
-    <div class="nav-r">
-      <span class="pill">Impacto · Matriz Insumo-Producto</span>
-    </div>
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <div class="sidenav-brand">
+    <div class="sidenav-logo">CP</div>
+    <span class="sidenav-brandtxt">ceteris<br>paribus</span>
   </div>
+  <a href="#hero"       class="sn-item active"><span class="sn-badge">MIP</span><span class="sn-label">Impacto</span></a>
+  <div class="sn-sep"></div>
+  <a href="#kpis"       class="sn-item"><span class="sn-badge">25</span><span class="sn-label">KPIs 2025</span></a>
+  <a href="#cadena"     class="sn-item"><span class="sn-badge">∑</span><span class="sn-label">Cadena</span></a>
+  <a href="#historico"  class="sn-item"><span class="sn-badge">20</span><span class="sn-label">Histórico</span></a>
+  <a href="#comparativo" class="sn-item"><span class="sn-badge">vs</span><span class="sn-label">vs Rubros</span></a>
+  <div class="sn-sep"></div>
+  <a href="#campo"      class="sn-item"><span class="sn-badge">50</span><span class="sn-label">Campo/Ind.</span></a>
+  <a href="#sectores"   class="sn-item"><span class="sn-badge">⊕</span><span class="sn-label">Sectores</span></a>
+  <a href="#anios"      class="sn-item"><span class="sn-badge">∫</span><span class="sn-label">Por año</span></a>
+  <a href="#metodo"     class="sn-item"><span class="sn-badge">?</span><span class="sn-label">Método</span></a>
 </nav>
 
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-tag">Impacto económico · Matriz Insumo-Producto</div>
-    <h1>La ganadería genera<br><span class="g">el doble</span> de lo que <span class="a">exporta</span></h1>
-    <p class="hero-desc">Por cada dólar que Uruguay exporta de carne bovina, la economía genera USD 2.23 de actividad productiva total. La cadena ganadera representó el <strong style="color:var(--teal)">34.4% de las exportaciones</strong> de Uruguay en 2025 y activó más de USD 8,400 MM de producción nacional.</p>
+<div class="layout">
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+<div class="hero" id="hero">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Impacto económico · Matriz Insumo-Producto</div>
+    <h1 class="hero-title">
+      <span style="color:var(--white)">La ganadería genera</span><br>
+      <span style="color:var(--mint)">el doble</span><br>
+      <span style="color:var(--muted)">de lo que exporta</span>
+    </h1>
+    <p class="hero-sub">
+      Por cada dólar que Uruguay exporta de carne bovina, la economía genera
+      <strong style="color:var(--white)">USD 2.23</strong> de actividad productiva total.
+      La cadena ganadera representó el <strong style="color:var(--mint)">34.4% de las exportaciones</strong>
+      de Uruguay en 2025 y activó más de USD 8.400 MM de producción nacional.
+    </p>
+
+    <!-- KPI highlights en hero -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Expo cadena ganadera</div>
+        <div class="kpi-val mint">USD 3.882</div>
+        <div class="kpi-note">millones FOB · 2025</div>
+        <span class="kpi-tag mint">+25.2% vs 2024</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">% del total exportado</div>
+        <div class="kpi-val amber">34.4%</div>
+        <div class="kpi-note">de USD 11.276 MM totales</div>
+        <span class="kpi-tag amber">1er rubro del país</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Producción total generada</div>
+        <div class="kpi-val mint">USD 8.439</div>
+        <div class="kpi-note">millones · efecto multiplicador MIP</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Multiplicador ponderado</div>
+        <div class="kpi-val gold">2.17×</div>
+        <div class="kpi-note">por cada USD exportado</div>
+        <span class="kpi-tag mint">Leontief (I-A)⁻¹</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INFORME EJECUTIVO ══════════════════════════════════════════════════ -->
+<section id="kpis">
+  <span class="section-tag">Informe ejecutivo</span>
+  <h2 class="section-title">Análisis · datos al cierre 2025</h2>
+  <p class="section-sub">Exportaciones reales DNA Aduanas + multiplicadores de la Matriz Insumo-Producto BCU base 2016.</p>
+
+  <div class="prose">
+    <p>
+      La ganadería bovina es el principal rubro de exportación de Uruguay. En 2025 la cadena ganadera completa — carne bovina, lana y cuero, subproductos y ganadería ovina — exportó <strong>USD 3.882 millones</strong>, equivalente al <strong>34.4% del total exportado</strong> por el país ese año. Es el primer rubro por lejos: casi tres veces lo que exportan los granos y oleaginosas.
+    </p>
+    <p>
+      Aplicando los multiplicadores de producción de la Matriz Insumo-Producto del BCU (base 2016, inversa de Leontief), cada dólar exportado de carne bovina genera <strong>USD 2.23 de actividad productiva total</strong> en la economía uruguaya. Para la cadena ganadera completa el multiplicador ponderado es <strong>2.17×</strong>, lo que implica una producción total de <strong>USD 8.440 millones</strong> en 2025, equivalente al <strong>9.8% del PIB</strong>.
+    </p>
+    <p>
+      Un hallazgo central: el impacto económico se divide en <strong>49.4% campo y 50.6% industria</strong> — una división casi exactamente simétrica. El frigorífico genera un encadenamiento industrial propio (frío, logística, energía, finanzas, servicios) de magnitud equivalente al de toda la cadena agropecuaria. <strong>La ganadería es tan urbana como rural en términos de impacto económico.</strong>
+    </p>
+    <p>
+      En términos de tendencia, 2021 fue el pico histórico: el boom de precios llevó las exportaciones bovinas a <strong>USD 2.866 MM</strong> solo en carne, con una producción generada equivalente al <strong>12.8% del PIB</strong>. Entre 2022 y 2024 hubo una normalización en torno al 8% del PIB. En 2025 se observa una recuperación parcial impulsada por Israel y China.
+    </p>
   </div>
 </section>
 
-<div class="wrap">
+<!-- ══ DESCOMPOSICIÓN POR CADENA ═════════════════════════════════════════ -->
+<section id="cadena">
+  <span class="section-tag">Descomposición por subcadena</span>
+  <h2 class="section-title">Exportaciones 2025 · multiplicadores MIP sector a sector</h2>
+  <p class="section-sub">Cada subcadena tiene su propio multiplicador según el sector de procesamiento en la MIP.</p>
 
-<!-- INFORME EJECUTIVO -->
-<div class="sec teal"><h2>Informe ejecutivo</h2><span>resumen analítico · datos al cierre 2025</span></div>
-
-<div class="cbox" style="padding:1.75rem 2rem;">
-  <div style="display:flex;flex-direction:column;gap:1.4rem;max-width:860px;border-left:2px solid rgba(45,212,191,0.2);padding-left:1.5rem;">
-
-    <p style="font-size:16px;color:var(--ink2);font-weight:300;line-height:1.9;">
-      La ganadería bovina es el principal rubro de exportación de Uruguay. En 2025 la cadena ganadera completa — carne bovina, lana y cuero, subproductos y ganadería ovina — exportó <strong style="color:var(--ink);font-weight:500;">USD 3.882 millones</strong>, equivalente al <strong style="color:var(--ink);font-weight:500;">34.4% del total exportado</strong> por el país ese año (USD 11.276 MM según criterio DNA Aduanas, que registra exportaciones por destino y no contempla las originadas en Zonas Francas). Es el primer rubro por lejos: casi tres veces lo que exportan los granos y oleaginosas, y cuatro veces la industria forestal.
-    </p>
-
-    <p style="font-size:16px;color:var(--ink2);font-weight:300;line-height:1.9;">
-      Aplicando los multiplicadores de producción de la Matriz Insumo-Producto del BCU (base 2016, inversa de Leontief), cada dólar exportado de carne bovina genera <strong style="color:var(--ink);font-weight:500;">USD 2.23 de actividad productiva total</strong> en la economía uruguaya, incluyendo efectos directos e indirectos en cascada. Para la cadena ganadera completa el multiplicador ponderado es <strong style="color:var(--ink);font-weight:500;">2.17×</strong>, lo que implica una producción total generada de <strong style="color:var(--ink);font-weight:500;">USD 8.440 millones</strong> en 2025, equivalente al <strong style="color:var(--ink);font-weight:500;">9.8% del PIB</strong> de ese año.
-    </p>
-
-    <p style="font-size:16px;color:var(--ink2);font-weight:300;line-height:1.9;">
-      Un hallazgo relevante surge de la descomposición exacta del multiplicador: el impacto económico se divide en <strong style="color:var(--ink);font-weight:500;">49.4% campo y 50.6% industria</strong> — una división casi exactamente simétrica. El frigorífico no solo transforma el ganado: genera un encadenamiento industrial propio (frío, logística, energía, finanzas, servicios profesionales) de magnitud equivalente al que genera toda la cadena agropecuaria desde el campo. La ganadería es tan urbana como rural en términos de impacto económico.
-    </p>
-
-    <p style="font-size:16px;color:var(--ink2);font-weight:300;line-height:1.9;">
-      En términos de tendencia, 2021 fue el pico histórico del período analizado: el boom de precios internacionales llevó las exportaciones bovinas a <strong style="color:var(--ink);font-weight:500;">USD 2.866 MM</strong> solo en carne, con una producción generada equivalente al <strong style="color:var(--ink);font-weight:500;">12.8% del PIB</strong>. Entre 2022 y 2024 hubo una normalización con la cadena en torno al 8% del PIB. En 2025 se observa una recuperación parcial impulsada principalmente por los mercados de Israel y China.
-    </p>
-
-    <p style="font-size:16px;color:var(--ink2);font-weight:300;line-height:1.9;">
-      El sector más activado es la propia cría de ganado vacuno: <strong style="color:var(--ink);font-weight:500;">USD 2.232 MM</strong> de los 8.440 MM generados corresponden a la actividad ganadera primaria en campo. Le siguen forrajes y cereales (USD 265 MM), almidones y alimentos animales (USD 216 MM), comercio mayorista (USD 156 MM) y transporte de carga (USD 114 MM). La ganadería activa de forma intensa la economía rural, pero también servicios urbanos como finanzas, logística y energía.
-    </p>
-
+  <div class="table-wrap">
+    <table class="cadena-table">
+      <thead>
+        <tr>
+          <th style="width:38%">Subcadena</th>
+          <th>Expo 2025<br><span style="font-weight:400;opacity:.6;letter-spacing:0;text-transform:none">(USD MM)</span></th>
+          <th>Multiplicador<br><span style="font-weight:400;opacity:.6;letter-spacing:0;text-transform:none">MIP</span></th>
+          <th style="min-width:180px">Producción generada<br><span style="font-weight:400;opacity:.6;letter-spacing:0;text-transform:none">(USD MM)</span></th>
+        </tr>
+      </thead>
+      <tbody id="cadena-tbody"></tbody>
+    </table>
   </div>
-</div>
+  <p class="table-note">Multiplicadores: Frigorífico bovinos (A.16) BL=2.227 · Cuero/textiles (A.33/A.31) prom.=2.04 · Subproductos (A.10) 1.85 · Ganadería ovina (A.9) 1.80 · Otras especies 1.75. MIP BCU base 2016.</p>
+</section>
 
-<!-- KPIs -->
-<div class="sec teal"><h2>2025 — año completo</h2><span>exportaciones reales + multiplicadores MIP</span></div>
+<!-- ══ SERIE HISTÓRICA ══════════════════════════════════════════════════ -->
+<section id="historico">
+  <span class="section-tag">Serie histórica 2020–2025</span>
+  <h2 class="section-title">Exportaciones de la cadena ganadera y producción generada por MIP</h2>
+  <p class="section-sub">Zona sólida = exportaciones reales por subcadena. Zona punteada superior = producción adicional generada por efecto multiplicador.</p>
 
-<div class="krow k4">
-  <div class="kpi">
-    <div class="kl">Expo cadena ganadera</div>
-    <div class="kv t">USD 3.882</div>
-    <div class="ks">millones — FOB Uruguay 2025</div>
-    <div class="ktag tl">+25.2% vs 2024</div>
+  <div class="chart-wrapper">
+    <div class="bar-chart-area">
+      <div class="bar-chart" id="bar-chart"></div>
+    </div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#2DD4BF;"></div>Ganadería bovina</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#A78BFA;"></div>Lana y cuero</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FB923C;"></div>Subproductos animales</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#60A5FA;"></div>Ganadería ovina y otras</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(0,232,122,0.2);border:1px dashed rgba(0,232,122,0.4);"></div>Efecto multiplicador MIP</div>
+    </div>
   </div>
-  <div class="kpi">
-    <div class="kl">% del total exportado</div>
-    <div class="kv a">34.4%</div>
-    <div class="ks">de USD 11,276 MM totales</div>
-    <div class="ktag am">1er rubro del país</div>
-  </div>
-  <div class="kpi">
-    <div class="kl">Producción total generada</div>
-    <div class="kv g">USD 8.439</div>
-    <div class="ks">millones — efecto multiplicador MIP</div>
-    <div class="ktag gn">cadena completa activada</div>
-  </div>
-  <div class="kpi">
-    <div class="kl">Multiplicador ponderado</div>
-    <div class="kv b">2.17×</div>
-    <div class="ks">por cada USD exportado</div>
-    <div class="ktag tl">Leontief (I-A)⁻¹</div>
-  </div>
-</div>
-
-<!-- Descomposicion por cadena -->
-<div class="sec teal"><h2>Descomposición por subcadena</h2><span>exportaciones 2025 · multiplicadores MIP sector por sector</span></div>
-
-<div class="cbox" style="padding:0;overflow:hidden;">
-<table class="cadena-table">
-  <thead>
-    <tr>
-      <th style="width:38%">Subcadena</th>
-      <th>Expo 2025<br><span style="font-weight:300;opacity:.7;letter-spacing:0;">(USD MM)</span></th>
-      <th>Multiplicador<br><span style="font-weight:300;opacity:.7;letter-spacing:0;">MIP</span></th>
-      <th style="min-width:160px">Producción generada<br><span style="font-weight:300;opacity:.7;letter-spacing:0;">(USD MM)</span></th>
-    </tr>
-  </thead>
-  <tbody id="cadena-tbody">
-  </tbody>
-</table>
-</div>
-<p class="cnote">Multiplicadores: Frigorífico bovinos (A.16) BL=2.227 · Cuero/textiles (A.33/A.31) prom.=2.04 · Subproductos (A.10) 1.85 · Ganadería ovina (A.9) 1.80 · Otras especies 1.75. MIP BCU base 2016.</p>
-
-<!-- Serie historica -->
-<div class="sec amber"><h2>Serie histórica 2020–2025</h2><span>exportaciones de la cadena ganadera y producción generada por MIP · USD MM</span></div>
-
-<div class="cbox">
-  <div class="chart-wrap">
-    <div class="bar-chart" id="bar-chart"></div>
-  </div>
-  <div class="chart-legend">
-    <div class="cl-item"><div class="cl-dot" style="background:#2DD4BF;"></div>Ganadería bovina</div>
-    <div class="cl-item"><div class="cl-dot" style="background:#A78BFA;"></div>Lana y cuero</div>
-    <div class="cl-item"><div class="cl-dot" style="background:#FB923C;"></div>Subproductos animales</div>
-    <div class="cl-item"><div class="cl-dot" style="background:#60A5FA;"></div>Ganadería ovina y otras</div>
-    <div class="cl-item"><div class="cl-dot" style="background:#475569;"></div>Otras especies</div>
-    <div class="cl-item"><div class="cl-dot" style="background:rgba(45,212,191,0.2);border:1px dashed rgba(45,212,191,0.5);"></div>Efecto multiplicador MIP</div>
-  </div>
-  <p class="cnote" style="margin-top:10px;">Zona sólida = exportaciones reales por subcadena (DNA Aduanas). Zona punteada superior = producción adicional generada por efecto multiplicador MIP. Pasá el cursor por cada barra para ver el detalle. 2026 excluido por año incompleto.</p>
-</div>
+</section>
 <div class="chart-tooltip" id="chart-tooltip"></div>
 
-<!-- Comparativo con otros rubros -->
-<div class="sec blue"><h2>Ganadería bovina vs. otras exportaciones</h2><span>participación 2025 · USD MM exportados</span></div>
+<!-- ══ COMPARATIVO CON OTROS RUBROS ════════════════════════════════════ -->
+<section id="comparativo">
+  <span class="section-tag">Ganadería bovina vs. otras exportaciones</span>
+  <h2 class="section-title">Participación 2025 — USD MM exportados</h2>
+  <p class="section-sub">La ganadería bovina lidera ampliamente como principal rubro exportador del país.</p>
 
-<div class="cbox">
-<div class="hbar-list" id="comparativo"></div>
-</div>
-
-<!-- Descomposición campo vs industria -->
-<div class="sec teal"><h2>Campo vs. industria</h2><span>descomposición exacta del multiplicador del frigorífico bovinos · inversa de Leontief (I-A)⁻¹ · MIP BCU 2016</span></div>
-
-<div class="infobox">
-  <div class="infobox-title">¿Cómo se lee esta descomposición?</div>
-  <div class="infobox-body">
-    El multiplicador 2.23 del frigorífico bovinos se divide en dos etapas productivas independientes. Por cada <strong>USD 1</strong> de demanda final de carne exportada: <strong>0.67</strong> van directamente a comprar ganado al campo, lo que activa toda la cadena agropecuaria (forrajes, veterinaria, transporte rural). Los <strong>0.33</strong> restantes son insumos directos del procesamiento industrial. Aplicando la inversa de Leontief sobre cada etapa, el impacto total se divide casi exactamente en <strong>50/50</strong>.
+  <div class="chart-wrapper">
+    <div class="hbar-list" id="comparativo"></div>
   </div>
-</div>
+</section>
 
-<!-- Barra dividida campo / industria -->
-<div class="cbox" style="margin-bottom:1.25rem;">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bord);border-radius:8px;overflow:hidden;margin-bottom:1.25rem;">
-    <div style="background:var(--bg4);padding:1.1rem 1.3rem;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Etapa campo / cría</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700;color:var(--green);line-height:1;">1.10</div>
-      <div style="font-size:14px;color:var(--ink2);font-weight:300;margin-top:4px;">multiplicador embebido en campo</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--ink2);margin-top:8px;">USD 3.544 MM <span style="color:var(--muted);font-size:13px;">· 49.4%</span></div>
-      <div style="font-size:13px;color:var(--ink2);font-weight:300;margin-top:2px;">producción generada · 2025</div>
+<!-- ══ CAMPO VS INDUSTRIA ═══════════════════════════════════════════════ -->
+<section id="campo">
+  <span class="section-tag">Campo vs. industria</span>
+  <h2 class="section-title">Descomposición exacta del multiplicador · Frigorífico bovinos A.16</h2>
+  <p class="section-sub">Inversa de Leontief (I-A)⁻¹ completa 108×108 · MIP BCU 2016. Por cada USD 1 exportado de carne, el impacto se divide casi exactamente a la mitad.</p>
+
+  <div class="info-box">
+    Por cada <strong>USD 1</strong> de demanda final de carne exportada: <strong>0.67</strong> van directamente a comprar ganado al campo, activando toda la cadena agropecuaria. Los <strong>0.33</strong> restantes son insumos directos del procesamiento industrial. Aplicando la inversa de Leontief sobre cada etapa, el impacto total se divide casi exactamente en <strong class="mint">50/50</strong>.
+  </div>
+
+  <div class="split-grid">
+    <div class="split-card">
+      <div class="split-label" style="color:var(--lime)">Etapa campo / cría</div>
+      <div class="split-val" style="color:var(--lime)">1.10</div>
+      <div class="split-sub">multiplicador embebido en campo</div>
+      <div class="split-usd">USD 3.544 MM <span class="split-pct">· 49.4%</span></div>
+      <div style="font-size:0.8rem;color:var(--muted);margin-top:0.25rem;">producción generada · 2025</div>
     </div>
-    <div style="background:var(--bg4);padding:1.1rem 1.3rem;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;">Etapa frigorífico / industria</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700;color:var(--teal);line-height:1;">1.13</div>
-      <div style="font-size:14px;color:var(--ink2);font-weight:300;margin-top:4px;">multiplicador embebido en industria</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--ink2);margin-top:8px;">USD 3.632 MM <span style="color:var(--muted);font-size:13px;">· 50.6%</span></div>
-      <div style="font-size:13px;color:var(--ink2);font-weight:300;margin-top:2px;">producción generada · 2025</div>
+    <div class="split-card">
+      <div class="split-label" style="color:var(--mint)">Etapa frigorífico / industria</div>
+      <div class="split-val" style="color:var(--mint)">1.13</div>
+      <div class="split-sub">multiplicador embebido en industria</div>
+      <div class="split-usd">USD 3.632 MM <span class="split-pct">· 50.6%</span></div>
+      <div style="font-size:0.8rem;color:var(--muted);margin-top:0.25rem;">producción generada · 2025</div>
     </div>
   </div>
 
   <!-- Barra proporcional -->
-  <div style="margin-bottom:10px;">
-    <div style="display:flex;height:14px;border-radius:4px;overflow:hidden;margin-bottom:6px;">
-      <div style="width:49.4%;background:var(--green);opacity:.7;"></div>
-      <div style="width:50.6%;background:var(--teal);opacity:.7;"></div>
+  <div style="margin-bottom:0.6rem;">
+    <div class="split-bar-wrap">
+      <div style="width:49.4%;background:var(--lime);opacity:.6;"></div>
+      <div style="width:50.6%;background:var(--mint);opacity:.6;"></div>
     </div>
-    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);">
-      <span style="color:var(--green);">Campo 49.4%</span>
-      <span style="color:var(--teal);">Frigorífico 50.6%</span>
+    <div class="split-axis">
+      <span style="color:var(--lime)">Campo 49.4%</span>
+      <span style="color:var(--mint)">Frigorífico 50.6%</span>
     </div>
   </div>
 
-  <!-- Sectores por etapa -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.25rem;">
+  <div class="etapas-grid">
     <div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Sectores activados · Campo</div>
+      <div class="etapa-label" style="color:var(--lime)">Sectores activados · Campo</div>
       <div class="hbar-list" id="campo-sectores"></div>
     </div>
     <div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;">Sectores activados · Industria</div>
+      <div class="etapa-label" style="color:var(--mint)">Sectores activados · Industria</div>
       <div class="hbar-list" id="indus-sectores"></div>
     </div>
   </div>
-  <p class="cnote" style="margin-top:1rem;">Descomposición exacta mediante inversa de Leontief (I-A)⁻¹ completa 108×108. Etapa campo = coeficiente A.9 en columna A.16 × columna A.9. Etapa industria = columna A.16 − etapa campo. Exportaciones bovina 2025: USD 3.222 MM.</p>
-</div>
+  <p class="table-note" style="margin-top:1.2rem;">Exportaciones bovina 2025: USD 3.222 MM. Descomposición mediante inversa de Leontief (I-A)⁻¹ completa 108×108.</p>
+</section>
 
-<!-- Efecto cadena -->
-<div class="sec green"><h2>Sectores más activados por la cadena bovina</h2><span>quién produce cuando sube la demanda de carne</span></div>
+<!-- ══ SECTORES MÁS ACTIVADOS ══════════════════════════════════════════ -->
+<section id="sectores">
+  <span class="section-tag">Sectores más activados por la cadena bovina</span>
+  <h2 class="section-title">Quién produce cuando sube la demanda de carne</h2>
+  <p class="section-sub">Con USD 3.882 MM exportados por la cadena ganadera, los multiplicadores de la MIP permiten estimar cuánta actividad se generó en cada sector proveedor.</p>
 
-<div class="infobox">
-  <div class="infobox-title">¿Cómo leer esto?</div>
-  <div class="infobox-body">
-    Con <strong>USD 3.882 MM</strong> exportados por la cadena ganadera en 2025, los multiplicadores de la MIP permiten estimar cuánta actividad se generó en cada sector proveedor. Los valores son la suma de los efectos directos e indirectos (inversa de Leontief) de todas las subcadenas: bovina, lana y cuero, subproductos y ovina.
+  <div class="efecto-grid" id="efecto-grid"></div>
+</section>
+
+<!-- ══ IMPACTO POR AÑO ═════════════════════════════════════════════════ -->
+<section id="anios">
+  <span class="section-tag">Impacto estimado por año</span>
+  <h2 class="section-title">Producción total generada por la cadena ganadera · USD MM</h2>
+  <p class="section-sub">Producción generada = exportaciones × multiplicador MIP por subcadena. Refleja el efecto total directo + indirecto.</p>
+
+  <div class="anios-grid" id="impacto-años"></div>
+</section>
+
+<!-- ══ METODOLOGÍA ════════════════════════════════════════════════════ -->
+<section id="metodo">
+  <span class="section-tag">Metodología y limitaciones</span>
+  <h2 class="section-title">Notas metodológicas</h2>
+
+  <div class="method-box">
+    <ul>
+      <li><strong>Datos de exportación:</strong> DNA Aduanas Uruguay, valores FOB en USD corrientes. Cadena ganadera = Ganadería bovina + Lana y cuero + Subproductos animales + Ganadería ovina y otras + Ganaderías otras especies.</li>
+      <li><strong>Multiplicadores:</strong> Inversa de Leontief (I-A)⁻¹ de la MIP industria×industria base 2016, versión junio 2023, BCU. Se aplica el multiplicador de producción (backward linkage normalizado = m).</li>
+      <li><strong>Asignación:</strong> Ganadería bovina usa multiplicador del frigorífico bovinos (A.16, m=2.227) porque las exportaciones son mayoritariamente carne procesada. Lana y cuero usa promedio cuero/calzado (A.33, m=2.136) y textiles (A.31, m=1.936).</li>
+      <li><strong>Doble contabilización:</strong> Los subproductos animales comparten parte de la cadena del frigorífico. El impacto total está levemente sobreestimado. Para un análisis sin solapamiento se requiere un shock simultáneo sobre la MIP completa.</li>
+      <li><strong>Año base MIP:</strong> La estructura de la economía cambió desde 2016 (nueva celulosa, variación de precios relativos). Los multiplicadores son una aproximación de la estructura productiva actual.</li>
+    </ul>
   </div>
-</div>
+</section>
 
-<div class="efecto-grid" id="efecto-grid"></div>
-
-<!-- Evolucion impacto -->
-<div class="sec teal"><h2>Impacto estimado por año</h2><span>producción total generada por la cadena ganadera · USD MM · MIP 2016</span></div>
-
-<div class="cbox">
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1px;background:var(--bord);border-radius:8px;overflow:hidden;" id="impacto-años"></div>
-</div>
-<p class="cnote">Producción generada = exportaciones × multiplicador MIP por subcadena. Refleja el efecto total en la economía uruguaya (directo + indirecto + inducido en cadena productiva).</p>
-
-<!-- Metodologia -->
-<div class="sec amber"><h2>Metodología y limitaciones</h2><span></span></div>
-<div class="meto">
-  <div class="meto-title">Notas metodológicas</div>
-  <ul>
-    <li><strong>Datos de exportación:</strong> DNA Aduanas Uruguay, valores FOB en USD corrientes. Cadena ganadera = Ganadería bovina + Lana y cuero + Subproductos animales + Ganadería ovina y otras + Ganaderías otras especies.</li>
-    <li><strong>Multiplicadores:</strong> Inversa de Leontief (I-A)⁻¹ de la MIP industria×industria base 2016, versión junio 2023, BCU. Se aplica el multiplicador de producción (backward linkage normalizado = m).</li>
-    <li><strong>Asignación:</strong> Ganadería bovina usa multiplicador del frigorífico bovinos (A.16, m=2.227) porque las exportaciones son mayoritariamente carne procesada. Lana y cuero usa promedio cuero/calzado (A.33, m=2.136) y textiles (A.31, m=1.936).</li>
-    <li><strong>Doble contabilización:</strong> Los subproductos animales comparten parte de la cadena del frigorífico. El impacto total está levemente sobreestimado. Para un análisis sin solapamiento se requiere un shock simultáneo sobre la MIP completa.</li>
-    <li><strong>Año base MIP:</strong> La estructura de la economía cambió desde 2016 (nueva celulosa, variación de precios relativos). Los multiplicadores son una aproximación de la estructura productiva actual.</li>
-  </ul>
-</div>
-
-</div><!-- /wrap -->
-
-<footer>
-  Exportaciones: DNA Aduanas Uruguay · Multiplicadores: MIP BCU base 2016 versión junio 2023<br>
-  Inversa de Leontief (I-A)⁻¹ industria × industria · 108 sectores · Precios básicos<br>
-  Datos procesados mayo 2026
+<footer class="footer">
+  <span>Exportaciones: DNA Aduanas Uruguay · Multiplicadores: MIP BCU base 2016 versión junio 2023</span>
+  <span>© 2026 Ceteris Paribus · datos al cierre 2025</span>
 </footer>
+
+</div><!-- /layout -->
 
 <script>
 const CADENAS = [
-  { nombre: 'Ganadería bovina',         sub: 'Carne bovina, ganado en pie, despojos',   color: '#2DD4BF', mult: 2.227, mipRef: 'Frigorífico bovinos A.16',
-    expo: { 2020:1808, 2021:2866, 2022:2825, 2023:2467, 2024:2482, 2025:3222 } },
-  { nombre: 'Lana y cuero',             sub: 'Pieles, cuero curtido, lana, artículos',   color: '#A78BFA', mult: 2.04,  mipRef: 'Cuero A.33 / Textiles A.31',
-    expo: { 2020:203,  2021:336,  2022:322,  2023:256,  2024:288,  2025:268  } },
-  { nombre: 'Subproductos animales',    sub: 'Sebo, harina, vísceras, otros',             color: '#FB923C', mult: 1.85,  mipRef: 'Ganadería otros A.10',
-    expo: { 2020:123,  2021:210,  2022:217,  2023:255,  2024:235,  2025:282  } },
-  { nombre: 'Ganadería ovina y otras',  sub: 'Carne ovina, ovinos en pie, equinos',       color: '#60A5FA', mult: 1.80,  mipRef: 'Ganadería bovina A.9',
-    expo: { 2020:79,   2021:125,  2022:99,   2023:90,   2024:62,   2025:75   } },
-  { nombre: 'Ganaderías otras especies',sub: 'Porcinos, aves, otros animales',            color: '#475569', mult: 1.75,  mipRef: 'Ganadería otros A.10',
-    expo: { 2020:24,   2021:37,   2022:37,   2023:45,   2024:35,   2025:35   } },
+  { nombre:'Ganadería bovina',          sub:'Carne bovina, ganado en pie, despojos',  color:'#2DD4BF', mult:2.227, mipRef:'Frigorífico bovinos A.16',
+    expo:{ 2020:1808, 2021:2866, 2022:2825, 2023:2467, 2024:2482, 2025:3222 } },
+  { nombre:'Lana y cuero',              sub:'Pieles, cuero curtido, lana, artículos',  color:'#A78BFA', mult:2.04,  mipRef:'Cuero A.33 / Textiles A.31',
+    expo:{ 2020:203,  2021:336,  2022:322,  2023:256,  2024:288,  2025:268  } },
+  { nombre:'Subproductos animales',     sub:'Sebo, harina, vísceras, otros',           color:'#FB923C', mult:1.85,  mipRef:'Ganadería otros A.10',
+    expo:{ 2020:123,  2021:210,  2022:217,  2023:255,  2024:235,  2025:282  } },
+  { nombre:'Ganadería ovina y otras',   sub:'Carne ovina, ovinos en pie, equinos',     color:'#60A5FA', mult:1.80,  mipRef:'Ganadería bovina A.9',
+    expo:{ 2020:79,   2021:125,  2022:99,   2023:90,   2024:62,   2025:75   } },
+  { nombre:'Ganaderías otras especies', sub:'Porcinos, aves, otros animales',          color:'#475569', mult:1.75,  mipRef:'Ganadería otros A.10',
+    expo:{ 2020:24,   2021:37,   2022:37,   2023:45,   2024:35,   2025:35   } },
 ];
 
 const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
-
-// PIB anual en USD MM (BCU, precios corrientes, convertido con TC promedio anual)
-const PIB = { 2020:53744, 2021:60684, 2022:71631, 2023:79706, 2024:82082, 2025:86369 };
+const PIB   = { 2020:53744, 2021:60684, 2022:71631, 2023:79706, 2024:82082, 2025:86369 };
 
 const OTROS_RUBROS = [
-  { nombre: 'Ganadería bovina',      val: 3222, color: '#2DD4BF' },
-  { nombre: 'Granos y oleaginosas',  val: 1228, color: '#84CC16' },
-  { nombre: 'Industria forestal',    val: 1010, color: '#34D399' },
-  { nombre: 'Lácteos',               val: 517,  color: '#60A5FA' },
-  { nombre: 'Agroindustria',         val: 493,  color: '#F59E0B' },
-  { nombre: 'Plásticos y química',   val: 363,  color: '#8B5CF6' },
-  { nombre: 'Automotriz',            val: 341,  color: '#6B7280' },
-  { nombre: 'Energía',               val: 330,  color: '#EF4444' },
-  { nombre: 'Lana y cuero',          val: 268,  color: '#A78BFA' },
-  { nombre: 'Otros industriales',    val: 192,  color: '#94A3B8' },
+  { nombre:'Ganadería bovina',     val:3222, color:'#2DD4BF' },
+  { nombre:'Granos y oleaginosas', val:1228, color:'#84CC16' },
+  { nombre:'Industria forestal',   val:1010, color:'#34D399' },
+  { nombre:'Lácteos',              val:517,  color:'#60A5FA' },
+  { nombre:'Agroindustria',        val:493,  color:'#F59E0B' },
+  { nombre:'Plásticos y química',  val:363,  color:'#8B5CF6' },
+  { nombre:'Automotriz',           val:341,  color:'#6B7280' },
+  { nombre:'Energía',              val:330,  color:'#EF4444' },
+  { nombre:'Lana y cuero',         val:268,  color:'#A78BFA' },
+  { nombre:'Otros industriales',   val:192,  color:'#94A3B8' },
 ];
 
-// Valores reales 2025: expo × coeficiente MIP t5, agregado por todas las subcadenas
-// Bovina 3222 (A.16) + Lana/cuero 268 (A.33) + Subproductos 282 (A.10) + Ovina 75 (A.9)
 const TOP_SECTORES = [
-  { sector: 'Cría de ganado bovino',
-    usd: 2228,   // 3222×0.6746 + 268×0.2017 + 75×(parcial A.9)
-    color: '#2DD4BF', desc: 'Insumo directo del frigorífico y de la curtiembre',
-    ref: 'A.16 t5 · coef. 0.6746' },
-  { sector: 'Forrajes, cereales y feed',
-    usd: 340,    // 3222×0.0803 + 282×0.2569 + 75×0.1219
-    color: '#84CC16', desc: 'Alimentación del rodeo bovino y ovino',
-    ref: 'A.16 → A.6 · A.10 → A.6' },
-  { sector: 'Almidones / Alim. animales',
-    usd: 216,    // 3222×0.0382 + 282×0.3154 + 75×0.0581
-    color: '#F59E0B', desc: 'Suplementación, ración y nutrición animal',
-    ref: 'A.16 → A.24 · A.10 → A.24' },
-  { sector: 'Comercio mayor/minorista',
-    usd: 156,    // 3222×0.0372 + 268×0.0447 + 282×0.0761 + 75×0.0419
-    color: '#60A5FA', desc: 'Insumos, materiales y canales de distribución',
-    ref: 'A.16 → A.71 (múltiples cadenas)' },
-  { sector: 'Transporte carga terrestre',
-    usd: 114,    // 3222×0.0329 + 268×0.0298 + contrib. ovina
-    color: '#FB923C', desc: 'Faena, acopio, frigorífico y exportación',
-    ref: 'A.16 → A.72 · A.33 → A.72' },
-  { sector: 'Servicios financieros',
-    usd: 95,     // 268×0.0294 + estimado A.9/A.16
-    color: '#8B5CF6', desc: 'Crédito rural, seguros y fondos agropecuarios',
-    ref: 'A.33 → A.86 · A.9 → A.86' },
-  { sector: 'Farmacéuticos / Veterinaria',
-    usd: 92,     // 3222×0.0286 (desde A.9 al frigorífico)
-    color: '#EC4899', desc: 'Sanidad animal del rodeo nacional',
-    ref: 'A.9 → A.42 · coef. 0.0286' },
-  { sector: 'Servicios agropecuarios',
-    usd: 88,     // 282×0.0664 + 75×0.0427 + contrib. A.11
-    color: '#34D399', desc: 'Veterinaria de campo, asesoramiento, esquila',
-    ref: 'A.10 → A.13 · A.9 → A.13' },
+  { sector:'Cría de ganado bovino',       usd:2228, color:'#2DD4BF', desc:'Insumo directo del frigorífico y de la curtiembre' },
+  { sector:'Forrajes, cereales y feed',   usd:340,  color:'#84CC16', desc:'Alimentación del rodeo bovino y ovino' },
+  { sector:'Almidones / Alim. animales',  usd:216,  color:'#F59E0B', desc:'Suplementación, ración y nutrición animal' },
+  { sector:'Comercio mayor/minorista',    usd:156,  color:'#60A5FA', desc:'Insumos, materiales y canales de distribución' },
+  { sector:'Transporte carga terrestre',  usd:114,  color:'#FB923C', desc:'Faena, acopio, frigorífico y exportación' },
+  { sector:'Servicios financieros',       usd:95,   color:'#8B5CF6', desc:'Crédito rural, seguros y fondos agropecuarios' },
+  { sector:'Farmacéuticos / Veterinaria', usd:92,   color:'#EC4899', desc:'Sanidad animal del rodeo nacional' },
+  { sector:'Servicios agropecuarios',     usd:88,   color:'#34D399', desc:'Veterinaria de campo, asesoramiento, esquila' },
 ];
 
-// Descomposición campo vs. industria (inversa Leontief 108x108, BCU MIP 2016)
 const CAMPO_SECTORES = [
-  { nombre: 'Cría de ganado bovino',          usd: 2232 },
-  { nombre: 'Forrajes y cereales (feed)',      usd: 265  },
-  { nombre: 'Almidones / Alim. animales',      usd: 126  },
-  { nombre: 'Servicios agropecuarios',         usd: 93   },
-  { nombre: 'Comercio mayor/minorista',        usd: 91   },
+  { nombre:'Cría de ganado bovino',        usd:2232 },
+  { nombre:'Forrajes y cereales (feed)',   usd:265  },
+  { nombre:'Almidones / Alim. animales',   usd:126  },
+  { nombre:'Servicios agropecuarios',      usd:93   },
+  { nombre:'Comercio mayor/minorista',     usd:91   },
 ];
 const INDUS_SECTORES = [
-  { nombre: 'Frigorífico (procesamiento)',     usd: 3293 },
-  { nombre: 'Servicios financieros',           usd: 48   },
-  { nombre: 'Transporte de carga terrestre',   usd: 48   },
-  { nombre: 'Mensajería / logística',          usd: 41   },
-  { nombre: 'Profesionales / consultoras',     usd: 31   },
-  { nombre: 'Generación energía eléctrica',    usd: 21   },
+  { nombre:'Frigorífico (procesamiento)',  usd:3293 },
+  { nombre:'Servicios financieros',        usd:48   },
+  { nombre:'Transporte de carga terrestre',usd:48   },
+  { nombre:'Mensajería / logística',       usd:41   },
+  { nombre:'Profesionales / consultoras',  usd:31   },
+  { nombre:'Generación energía eléctrica', usd:21   },
 ];
 
-function fmtMM(n) { return new Intl.NumberFormat('es-UY').format(Math.round(n)); }
+function fmtMM(n){ return new Intl.NumberFormat('es-UY').format(Math.round(n)); }
 
-// ─── Campo vs. industria ───
-(function buildEtapas() {
-  function renderHbars(sectores, containerId, color) {
-    const maxVal = Math.max(...sectores.map(s => s.usd));
-    let html = '';
-    sectores.forEach(s => {
-      const pct = (s.usd / maxVal * 100).toFixed(1);
-      html += `
+// ─── Etapas campo / industria ───
+(function(){
+  function renderHbars(sectores, id, color){
+    const maxVal = Math.max(...sectores.map(s=>s.usd));
+    document.getElementById(id).innerHTML = sectores.map(s=>`
       <div class="hbar-row">
         <div class="hbar-label">${s.nombre}</div>
-        <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${color};opacity:.6;"></div></div>
+        <div class="hbar-track"><div class="hbar-fill" style="width:${(s.usd/maxVal*100).toFixed(1)}%;background:${color};opacity:.55;"></div></div>
         <div class="hbar-val">${fmtMM(s.usd)} MM</div>
-      </div>`;
-    });
-    document.getElementById(containerId).innerHTML = html;
+      </div>`).join('');
   }
-  renderHbars(CAMPO_SECTORES, 'campo-sectores', 'var(--green)');
-  renderHbars(INDUS_SECTORES, 'indus-sectores', 'var(--teal)');
+  renderHbars(CAMPO_SECTORES,'campo-sectores','var(--lime)');
+  renderHbars(INDUS_SECTORES,'indus-sectores','var(--mint)');
 })();
 
 // ─── Tabla cadena ───
-(function buildCadena() {
-  const maxExpo = Math.max(...CADENAS.map(c => c.expo[2025]));
-  const maxGen  = Math.max(...CADENAS.map(c => c.expo[2025] * c.mult));
-  let rows = '';
-  let totalExpo = 0, totalGen = 0;
-  CADENAS.forEach(c => {
-    const expo = c.expo[2025];
-    const gen  = expo * c.mult;
-    totalExpo += expo;
-    totalGen  += gen;
-    rows += `
-    <tr>
-      <td>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div class="dot" style="background:var(--ink2);opacity:.4;"></div>
-          <div>
-            <div class="ct-name">${c.nombre}</div>
-          </div>
-        </div>
-      </td>
-      <td>
-        <div class="ct-bar-wrap calc-tip" data-tip="exportaciones reales 2025 · DNA Aduanas (FOB)">
-          <span class="ct-num" style="color:var(--ink2);">${fmtMM(expo)}</span>
-          <div class="ct-bar"><div class="ct-bar-fill" style="width:${(expo/maxExpo*100).toFixed(1)}%;background:var(--ink2);opacity:.25;"></div></div>
-        </div>
-      </td>
-      <td class="ct-mult calc-tip" data-tip="multiplicador Leontief (I-A)⁻¹ · ${c.mipRef}">× ${c.mult.toFixed(2)}</td>
-      <td>
-        <div class="ct-bar-wrap calc-tip" data-tip="${fmtMM(expo)} × ${c.mult.toFixed(2)} = ${fmtMM(gen)} MM">
-          <span class="ct-gen" style="color:var(--teal);">${fmtMM(gen)}</span>
-          <div class="ct-bar"><div class="ct-bar-fill" style="width:${(gen/maxGen*100).toFixed(1)}%;background:var(--teal);opacity:.5;"></div></div>
-        </div>
-      </td>
+(function(){
+  const maxExpo = Math.max(...CADENAS.map(c=>c.expo[2025]));
+  const maxGen  = Math.max(...CADENAS.map(c=>c.expo[2025]*c.mult));
+  let rows='', totalExpo=0, totalGen=0;
+  CADENAS.forEach(c=>{
+    const expo=c.expo[2025], gen=expo*c.mult;
+    totalExpo+=expo; totalGen+=gen;
+    rows+=`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:9px;height:9px;border-radius:2px;background:${c.color};flex-shrink:0;"></div>
+        <div class="ct-name">${c.nombre}</div>
+      </div></td>
+      <td><div class="ct-bar-wrap calc-tip" data-tip="exportaciones reales 2025 · DNA Aduanas">
+        <span class="ct-num" style="color:var(--muted);">${fmtMM(expo)}</span>
+        <div class="ct-bar"><div class="ct-bar-fill" style="width:${(expo/maxExpo*100).toFixed(1)}%;background:var(--muted2);"></div></div>
+      </div></td>
+      <td class="ct-mult calc-tip" data-tip="${c.mipRef}">× ${c.mult.toFixed(2)}</td>
+      <td><div class="ct-bar-wrap calc-tip" data-tip="${fmtMM(expo)} × ${c.mult.toFixed(2)} = ${fmtMM(gen)} MM">
+        <span class="ct-gen">${fmtMM(gen)}</span>
+        <div class="ct-bar"><div class="ct-bar-fill" style="width:${(gen/maxGen*100).toFixed(1)}%;background:var(--mint);opacity:.5;"></div></div>
+      </div></td>
     </tr>`;
   });
-  rows += `
-  <tr class="total-row">
-    <td><div style="font-size:13px;font-weight:700;color:var(--ink);padding-left:18px;">Total cadena ganadera</div></td>
-    <td><div class="ct-bar-wrap calc-tip" data-tip="suma: ${CADENAS.map(c=>fmtMM(c.expo[2025])).join(' + ')}"><span class="ct-num" style="color:var(--teal);font-size:15px;font-weight:700;">${fmtMM(totalExpo)}</span></div></td>
-    <td class="ct-mult calc-tip" data-tip="promedio ponderado por expo" style="color:var(--ink2);">× 2.17 pond.</td>
-    <td><div class="ct-bar-wrap calc-tip" data-tip="${CADENAS.map(c=>fmtMM(Math.round(c.expo[2025]*c.mult))).join(' + ')} = ${fmtMM(totalGen)}"><span class="ct-gen" style="color:var(--green);font-size:16px;">${fmtMM(totalGen)}</span></div></td>
+  rows+=`<tr class="total-row">
+    <td><span style="font-size:0.9rem;font-weight:700;color:var(--white);padding-left:17px;">Total cadena ganadera</span></td>
+    <td><div class="ct-bar-wrap"><span class="ct-num" style="color:var(--mint);font-weight:700;">${fmtMM(totalExpo)}</span></div></td>
+    <td class="ct-mult" style="color:var(--muted);">× 2.17 pond.</td>
+    <td><div class="ct-bar-wrap"><span class="ct-gen" style="color:var(--lime);font-size:1.1rem;">${fmtMM(totalGen)}</span></div></td>
   </tr>`;
-  document.getElementById('cadena-tbody').innerHTML = rows;
+  document.getElementById('cadena-tbody').innerHTML=rows;
 })();
 
 // ─── Bar chart histórico ───
-(function buildBarChart() {
-  // Escala sobre producción generada (el máximo posible, 2025)
-  const maxProd = Math.max(...YEARS.map(y => CADENAS.reduce((s,c) => s + (c.expo[y]||0)*c.mult, 0)));
-  const H = 190; // altura máxima de barra en px (deja margen para labels arriba y abajo)
-
-  const tip = document.getElementById('chart-tooltip');
-  let html = '';
-
-  YEARS.forEach(y => {
-    const expo  = CADENAS.reduce((s,c) => s + (c.expo[y]||0), 0);
-    const prod  = CADENAS.reduce((s,c) => s + (c.expo[y]||0)*c.mult, 0);
-    const extra = prod - expo; // efecto multiplicador puro
-
-    const hProd  = Math.round(prod  / maxProd * H);
-    const hExpo  = Math.round(expo  / maxProd * H);
-    const hExtra = hProd - hExpo; // px de zona MIP
-
-    // Segmentos de exportación (apilados, de abajo a arriba = orden inverso del array)
-    let segs = '';
-    [...CADENAS].reverse().forEach(c => {
-      const segH = Math.round((c.expo[y]||0) / maxProd * H);
-      if(segH > 0) segs += `<div class="bar-seg" style="height:${segH}px;background:${c.color};opacity:.85;"></div>`;
+(function(){
+  const maxProd = Math.max(...YEARS.map(y=>CADENAS.reduce((s,c)=>s+(c.expo[y]||0)*c.mult,0)));
+  const H = 190;
+  let html='';
+  YEARS.forEach(y=>{
+    const expo = CADENAS.reduce((s,c)=>s+(c.expo[y]||0),0);
+    const prod = CADENAS.reduce((s,c)=>s+(c.expo[y]||0)*c.mult,0);
+    const extra= prod-expo;
+    const hProd = Math.round(prod/maxProd*H);
+    const hExpo = Math.round(expo/maxProd*H);
+    const hExtra= hProd-hExpo;
+    let segs='';
+    [...CADENAS].reverse().forEach(c=>{
+      const segH=Math.round((c.expo[y]||0)/maxProd*H);
+      if(segH>0) segs+=`<div class="bar-seg" style="height:${segH}px;background:${c.color};opacity:.85;"></div>`;
     });
-
-    // Tooltip data como JSON en dataset
-    const pib    = PIB[y] || 0;
-    const pctPib = pib > 0 ? (expo / pib * 100).toFixed(1) : '—';
-    const pctProd= pib > 0 ? (prod / pib * 100).toFixed(1) : '—';
-
-    const tipData = JSON.stringify({
-      y, expo, prod, extra, pib, pctPib, pctProd,
-      subs: CADENAS.map(c => ({ n: c.nombre, e: c.expo[y]||0, g: Math.round((c.expo[y]||0)*c.mult), color: c.color }))
+    const pib=PIB[y]||0;
+    const tipData=JSON.stringify({ y, expo, prod, extra, pib,
+      pctProd: pib>0?(prod/pib*100).toFixed(1):'—',
+      subs: CADENAS.map(c=>({ n:c.nombre, e:c.expo[y]||0, color:c.color }))
     });
-
-    html += `
-    <div class="bar-year" data-tip='${tipData}'
-         onmouseenter="showTip(event,this)" onmouseleave="hideTip()" onmousemove="moveTip(event)">
-      <div class="bar-label-top" style="color:var(--teal);font-size:14px;">${pctProd}% PIB</div>
-      <div class="bar-label-top" style="color:var(--ink2);font-size:12px;font-weight:400;margin-bottom:3px;">${fmtMM(prod)} MM</div>
+    html+=`<div class="bar-year" data-tip='${tipData}'
+        onmouseenter="showTip(event,this)" onmouseleave="hideTip()" onmousemove="moveTip(event)">
+      <div class="bar-label-top">${(pib>0?(prod/pib*100):0).toFixed(1)}% PIB</div>
+      <div class="bar-label-top" style="color:var(--muted);font-size:0.68rem;">${fmtMM(prod)} MM</div>
       <div class="bar-col" style="height:${hProd}px;">
-        <div class="bar-mip" style="height:${hExtra}px;flex-shrink:0;"></div>
-        <div class="bar-expo" style="height:${hExpo}px;">
-          ${segs}
-        </div>
+        <div class="bar-mip" style="height:${hExtra}px;"></div>
+        <div class="bar-expo" style="height:${hExpo}px;">${segs}</div>
       </div>
-      <div class="bar-label-expo" style="font-weight:400;color:var(--ink2);margin-top:4px;">${fmtMM(expo)} MM</div>
+      <div class="bar-label-expo">${fmtMM(expo)} MM</div>
       <div class="bar-label-year">${y}</div>
     </div>`;
   });
-
-  document.getElementById('bar-chart').innerHTML = html;
+  document.getElementById('bar-chart').innerHTML=html;
 })();
 
-function showTip(e, el) {
-  const d = JSON.parse(el.dataset.tip);
-  const tip = document.getElementById('chart-tooltip');
-  let rows = d.subs
-    .filter(s => s.e > 0)
-    .map(s => `<div class="ctt-row"><span class="ctt-lb" style="border-left:2px solid ${s.color};padding-left:5px;">${s.n}</span><span class="ctt-vl">${fmtMM(s.e)} MM</span></div>`)
-    .join('');
-  tip.innerHTML = `
-    <div class="ctt-year">${d.y}</div>
-    ${rows}
+function showTip(e,el){
+  const d=JSON.parse(el.dataset.tip);
+  const tip=document.getElementById('chart-tooltip');
+  let rows=d.subs.filter(s=>s.e>0).map(s=>`
+    <div class="ctt-row">
+      <span class="ctt-lb" style="border-left:2px solid ${s.color};padding-left:5px;">${s.n}</span>
+      <span class="ctt-vl">${fmtMM(s.e)} MM</span>
+    </div>`).join('');
+  tip.innerHTML=`<div class="ctt-year">${d.y}</div>${rows}
     <div class="ctt-div"></div>
-    <div class="ctt-row"><span class="ctt-lb">Exportaciones</span><span class="ctt-vl" style="color:var(--teal);">USD ${fmtMM(d.expo)} MM</span></div>
-    <div class="ctt-row"><span class="ctt-lb">Efecto MIP (+${((d.prod/d.expo-1)*100).toFixed(0)}%)</span><span class="ctt-vl" style="color:rgba(45,212,191,0.7);">+${fmtMM(d.extra)} MM</span></div>
+    <div class="ctt-row"><span class="ctt-lb">Exportaciones</span><span class="ctt-vl" style="color:var(--mint);">USD ${fmtMM(d.expo)} MM</span></div>
+    <div class="ctt-row"><span class="ctt-lb">Efecto MIP (+${((d.prod/d.expo-1)*100).toFixed(0)}%)</span><span class="ctt-vl" style="color:rgba(0,232,122,0.6);">+${fmtMM(d.extra)} MM</span></div>
     <div class="ctt-total"><span class="ctt-lb">Producción generada</span><span class="ctt-vl">USD ${fmtMM(d.prod)} MM</span></div>`;
   tip.classList.add('visible');
   moveTip(e);
 }
-function moveTip(e) {
-  const tip = document.getElementById('chart-tooltip');
-  const x = e.clientX + 16, y = e.clientY - 10;
-  const overRight = x + tip.offsetWidth > window.innerWidth - 8;
-  tip.style.left  = (overRight ? e.clientX - tip.offsetWidth - 12 : x) + 'px';
-  tip.style.top   = Math.max(8, y) + 'px';
+function moveTip(e){
+  const tip=document.getElementById('chart-tooltip');
+  const x=e.clientX+16, y=e.clientY-10;
+  tip.style.left=(x+tip.offsetWidth>window.innerWidth-8?e.clientX-tip.offsetWidth-12:x)+'px';
+  tip.style.top=Math.max(8,y)+'px';
 }
-function hideTip() {
-  document.getElementById('chart-tooltip').classList.remove('visible');
-}
+function hideTip(){ document.getElementById('chart-tooltip').classList.remove('visible'); }
 
 // ─── Comparativo rubros ───
-(function buildComparativo() {
-  const maxVal = Math.max(...OTROS_RUBROS.map(r => r.val));
-  let html = '';
-  const totalExpo = 3882; // total cadena ganadera 2025
-  OTROS_RUBROS.forEach(r => {
-    const pct = (r.val / maxVal * 100).toFixed(1);
-    html += `
+(function(){
+  const maxVal=Math.max(...OTROS_RUBROS.map(r=>r.val));
+  let html=OTROS_RUBROS.map(r=>`
     <div class="hbar-row">
       <div class="hbar-label">${r.nombre}</div>
-      <div class="hbar-track">
-        <div class="hbar-fill" style="width:${pct}%;background:${r.nombre==='Ganadería bovina'?'var(--teal)':'var(--ink2)'};opacity:${r.nombre==='Ganadería bovina'?'.75':'.3'};"></div>
-      </div>
+      <div class="hbar-track"><div class="hbar-fill" style="width:${(r.val/maxVal*100).toFixed(1)}%;background:${r.nombre==='Ganadería bovina'?'var(--mint)':'var(--muted2)'};opacity:${r.nombre==='Ganadería bovina'?'.75':'.4'};"></div></div>
       <div class="hbar-val">USD ${fmtMM(r.val)} MM</div>
-    </div>`;
-  });
-  html += `
-  <div style="border-top:1px solid var(--bord2);margin-top:10px;padding-top:10px;display:flex;align-items:center;gap:10px;width:100%;">
-    <div style="font-size:15px;color:var(--ink2);font-weight:300;width:210px;flex-shrink:0;white-space:nowrap;">Total cadena ganadera</div>
-    <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:100%;background:var(--ink2);opacity:.15;border-radius:4px;"></div>
-    </div>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:var(--ink);text-align:right;flex-shrink:0;white-space:nowrap;">USD ${fmtMM(totalExpo)} MM</div>
+    </div>`).join('');
+  html+=`<div style="border-top:1px solid var(--border);margin-top:10px;padding-top:10px;display:flex;align-items:center;gap:10px;">
+    <div class="hbar-label" style="color:var(--text);font-weight:600;">Total cadena ganadera</div>
+    <div class="hbar-track"><div class="hbar-fill" style="width:100%;background:var(--mint);opacity:.12;"></div></div>
+    <div class="hbar-val" style="color:var(--white);font-weight:700;">USD ${fmtMM(3882)} MM</div>
   </div>`;
-  document.getElementById('comparativo').innerHTML = html;
+  document.getElementById('comparativo').innerHTML=html;
 })();
 
 // ─── Top sectores activados ───
-(function buildEfecto() {
-  const maxUsd = Math.max(...TOP_SECTORES.map(s => s.usd));
-  let html = '';
-  TOP_SECTORES.forEach((s, i) => {
-    const barW = (s.usd / maxUsd * 100).toFixed(1);
-    html += `
+(function(){
+  const maxUsd=Math.max(...TOP_SECTORES.map(s=>s.usd));
+  document.getElementById('efecto-grid').innerHTML=TOP_SECTORES.map(s=>`
     <div class="efecto-card">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;">
         <div>
           <div class="ef-sector">${s.sector}</div>
           <div class="ef-sub">${s.desc}</div>
         </div>
         <div style="text-align:right;flex-shrink:0;">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--teal);line-height:1;">USD ${fmtMM(s.usd)}</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);margin-top:3px;">millones · 2025</div>
+          <div class="ef-usd">USD ${fmtMM(s.usd)}</div>
+          <div class="ef-millon">millones · 2025</div>
         </div>
       </div>
-      <div class="ef-bar"><div class="ef-bar-fill" style="width:${barW}%;background:var(--teal);opacity:.5;"></div></div>
-    </div>`;
-  });
-  document.getElementById('efecto-grid').innerHTML = html;
+      <div class="ef-bar"><div class="ef-bar-fill" style="width:${(s.usd/maxUsd*100).toFixed(1)}%;background:${s.color};opacity:.45;"></div></div>
+    </div>`).join('');
 })();
 
 // ─── Impacto por año ───
-(function buildImpactoAnios() {
-  const maxProd = Math.max(...YEARS.map(y => CADENAS.reduce((s,c) => s + (c.expo[y]||0)*c.mult, 0)));
-  let html = '';
-  YEARS.forEach(y => {
-    const expo = CADENAS.reduce((s,c) => s+(c.expo[y]||0),0);
-    const prod = CADENAS.reduce((s,c) => s+(c.expo[y]||0)*c.mult,0);
-    const pct  = (prod/maxProd*100).toFixed(0);
-    html += `
-    <div style="background:var(--bg4);padding:1rem 1.1rem;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);letter-spacing:.15em;margin-bottom:6px;">${y}</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--green);line-height:1;">${fmtMM(prod)}</div>
-      <div style="font-size:13px;color:var(--ink2);font-weight:300;margin-top:4px;">USD MM producción</div>
-      <div style="height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:8px;overflow:hidden;">
-        <div style="height:100%;width:${pct}%;background:var(--teal);border-radius:2px;"></div>
-      </div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2);margin-top:5px;">expo: ${fmtMM(expo)} MM</div>
+(function(){
+  const maxProd=Math.max(...YEARS.map(y=>CADENAS.reduce((s,c)=>s+(c.expo[y]||0)*c.mult,0)));
+  document.getElementById('impacto-años').innerHTML=YEARS.map(y=>{
+    const expo=CADENAS.reduce((s,c)=>s+(c.expo[y]||0),0);
+    const prod=CADENAS.reduce((s,c)=>s+(c.expo[y]||0)*c.mult,0);
+    return `<div class="anio-card">
+      <div class="anio-year">${y}</div>
+      <div class="anio-val">${fmtMM(prod)}</div>
+      <div class="anio-sub">USD MM producción</div>
+      <div class="anio-bar"><div class="anio-bar-fill" style="width:${(prod/maxProd*100).toFixed(0)}%;"></div></div>
+      <div class="anio-expo">expo: ${fmtMM(expo)} MM</div>
     </div>`;
-  });
-  document.getElementById('impacto-años').innerHTML = html;
+  }).join('');
+})();
+
+// ─── Sidenav active on scroll ───
+(function(){
+  const items=document.querySelectorAll('.sn-item[href^="#"]');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        items.forEach(a=>a.classList.remove('active'));
+        const a=document.querySelector(`.sn-item[href="#${e.target.id}"]`);
+        if(a) a.classList.add('active');
+      }
+    });
+  },{threshold:0.3});
+  document.querySelectorAll('section[id], div[id="hero"]').forEach(s=>obs.observe(s));
 })();
 </script>
 </body>
