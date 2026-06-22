@@ -771,9 +771,10 @@ function mesAnio(iso) {
 // ── CARGA DATOS ────────────────────────────────────────────────────────────
 let FAENA = {}; // mapa fecha → {novillos, total}
 
+const DATA_BASE = 'https://raw.githubusercontent.com/mltn1980/ceteris-paribus/main/data';
 Promise.all([
-  fetch('../data/rhe-full.json').then(r => r.json()),
-  fetch('../data/faena-novillos.json').then(r => r.json()).catch(() => [])
+  fetch(`${DATA_BASE}/rhe-full.json`).then(r => r.json()),
+  fetch(`${DATA_BASE}/faena-novillos.json`).then(r => r.json()).catch(() => [])
 ])
   .then(([rhe, faena]) => {
     faena.forEach(f => { FAENA[f.fecha] = { novillos: f.novillos, total: f.total }; });
