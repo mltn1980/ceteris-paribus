@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHE — Relación Hacienda / Exportación · INAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0a0f0d;
+    --bg2:      #0e1510;
+    --card:     #131d15;
+    --card2:    #162019;
+    --border:   rgba(0,255,136,0.08);
+    --border2:  rgba(255,255,255,0.06);
+    --mint:     #00e87a;
+    --mint-dim: rgba(0,232,122,0.12);
+    --gold:     #f5a623;
+    --red:      #ff4d4d;
+    --red-dim:  rgba(255,77,77,0.10);
+    --white:    #f0f4f1;
+    --muted:    #6b7d70;
+    --muted2:   #4a5c50;
+    --text:     #c8d8cc;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; font-size:18px; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:18px; line-height:1.6; overflow-x:hidden; }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-thumb { background:var(--mint-dim); border-radius:2px; }
+
+  /* ── TOPBAR ── */
+  .topbar { position:fixed; top:0; left:0; right:0; z-index:200; height:52px; background:rgba(10,15,13,0.94); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; }
+  .topbar-brand { display:flex; align-items:center; gap:0.6rem; font-weight:800; font-size:1rem; color:var(--white); text-decoration:none; }
+  .topbar-logo { width:32px; height:32px; border-radius:8px; background:var(--mint); display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:900; color:var(--bg); }
+  .topbar-nav { display:flex; gap:0.1rem; }
+  .topbar-nav a { text-decoration:none; color:var(--muted); font-size:0.82rem; font-weight:500; padding:0.28rem 0.65rem; border-radius:6px; transition:all 0.2s; }
+  .topbar-nav a:hover { color:var(--white); background:rgba(255,255,255,0.06); }
+  .topbar-nav a.active { color:var(--mint); }
+  .topbar-right { display:flex; align-items:center; gap:0.5rem; font-size:0.75rem; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+  .live-dot { width:6px; height:6px; border-radius:50%; background:var(--mint); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+  /* ── SIDENAV ── */
+  .sidenav { position:fixed; left:0; top:0; bottom:0; width:128px; background:var(--bg2); border-right:1px solid var(--border); display:flex; flex-direction:column; align-items:stretch; padding:1.4rem 0.7rem; gap:0.3rem; z-index:100; }
+  .sidenav-brand { display:flex; align-items:center; gap:0.5rem; padding:0 0.4rem 1.2rem; margin-bottom:0.6rem; border-bottom:1px solid var(--border); text-decoration:none; }
+  .sidenav-logo { width:30px; height:30px; border-radius:7px; background:var(--mint); display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:900; color:var(--bg); flex-shrink:0; }
+  .sidenav-brandtxt { font-weight:800; font-size:0.82rem; color:var(--white); line-height:1.1; }
+  .sn-item { display:flex; align-items:center; gap:0.6rem; padding:0.6rem 0.7rem; cursor:pointer; border-radius:8px; text-decoration:none; transition:background 0.2s; }
+  .sn-item:hover { background:var(--mint-dim); }
+  .sn-item.active { background:var(--mint-dim); }
+  .sn-badge { font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:700; color:var(--mint); letter-spacing:0.02em; min-width:26px; text-align:center; flex-shrink:0; }
+  .sn-label { font-size:0.82rem; color:var(--muted); font-weight:500; white-space:nowrap; }
+  .sn-item.active .sn-label { color:var(--white); }
+  .sn-sep { height:1px; background:var(--border); margin:0.4rem 0.4rem; }
+
+  .layout { margin-left:128px; padding-top:0; }
+
+  /* ── HERO ── */
+  .hero { padding:4rem 4rem 3rem; position:relative; overflow:hidden; background:radial-gradient(ellipse 60% 50% at 80% 50%, rgba(0,232,122,0.04), transparent 60%), var(--bg); }
+  .hero::before { content:''; position:absolute; inset:0; z-index:0; background-image:linear-gradient(rgba(0,232,122,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,122,0.02) 1px,transparent 1px); background-size:48px 48px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent 100%); }
+  .hero-content { position:relative; z-index:1; }
+  .hero-top { display:flex; align-items:flex-start; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+  .hero-left { max-width:520px; }
+  .eyebrow { display:inline-flex; align-items:center; gap:0.5rem; background:var(--mint-dim); border:1px solid rgba(0,232,122,0.2); border-radius:100px; padding:0.3rem 0.9rem; font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:500; color:var(--mint); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.5rem; }
+  .eyebrow-dot { width:5px; height:5px; border-radius:50%; background:var(--mint); animation:pulse 2s ease-in-out infinite; }
+  .hero-title { font-size:clamp(2.2rem,4.5vw,3.8rem); font-weight:900; line-height:1.0; letter-spacing:-0.03em; margin-bottom:1rem; }
+  .hero-sub { font-size:0.97rem; color:var(--muted); max-width:52ch; line-height:1.75; margin-bottom:2rem; }
+
+  /* ── GAUGE ── */
+  .zona-box { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.5rem 1.8rem; min-width:310px; max-width:400px; }
+  .zona-label { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:1.3rem; }
+  .split-gauge-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.45rem; }
+  .split-gauge-animal { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .split-gauge-val { font-size:1.3rem; font-weight:800; }
+  .split-gauge-val.mint { color:var(--mint); }
+  .split-gauge-val.red  { color:var(--red); }
+  .split-gauge-delta { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:600; margin-left:0.4rem; }
+  .split-gauge-delta.pos { color:var(--mint); }
+  .split-gauge-delta.neg { color:var(--red); }
+  .split-bar-wrap { position:relative; height:11px; border-radius:7px; overflow:hidden; background:var(--bg2); display:flex; margin-bottom:0.35rem; }
+  .split-bar-left  { width:50%; height:100%; background:rgba(255,77,77,0.18); display:flex; justify-content:flex-end; overflow:hidden; }
+  .split-bar-right { width:50%; height:100%; background:rgba(0,232,122,0.1); overflow:hidden; }
+  .split-fill { height:100%; border-radius:4px; transition:width 0.9s cubic-bezier(0.34,1.56,0.64,1); }
+  .split-fill.producer   { background:linear-gradient(90deg,rgba(0,232,122,0.4),var(--mint)); }
+  .split-fill.frigorifico { background:linear-gradient(270deg,rgba(255,77,77,0.4),var(--red)); }
+  .split-center-mark { position:absolute; top:-2px; bottom:-2px; left:50%; transform:translateX(-50%); width:2px; background:var(--white); border-radius:2px; z-index:3; opacity:0.5; }
+  .split-axis { display:flex; justify-content:space-between; margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--border2); font-family:'JetBrains Mono',monospace; font-size:0.67rem; color:var(--muted2); letter-spacing:0.08em; }
+  .split-axis .red  { color:rgba(255,77,77,0.7); }
+  .split-axis .mint { color:rgba(0,232,122,0.7); }
+  .zona-badge { display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.8rem; border-radius:100px; font-family:'JetBrains Mono',monospace; font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-top:0.8rem; }
+  .zona-badge.producer   { background:var(--mint-dim); border:1px solid rgba(0,232,122,0.25); color:var(--mint); }
+  .zona-badge.frigorifico { background:var(--red-dim);  border:1px solid rgba(255,77,77,0.25);  color:var(--red); }
+  .zona-badge-dot { width:5px; height:5px; border-radius:50%; }
+  .zona-badge.producer   .zona-badge-dot { background:var(--mint); }
+  .zona-badge.frigorifico .zona-badge-dot { background:var(--red); }
+
+  /* ── KPI ROW ── */
+  .kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-top:2.5rem; }
+  .kpi-card { background:var(--card); padding:1.4rem 1.2rem; transition:background 0.2s; }
+  .kpi-card:hover { background:var(--card2); }
+  .kpi-val { font-size:1.85rem; font-weight:800; line-height:1; letter-spacing:-0.02em; margin-bottom:0.2rem; }
+  .kpi-val.mint  { color:var(--mint); }
+  .kpi-val.red   { color:var(--red); }
+  .kpi-val.white { color:var(--white); }
+  .kpi-val.gold  { color:var(--gold); }
+  .kpi-label { font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.3rem; }
+  .kpi-note { font-size:0.88rem; color:var(--muted2); line-height:1.5; }
+
+  /* ── SECTIONS ── */
+  section { padding:4rem 4rem; border-top:1px solid var(--border); }
+  .section-tag { font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--mint); margin-bottom:0.5rem; display:block; }
+  .section-title { font-size:clamp(1.6rem,2.3vw,2.2rem); font-weight:800; line-height:1.1; letter-spacing:-0.02em; color:var(--white); margin-bottom:0.6rem; }
+  .section-sub { font-size:1.02rem; color:var(--muted); max-width:64ch; line-height:1.75; margin-bottom:2.5rem; }
+
+  /* ── CHART COMMON ── */
+  .chart-wrapper { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.4rem 1.4rem 1.1rem; margin-bottom:1.8rem; overflow:hidden; }
+  .chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.1rem; gap:1rem; flex-wrap:wrap; }
+  .chart-title { font-size:1.04rem; font-weight:700; color:var(--white); }
+  .chart-title span { color:var(--muted); font-weight:400; font-size:0.9rem; margin-left:0.5rem; }
+  .chart-legend { display:flex; gap:1.1rem; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; align-items:center; }
+  .legend-item { display:flex; align-items:center; gap:0.35rem; }
+  .legend-dot { width:8px; height:8px; border-radius:2px; }
+  .chart-area { position:relative; overflow-x:auto; }
+
+  /* ── BARS COMMON ── */
+  .bars-zone { position:relative; }
+  .bars-axis { position:absolute; left:0; right:0; top:50%; height:1px; background:rgba(0,232,122,0.28); z-index:2; }
+  .bars-axis-label { position:absolute; right:0; top:-16px; font-family:'JetBrains Mono',monospace; font-size:0.66rem; color:rgba(0,232,122,0.5); white-space:nowrap; }
+  .bars-container { position:absolute; top:0; left:0; right:2.6%; bottom:0; display:flex; align-items:center; gap:0; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; height:100%; position:relative; cursor:pointer; min-width:0; }
+  .bar-col:hover .bar-tooltip { display:block; }
+  .year-divider { position:absolute; top:0; bottom:0; width:1px; background:rgba(255,255,255,0.11); z-index:3; }
+  .year-label-chart { position:absolute; bottom:-20px; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:0.66rem; color:var(--muted2); letter-spacing:0.04em; white-space:nowrap; }
+  .bar-tooltip { display:none; position:absolute; bottom:calc(50% + 6px); left:50%; transform:translateX(-50%); background:rgba(14,21,16,0.97); border:1px solid var(--border); border-radius:8px; padding:0.55rem 0.85rem; white-space:nowrap; z-index:50; pointer-events:none; font-size:0.82rem; box-shadow:0 4px 16px rgba(0,0,0,0.4); }
+  .bar-tooltip.below { bottom:auto; top:calc(50% + 6px); }
+  .tt-date { color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:0.74rem; margin-bottom:0.2rem; }
+  .tt-val  { color:var(--white); font-weight:700; font-size:0.96rem; }
+  .tt-dev  { font-size:0.78rem; margin-top:0.1rem; }
+  .tt-area { font-size:0.68rem; color:var(--muted2); margin-top:0.1rem; }
+  .tt-dev.pos { color:var(--mint); }
+  .tt-dev.neg { color:var(--red); }
+
+  /* ── INTEGRAL CARDS ── */
+  .integral-row { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2rem; }
+  .integral-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.6rem 1.8rem; }
+  .integral-card.producer-card   { border-top:3px solid var(--mint); }
+  .integral-card.frigorifico-card { border-top:3px solid var(--red); }
+  .ic-label { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:0.7rem; }
+  .ic-label.mint { color:var(--mint); }
+  .ic-label.red  { color:var(--red); }
+  .ic-val { font-size:2.4rem; font-weight:900; line-height:1; letter-spacing:-0.03em; margin-bottom:0.25rem; }
+  .ic-val.mint { color:var(--mint); }
+  .ic-val.red  { color:var(--red); }
+  .ic-sub { font-size:0.94rem; color:var(--muted); line-height:1.65; margin-bottom:1.1rem; }
+  .ic-stat-row { display:flex; align-items:center; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border2); font-size:0.92rem; }
+  .ic-stat-row:last-child { border-bottom:none; }
+  .ic-stat-label { color:var(--muted); }
+  .ic-stat-val { font-weight:700; font-family:'JetBrains Mono',monospace; font-size:0.92rem; }
+  .ic-stat-val.mint  { color:var(--mint); }
+  .ic-stat-val.red   { color:var(--red); }
+  .ic-stat-val.white { color:var(--white); }
+
+  /* ── BALANCE BAR ── */
+  .balance-bar-header { display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:0.67rem; color:var(--muted); margin-bottom:0.4rem; }
+  .balance-bar-wrap { position:relative; height:26px; border-radius:8px; overflow:hidden; background:rgba(255,255,255,0.04); display:flex; margin-bottom:2rem; }
+  .balance-bar-prod { height:100%; background:linear-gradient(90deg,rgba(0,232,122,0.45),var(--mint)); border-radius:8px 0 0 8px; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-family:'JetBrains Mono',monospace; font-size:0.67rem; font-weight:700; color:var(--bg); transition:width 1s cubic-bezier(0.34,1.56,0.64,1); }
+  .balance-bar-frig { height:100%; background:linear-gradient(270deg,rgba(255,77,77,0.45),var(--red)); border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:flex-start; padding-left:8px; font-family:'JetBrains Mono',monospace; font-size:0.67rem; font-weight:700; color:var(--white); transition:width 1s cubic-bezier(0.34,1.56,0.64,1); }
+
+  /* ── YEAR BREAKDOWN ── */
+  .year-breakdown { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:2rem; }
+  .yb-card { background:var(--card); padding:1.2rem 1.1rem; transition:background 0.2s; }
+  .yb-card:hover { background:var(--card2); }
+  .yb-year { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.7rem; }
+  .yb-balance { font-size:1.3rem; font-weight:800; line-height:1; margin-bottom:0.2rem; }
+  .yb-balance.pos     { color:var(--mint); }
+  .yb-balance.neg     { color:var(--red); }
+  .yb-balance.neutral { color:var(--gold); }
+  .yb-sublabel { font-size:0.73rem; margin-bottom:0.7rem; }
+  .yb-bars { display:flex; flex-direction:column; gap:0.28rem; }
+  .yb-bar-row { display:flex; align-items:center; gap:0.45rem; font-size:0.7rem; }
+  .yb-bar-label { color:var(--muted); width:34px; flex-shrink:0; font-family:'JetBrains Mono',monospace; font-size:0.64rem; }
+  .yb-bar-track { flex:1; height:5px; border-radius:3px; background:var(--border2); overflow:hidden; }
+  .yb-bar-fill { height:100%; border-radius:3px; }
+  .yb-bar-num { color:var(--muted2); font-family:'JetBrains Mono',monospace; font-size:0.66rem; width:40px; flex-shrink:0; text-align:right; }
+
+  /* ── YEAR GRID (22 años) ── */
+  .year-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .year-card { background:var(--card); padding:0.9rem 0.9rem; transition:background 0.2s; }
+  .year-card:hover { background:var(--card2); }
+  .year-card.current { background:var(--card2); border-left:2px solid var(--mint); }
+  .year-num { font-family:'JetBrains Mono',monospace; font-size:0.67rem; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.35rem; }
+  .year-avg { font-size:1.1rem; font-weight:800; line-height:1; margin-bottom:0.28rem; }
+  .year-avg.above { color:var(--mint); }
+  .year-avg.below { color:var(--red); }
+  .year-bar-track { height:3px; border-radius:2px; background:var(--border2); margin-bottom:0.3rem; overflow:hidden; }
+  .year-bar-fill  { height:100%; border-radius:2px; }
+  .year-pct { font-size:0.68rem; color:var(--muted2); font-family:'JetBrains Mono',monospace; }
+
+  /* ── CUMULATIVE CHART ── */
+  .cum-positive-label { position:absolute; left:4px; top:4px;    font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:rgba(0,232,122,0.5); pointer-events:none; z-index:6; }
+  .cum-negative-label { position:absolute; left:4px; bottom:4px; font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:rgba(255,77,77,0.5); pointer-events:none; z-index:6; }
+  .crossover-mark  { position:absolute; top:0; bottom:0; width:2px; background:var(--gold); z-index:4; opacity:0.85; }
+  .crossover-label { position:absolute; top:4px; transform:translateX(-50%); background:var(--gold); color:var(--bg); font-family:'JetBrains Mono',monospace; font-size:0.64rem; font-weight:700; padding:2px 5px; border-radius:3px; white-space:nowrap; }
+
+  /* ── INFO / ALERT BOXES ── */
+  .info-box    { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:1.3rem 1.8rem; font-size:0.98rem; color:var(--muted); line-height:1.8; margin-top:1.5rem; }
+  .info-box strong { color:var(--text); }
+  .info-box .mint { color:var(--mint); font-weight:600; }
+  .info-box .red  { color:var(--red);  font-weight:600; }
+  .alert-box   { background:var(--red-dim); border:1px solid rgba(255,77,77,0.2); border-radius:12px; padding:1.3rem 1.8rem; margin:1.5rem 0; font-size:1.02rem; color:var(--text); line-height:1.8; }
+  .alert-box strong { color:var(--red); }
+  .highlight   { background:var(--mint-dim); border:1px solid rgba(0,232,122,0.18); border-radius:12px; padding:1.3rem 1.8rem; margin:1.5rem 0; font-size:1.02rem; color:var(--text); line-height:1.8; }
+  .highlight strong { color:var(--mint); }
+
+  /* ── METHOD BOX ── */
+  .method-box { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:1.5rem 2rem; font-size:0.98rem; color:var(--muted); line-height:1.85; }
+  .method-box strong { color:var(--text); }
+  .method-box + .method-box { margin-top:1rem; }
+
+  /* ── FOOTER ── */
+  .footer { padding:2rem 4rem 2rem 4rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted2); }
+  .footer a { color:var(--muted); text-decoration:none; }
+  .footer a:hover { color:var(--mint); }
+
+  @media (max-width:960px) {
+    .sidenav { display:none; }
+    .layout  { margin-left:0; }
+    .hero, section { padding:3rem 1.5rem; }
+    .hero-top { flex-direction:column; }
+    .zona-box { max-width:100%; min-width:0; width:100%; }
+    .kpi-row { grid-template-columns:1fr 1fr; }
+    .integral-row { grid-template-columns:1fr; }
+    .year-breakdown { grid-template-columns:1fr 1fr; }
+    .year-grid { grid-template-columns:repeat(3,1fr); }
+    .footer { padding:1.5rem; flex-direction:column; gap:0.5rem; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <a href="../GANADERIA/ganaderia_cp_style.html" class="sidenav-brand">
+    <div class="sidenav-logo">CP</div>
+    <span class="sidenav-brandtxt">ceteris<br>paribus</span>
+  </a>
+  <a href="#hero"        class="sn-item active"><span class="sn-badge">RHE</span><span class="sn-label">Actual</span></a>
+  <div class="sn-sep"></div>
+  <a href="#serie"       class="sn-item"><span class="sn-badge">05</span><span class="sn-label">Serie 2005</span></a>
+  <a href="#areas"       class="sn-item"><span class="sn-badge">∫</span><span class="sn-label">Áreas</span></a>
+  <a href="#balance"     class="sn-item"><span class="sn-badge">Σ</span><span class="sn-label">Balance</span></a>
+  <div class="sn-sep"></div>
+  <a href="#historico"   class="sn-item"><span class="sn-badge">∫05</span><span class="sn-label">Histórico</span></a>
+  <a href="#faena"       class="sn-item"><span class="sn-badge">⚖</span><span class="sn-label">Ponderado</span></a>
+  <a href="#anual"       class="sn-item"><span class="sn-badge">Año</span><span class="sn-label">Por año</span></a>
+  <a href="#metodologia" class="sn-item"><span class="sn-badge">?</span><span class="sn-label">Método</span></a>
+</nav>
+
+<div class="layout">
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+<div class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-top">
+      <div class="hero-left">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>INAC · Indicador semanal</div>
+        <h1 class="hero-title">
+          <span style="color:var(--white)">Relación</span><br>
+          <span style="color:var(--mint)">Hacienda /</span><br>
+          <span style="color:var(--white)">Exportación</span>
+        </h1>
+        <p class="hero-sub">
+          El RHE pondera el precio de hacienda (novillo y vaca) en 4.ª balanza respecto al
+          ingreso medio de exportación de carne bovina — promedio móvil de 3 semanas.
+          <strong style="color:var(--mint)">Por encima del promedio histórico</strong> (0.9357 desde ene-2005)
+          indica condición favorable para el productor; por debajo, el diferencial lo captura el frigorífico.
+        </p>
+      </div>
+
+      <!-- Gauge -->
+      <div class="zona-box">
+        <div class="zona-label">Posición actual vs. promedio histórico (2005–2026)</div>
+        <div class="split-gauge-header">
+          <span class="split-gauge-animal">RHE compuesto</span>
+          <span>
+            <span class="split-gauge-val" id="gauge-val">—</span>
+            <span class="split-gauge-delta" id="gauge-delta">—</span>
+          </span>
+        </div>
+        <div class="split-bar-wrap">
+          <div class="split-bar-left" ><div class="split-fill frigorifico" id="fill-left"  style="width:0%"></div></div>
+          <div class="split-bar-right"><div class="split-fill producer"    id="fill-right" style="width:0%"></div></div>
+          <div class="split-center-mark"></div>
+        </div>
+        <div id="zona-badge-wrap"></div>
+        <div class="split-axis">
+          <span class="red">◀ Frigorífico (menor valor)</span>
+          <span class="mint">Mayor valor — Productor ▶</span>
+        </div>
+      </div>
+    </div><!-- /hero-top -->
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">RHE actual</div>
+        <div class="kpi-val" id="kpi-rhe" style="color:var(--white)">—</div>
+        <div class="kpi-note" id="kpi-rhe-dev">—</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Prom. histórico (ene-2005)</div>
+        <div class="kpi-val white">0.9357</div>
+        <div class="kpi-note">1.119 semanas · base INAC</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Semana analizada</div>
+        <div class="kpi-val white" id="kpi-semana">—</div>
+        <div class="kpi-note" id="kpi-act">Actualizado INAC</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Prom. año en curso</div>
+        <div class="kpi-val" id="kpi-anio-avg" style="color:var(--white)">—</div>
+        <div class="kpi-note" id="kpi-anio-note">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SERIE 2005–2026 ════════════════════════════════════════════════════ -->
+<section id="serie">
+  <span class="section-tag">Serie histórica completa</span>
+  <h2 class="section-title">Evolución del RHE — 2005 a la fecha</h2>
+  <p class="section-sub">Desviación semanal desde el promedio histórico (0.9357). <strong style="color:var(--mint)">Verde</strong> = semanas favorables al productor · <strong style="color:var(--red)">Rojo</strong> = semanas favorables al frigorífico.</p>
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">RHE semanal 2005–2026<span>1.119 semanas · fuente INAC</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Productor</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Frigorífico</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <div class="bars-zone" style="height:220px;" id="zone-full">
+          <div class="bars-axis"><div class="bars-axis-label">prom. hist. 0.9357</div></div>
+          <div class="bars-container" id="bars-full"></div>
+        </div>
+        <div style="height:24px;position:relative;" id="xlabels-full"></div>
+      </div>
+    </div>
+  </div>
+  <div id="ctx-full"></div>
+</section>
+
+<!-- ══ ÁREAS 2023–2026 ════════════════════════════════════════════════════ -->
+<section id="areas">
+  <span class="section-tag">Integración numérica · 2023–2026</span>
+  <h2 class="section-title">¿Quién capturó más? <span style="color:var(--mint)">Productor</span> vs <span style="color:var(--red)">Frigorífico</span></h2>
+  <p class="section-sub">Área acumulada bajo la curva del RHE respecto al promedio histórico, calculada con la regla trapezoidal. Cada semana aporta al área de su zona en proporción a su distancia del promedio.</p>
+
+  <!-- Balance bar -->
+  <div class="balance-bar-header">
+    <span style="color:var(--mint)">▶ PRODUCTOR</span>
+    <span style="color:var(--red)">FRIGORÍFICO ◀</span>
+  </div>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar-prod" id="bal-prod" style="width:50%">—%</div>
+    <div class="balance-bar-frig" id="bal-frig" style="width:50%">—%</div>
+  </div>
+
+  <!-- KPIs de área -->
+  <div class="kpi-row" style="margin-bottom:2rem;">
+    <div class="kpi-card"><div class="kpi-label">Área productora</div><div class="kpi-val mint" id="a-prod">—</div><div class="kpi-note">índice × semanas</div></div>
+    <div class="kpi-card"><div class="kpi-label">Área frigorífico</div><div class="kpi-val red"  id="a-frig">—</div><div class="kpi-note">índice × semanas</div></div>
+    <div class="kpi-card"><div class="kpi-label">Balance neto</div><div class="kpi-val" id="a-net">—</div><div class="kpi-note" id="a-net-note">—</div></div>
+    <div class="kpi-card"><div class="kpi-label">% área productora</div><div class="kpi-val" id="a-pct">—</div><div class="kpi-note" id="a-pct-note">—</div></div>
+  </div>
+
+  <!-- Gráfico de desviación 2023+ -->
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">Desviación semanal 2023–2026<span>cada barra = área de esa semana</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Área productora</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Área frigorífico</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <div class="bars-zone" style="height:260px;" id="zone-dev">
+          <div class="bars-axis"><div class="bars-axis-label">prom. hist. 0.9357</div></div>
+          <div class="bars-container" id="bars-dev"></div>
+        </div>
+        <div style="height:24px;position:relative;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards detalle -->
+  <div class="integral-row">
+    <div class="integral-card producer-card">
+      <div class="ic-label mint">Zona productora</div>
+      <div class="ic-val mint" id="ic-prod-val">—</div>
+      <div class="ic-sub">Suma de excedentes semanales por encima del promedio histórico (regla trapezoidal).</div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semanas sobre prom.</span><span class="ic-stat-val mint" id="ic-prod-weeks">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semana de mayor excedente</span><span class="ic-stat-val white" id="ic-prod-max">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Excedente máx. semanal</span><span class="ic-stat-val mint" id="ic-prod-max-val">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Excedente prom. (sem. activas)</span><span class="ic-stat-val mint" id="ic-prod-avg">—</span></div>
+    </div>
+    <div class="integral-card frigorifico-card">
+      <div class="ic-label red">Zona frigorífico</div>
+      <div class="ic-val red" id="ic-frig-val">—</div>
+      <div class="ic-sub">Suma de déficits semanales por debajo del promedio histórico (regla trapezoidal).</div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semanas bajo prom.</span><span class="ic-stat-val red" id="ic-frig-weeks">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semana de mayor déficit</span><span class="ic-stat-val white" id="ic-frig-max">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Déficit máx. semanal</span><span class="ic-stat-val red" id="ic-frig-max-val">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Déficit prom. (sem. activas)</span><span class="ic-stat-val red" id="ic-frig-avg">—</span></div>
+    </div>
+  </div>
+
+  <!-- Balance por año -->
+  <h3 style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:1rem;">Balance por año (2023–2026)</h3>
+  <div class="year-breakdown" id="year-breakdown"></div>
+
+  <div class="info-box" id="info-areas"></div>
+</section>
+
+<!-- ══ BALANCE ACUMULADO ══════════════════════════════════════════════════ -->
+<section id="balance">
+  <span class="section-tag">Integral acumulada en el tiempo</span>
+  <h2 class="section-title">Balance acumulado semana a semana</h2>
+  <p class="section-sub">Suma corrida de (RHE − 0.9357) desde ene-2023. Por encima del eje = el productor lleva ventaja acumulada; por debajo = el frigorífico. El cruce del eje (marcador dorado) indica reversión del balance dominante.</p>
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">Balance acumulado — Σ desvíos desde ene-2023<span>cruce dorado = reversión</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Ventaja productora</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Ventaja frigorífico</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gold);border-radius:50%"></div>Reversión</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <div class="bars-zone" style="height:200px;" id="zone-cum">
+          <div class="cum-positive-label">▲ VENTAJA PRODUCTORA</div>
+          <div class="cum-negative-label">▼ VENTAJA FRIGORÍFICO</div>
+          <div class="bars-axis">
+            <div class="bars-axis-label">balance = 0</div>
+          </div>
+          <div class="bars-container" id="bars-cum"></div>
+        </div>
+        <div style="height:24px;position:relative;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box" id="info-balance"></div>
+
+  <div class="info-box" style="margin-top:1rem;">
+    <strong>¿Por qué el gráfico se mantiene en zona frigorífico durante todo 2024 y casi todo 2025?</strong>
+    Porque el balance acumulado tiene <strong>memoria</strong>: no mide si una semana puntual está
+    arriba o abajo del promedio, sino la <strong>suma corrida de todos los desvíos desde ene-2023</strong>.
+    <br><br>
+    <strong>2023</strong> (RHE promedio 0.914) y <strong>2024</strong> (0.926) cerraron ambos
+    <span class="red">por debajo</span> del promedio histórico (0.9357), acumulando semana tras semana
+    un déficit que arrastró el balance hasta su <span class="red">mínimo de −2.02 en marzo de 2025</span>.
+    Aunque a partir de mediados de 2025 las semanas empezaron a ser favorables al productor,
+    el acumulado primero tuvo que <strong>"pagar la deuda"</strong> de esos dos años negativos
+    antes de poder volver a cruzar el eje.
+    <br><br>
+    Por eso el cruce a <span class="mint">zona productora recién ocurrió el 9-nov-2025</span>: no fue
+    hasta que el flujo sostenido de excedentes de la segunda mitad de 2025 superó en magnitud al déficit
+    acumulado de 2023–2024. En otras palabras, <strong>2024 y 2025 se ven rojos no porque cada semana
+    fuera mala para el productor, sino porque el sistema todavía cargaba el lastre del bienio anterior.</strong>
+  </div>
+</section>
+
+<!-- ══ ANÁLISIS HISTÓRICO COMPLETO 2005–2026 ═════════════════════════════ -->
+<section id="historico">
+  <span class="section-tag">Integración numérica · serie completa</span>
+  <h2 class="section-title">Análisis integral histórico — 2005 a 2026</h2>
+  <p class="section-sub">
+    Las mismas métricas de área aplicadas a las <strong>1.119 semanas completas</strong> desde ene-2005.
+    El resultado revela si, a lo largo del tiempo, el diferencial favoreció más al productor
+    o al frigorífico — y cuándo se produjeron las grandes reversiones del balance.
+  </p>
+
+  <!-- Balance bar -->
+  <div class="balance-bar-header">
+    <span style="color:var(--mint)">▶ PRODUCTOR — área acumulada 2005–2026</span>
+    <span style="color:var(--red)">FRIGORÍFICO ◀</span>
+  </div>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar-prod" id="h-bal-prod" style="width:50%">—%</div>
+    <div class="balance-bar-frig" id="h-bal-frig" style="width:50%">—%</div>
+  </div>
+  <p style="font-size:0.92rem;color:var(--muted);line-height:1.65;margin:-1rem 0 2rem;">
+    <strong style="color:var(--text);">¿Por qué da casi 50/50?</strong> Porque el RHE se mide contra
+    <strong style="color:var(--text);">su propio promedio histórico</strong> (0.9357). El promedio es,
+    por definición, el centro de gravedad de la serie: deja aproximadamente la mitad del área por encima
+    y la otra mitad por debajo. Por eso el reparto histórico tiende al equilibrio —
+    el dato relevante no es el total acumulado, sino <strong style="color:var(--text);">cuándo y con qué
+    intensidad</strong> el índice se apartó hacia cada lado (lo que muestran los gráficos de abajo).
+  </p>
+
+  <!-- KPIs área histórica -->
+  <div class="kpi-row" style="margin-bottom:2rem;">
+    <div class="kpi-card"><div class="kpi-label">Área productora</div><div class="kpi-val mint" id="h-prod">—</div><div class="kpi-note">índ × semanas · 2005–2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Área frigorífico</div><div class="kpi-val red"  id="h-frig">—</div><div class="kpi-note">índ × semanas · 2005–2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Balance neto</div><div class="kpi-val" id="h-net">—</div><div class="kpi-note" id="h-net-note">—</div></div>
+    <div class="kpi-card"><div class="kpi-label">% área productora</div><div class="kpi-val" id="h-pct">—</div><div class="kpi-note" id="h-pct-note">—</div></div>
+  </div>
+
+  <!-- Cards integral histórica -->
+  <div class="integral-row">
+    <div class="integral-card producer-card">
+      <div class="ic-label mint">Zona productora — 2005–2026</div>
+      <div class="ic-val mint" id="h-ic-prod">—</div>
+      <div class="ic-sub">Área total acumulada en las semanas sobre el promedio histórico.</div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semanas sobre prom.</span><span class="ic-stat-val mint" id="h-prod-weeks">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Año más favorable</span><span class="ic-stat-val mint" id="h-prod-best-yr">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Excedente máx. semanal</span><span class="ic-stat-val mint" id="h-prod-max-val">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semana de mayor excedente</span><span class="ic-stat-val white" id="h-prod-max-fecha">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Excedente prom. (sem. activas)</span><span class="ic-stat-val mint" id="h-prod-avg">—</span></div>
+    </div>
+    <div class="integral-card frigorifico-card">
+      <div class="ic-label red">Zona frigorífico — 2005–2026</div>
+      <div class="ic-val red" id="h-ic-frig">—</div>
+      <div class="ic-sub">Área total acumulada en las semanas bajo el promedio histórico.</div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semanas bajo prom.</span><span class="ic-stat-val red" id="h-frig-weeks">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Año más adverso</span><span class="ic-stat-val red" id="h-frig-worst-yr">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Déficit máx. semanal</span><span class="ic-stat-val red" id="h-frig-max-val">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semana de mayor déficit</span><span class="ic-stat-val white" id="h-frig-max-fecha">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Déficit prom. (sem. activas)</span><span class="ic-stat-val red" id="h-frig-avg">—</span></div>
+    </div>
+  </div>
+
+  <!-- Desvío semanal (sin acumular) -->
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">Desvío semanal 2005–2026 — valor de cada semana<span>cada barra = (RHE − 0.9357) de esa semana, sin acumular</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Sobre promedio</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Bajo promedio</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <div style="position:absolute;left:0;top:0;bottom:24px;width:44px;z-index:5;pointer-events:none;" id="h-wk-yaxis"></div>
+        <div style="position:relative;margin-left:48px;">
+          <div class="bars-zone" style="height:240px;" id="h-zone-wk">
+            <div class="bars-axis"><div class="bars-axis-label">prom. hist. 0.9357</div></div>
+            <div id="h-wk-ylines"></div>
+            <div class="bars-container" id="h-bars-wk"></div>
+          </div>
+          <div style="height:24px;position:relative;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- contexto narrativo del chart -->
+  <div class="highlight" style="margin-bottom:1.5rem;">
+    <strong>De lo semanal a lo acumulado:</strong> El gráfico de arriba muestra el
+    <strong>valor puntual de cada semana</strong> — se ve claramente el <span class="red">crash de 2008</span>
+    como un bloque rojo continuo y profundo (todas las semanas bajo el promedio, con déficits máximos
+    de hasta −0.25), y otro bloque similar en <span class="red">2014</span>.
+    El gráfico de abajo <strong>acumula</strong> esos mismos desvíos: cada barra suma todas las anteriores.
+    Por eso una baja grande y sostenida como la de 2008 (−6.66 en un solo año) no solo hunde el balance
+    en ese momento, sino que <strong>lo mantiene en territorio negativo durante años</strong>: hacen falta
+    muchas semanas positivas para compensar un pozo tan profundo. El acumulado tiene memoria; lo semanal no.
+  </div>
+
+  <!-- Balance acumulado histórico -->
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">Balance acumulado 2005–2026 — Σ desvíos<span>cruce dorado = reversión · escala dinámica con referencias</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Ventaja productora</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Ventaja frigorífico</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gold);border-radius:50%"></div>Reversión</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <!-- Eje Y con referencias -->
+        <div style="position:absolute;left:0;top:0;bottom:24px;width:44px;z-index:5;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;" id="h-yaxis"></div>
+        <div style="position:relative;margin-left:48px;">
+          <div class="bars-zone" style="height:280px;" id="h-zone-cum">
+            <div class="cum-positive-label">▲ VENTAJA PRODUCTORA</div>
+            <div class="cum-negative-label">▼ VENTAJA FRIGORÍFICO</div>
+            <div class="bars-axis">
+              <div class="bars-axis-label">balance = 0</div>
+            </div>
+            <!-- líneas de referencia del eje Y -->
+            <div id="h-ylines"></div>
+            <div class="bars-container" id="h-bars-cum"></div>
+          </div>
+          <div style="height:24px;position:relative;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Balance por año (todos) -->
+  <h3 style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:1rem;">Balance por año — 2005 a 2026</h3>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem;" id="h-year-breakdown"></div>
+
+  <div class="info-box" id="h-info-box"></div>
+</section>
+
+<!-- ══ ANÁLISIS PONDERADO POR FAENA 2005–2026 ════════════════════════════ -->
+<section id="faena">
+  <span class="section-tag">Integración ponderada por volumen · ⚖</span>
+  <h2 class="section-title">Análisis ponderado por faena de novillos</h2>
+  <p class="section-sub">
+    El análisis anterior trata cada semana por igual. Pero el impacto económico real depende de
+    <strong>cuántos novillos se faenaron</strong>: una semana con desvío alto y mucha faena transfiere
+    más valor que una con el mismo desvío pero poca faena. Aquí cada desvío se pondera por la faena
+    de novillos (INAC) suavizada con un <strong>promedio móvil de 3 semanas</strong> — el mismo criterio
+    con que INAC construye el RHE —, cambiando la unidad de "índice × semanas" a
+    <strong>"índice × cabezas"</strong>.
+  </p>
+
+  <!-- Gráfico de faena semanal -->
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">Faena de novillos 2005–2026<span>promedio móvil 3 semanas · fuente INAC</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Semana en zona prod.</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Semana en zona frig.</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--muted2)"></div>Promedio de la serie</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <!-- Eje Y faena -->
+        <div style="position:absolute;left:0;top:0;bottom:24px;width:44px;z-index:5;pointer-events:none;" id="f-yaxis"></div>
+        <div style="position:relative;margin-left:48px;">
+          <div style="position:relative;height:300px;" id="f-zone">
+            <div id="f-ylines"></div>
+            <div class="bars-container" style="align-items:flex-end;" id="f-bars"></div>
+          </div>
+          <div style="height:24px;position:relative;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Balance bar ponderado -->
+  <div class="balance-bar-header">
+    <span style="color:var(--mint)">▶ PRODUCTOR — área ponderada por faena</span>
+    <span style="color:var(--red)">FRIGORÍFICO ◀</span>
+  </div>
+  <div class="balance-bar-wrap">
+    <div class="balance-bar-prod" id="fw-bal-prod" style="width:50%">—%</div>
+    <div class="balance-bar-frig" id="fw-bal-frig" style="width:50%">—%</div>
+  </div>
+
+
+  <!-- Cards comparación -->
+  <div class="integral-row">
+    <div class="integral-card producer-card">
+      <div class="ic-label mint">Zona productora — ponderada</div>
+      <div class="ic-val mint" id="fw-prod">—</div>
+      <div class="ic-sub">Σ (excedente semanal × faena prom. móvil 3 sem) en semanas sobre el promedio histórico. Unidad: millones de índice·cabeza.</div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Faena en zona productora</span><span class="ic-stat-val mint" id="fw-prod-faena">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semana de mayor impacto</span><span class="ic-stat-val white" id="fw-prod-max-fecha">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Impacto máx. semanal</span><span class="ic-stat-val mint" id="fw-prod-max-val">—</span></div>
+    </div>
+    <div class="integral-card frigorifico-card">
+      <div class="ic-label red">Zona frigorífico — ponderada</div>
+      <div class="ic-val red" id="fw-frig">—</div>
+      <div class="ic-sub">Σ (déficit semanal × faena prom. móvil 3 sem) en semanas bajo el promedio histórico. Unidad: millones de índice·cabeza.</div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Faena en zona frigorífico</span><span class="ic-stat-val red" id="fw-frig-faena">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Semana de mayor impacto</span><span class="ic-stat-val white" id="fw-frig-max-fecha">—</span></div>
+      <div class="ic-stat-row"><span class="ic-stat-label">Impacto máx. semanal</span><span class="ic-stat-val red" id="fw-frig-max-val">—</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.92rem;color:var(--muted);line-height:1.65;margin:-0.6rem 0 2rem;">
+    <strong style="color:var(--text);">¿Qué mide el "impacto máx. semanal"?</strong> Es la mayor contribución
+    que aportó <strong style="color:var(--text);">una sola semana</strong> al área de su zona, calculada como
+    <strong style="color:var(--text);">desvío del RHE × faena de novillos</strong> (prom. móvil 3 sem) de esa semana,
+    en miles de índice·cabeza (k). Un valor de <strong style="color:var(--mint);">+4,0k</strong> significa que esa
+    semana, al combinar un RHE alto sobre el promedio con un volumen importante de faena, empujó el área hacia el
+    productor el equivalente a 4.000 unidades de índice·cabeza. Identifica <strong style="color:var(--text);">la
+    semana que más pesó</strong> en todo el período para cada lado — no el desvío más grande ni la mayor faena por
+    separado, sino la combinación más potente de ambos.
+  </p>
+
+  <!-- Balance acumulado ponderado -->
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="chart-title">Balance acumulado ponderado por faena — 2005–2026<span>Σ (desvío × novillos) · cruce dorado = reversión</span></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Ventaja productora</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Ventaja frigorífico</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gold);border-radius:50%"></div>Reversión</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <div style="position:relative;">
+        <div style="position:absolute;left:0;top:0;bottom:24px;width:44px;z-index:5;pointer-events:none;" id="fw-yaxis"></div>
+        <div style="position:relative;margin-left:48px;">
+          <div class="bars-zone" style="height:280px;" id="fw-zone-cum">
+            <div class="cum-positive-label">▲ VENTAJA PRODUCTORA</div>
+            <div class="cum-negative-label">▼ VENTAJA FRIGORÍFICO</div>
+            <div class="bars-axis">
+              <div class="bars-axis-label">balance = 0</div>
+            </div>
+            <div id="fw-ylines"></div>
+            <div class="bars-container" id="fw-bars-cum"></div>
+          </div>
+          <div style="height:24px;position:relative;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box" id="fw-info-box"></div>
+</section>
+
+<!-- ══ COMPORTAMIENTO ANUAL ═══════════════════════════════════════════════ -->
+<section id="anual">
+  <span class="section-tag">Serie completa año a año</span>
+  <h2 class="section-title">Comportamiento anual del RHE — 2005–2026</h2>
+  <p class="section-sub">Promedio anual y porcentaje de semanas en zona productora. <span style="color:var(--mint)">Verde</span> = año favorable para el productor · <span style="color:var(--red)">Rojo</span> = año favorable para el frigorífico. ★ = año en curso.</p>
+  <div class="year-grid" id="year-grid"></div>
+</section>
+
+<!-- ══ METODOLOGÍA ════════════════════════════════════════════════════════ -->
+<section id="metodologia">
+  <span class="section-tag">Metodología</span>
+  <h2 class="section-title">Cómo se construye el RHE</h2>
+  <div class="method-box">
+    <p><strong>Indicador base:</strong> RHE = precio hacienda ponderado (novillo y vaca) en 4.ª balanza (USD/kg vivo) / ingreso medio de exportación de carne bovina (USD/kg peso canal ponderado). Ambas series con <strong>promedio móvil de 3 semanas</strong>. Fuente: <strong>INAC</strong>.</p>
+  </div>
+  <div class="method-box" style="margin-top:1rem;">
+    <p><strong>Promedio histórico:</strong> media de las 1.119 semanas desde ene-2005, igual a <strong>0.9357</strong>. Por encima → condición favorable para el productor. Por debajo → el diferencial relativo favorece al frigorífico.</p>
+  </div>
+  <div class="method-box" style="margin-top:1rem;">
+    <p><strong>Integración de áreas:</strong> se aplica la <strong>regla trapezoidal</strong> — para cada intervalo entre semanas consecutivas, el área = ½ × (dev_i + dev_{i+1}) × Δt, donde Δt = 1 semana. La suma de las áreas positivas (RHE > 0.9357) da el área productora; la suma de las negativas, el área frigorífico. El cociente entre ellas y el balance neto cuantifican quién acumuló más margen relativo en el período.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 Ceteris Paribus — datos: <a href="#">INAC</a></span>
+  <span id="footer-txt">RHE · serie 2005–2026 · análisis integral</span>
+</footer>
+
+</div><!-- /layout -->
+
+<script>
+const HIST    = 0.9357;
+const MAX_DEV = HIST * 0.17;
+const START23 = '2023-01-01';
+
+const fmt  = (v,d=4) => (+v).toFixed(d);
+const sign = v => v >= 0 ? '+' : '';
+const pct  = v => (+v).toFixed(1) + '%';
+function fechaCorta(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('es-UY',{day:'numeric',month:'short',year:'2-digit'});
+}
+function mesAnio(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('es-UY',{month:'short',year:'numeric'});
+}
+
+// ── CARGA DATOS ────────────────────────────────────────────────────────────
+let FAENA = {}; // mapa fecha → {novillos, total}
+
+Promise.all([
+  fetch('../data/rhe-full.json').then(r => r.json()),
+  fetch('../data/faena-novillos.json').then(r => r.json()).catch(() => [])
+])
+  .then(([rhe, faena]) => {
+    faena.forEach(f => { FAENA[f.fecha] = { novillos: f.novillos, total: f.total }; });
+    init(rhe);
+  })
+  .catch(e => { document.getElementById('bars-full').innerHTML = '<div style="color:var(--red);padding:2rem;font-size:0.85rem">Error cargando datos. Verificar servidor.</div>'; });
+
+function init(DATA) {
+  const n      = DATA.length;
+  const LATEST = DATA[n - 1];
+  const rhe    = LATEST.rhe;
+  const dev    = rhe - HIST;
+  const isAbove = dev >= 0;
+
+  // ── Estadísticas por año (todos) ──
+  const byYear = {};
+  DATA.forEach(d => {
+    const y = d.fecha.substring(0,4);
+    if (!byYear[y]) byYear[y] = [];
+    byYear[y].push(d.rhe);
+  });
+  const yearStats = {};
+  Object.entries(byYear).forEach(([y,vals]) => {
+    const avg   = vals.reduce((s,v)=>s+v,0)/vals.length;
+    const above = vals.filter(v=>v>HIST).length;
+    yearStats[y] = { avg, above, total:vals.length, pct:above/vals.length*100 };
+  });
+
+  const curYear  = LATEST.fecha.substring(0,4);
+  const prevYear = String(+curYear - 1);
+
+  // ── Integración numérica 2023+ ──
+  const DATA23 = DATA.filter(d => d.fecha >= START23);
+  const n23 = DATA23.length;
+  let prodArea=0, frigArea=0, cumBal=0;
+  let prodMaxVal=0, prodMaxFecha='', frigMaxVal=0, frigMaxFecha='';
+  const cumData = [];
+
+  DATA23.forEach((d,i) => {
+    const dv     = d.rhe - HIST;
+    const dvNext = i < n23-1 ? DATA23[i+1].rhe - HIST : dv;
+    const trap   = (dv + dvNext) / 2;
+    if (dv > 0) {
+      prodArea += Math.abs(trap);
+      if (dv > prodMaxVal) { prodMaxVal = dv; prodMaxFecha = d.fecha; }
+    } else {
+      frigArea += Math.abs(trap);
+      if (Math.abs(dv) > frigMaxVal) { frigMaxVal = Math.abs(dv); frigMaxFecha = d.fecha; }
+    }
+    cumBal += dv;
+    cumData.push({ ...d, dv, cumBal });
+  });
+
+  const totalArea = prodArea + frigArea;
+  const netBal    = prodArea - frigArea;
+  const prodPct   = prodArea / totalArea * 100;
+  const frigPct   = frigArea / totalArea * 100;
+  const prodWeeks = DATA23.filter(d=>d.rhe>HIST).length;
+  const frigWeeks = DATA23.filter(d=>d.rhe<=HIST).length;
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // HERO
+  // ══════════════════════════════════════════════════════════════════════════
+  const topFechaEl = document.getElementById('top-fecha');
+  if (topFechaEl) topFechaEl.textContent = 'INAC · ' + mesAnio(LATEST.fecha);
+
+  // Gauge fill
+  const fillPct = Math.min(Math.abs(dev) / MAX_DEV * 100, 100);
+  setTimeout(() => {
+    if (isAbove) document.getElementById('fill-right').style.width = fillPct + '%';
+    else         document.getElementById('fill-left').style.width  = fillPct + '%';
+  }, 200);
+
+  const gvEl = document.getElementById('gauge-val');
+  gvEl.textContent = fmt(rhe,4);
+  gvEl.className   = 'split-gauge-val ' + (isAbove ? 'mint' : 'red');
+  const gdEl = document.getElementById('gauge-delta');
+  gdEl.textContent = sign(dev) + fmt(dev,4) + ' vs prom. hist.';
+  gdEl.className   = 'split-gauge-delta ' + (isAbove ? 'pos' : 'neg');
+  const badge = document.createElement('div');
+  badge.className  = 'zona-badge ' + (isAbove ? 'producer' : 'frigorifico');
+  badge.innerHTML  = `<span class="zona-badge-dot"></span>${isAbove ? 'Zona productora' : 'Zona frigorífico'}`;
+  document.getElementById('zona-badge-wrap').appendChild(badge);
+
+  const rheKpi = document.getElementById('kpi-rhe');
+  rheKpi.textContent = fmt(rhe,4);
+  rheKpi.style.color = isAbove ? 'var(--mint)' : 'var(--red)';
+  document.getElementById('kpi-rhe-dev').textContent = sign(dev) + fmt(Math.abs(dev/HIST)*100,1) + '% vs prom. hist.';
+  document.getElementById('kpi-semana').textContent  = fechaCorta(LATEST.fecha);
+  const avgCurYear = yearStats[curYear]?.avg ?? null;
+  if (avgCurYear) {
+    const aKpi = document.getElementById('kpi-anio-avg');
+    aKpi.textContent = fmt(avgCurYear,4);
+    aKpi.style.color = avgCurYear >= HIST ? 'var(--mint)' : 'var(--red)';
+    document.getElementById('kpi-anio-note').textContent = curYear + ' · ' + yearStats[curYear].total + ' sem.';
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CHART COMPLETO 2005-2026
+  // ══════════════════════════════════════════════════════════════════════════
+  buildDevBars(DATA, 'bars-full', 'zone-full', 110, 0.20, true);
+
+  // Context box
+  const ctxEl = document.getElementById('ctx-full');
+  const max5  = DATA.reduce((a,b)=>b.rhe>a.rhe?b:a);
+  const min5  = DATA.reduce((a,b)=>b.rhe<a.rhe?b:a);
+  if (!isAbove) {
+    ctxEl.innerHTML = `<div class="alert-box">Semana ${fechaCorta(LATEST.fecha)}: RHE <strong>${fmt(rhe,4)}</strong>, <strong>${fmt(Math.abs(dev),4)} pts bajo el promedio histórico</strong> — zona frigorífico. Caída desde el máximo histórico de <strong>${fmt(max5.rhe,4)}</strong> el ${fechaCorta(max5.fecha)}.</div>`;
+  } else {
+    ctxEl.innerHTML = `<div class="highlight">Semana ${fechaCorta(LATEST.fecha)}: RHE <strong>${fmt(rhe,4)}</strong>, <strong>${sign(dev)}${fmt(dev,4)} sobre el promedio histórico</strong>. Máximo de la serie: <strong>${fmt(max5.rhe,4)}</strong> el ${fechaCorta(max5.fecha)}.</div>`;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // ÁREAS 2023+
+  // ══════════════════════════════════════════════════════════════════════════
+  // Balance bar
+  setTimeout(() => {
+    document.getElementById('bal-prod').style.width = prodPct + '%';
+    document.getElementById('bal-prod').textContent = pct(prodPct);
+    document.getElementById('bal-frig').style.width = frigPct + '%';
+    document.getElementById('bal-frig').textContent = pct(frigPct);
+  }, 250);
+
+  // KPIs área
+  document.getElementById('a-prod').textContent = fmt(prodArea,3);
+  document.getElementById('a-frig').textContent = fmt(frigArea,3);
+  const aNetEl = document.getElementById('a-net');
+  aNetEl.textContent = sign(netBal) + fmt(Math.abs(netBal),3);
+  aNetEl.style.color = netBal >= 0 ? 'var(--mint)' : 'var(--red)';
+  document.getElementById('a-net-note').textContent = netBal >= 0 ? 'A favor del productor' : 'A favor del frigorífico';
+  const aPctEl = document.getElementById('a-pct');
+  aPctEl.textContent = pct(prodPct);
+  aPctEl.style.color = prodPct > 50 ? 'var(--mint)' : 'var(--red)';
+  document.getElementById('a-pct-note').textContent = pct(frigPct) + ' frigorífico';
+
+  // Gráfico desviación 2023+
+  buildDevBars(DATA23, 'bars-dev', 'zone-dev', 130, 0.20, true, true);
+
+  // Cards detalle
+  document.getElementById('ic-prod-val').textContent     = fmt(prodArea,4) + ' índ·sem';
+  document.getElementById('ic-prod-weeks').textContent   = prodWeeks + ' de ' + n23;
+  document.getElementById('ic-prod-max').textContent     = fechaCorta(prodMaxFecha);
+  document.getElementById('ic-prod-max-val').textContent = '+' + fmt(prodMaxVal,4);
+  document.getElementById('ic-prod-avg').textContent     = '+' + fmt(prodArea/prodWeeks,4);
+  document.getElementById('ic-frig-val').textContent     = fmt(frigArea,4) + ' índ·sem';
+  document.getElementById('ic-frig-weeks').textContent   = frigWeeks + ' de ' + n23;
+  document.getElementById('ic-frig-max').textContent     = fechaCorta(frigMaxFecha);
+  document.getElementById('ic-frig-max-val').textContent = '-' + fmt(frigMaxVal,4);
+  document.getElementById('ic-frig-avg').textContent     = '-' + fmt(frigArea/frigWeeks,4);
+
+  // Year breakdown 2023+
+  buildYearBreakdown(DATA23);
+
+  // Info áreas
+  const winArea  = netBal > 0 ? prodArea : frigArea;
+  const loseArea = netBal > 0 ? frigArea : prodArea;
+  const winner   = netBal > 0 ? 'productor' : 'frigorífico';
+  const advantage = ((winArea/loseArea - 1)*100).toFixed(1);
+  const maxRHE23 = DATA23.reduce((a,b)=>b.rhe>a.rhe?b:a);
+  const minRHE23 = DATA23.reduce((a,b)=>b.rhe<a.rhe?b:a);
+  document.getElementById('info-areas').innerHTML = `
+    <strong>Lectura 2023–2026 (${n23} semanas):</strong>
+    El <strong>${winner}</strong> acumuló un área <strong>${advantage}% mayor</strong>
+    (${fmt(winArea,3)} vs ${fmt(loseArea,3)} índ·sem).
+    Pico máximo de excedente productor: <strong>+${fmt(maxRHE23.rhe-HIST,4)}</strong>
+    el <strong>${fechaCorta(maxRHE23.fecha)}</strong> (RHE ${fmt(maxRHE23.rhe,4)}).
+    Mayor presión sobre el productor: <strong>${fmt(minRHE23.rhe-HIST,4)}</strong>
+    el <strong>${fechaCorta(minRHE23.fecha)}</strong> (RHE ${fmt(minRHE23.rhe,4)}).
+    Última semana disponible (${fechaCorta(LATEST.fecha)}): RHE ${fmt(rhe,4)},
+    <strong>${isAbove ? 'zona productora' : 'zona frigorífico'}</strong>.`;
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // BALANCE ACUMULADO
+  // ══════════════════════════════════════════════════════════════════════════
+  buildCumChart(cumData);
+
+  const cumFinal  = cumData[cumData.length-1].cumBal;
+  const cumPeak   = cumData.reduce((a,b)=>b.cumBal>a.cumBal?b:a);
+  const cumTrough = cumData.reduce((a,b)=>b.cumBal<a.cumBal?b:a);
+  const crossovers = [];
+  for (let i=1;i<cumData.length;i++) {
+    if ((cumData[i-1].cumBal<0&&cumData[i].cumBal>=0)||(cumData[i-1].cumBal>=0&&cumData[i].cumBal<0))
+      crossovers.push(cumData[i].fecha);
+  }
+  document.getElementById('info-balance').innerHTML = `
+    <strong>Balance acumulado al ${fechaCorta(cumData[cumData.length-1].fecha)}:</strong>
+    <span style="color:${cumFinal>=0?'var(--mint)':'var(--red)'}">${sign(cumFinal)}${fmt(cumFinal,4)} índ·sem</span>
+    — el <strong>${cumFinal>=0?'productor':'frigorífico'}</strong> lleva ventaja neta desde ene-2023.
+    Pico de ventaja productora: <strong>+${fmt(cumPeak.cumBal,4)}</strong> el ${fechaCorta(cumPeak.fecha)}.
+    Mayor ventaja frigorífico: <strong>${fmt(cumTrough.cumBal,4)}</strong> el ${fechaCorta(cumTrough.fecha)}.
+    ${crossovers.length ? `Reversiones del balance: <strong>${crossovers.map(f=>fechaCorta(f)).join(', ')}</strong>.` : 'Sin reversión del balance dominante en el período.'}`;
+
+  // ══ ANÁLISIS HISTÓRICO COMPLETO 2005–2026 ══════════════════════════════
+  (function buildHistorico() {
+    let hProd=0, hFrig=0, hCumBal=0;
+    let hProdMaxV=0, hProdMaxF='', hFrigMaxV=0, hFrigMaxF='';
+    const hCumData = [];
+
+    DATA.forEach((d,i) => {
+      const dv   = d.rhe - HIST;
+      const dvN  = i < n-1 ? DATA[i+1].rhe - HIST : dv;
+      const trap = (dv + dvN) / 2;
+      if (dv > 0) { hProd += Math.abs(trap); if (dv > hProdMaxV) { hProdMaxV=dv; hProdMaxF=d.fecha; } }
+      else        { hFrig += Math.abs(trap); if (Math.abs(dv) > hFrigMaxV) { hFrigMaxV=Math.abs(dv); hFrigMaxF=d.fecha; } }
+      hCumBal += dv;
+      hCumData.push({ ...d, dv, cumBal: hCumBal });
+    });
+
+    const hTotal = hProd + hFrig;
+    const hNet   = hProd - hFrig;
+    const hPPct  = hProd / hTotal * 100;
+    const hFPct  = hFrig / hTotal * 100;
+    const hProdWeeks = DATA.filter(d=>d.rhe>HIST).length;
+    const hFrigWeeks = DATA.filter(d=>d.rhe<=HIST).length;
+
+    // Mejor y peor año por área
+    const hByYear = {};
+    DATA.forEach(d => { const y=d.fecha.substring(0,4); if(!hByYear[y])hByYear[y]={prod:0,frig:0}; });
+    DATA.forEach((d,i) => {
+      const y=d.fecha.substring(0,4);
+      const dv=d.rhe-HIST, dvN=i<n-1?DATA[i+1].rhe-HIST:dv, trap=(dv+dvN)/2;
+      if(dv>0) hByYear[y].prod+=Math.abs(trap);
+      else     hByYear[y].frig+=Math.abs(trap);
+    });
+    const bestProdYr  = Object.entries(hByYear).sort((a,b)=>b[1].prod-a[1].prod)[0][0];
+    const worstFrigYr = Object.entries(hByYear).sort((a,b)=>b[1].frig-a[1].frig)[0][0];
+
+    // KPIs
+    document.getElementById('h-prod').textContent = fmt(hProd,3);
+    document.getElementById('h-frig').textContent = fmt(hFrig,3);
+    const hNetEl = document.getElementById('h-net');
+    hNetEl.textContent = sign(hNet) + fmt(Math.abs(hNet),3);
+    hNetEl.style.color = hNet>=0?'var(--mint)':'var(--red)';
+    document.getElementById('h-net-note').textContent = hNet>=0?'A favor del productor':'A favor del frigorífico';
+    const hPctEl = document.getElementById('h-pct');
+    hPctEl.textContent = pct(hPPct);
+    hPctEl.style.color = hPPct>50?'var(--mint)':'var(--red)';
+    document.getElementById('h-pct-note').textContent = pct(hFPct) + ' frigorífico';
+
+    setTimeout(() => {
+      document.getElementById('h-bal-prod').style.width = hPPct+'%';
+      document.getElementById('h-bal-prod').textContent = pct(hPPct);
+      document.getElementById('h-bal-frig').style.width = hFPct+'%';
+      document.getElementById('h-bal-frig').textContent = pct(hFPct);
+    }, 400);
+
+    // Cards
+    document.getElementById('h-ic-prod').textContent       = fmt(hProd,4)+' índ·sem';
+    document.getElementById('h-prod-weeks').textContent    = hProdWeeks+' de '+n;
+    document.getElementById('h-prod-best-yr').textContent  = bestProdYr+' — '+fmt(hByYear[bestProdYr].prod,3)+' índ·sem';
+    document.getElementById('h-prod-max-val').textContent  = '+'+fmt(hProdMaxV,4);
+    document.getElementById('h-prod-max-fecha').textContent = fechaCorta(hProdMaxF);
+    document.getElementById('h-prod-avg').textContent      = '+'+fmt(hProd/hProdWeeks,4);
+    document.getElementById('h-ic-frig').textContent       = fmt(hFrig,4)+' índ·sem';
+    document.getElementById('h-frig-weeks').textContent    = hFrigWeeks+' de '+n;
+    document.getElementById('h-frig-worst-yr').textContent = worstFrigYr+' — '+fmt(hByYear[worstFrigYr].frig,3)+' índ·sem';
+    document.getElementById('h-frig-max-val').textContent  = '-'+fmt(hFrigMaxV,4);
+    document.getElementById('h-frig-max-fecha').textContent = fechaCorta(hFrigMaxF);
+    document.getElementById('h-frig-avg').textContent      = '-'+fmt(hFrig/hFrigWeeks,4);
+
+    // Desvío semanal histórico (sin acumular)
+    buildDevBars(DATA, 'h-bars-wk', 'h-zone-wk', 120, 0.20, true, false);
+    // Eje Y del desvío semanal
+    (function() {
+      const HALF_WK = 120, WK_MAXDEV = 0.20, WK_H = 240;
+      const yAxis = document.getElementById('h-wk-yaxis');
+      const yLines = document.getElementById('h-wk-ylines');
+      for (let v = -0.20; v <= 0.201; v += 0.05) {
+        const vr = Math.round(v*100)/100;
+        const yPos = HALF_WK - (vr / WK_MAXDEV) * HALF_WK;
+        if (yPos < 2 || yPos > WK_H - 2) continue;
+        const isZero = Math.abs(vr) < 0.001;
+        const line = document.createElement('div');
+        line.style.cssText = `position:absolute;left:0;right:0;top:${yPos}px;height:1px;background:${isZero?'rgba(0,232,122,0.28)':vr>0?'rgba(0,232,122,0.07)':'rgba(255,77,77,0.07)'};z-index:1;`;
+        yLines.appendChild(line);
+        const lbl = document.createElement('div');
+        lbl.style.cssText = `position:absolute;right:4px;top:${yPos}px;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:${isZero?'rgba(0,232,122,0.6)':vr>0?'rgba(0,232,122,0.35)':'rgba(255,77,77,0.35)'};font-weight:${isZero?700:400};white-space:nowrap;`;
+        lbl.textContent = (vr>0?'+':'') + vr.toFixed(2);
+        yAxis.appendChild(lbl);
+      }
+    })();
+
+    // Balance acumulado histórico
+    buildCumChart(hCumData, 'h-bars-cum', 'h-zone-cum', 140);
+
+    // ── Eje Y con líneas de referencia ──
+    // Calcular escala real
+    const hScale = Math.max(...hCumData.map(d=>Math.abs(d.cumBal)));
+    const HALF_H = 140;
+    const CHART_H = 280;
+
+    // Valores de referencia (cada 2 unidades aprox)
+    const refStep = hScale > 8 ? 2 : 1;
+    const refs = [];
+    for (let v = -Math.ceil(hScale); v <= Math.ceil(hScale); v += refStep) refs.push(v);
+
+    const yLines = document.getElementById('h-ylines');
+    const yAxis  = document.getElementById('h-yaxis');
+    refs.forEach(v => {
+      // posición: v=0 está en 50% del chart (HALF_H px desde arriba)
+      const yPos = HALF_H - (v / hScale) * HALF_H; // px desde top del bars-zone
+      if (yPos < 2 || yPos > CHART_H - 2) return;
+
+      // línea horizontal
+      const line = document.createElement('div');
+      line.style.cssText = `position:absolute;left:0;right:0;top:${yPos}px;height:1px;
+        background:${v===0?'rgba(0,232,122,0.28)':v>0?'rgba(0,232,122,0.08)':'rgba(255,77,77,0.08)'};z-index:1;`;
+      yLines.appendChild(line);
+
+      // etiqueta en eje Y
+      const lbl = document.createElement('div');
+      lbl.style.cssText = `position:absolute;right:4px;top:${yPos}px;transform:translateY(-50%);
+        font-family:'JetBrains Mono',monospace;font-size:0.64rem;
+        color:${v===0?'rgba(0,232,122,0.6)':v>0?'rgba(0,232,122,0.35)':'rgba(255,77,77,0.35)'};
+        font-weight:${v===0?700:400};white-space:nowrap;`;
+      lbl.textContent = (v > 0 ? '+' : '') + v;
+      document.getElementById('h-yaxis').appendChild(lbl);
+    });
+
+    // Year breakdown (todos)
+    const hGrid = document.getElementById('h-year-breakdown');
+    Object.entries(hByYear).sort().forEach(([yr,s]) => {
+      const yNet=s.prod-s.frig, yT=s.prod+s.frig;
+      const yPPct=yT?s.prod/yT*100:0;
+      const bc=yNet>0.05?'var(--mint)':yNet<-0.05?'var(--red)':'var(--gold)';
+      const lbl=yNet>0.05?'Prod.':yNet<-0.05?'Frig.':'—';
+      const isCur=yr===curYear;
+      const card=document.createElement('div');
+      card.style.cssText=`background:var(--card);padding:0.9rem 0.85rem;transition:background 0.2s;${isCur?'border-left:2px solid var(--mint);background:var(--card2);':''}`;
+      card.innerHTML=`
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.4rem;">${yr}${isCur?' ★':''}</div>
+        <div style="font-size:1.05rem;font-weight:800;color:${bc};line-height:1;margin-bottom:0.2rem;">${sign(yNet)}${fmt(Math.abs(yNet),3)}</div>
+        <div style="font-size:0.68rem;color:${bc};margin-bottom:0.5rem;">${lbl}</div>
+        <div style="height:4px;border-radius:2px;background:rgba(255,255,255,0.06);overflow:hidden;margin-bottom:2px;">
+          <div style="height:100%;width:${yPPct.toFixed(0)}%;background:var(--mint);border-radius:2px;"></div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--muted2);">${yPPct.toFixed(0)}% prod.</div>`;
+      hGrid.appendChild(card);
+    });
+
+    // Info box
+    const hCumFinal  = hCumData[hCumData.length-1].cumBal;
+    const hCumPeak   = hCumData.reduce((a,b)=>b.cumBal>a.cumBal?b:a);
+    const hCumTrough = hCumData.reduce((a,b)=>b.cumBal<a.cumBal?b:a);
+    const hCross = [];
+    for(let i=1;i<hCumData.length;i++)
+      if((hCumData[i-1].cumBal<0&&hCumData[i].cumBal>=0)||(hCumData[i-1].cumBal>=0&&hCumData[i].cumBal<0))
+        hCross.push(hCumData[i].fecha);
+    const hWinner = hNet>=0?'productor':'frigorífico';
+    const hAdv    = Math.abs(hNet / Math.min(hProd,hFrig) * 100).toFixed(2);
+    document.getElementById('h-info-box').innerHTML =
+      `<strong>Hallazgo histórico 2005–2026 (${n} semanas):</strong>
+      En 21 años, el <strong>${hWinner}</strong> acumuló apenas un
+      <strong style="color:${hNet>=0?'var(--mint)':'var(--red)'}">${hAdv}% más</strong> de área
+      (${fmt(hProd,3)} vs ${fmt(hFrig,3)} índ·sem — balance neto ${sign(hNet)}${fmt(hNet,3)}).
+      El promedio histórico 0.9357 es un <strong>verdadero punto de equilibrio estructural</strong>:
+      a largo plazo el diferencial se distribuye casi simétricamente.
+      Máx. ventaja productora acumulada: <strong>+${fmt(hCumPeak.cumBal,3)}</strong> el ${fechaCorta(hCumPeak.fecha)}.
+      Máx. ventaja frigorífico acumulada: <strong>${fmt(hCumTrough.cumBal,3)}</strong> el ${fechaCorta(hCumTrough.fecha)}.
+      El balance acumulado <strong>revirtió ${hCross.length} veces</strong> en 21 años.`;
+  })();
+
+  // ══ ANÁLISIS PONDERADO POR FAENA 2005–2026 ═════════════════════════════
+  (function buildPonderado() {
+    // Solo semanas con faena disponible
+    const rows = DATA.map(d => ({ ...d, faena: FAENA[d.fecha]?.novillos ?? null }))
+                     .filter(d => d.faena != null);
+    if (!rows.length) return;
+    const m = rows.length;
+
+    // Promedio móvil de 3 semanas de la faena — mismo criterio que el RHE
+    rows.forEach((d,i) => {
+      const win = rows.slice(Math.max(0, i-2), i+1);
+      d.faenaMA3 = win.reduce((s,x) => s + x.faena, 0) / win.length;
+    });
+
+    let wProd=0, wFrig=0;            // áreas ponderadas (índice·cabeza)
+    let faenaProd=0, faenaFrig=0;    // faena total por zona
+    let sumDevW=0, sumFaena=0;       // para desvío promedio ponderado
+    let sumDevS=0;                   // para desvío promedio simple
+    let wCumBal=0;
+    let pMaxV=0, pMaxF='', fMaxV=0, fMaxF='';
+    const wCum = [];
+
+    rows.forEach(d => {
+      const dv = d.rhe - HIST;
+      const impact = dv * d.faenaMA3;   // índice·cabeza (con signo), faena suavizada 3 sem
+      if (dv > 0) {
+        wProd += impact; faenaProd += d.faena;
+        if (impact > pMaxV) { pMaxV = impact; pMaxF = d.fecha; }
+      } else {
+        wFrig += Math.abs(impact); faenaFrig += d.faena;
+        if (Math.abs(impact) > fMaxV) { fMaxV = Math.abs(impact); fMaxF = d.fecha; }
+      }
+      sumDevW += impact; sumFaena += d.faenaMA3;
+      sumDevS += dv;
+      wCumBal += impact;
+      wCum.push({ fecha:d.fecha, rhe:d.rhe, dv, faena:d.faena, cumBal:wCumBal });
+    });
+
+    const wTotal = wProd + wFrig;
+    const wNet   = wProd - wFrig;
+    const wPPct  = wProd / wTotal * 100;
+    const wFPct  = wFrig / wTotal * 100;
+    const devPond   = sumDevW / sumFaena;   // desvío promedio ponderado por faena
+    const devSimple = sumDevS / m;          // desvío promedio simple
+
+    const MM = v => (v/1e6).toFixed(2);     // a millones de índice·cabeza
+    const fmtHead = v => v.toLocaleString('es-UY');
+
+    setTimeout(() => {
+      document.getElementById('fw-bal-prod').style.width = wPPct+'%';
+      document.getElementById('fw-bal-prod').textContent = pct(wPPct);
+      document.getElementById('fw-bal-frig').style.width = wFPct+'%';
+      document.getElementById('fw-bal-frig').textContent = pct(wFPct);
+    }, 450);
+
+    // Cards
+    document.getElementById('fw-prod').textContent          = MM(wProd) + 'M índ·cab';
+    document.getElementById('fw-prod-faena').textContent    = fmtHead(faenaProd) + ' cab.';
+    document.getElementById('fw-prod-max-fecha').textContent = fechaCorta(pMaxF);
+    document.getElementById('fw-prod-max-val').textContent  = '+' + (pMaxV/1e3).toFixed(1) + 'k';
+    document.getElementById('fw-frig').textContent          = MM(wFrig) + 'M índ·cab';
+    document.getElementById('fw-frig-faena').textContent    = fmtHead(faenaFrig) + ' cab.';
+    document.getElementById('fw-frig-max-fecha').textContent = fechaCorta(fMaxF);
+    document.getElementById('fw-frig-max-val').textContent  = '-' + (fMaxV/1e3).toFixed(1) + 'k';
+
+    // ── Gráfico de faena semanal (barras desde abajo) ──
+    buildFaenaChart(rows);
+
+    // ── Balance acumulado ponderado ──
+    buildWeightedCum(wCum);
+
+    // ── Info box ──
+    const winner = wNet>=0 ? 'productor' : 'frigorífico';
+    const adv    = Math.abs(wNet / Math.min(wProd,wFrig) * 100).toFixed(2);
+    const wCumFinal = wCum[wCum.length-1].cumBal;
+    const cambioSigno = (devPond>=0) !== (devSimple>=0);
+    let comparativa;
+    if (cambioSigno) {
+      comparativa = `Al ponderar por faena el balance <strong>cambia de signo</strong> respecto al análisis simple — los desvíos grandes coincidieron con semanas de faena ${devPond>=0?'alta en zona productora':'alta en zona frigorífico'}.`;
+    } else if (Math.abs(devPond) > Math.abs(devSimple)) {
+      comparativa = `El desvío ponderado (${sign(devPond)}${fmt(devPond,4)}) es <strong>más extremo</strong> que el simple (${sign(devSimple)}${fmt(devSimple,4)}): los desvíos coincidieron con semanas de <strong>mayor faena</strong>, amplificando el impacto a favor del ${winner}.`;
+    } else {
+      comparativa = `El desvío ponderado (${sign(devPond)}${fmt(devPond,4)}) es <strong>más moderado</strong> que el simple (${sign(devSimple)}${fmt(devSimple,4)}): los desvíos grandes tendieron a darse en semanas de <strong>menor faena</strong>, atenuando su impacto real.`;
+    }
+    document.getElementById('fw-info-box').innerHTML =
+      `<strong>Hallazgo ponderado por faena (${m} semanas, ${fmtHead(sumFaena)} novillos):</strong>
+      El <strong>${winner}</strong> acumuló un área ponderada <strong style="color:${wNet>=0?'var(--mint)':'var(--red)'}">${adv}% mayor</strong>
+      (${MM(wProd)}M vs ${MM(wFrig)}M índice·cabeza · ${pct(wPPct)} prod. / ${pct(wFPct)} frig.).
+      ${comparativa}
+      Balance acumulado ponderado al ${fechaCorta(LATEST.fecha)}:
+      <strong style="color:${wCumFinal>=0?'var(--mint)':'var(--red)'}">${wCumFinal>=0?'+':'−'}${MM(Math.abs(wCumFinal))}M índ·cab</strong>.`;
+  })();
+
+  // ── HELPER: gráfico faena semanal ──
+  function buildFaenaChart(rows) {
+    const container = document.getElementById('f-bars');
+    const zone      = document.getElementById('f-zone');
+    const n2        = rows.length;
+    const H         = zone.offsetHeight || 300;
+    const maxF      = Math.max(...rows.map(d=>d.faenaMA3));
+    const avgF      = rows.reduce((s,d)=>s+d.faenaMA3,0)/n2;
+
+    const years = {};
+    rows.forEach((d,i)=>{ const y=d.fecha.substring(0,4); if(!years[y])years[y]=i; });
+
+    rows.forEach((d,i)=>{
+      const barH   = Math.max(d.faenaMA3/maxF*H, 1);
+      const isLast = i===n2-1;
+      // color según zona RHE de esa semana
+      const isAb   = d.rhe >= HIST;
+      const color  = isAb ? 'rgba(0,232,122,0.55)' : 'rgba(255,77,77,0.55)';
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+      col.style.justifyContent = 'flex-end';
+      const bar = document.createElement('div');
+      bar.style.cssText = `width:100%;height:${barH}px;background:${color};border-radius:1px 1px 0 0;${isLast?'box-shadow:0 0 8px var(--gold);background:var(--gold);':''}`;
+      const tt = document.createElement('div');
+      tt.className = 'bar-tooltip';
+      tt.style.bottom = (barH + 6) + 'px';
+      tt.innerHTML = `<div class="tt-date">${fechaCorta(d.fecha)}</div>
+        <div class="tt-val">${Math.round(d.faenaMA3).toLocaleString('es-UY')} novillos <span style="color:var(--muted2);font-weight:400">(prom. 3 sem)</span></div>
+        <div class="tt-area">semana real: ${d.faena.toLocaleString('es-UY')} cab.</div>
+        <div class="tt-dev ${isAb?'pos':'neg'}">RHE ${fmt(d.rhe,4)} · ${isAb?'zona prod.':'zona frig.'}</div>`;
+      col.appendChild(bar); col.appendChild(tt);
+      container.appendChild(col);
+    });
+
+    // línea promedio
+    const avgLine = document.createElement('div');
+    const avgY = H - (avgF/maxF*H);
+    avgLine.style.cssText = `position:absolute;left:0;right:0;top:${avgY}px;height:1px;border-top:1px dashed rgba(107,125,112,0.6);z-index:4;`;
+    zone.appendChild(avgLine);
+    const avgLbl = document.createElement('div');
+    avgLbl.style.cssText = `position:absolute;right:0;top:${avgY-14}px;font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--muted);z-index:4;`;
+    avgLbl.textContent = 'prom. ' + Math.round(avgF/1000) + 'k';
+    zone.appendChild(avgLbl);
+
+    // eje Y faena
+    const yAxis = document.getElementById('f-yaxis');
+    const yLines = document.getElementById('f-ylines');
+    for (let v=10000; v<=maxF; v+=10000) {
+      const yPos = H - (v/maxF*H);
+      const line = document.createElement('div');
+      line.style.cssText = `position:absolute;left:0;right:0;top:${yPos}px;height:1px;background:rgba(255,255,255,0.04);z-index:1;`;
+      yLines.appendChild(line);
+      const lbl = document.createElement('div');
+      lbl.style.cssText = `position:absolute;right:4px;top:${yPos}px;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:var(--muted2);white-space:nowrap;`;
+      lbl.textContent = (v/1000) + 'k';
+      yAxis.appendChild(lbl);
+    }
+
+    // year dividers
+    Object.entries(years).forEach(([yr,idx])=>{
+      if(idx===0)return;
+      const p=(idx/n2*100*0.974).toFixed(2);
+      const div=document.createElement('div'); div.className='year-divider'; div.style.left=p+'%';
+      const lbl=document.createElement('div'); lbl.className='year-label-chart'; lbl.style.left=p+'%'; lbl.textContent=yr;
+      div.appendChild(lbl); zone.appendChild(div);
+    });
+  }
+
+  // ── HELPER: balance acumulado ponderado ──
+  function buildWeightedCum(wCum) {
+    const container = document.getElementById('fw-bars-cum');
+    const zone      = document.getElementById('fw-zone-cum');
+    const n2        = wCum.length;
+    const HALF      = 140;
+    const SCALE     = Math.max(...wCum.map(d=>Math.abs(d.cumBal)));
+
+    const years = {};
+    wCum.forEach((d,i)=>{ const y=d.fecha.substring(0,4); if(!years[y])years[y]=i; });
+
+    wCum.forEach((d,i)=>{
+      const isAb   = d.cumBal>=0;
+      const barH   = Math.min(Math.abs(d.cumBal)/SCALE*HALF, HALF-1);
+      const isLast = i===n2-1;
+      const color  = isAb?'#00e87a':'#ff4d4d';
+      const opacity = 0.45+Math.abs(d.cumBal)/SCALE*0.55;
+      const col=document.createElement('div'); col.className='bar-col';
+      const s1=document.createElement('div'); s1.style.cssText=`width:100%;height:${isAb?HALF-barH:HALF}px;`;
+      const bar=document.createElement('div'); bar.style.cssText=`width:100%;height:${barH}px;background:${color};opacity:${opacity.toFixed(2)};border-radius:${isAb?'2px 2px 0 0':'0 0 2px 2px'};${isLast?`box-shadow:0 0 8px ${color};`:''}`;
+      const s2=document.createElement('div'); s2.style.cssText=`width:100%;height:${isAb?HALF:HALF-barH}px;`;
+      const tt=document.createElement('div'); tt.className='bar-tooltip'+(isAb?'':' below');
+      tt.innerHTML=`<div class="tt-date">${fechaCorta(d.fecha)}</div><div class="tt-val">RHE ${fmt(d.rhe,4)}</div><div class="tt-dev ${isAb?'pos':'neg'}">Σ pond.: ${sign(d.cumBal)}${(d.cumBal/1e6).toFixed(2)}M</div>`;
+      col.appendChild(s1); col.appendChild(bar); col.appendChild(s2); col.appendChild(tt);
+      container.appendChild(col);
+    });
+
+    // eje Y — step adaptativo (~5 divisiones a cada lado)
+    const yAxis=document.getElementById('fw-yaxis');
+    const yLines=document.getElementById('fw-ylines');
+    const CHART_H=280;
+    const scaleM = SCALE/1e6;
+    // "nice step" para tener ~4-5 marcas
+    const rawStep = scaleM / 4;
+    const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    const norm = rawStep / mag;
+    const niceStep = (norm < 1.5 ? 1 : norm < 3 ? 2 : norm < 7 ? 5 : 10) * mag;
+    const decimals = niceStep < 1 ? (niceStep < 0.1 ? 2 : 1) : 0;
+    for (let v=-Math.ceil(scaleM/niceStep)*niceStep; v<=scaleM; v+=niceStep) {
+      const yPos = HALF - (v/scaleM)*HALF;
+      if (yPos<2||yPos>CHART_H-2) continue;
+      const isZero = Math.abs(v) < niceStep/2;
+      const line=document.createElement('div');
+      line.style.cssText=`position:absolute;left:0;right:0;top:${yPos}px;height:1px;background:${isZero?'rgba(0,232,122,0.28)':v>0?'rgba(0,232,122,0.08)':'rgba(255,77,77,0.08)'};z-index:1;`;
+      yLines.appendChild(line);
+      const lbl=document.createElement('div');
+      lbl.style.cssText=`position:absolute;right:4px;top:${yPos}px;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:${isZero?'rgba(0,232,122,0.6)':v>0?'rgba(0,232,122,0.35)':'rgba(255,77,77,0.35)'};font-weight:${isZero?700:400};white-space:nowrap;`;
+      lbl.textContent=(v>0?'+':'')+v.toFixed(decimals)+'M';
+      yAxis.appendChild(lbl);
+    }
+
+    // year dividers
+    Object.entries(years).forEach(([yr,idx])=>{
+      if(idx===0)return;
+      const p=(idx/n2*100*0.974).toFixed(2);
+      const div=document.createElement('div'); div.className='year-divider'; div.style.left=p+'%';
+      const lbl=document.createElement('div'); lbl.className='year-label-chart'; lbl.style.left=p+'%'; lbl.textContent=yr;
+      div.appendChild(lbl); zone.appendChild(div);
+    });
+
+    // crossovers
+    for(let i=1;i<n2;i++){
+      if((wCum[i-1].cumBal<0&&wCum[i].cumBal>=0)||(wCum[i-1].cumBal>=0&&wCum[i].cumBal<0)){
+        const p=(i/n2*100*0.974).toFixed(2);
+        const mk=document.createElement('div'); mk.className='crossover-mark'; mk.style.left=p+'%';
+        const ml=document.createElement('div'); ml.className='crossover-label'; ml.style.left=p+'%'; ml.textContent=fechaCorta(wCum[i].fecha);
+        mk.appendChild(ml); zone.appendChild(mk);
+      }
+    }
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // YEAR GRID (todos los años)
+  // ══════════════════════════════════════════════════════════════════════════
+  const grid = document.getElementById('year-grid');
+  Object.keys(yearStats).sort().forEach(yr => {
+    const s = yearStats[yr];
+    const isAb = s.avg >= HIST;
+    const isCur = yr === curYear;
+    const card = document.createElement('div');
+    card.className = 'year-card' + (isCur ? ' current' : '');
+    card.innerHTML = `
+      <div class="year-num">${yr}${isCur?' ★':''}</div>
+      <div class="year-avg ${isAb?'above':'below'}">${fmt(s.avg,3)}</div>
+      <div class="year-bar-track"><div class="year-bar-fill" style="width:${s.pct.toFixed(0)}%;background:${isAb?'var(--mint)':'var(--red)'}"></div></div>
+      <div class="year-pct">${s.pct.toFixed(0)}% prod.</div>`;
+    grid.appendChild(card);
+  });
+
+  // Footer
+  document.getElementById('footer-txt').textContent = 'Actualizado ' + LATEST.fecha + ' · ' + n + ' semanas · INAC';
+}
+
+// ── HELPER: BARRAS DE DESVIACIÓN ───────────────────────────────────────────
+function buildDevBars(DATA, barsId, zoneId, HALF, maxDev, showYears, showArea) {
+  const container = document.getElementById(barsId);
+  const zone      = document.getElementById(zoneId);
+  const n         = DATA.length;
+
+  const years = {};
+  DATA.forEach((d,i) => { const y=d.fecha.substring(0,4); if(!years[y])years[y]=i; });
+
+  DATA.forEach((d,i) => {
+    const dv     = d.rhe - HIST;
+    const isAb   = dv >= 0;
+    const barH   = Math.min(Math.abs(dv)/maxDev*HALF, HALF-1);
+    const isLast = i === n-1;
+    const color  = isAb ? '#00e87a' : '#ff4d4d';
+
+    const dvNext = i < n-1 ? DATA[i+1].rhe - HIST : dv;
+    const areaCont = Math.abs((dv + dvNext) / 2);
+
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const s1 = document.createElement('div');
+    s1.style.cssText = `width:100%;height:${isAb?HALF-barH:HALF}px;`;
+    const bar = document.createElement('div');
+    bar.style.cssText = `width:100%;height:${barH}px;background:${color};border-radius:${isAb?'2px 2px 0 0':'0 0 2px 2px'};${isLast?`box-shadow:0 0 8px ${color};`:''}`;
+    const s2 = document.createElement('div');
+    s2.style.cssText = `width:100%;height:${isAb?HALF:HALF-barH}px;`;
+    const tt = document.createElement('div');
+    tt.className = 'bar-tooltip' + (isAb?'':' below');
+    tt.innerHTML = `<div class="tt-date">${fechaCorta(d.fecha)}</div>
+      <div class="tt-val">RHE ${fmt(d.rhe,4)}</div>
+      <div class="tt-dev ${isAb?'pos':'neg'}">${sign(dv)}${fmt(dv,4)} vs prom.</div>
+      ${showArea ? `<div class="tt-area">Área: ${fmt(areaCont,4)} índ·sem</div>` : ''}`;
+    col.appendChild(s1); col.appendChild(bar); col.appendChild(s2); col.appendChild(tt);
+    container.appendChild(col);
+  });
+
+  if (showYears && zone) {
+    Object.entries(years).forEach(([yr,idx]) => {
+      if (idx === 0) return;
+      const p = (idx/n*100*0.974).toFixed(2);
+      const div = document.createElement('div');
+      div.className = 'year-divider';
+      div.style.left = p + '%';
+      const lbl = document.createElement('div');
+      lbl.className = 'year-label-chart';
+      lbl.style.left = p + '%';
+      lbl.textContent = yr;
+      div.appendChild(lbl);
+      zone.appendChild(div);
+    });
+  }
+}
+
+// ── HELPER: CHART ACUMULADO ────────────────────────────────────────────────
+function buildCumChart(cumData, barsId='bars-cum', zoneId='zone-cum', HALF_OVERRIDE=null) {
+  const container = document.getElementById(barsId);
+  const zone      = document.getElementById(zoneId);
+  const n         = cumData.length;
+  const HALF      = HALF_OVERRIDE ?? 100;
+  const SCALE     = Math.max(...cumData.map(d=>Math.abs(d.cumBal)));
+
+  const years = {};
+  cumData.forEach((d,i) => { const y=d.fecha.substring(0,4); if(!years[y])years[y]=i; });
+
+  cumData.forEach((d,i) => {
+    const isAb   = d.cumBal >= 0;
+    const rawH   = Math.abs(d.cumBal)/SCALE*HALF;
+    const barH   = Math.min(Math.max(rawH, 2), HALF-1);
+    const isLast = i === n-1;
+    const color  = isAb ? '#00e87a' : '#ff4d4d';
+    const opacity = Math.max(0.45 + Math.abs(d.cumBal)/SCALE*0.55, 0.55);
+
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const s1 = document.createElement('div'); s1.style.cssText=`width:100%;height:${isAb?HALF-barH:HALF}px;`;
+    const bar = document.createElement('div');
+    bar.style.cssText = `width:100%;height:${barH}px;background:${color};opacity:${opacity.toFixed(2)};border-radius:${isAb?'2px 2px 0 0':'0 0 2px 2px'};${isLast?`box-shadow:0 0 8px ${color};`:''}`;
+    const s2 = document.createElement('div'); s2.style.cssText=`width:100%;height:${isAb?HALF:HALF-barH}px;`;
+    const tt = document.createElement('div');
+    tt.className = 'bar-tooltip' + (isAb?'':' below');
+    tt.innerHTML = `<div class="tt-date">${fechaCorta(d.fecha)}</div>
+      <div class="tt-val">RHE ${fmt(d.rhe,4)}</div>
+      <div class="tt-dev ${isAb?'pos':'neg'}">Σ acum.: ${sign(d.cumBal)}${fmt(d.cumBal,4)}</div>`;
+    col.appendChild(s1); col.appendChild(bar); col.appendChild(s2); col.appendChild(tt);
+    container.appendChild(col);
+  });
+
+  // Year dividers
+  Object.entries(years).forEach(([yr,idx]) => {
+    if (idx===0) return;
+    const p = (idx/n*100*0.974).toFixed(2);
+    const div = document.createElement('div'); div.className='year-divider'; div.style.left=p+'%';
+    const lbl = document.createElement('div'); lbl.className='year-label-chart'; lbl.style.left=p+'%'; lbl.textContent=yr;
+    div.appendChild(lbl); zone.appendChild(div);
+  });
+
+  // Crossovers
+  for (let i=1;i<n;i++) {
+    if ((cumData[i-1].cumBal<0&&cumData[i].cumBal>=0)||(cumData[i-1].cumBal>=0&&cumData[i].cumBal<0)) {
+      const p = (i/n*100*0.974).toFixed(2);
+      const mk = document.createElement('div'); mk.className='crossover-mark'; mk.style.left=p+'%';
+      const ml = document.createElement('div'); ml.className='crossover-label'; ml.style.left=p+'%'; ml.textContent=fechaCorta(cumData[i].fecha);
+      mk.appendChild(ml); zone.appendChild(mk);
+    }
+  }
+}
+
+// ── HELPER: YEAR BREAKDOWN 2023+ ───────────────────────────────────────────
+function buildYearBreakdown(DATA23) {
+  const years = {};
+  DATA23.forEach(d => { const y=d.fecha.substring(0,4); if(!years[y])years[y]=[]; years[y].push(d); });
+  const grid = document.getElementById('year-breakdown');
+  grid.innerHTML = '';
+  Object.entries(years).forEach(([yr,rows]) => {
+    let yProd=0,yFrig=0,yProdW=0,yFrigW=0;
+    rows.forEach((d,i) => {
+      const dv=d.rhe-HIST, dvN=i<rows.length-1?rows[i+1].rhe-HIST:dv;
+      const trap=(dv+dvN)/2;
+      if(dv>0){yProd+=Math.abs(trap);yProdW++;}else{yFrig+=Math.abs(trap);yFrigW++;}
+    });
+    const yNet=yProd-yFrig, yTot=yProd+yFrig;
+    const yPPct=yTot>0?yProd/yTot*100:0, yFPct=yTot>0?yFrig/yTot*100:0;
+    const bc = yNet>0.05?'pos':yNet<-0.05?'neg':'neutral';
+    const bcolor = yNet>0.05?'var(--mint)':yNet<-0.05?'var(--red)':'var(--gold)';
+    const label  = yNet>0.05?'Productor':yNet<-0.05?'Frigorífico':'Neutro';
+    const card = document.createElement('div'); card.className='yb-card';
+    card.innerHTML=`
+      <div class="yb-year">${yr} · ${rows.length} sem.</div>
+      <div class="yb-balance ${bc}">${sign(yNet)}${fmt(Math.abs(yNet),3)}</div>
+      <div class="yb-sublabel" style="color:${bcolor}">${label}</div>
+      <div class="yb-bars">
+        <div class="yb-bar-row">
+          <span class="yb-bar-label" style="color:var(--mint)">PROD</span>
+          <div class="yb-bar-track"><div class="yb-bar-fill" style="width:${yPPct.toFixed(0)}%;background:var(--mint)"></div></div>
+          <span class="yb-bar-num" style="color:var(--mint)">${pct(yPPct)}</span>
+        </div>
+        <div class="yb-bar-row">
+          <span class="yb-bar-label" style="color:var(--red)">FRIG</span>
+          <div class="yb-bar-track"><div class="yb-bar-fill" style="width:${yFPct.toFixed(0)}%;background:var(--red)"></div></div>
+          <span class="yb-bar-num" style="color:var(--red)">${pct(yFPct)}</span>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>
