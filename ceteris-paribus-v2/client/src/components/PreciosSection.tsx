@@ -11,8 +11,6 @@ const TABS = [
   { id: "dolar", label: "USD/UYU", symbol: "FX_IDC:USDUYU", title: "Dólar / Peso Uruguayo" },
   { id: "usd-ars", label: "USD/ARS", symbol: "FX_IDC:USDARS", title: "Dólar / Peso Argentino" },
   { id: "usd-brl", label: "USD/BRL", symbol: "FX_IDC:USDBRL", title: "Dólar / Real Brasileño" },
-  { id: "vix", label: "VIX", symbol: "TVC:VIX", title: "VIX — Índice de Volatilidad (CBOE)" },
-  { id: "move", label: "MOVE (FRED)", symbol: "TVC:MOVE", title: "MOVE Index — Volatilidad de Bonos (ICE BofA / FRED)" },
 ];
 
 export default function PreciosSection() {
