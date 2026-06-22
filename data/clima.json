@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-06-21",
+  "actualizado": "2026-06-22",
   "alerta": {
     "activa": true,
     "tipo": "Frío extremo",
     "nivel": "Naranja",
-    "titulo": "Masa de ar polar más fuerte del año en el inicio del invierno",
-    "descripcion": "Intensa masa de aire frío llegará en los próximos días trayendo frío extremo en el comienzo del invierno. Rio Grande do Sul completa cinco días seguidos bajo cero. Heladas agrometeorológicas previstas para el domingo. Prepárese para temperaturas de hasta -8°C.",
-    "vigencia": "18-22 jun 2026",
+    "titulo": "Ciclone bomba na Argentina impulsiona onda polar para o Brasil",
+    "descripcion": "Ciclón bomba en Argentina impulsa onda polar hacia Brasil y Uruguay. Frente fría avanza con lluvias y riesgo de tormentas. Onda de frío agravará enfermedades respiratorias. Se esperan temperaturas de hasta -8°C. Mucha nieve en Argentina con aire gelado en camino.",
+    "vigencia": "22-25 jun 2026",
     "fuente": "MetSul/INUMET"
   },
   "enso": {
@@ -19,7 +19,7 @@
     "fuente": "IRI/Columbia",
     "fuente_fecha": "19 may 2026",
     "proximo_update": "~19 jul 2026",
-    "nota_extra": "NOAA anuncia oficialmente el comienzo del El Niño 2026-2027 (11 jun). Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño va a ganar mucha fuerza en el invierno. Masa de aire polar más fuerte del año traerá frío extremo en el comienzo del invierno. El Niño Costero alcanza intensidad muy fuerte en Perú y Ecuador. OMJ va a intensificar el El Niño y aumentar la lluvia en Brasil. Super El Niño puede elevar riesgo de hambre en varias regiones del planeta. Super El Niño se aproxima con rápido calentamiento del Pacífico. Inverno bajo El Niño tendrá alto riesgo de inundaciones en el Sur de Brasil."
+    "nota_extra": "NOAA anuncia oficialmente el comienzo del El Niño 2026-2027 (11 jun). Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño va a ganar mucha fuerza en el invierno. Ciclón bomba en Argentina impulsa onda polar hacia la región. El Niño Costero alcanza intensidad muy fuerte en Perú y Ecuador. OMJ va a intensificar el El Niño y aumentar la lluvia en Brasil. Super El Niño puede elevar riesgo de hambre en varias regiones del planeta. Super El Niño se aproxima con rápido calentamiento del Pacífico. Inverno bajo El Niño tendrá alto riesgo de inundaciones en el Sur de Brasil."
   },
   "probabilidades": [
     {
