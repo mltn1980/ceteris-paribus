@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import FeaturedReports from "@/components/FeaturedReports";
 import PreciosSection from "@/components/PreciosSection";
+import VolatilidadSection from "@/components/VolatilidadSection";
 import ClimaSection from "@/components/ClimaSection";
 import DataSection from "@/components/DataSection";
 import PremiumSection from "@/components/PremiumSection";
@@ -107,21 +108,8 @@ export default function Home() {
 
         {/* Page 2: Volatilidad */}
         <BookPage id="volatilidad" className="bg-[oklch(0.97_0.005_210)]">
-          <div className="flex-1 flex flex-col justify-center pl-0 lg:pl-16 px-4 lg:px-8">
-            <div className="container">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-[oklch(0.55_0.15_30/0.12)] flex items-center justify-center border border-[oklch(0.55_0.15_30/0.25)]">
-                  <LineChart className="w-6 h-6 text-[oklch(0.50_0.15_30)]" />
-                </div>
-                <div>
-                  <h2 className="text-2xl lg:text-3xl font-black text-[oklch(0.12_0.03_250)]">
-                    Volatilidad
-                  </h2>
-                  <p className="text-base text-[oklch(0.38_0.03_250)]">VIX · MOVE Index · Índices de riesgo</p>
-                </div>
-              </div>
-              <p className="text-[oklch(0.50_0.03_250)] text-sm">Próximamente.</p>
-            </div>
+          <div className="flex-1 flex flex-col justify-start pl-0 lg:pl-16 pt-20">
+            <VolatilidadSection />
           </div>
         </BookPage>
 
