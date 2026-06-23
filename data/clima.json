@@ -1,66 +1,66 @@
 {
-  "actualizado": "2026-06-22",
+  "actualizado": "2026-06-23",
   "alerta": {
     "activa": true,
     "tipo": "Frío extremo",
     "nivel": "Naranja",
-    "titulo": "Ciclone bomba na Argentina impulsiona onda polar para o Brasil",
-    "descripcion": "Ciclón bomba en Argentina impulsa onda polar hacia Brasil y Uruguay. Frente fría avanza con lluvias y riesgo de tormentas. Onda de frío agravará enfermedades respiratorias. Se esperan temperaturas de hasta -8°C. Mucha nieve en Argentina con aire gelado en camino.",
-    "vigencia": "22-25 jun 2026",
+    "titulo": "Onda polar: pior do frio será nas próximas três madrugadas",
+    "descripcion": "La onda polar está recién comenzando. Las próximas tres madrugadas (miércoles, jueves y viernes) tendrán el frío más intenso a extremo. Se esperan temperaturas de hasta -8°C. Masa de ar polar toma conta do Sul do Brasil. Bajas sensaciones térmicas con vientos SW y W de 20-30 km/h, rachas de hasta 50 km/h.",
+    "vigencia": "23-26 jun 2026",
     "fuente": "MetSul/INUMET"
   },
   "enso": {
     "fase": "El Niño",
-    "nino34": 0.9,
-    "nino34_anterior": 0.5,
-    "nino34_semana": "13 may 2026",
+    "nino34": 1.7,
+    "nino34_anterior": 0.9,
+    "nino34_semana": "17 jun 2026",
     "perspectiva_label": "El Niño",
-    "perspectiva_pct": "97–98%",
+    "perspectiva_pct": "100%",
     "fuente": "IRI/Columbia",
-    "fuente_fecha": "19 may 2026",
-    "proximo_update": "~19 jul 2026",
-    "nota_extra": "NOAA anuncia oficialmente el comienzo del El Niño 2026-2027 (11 jun). Probabilidad 98% para May-Jun-Jul. Anomalía Niño 3.4 semanal +0.9°C (13 may). Subsuperficie con anomalías de hasta +6°C — más del doble que en mayo 2023. El Niño persistirá todo 2026 con probabilidades 97-98%. SOI en -11.1 confirma acoplamiento océano-atmósfera. El Niño va a ganar mucha fuerza en el invierno. Ciclón bomba en Argentina impulsa onda polar hacia la región. El Niño Costero alcanza intensidad muy fuerte en Perú y Ecuador. OMJ va a intensificar el El Niño y aumentar la lluvia en Brasil. Super El Niño puede elevar riesgo de hambre en varias regiones del planeta. Super El Niño se aproxima con rápido calentamiento del Pacífico. Inverno bajo El Niño tendrá alto riesgo de inundaciones en el Sur de Brasil."
+    "fuente_fecha": "22 jun 2026",
+    "proximo_update": "~22 jul 2026",
+    "nota_extra": "El Niño se intensifica rápidamente hacia evento moderado-fuerte. Anomalía Niño 3.4 semanal +1.7°C (17 jun), subió desde +0.9°C. Subsuperficie con anomalías de hasta +6°C — casi el doble que en junio 2023. IRI asigna 100% probabilidad El Niño para JJA-SON, 99% para OND-DJF. 13 de 24 modelos proyectan El Niño muy fuerte (≥+2.0°C) para SON 2026. SOI en -14.5 (mayo) y -21.9 (30 días a jun 20) confirma fuerte acoplamiento océano-atmósfera. Contenido calórico oceánico casi el doble que en mismo período de 2023. El Niño persistirá hasta inicios de 2027. Inverno bajo El Niño tendrá alto riesgo de inundaciones en el Sur de Brasil. Onda polar intensa afecta la región a pesar del El Niño."
   },
   "probabilidades": [
     {
-      "label": "May-Jun-Jul 2026",
-      "actual": true,
-      "el_nino": 98,
-      "neutral": 2,
-      "la_nina": 0,
-      "descripcion": "El Niño establecido"
-    },
-    {
       "label": "Jun-Jul-Ago 2026",
-      "actual": false,
-      "el_nino": 97,
-      "neutral": 3,
+      "actual": true,
+      "el_nino": 100,
+      "neutral": 0,
       "la_nina": 0,
-      "descripcion": "Continúa con alta confianza"
+      "descripcion": "El Niño establecido, intensificándose"
     },
     {
       "label": "Jul-Ago-Set 2026",
       "actual": false,
-      "el_nino": 97,
-      "neutral": 3,
-      "la_nina": 0,
-      "descripcion": "Persistente"
-    },
-    {
-      "label": "Ago-Set-Oct 2026",
-      "actual": false,
-      "el_nino": 98,
-      "neutral": 2,
+      "el_nino": 100,
+      "neutral": 0,
       "la_nina": 0,
       "descripcion": "Máxima certeza"
     },
     {
+      "label": "Ago-Set-Oct 2026",
+      "actual": false,
+      "el_nino": 100,
+      "neutral": 0,
+      "la_nina": 0,
+      "descripcion": "Pico de intensidad esperado"
+    },
+    {
       "label": "Oct-Nov-Dic 2026",
       "actual": false,
-      "el_nino": 97,
-      "neutral": 3,
+      "el_nino": 99,
+      "neutral": 1,
       "la_nina": 0,
-      "descripcion": "Continúa fuerte"
+      "descripcion": "Continúa muy fuerte"
+    },
+    {
+      "label": "Dic-Ene-Feb 2026/27",
+      "actual": false,
+      "el_nino": 99,
+      "neutral": 1,
+      "la_nina": 0,
+      "descripcion": "Persistente hacia 2027"
     }
   ],
   "inumet": {
