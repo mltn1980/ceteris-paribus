@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-06-23",
+  "actualizado": "2026-06-24",
   "alerta": {
     "activa": true,
     "tipo": "Frío extremo",
     "nivel": "Naranja",
-    "titulo": "Onda polar: pior do frio será nas próximas três madrugadas",
-    "descripcion": "La onda polar está recién comenzando. Las próximas tres madrugadas (miércoles, jueves y viernes) tendrán el frío más intenso a extremo. Se esperan temperaturas de hasta -8°C. Masa de ar polar toma conta do Sul do Brasil. Bajas sensaciones térmicas con vientos SW y W de 20-30 km/h, rachas de hasta 50 km/h.",
-    "vigencia": "23-26 jun 2026",
+    "titulo": "Onda polar: frio extremo de -9°C en Santa Catarina, hasta -8°C esperados",
+    "descripcion": "Onda polar con frío extremo afecta la región. Santa Catarina registró -9°C formando hielo sobre animales. Casi 70 ciudades gaúchas bajo cero. Las próximas madrugadas (jueves y viernes) mantendrán temperaturas muy bajas. Uruguay: mínimas de 1-4°C, probables heladas agrometeorológicas el viernes. Vientos W al SW 20-40 km/h, rachas hasta 50 km/h.",
+    "vigencia": "24-26 jun 2026",
     "fuente": "MetSul/INUMET"
   },
   "enso": {
