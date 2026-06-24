@@ -185,48 +185,41 @@ tbody td.label{color:#8ba0bc;font-size:.78rem}
 <!-- ── TAB 3: FOCO AGROPECUARIO ── -->
 <div class="panel" id="tab-agro">
   <div style="margin-top:12px">
-    <div class="section-title">Impuestos al sector agropecuario en 2024 <span class="section-sub">· Fuente: OPYPA/MGAP · Datos estimados</span></div>
+    <div class="section-title">Impuestos específicamente agropecuarios · DGI <span class="section-sub">· Pesos constantes oct-2022 · Miles de millones · Serie 1996–2025</span></div>
 
     <div class="agro-grid">
       <div class="card">
-        <div class="card-title">Total impuestos al agro</div>
-        <div class="card-val">USD 327 M</div>
-        <div class="card-desc">Neto de devolución de impuestos indirectos</div>
+        <div class="card-title">Total agro DGI · 2025</div>
+        <div class="card-val" id="agro-kpi-total">—</div>
+        <div class="card-desc" id="agro-kpi-var">Var. interanual en términos reales</div>
       </div>
       <div class="card">
-        <div class="card-title">Presión fiscal agropecuaria</div>
-        <div class="card-val">6,5%</div>
-        <div class="card-desc">Impuestos / PIB sectorial · baja desde 6,9% en 2023</div>
+        <div class="card-title">IMEBA (base + adicionales) · 2025</div>
+        <div class="card-val" id="agro-kpi-imeba">—</div>
+        <div class="card-desc">Principal impuesto de origen agropecuario</div>
       </div>
     </div>
 
-    <!-- Composición 2024 en USD -->
-    <div class="section-title">Composición de la carga fiscal al agro en 2024 <span class="section-sub">· Miles de USD</span></div>
-    <div class="agro-comp" id="agro-comp-2024"></div>
-
-    <!-- Serie 2018-2024 pesos const -->
-    <div class="section-title" style="margin-top:28px">Evolución de la recaudación al agro 2018–2024 <span class="section-sub">· Miles de millones de pesos constantes de 2024</span></div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#f5c842"></div>Impuestos sobre la tierra (BPS+CIR+Primaria+Patrimonio)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>Impuestos a la renta (IRAE+IMEBA)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#22d3ee"></div>Indirectos + detracciones neto devolución</div>
+    <!-- Barras apiladas 1996-2025 -->
+    <div class="legend" style="margin-bottom:14px">
+      <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>IMEBA base</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#22d3ee"></div>IMEBA adicional INIA</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6ee7b7"></div>IMEBA adicional MEVIR</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f5c842"></div>Patrimonio Agropecuario</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>IRA / IMAGRO (pre-2006)</div>
     </div>
-    <div class="bar-chart" id="bar-agro-serie" style="gap:8px"></div>
+    <div class="bar-chart" id="bar-agro-serie" style="gap:5px"></div>
 
-    <!-- Presión fiscal por año -->
-    <div class="section-title" style="margin-top:32px">Presión fiscal agropecuaria 2018–2024 <span class="section-sub">· Impuestos / PIB sectorial</span></div>
-    <div class="presion-row" id="presion-row"></div>
+    <!-- Variación interanual -->
+    <div class="section-title" style="margin-top:32px">Variación interanual real <span class="section-sub">· Total impuestos agropecuarios DGI</span></div>
+    <div class="bar-chart" id="bar-agro-var" style="gap:5px"></div>
 
-    <div style="margin-top:28px">
-      <div class="section-title">Detalle recaudación estimada 2024</div>
-      <table>
-        <thead><tr><th>Concepto</th><th style="text-align:right">Miles USD</th><th style="text-align:right">% total</th></tr></thead>
-        <tbody id="tabla-agro"></tbody>
-      </table>
-    </div>
+    <!-- Composición último año -->
+    <div class="section-title" style="margin-top:32px">Participación por impuesto · 2025</div>
+    <div class="bar-chart" id="bar-agro-pct"></div>
 
-    <div class="chart-note" style="text-align:left;margin-top:20px">
-      Fuente: OPYPA (Anuario 2024) con base en DGI, BPS y estimaciones propias. Los datos de 2024 son estimados. IRAE: devengado neto de pago a cuenta de IMEBA. IMEBA: incluye el imputado al pago del IRAE. IVA: estimación del IVA costos de productores bajo régimen IMEBA. No incluye: IRPF sobre arrendamientos, impuestos específicos a instituciones sectoriales (INIA, INAC, SUL), ni impuesto municipal (devuelto como crédito desde 2012).
+    <div class="chart-note" style="text-align:left;margin-top:24px">
+      Impuestos 100% de origen agropecuario registrados en DGI. <b>IMEBA</b>: Impuesto a la Enajenación de Bienes Agropecuarios; las variaciones reflejan volumen y precios de producción primaria. <b>INIA/MEVIR</b>: adicionales del IMEBA con destino específico. <b>Patrimonio Agropecuario</b>: serie separada en DGI a partir de 1996. <b>IRA/IMAGRO</b>: vigentes hasta la Reforma Tributaria de 2006, reemplazados por IRAE. <b>No incluidos</b> (no separables en DGI a nivel sectorial): IRAE agropecuario, IRPF sobre arrendamientos, contribución inmobiliaria rural (recaudada por intendencias), aportes BPS patronales, IVA costos de productores IMEBA, Impuesto de Educación Primaria (incluye sectores urbanos), tasa de registro y detracciones.
     </div>
   </div>
 </div>
@@ -260,31 +253,16 @@ const D = {
 
 const KPI = {fecha:'03/2026',real_giga:52.1,var_ia:5.1,acum_12m:617};
 
-// ── AGRO DATA (OPYPA 2024) ──
+// ── AGRO DATA (DGI series reales) ──
 const AGRO = {
-  comp2024:[
-    {label:'BPS (aportes patronales)',val:37818,cat:'tierra'},
-    {label:'Contribución inmobiliaria',val:114556,cat:'tierra'},
-    {label:'Impuesto de Primaria',val:21022,cat:'tierra'},
-    {label:'Patrimonio',val:46671,cat:'tierra'},
-    {label:'IRAE (devengado neto)',val:58251,cat:'renta'},
-    {label:'IMEBA (total)',val:64786,cat:'renta'},
-    {label:'IVA (costos productores IMEBA)',val:24909,cat:'indirecto'},
-    {label:'MEVIR (adicional IMEBA)',val:9127,cat:'indirecto'},
-    {label:'Tasa de registro (cajas negras)',val:2383,cat:'indirecto'},
-    {label:'Detracciones exportaciones',val:1082,cat:'indirecto'},
-    {label:'Devolución impuestos indirectos',val:-53477,cat:'devol'}
-  ],
-  serie:{
-    labels:[2018,2019,2020,2021,2022,2023,2024],
-    tierra:[8391,8062,8309,8531,8544,8591,8792],
-    renta:[4437,4600,5490,7063,8450,4622,4915],
-    neto:[-260,-384,-308,-300,-218,300,-362]
-  },
-  presion:[
-    {anno:2018,pct:6.8},{anno:2019,pct:5.9},{anno:2020,pct:6.0},
-    {anno:2021,pct:6.6},{anno:2022,pct:7.1},{anno:2023,pct:6.9},{anno:2024,pct:6.5}
-  ]
+  years:[1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],
+  imeba:[1.678,2.386,2.365,1.47,1.376,1.179,1.436,2.18,3.695,3.508,3.57,3.548,2.754,2.198,2.411,2.855,2.714,2.515,2.734,2.623,2.45,2.376,2.57,2.645,2.589,3.4,3.473,2.483,2.51,3.168],
+  mevir:[0.194,0.194,0.02,0.129,0.142,0.121,0.144,0.214,0.319,0.297,0.291,0.306,0.365,0.34,0.351,0.364,0.422,0.404,0.405,0.362,0.329,0.323,0.308,0.359,0.364,0.477,0.532,0.34,0.36,0.439],
+  inia:[0.436,0.452,0.428,0.307,0.325,0.296,0.355,0.503,0.746,0.692,0.686,0.763,0.913,0.846,0.859,0.972,1.066,1.035,1.024,0.989,0.852,0.937,0.882,0.96,0.969,1.208,1.347,0.957,1.003,1.174],
+  pat:[0.771,1.267,1.256,0.871,0.955,0.262,0.013,0.007,0.006,0.004,0.003,0.001,0.166,0.387,0.506,0.752,0.794,1.325,1.788,1.584,1.389,1.172,1.039,0.992,1.134,1.082,1.155,0.998,0.959,0.972],
+  ira:[0.224,0.029,0.015,0.008,0.034,0.011,0.011,0.048,0.098,0.114,0.115,0.215,0.028,0.027,0.005,0.003,0.006,0.002,0.001,0.0,0.002,0.0,null,null,null,null,null,null,null,null],
+  total:[3.303,4.328,4.084,2.785,2.832,1.869,1.959,2.952,4.864,4.615,4.665,4.833,4.226,3.798,4.132,4.946,5.002,5.281,5.952,5.558,5.022,4.808,4.799,4.956,5.056,6.167,6.507,4.778,4.832,5.753],
+  varia:[null,31.0,-5.6,-31.8,1.7,-34.0,4.8,50.7,64.8,-5.1,1.1,3.6,-12.6,-10.1,8.8,19.7,1.1,5.6,12.7,-6.6,-9.6,-4.3,-0.2,3.3,2.0,22.0,5.5,-26.6,1.1,19.1]
 };
 
 // ── UTILIDADES ──
@@ -471,84 +449,75 @@ function buildComposicion(){
 
 // ── AGRO ──
 function buildAgro(){
-  // Composición 2024
-  const catColor = {tierra:'#f5c842',renta:'#34d399',indirecto:'#22d3ee',devol:'#f87171'};
-  const catLabel = {tierra:'Tierra',renta:'Renta',indirecto:'Indirecto',devol:'Devolución'};
-  const total = AGRO.comp2024.reduce((s,r)=>s+r.val,0);
-  const mxAbs = Math.max(...AGRO.comp2024.map(r=>Math.abs(r.val)));
-  document.getElementById('agro-comp-2024').innerHTML = AGRO.comp2024.map(r=>{
-    const pct = (Math.abs(r.val)/mxAbs*100).toFixed(1);
-    const col = catColor[r.cat];
-    const neg = r.val<0;
-    return `<div class="agro-comp-row">
-      <div class="agro-comp-label">${r.label}</div>
-      <div class="bar-track" style="height:18px">
-        <div class="bar-fill" style="width:${pct}%;background:${col};opacity:${neg?.55:.85}"></div>
-      </div>
-      <div class="agro-comp-val" style="color:${col}">${neg?'-':''}${fmtM(Math.abs(r.val))}</div>
-    </div>`;
-  }).join('');
+  const {years,imeba,mevir,inia,pat,ira,total,varia} = AGRO;
+  const n = years.length;
 
-  // Serie 2018-2024
-  const {labels,tierra,renta,neto} = AGRO.serie;
-  const maxS = Math.max(...tierra.map((t,i)=>t+renta[i]));
-  document.getElementById('bar-agro-serie').innerHTML = labels.map((yr,i)=>{
-    const tot = tierra[i]+renta[i];
-    const netoPct = Math.abs(neto[i])/maxS*100;
+  // KPIs último año (2025)
+  const last = n-1;
+  const totLast = total[last];
+  const varLast = varia[last];
+  const imebaTotLast = (imeba[last]||0)+(mevir[last]||0)+(inia[last]||0);
+  document.getElementById('agro-kpi-total').textContent = '$'+fmt(totLast,2)+'B';
+  const varEl2 = document.getElementById('agro-kpi-var');
+  varEl2.textContent = (varLast>0?'+':'')+fmt(varLast,1)+'% vs '+years[last-1]+' · pesos const. oct-2022';
+  varEl2.style.color = varLast>=0?'#34d399':'#f87171';
+  document.getElementById('agro-kpi-imeba').textContent = '$'+fmt(imebaTotLast,2)+'B';
+
+  // Stacked bars por año
+  const mxT = Math.max(...total.filter(v=>v));
+  document.getElementById('bar-agro-serie').innerHTML = years.map((yr,i)=>{
+    const tot = total[i]||0;
+    const im = imeba[i]||0, me = mevir[i]||0, in_ = inia[i]||0, pt = pat[i]||0, ir = ira[i]||0;
+    const isSequia = yr===2023;
+    const isRecord = yr===2022;
     return `<div class="stacked-row">
-      <div class="bar-year">${yr}</div>
-      <div class="stacked-track" style="height:26px;position:relative">
-        <div class="seg" style="width:${(tierra[i]/maxS*100).toFixed(1)}%;background:#f5c842;opacity:.85"></div>
-        <div class="seg" style="width:${(renta[i]/maxS*100).toFixed(1)}%;background:#34d399;opacity:.85"></div>
-        <div class="seg" style="width:${netoPct.toFixed(1)}%;background:${neto[i]<0?'rgba(248,113,113,.4)':'rgba(34,211,238,.5)'}"></div>
+      <div class="bar-year" style="${isRecord?'color:#34d399':isSequia?'color:#f87171':''}">${yr}</div>
+      <div class="stacked-track" style="height:22px">
+        <div class="seg" style="width:${(im/mxT*100).toFixed(2)}%;background:#34d399;opacity:.9"></div>
+        <div class="seg" style="width:${(in_/mxT*100).toFixed(2)}%;background:#22d3ee;opacity:.85"></div>
+        <div class="seg" style="width:${(me/mxT*100).toFixed(2)}%;background:#6ee7b7;opacity:.85"></div>
+        <div class="seg" style="width:${(pt/mxT*100).toFixed(2)}%;background:#f5c842;opacity:.85"></div>
+        ${ir?`<div class="seg" style="width:${(ir/mxT*100).toFixed(2)}%;background:#64748b;opacity:.7"></div>`:''}
       </div>
-      <div class="bar-val">$${fmt((tot+neto[i])/1000,1)}B</div>
+      <div class="bar-val" style="${isRecord?'color:#34d399':isSequia?'color:#f87171':''}">$${fmt(tot,2)}B</div>
     </div>`;
   }).join('');
 
-  // Presión fiscal
-  const maxPF = Math.max(...AGRO.presion.map(r=>r.pct));
-  document.getElementById('presion-row').innerHTML = AGRO.presion.map(r=>`
-    <div class="presion-col">
-      <div class="presion-anno">${r.anno}</div>
-      <div class="presion-val">${fmt(r.pct,1)}%</div>
-      <div style="margin-top:6px;height:3px;background:rgba(130,170,225,.15);border-radius:2px;overflow:hidden">
-        <div style="width:${(r.pct/maxPF*100).toFixed(0)}%;height:100%;background:#22d3ee;border-radius:2px"></div>
+  // Variación interanual (desde 1997)
+  const varData = years.slice(1).map((yr,i)=>({yr, v:varia[i+1]}));
+  const mxV = Math.max(...varData.map(d=>Math.abs(d.v||0)));
+  document.getElementById('bar-agro-var').innerHTML = varData.map(({yr,v})=>{
+    if(v===null||v===undefined) return '';
+    const pos = v>=0;
+    const pct = (Math.abs(v)/mxV*100).toFixed(1);
+    return `<div class="bar-row">
+      <div class="bar-year" style="color:${pos?'#34d399':'#f87171'}">${yr}</div>
+      <div class="bar-track" style="background:rgba(130,170,225,.07)">
+        <div class="bar-fill" style="width:${pct}%;background:${pos?'#34d399':'#f87171'};opacity:.8"></div>
       </div>
+      <div class="bar-val" style="color:${pos?'#34d399':'#f87171'}">${pos?'+':''}${fmt(v,1)}%</div>
+    </div>`;
+  }).join('');
+
+  // Participación % en 2025
+  const i25 = years.indexOf(2025);
+  const tot25 = total[i25];
+  const comp25 = [
+    {label:'IMEBA base', val:imeba[i25], col:'#34d399'},
+    {label:'IMEBA adicional INIA', val:inia[i25], col:'#22d3ee'},
+    {label:'IMEBA adicional MEVIR', val:mevir[i25], col:'#6ee7b7'},
+    {label:'Patrimonio Agropecuario', val:pat[i25], col:'#f5c842'},
+  ];
+  const mxComp = Math.max(...comp25.map(c=>c.val));
+  document.getElementById('bar-agro-pct').innerHTML = comp25.map(c=>`
+    <div class="bar-row">
+      <div class="bar-year" style="color:${c.col};font-weight:600;font-size:.76rem">${c.label}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${(c.val/mxComp*100).toFixed(1)}%;background:${c.col}"></div>
+      </div>
+      <div class="bar-val" style="color:${c.col}">${fmt(c.val/tot25*100,1)}%</div>
     </div>
   `).join('');
-
-  // Tabla detalle
-  const totalAgro = AGRO.comp2024.reduce((s,r)=>s+(r.val>0?r.val:0),0);
-  const totalNeto = AGRO.comp2024.reduce((s,r)=>s+r.val,0);
-  const grupos = [
-    {titulo:'Impuestos sobre la tierra',items:['BPS (aportes patronales)','Contribución inmobiliaria','Impuesto de Primaria','Patrimonio']},
-    {titulo:'Impuestos a la renta',items:['IRAE (devengado neto)','IMEBA (total)']},
-    {titulo:'Impuestos indirectos',items:['IVA (costos productores IMEBA)','MEVIR (adicional IMEBA)','Tasa de registro (cajas negras)','Detracciones exportaciones']},
-    {titulo:'Devoluciones',items:['Devolución impuestos indirectos']}
-  ];
-  let html='';
-  grupos.forEach(g=>{
-    html+=`<tr><td colspan="3" class="label" style="padding-top:12px;color:#6b83a0;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase">${g.titulo}</td></tr>`;
-    g.items.forEach(label=>{
-      const r=AGRO.comp2024.find(x=>x.label===label);
-      if(!r)return;
-      const pct=((r.val/totalNeto)*100).toFixed(1);
-      html+=`<tr>
-        <td style="padding-left:16px">${r.label}</td>
-        <td style="text-align:right" class="${r.val<0?'neg':''}">${r.val<0?'-':''}${fmtM(Math.abs(r.val))}</td>
-        <td style="text-align:right" class="${r.val<0?'neg':''}">${r.val<0?'-':''}${Math.abs(parseFloat(pct)).toFixed(1)}%</td>
-      </tr>`;
-    });
-    const subtot=g.items.reduce((s,label)=>{const r=AGRO.comp2024.find(x=>x.label===label);return s+(r?r.val:0);},0);
-    html+=`<tr style="border-top:1px solid rgba(130,170,225,.15)"><td style="padding-left:16px;font-weight:600;color:#c8d9ed">Subtotal</td><td style="text-align:right;font-weight:600;color:#c8d9ed" class="${subtot<0?'neg':''}">${subtot<0?'-':''}${fmtM(Math.abs(subtot))}</td><td></td></tr>`;
-  });
-  html+=`<tr style="border-top:2px solid rgba(130,170,225,.25)">
-    <td style="font-weight:700;color:#f5c842">Total neto</td>
-    <td style="text-align:right;font-weight:700;color:#f5c842">${fmtM(totalNeto)}</td>
-    <td style="text-align:right;color:#f5c842">100%</td>
-  </tr>`;
-  document.getElementById('tabla-agro').innerHTML = html;
 }
 
 // ── TABS ──
