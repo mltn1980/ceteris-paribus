@@ -14,6 +14,15 @@ interface Article {
 
 const ARTICLES: Article[] = [
   {
+    title: "Combustibles, dólar y gasto público: críticas a la política económica actual",
+    source: "Radio Rural · Tiempo de Cambio",
+    date: "Junio 2026",
+    excerpt:
+      "Milton Ramallo cuestiona la política económica actual: falta de transparencia en precios de combustibles, medidas que desalientan el uso del dólar y crecimiento sostenido del gasto público. Advierte que el Estado sigue recurriendo a mayores cargas sobre el sector privado para sostener sus cuentas, en lugar de optimizar sus propios costos.",
+    url: "https://on.soundcloud.com/NxcbiJapbXdflP8Zuu",
+    type: "audio",
+  },
+  {
     title: "Ley de desburocratización: silencio positivo, digitalización y costos estructurales",
     source: "Radio Rural · Esta Mañana",
     date: "Junio 2026",
