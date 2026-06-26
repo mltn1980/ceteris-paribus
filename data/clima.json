@@ -1,12 +1,12 @@
 {
-  "actualizado": "2026-06-25",
+  "actualizado": "2026-06-26",
   "alerta": {
     "activa": true,
     "tipo": "Frío extremo",
     "nivel": "Naranja",
-    "titulo": "Onda polar: -9°C en Santa Catarina, casi 70 ciudades gaúchas bajo cero",
-    "descripcion": "Onda polar con frío extremo continúa afectando la región. Santa Catarina registró -9°C formando hielo sobre animales. Casi 70 ciudades gaúchas bajo cero. Uruguay: hoy jueves mínimas de 4°C, mañana viernes heladas con mínimas de 0°C. Vientos NW al SW 20-40 km/h, rachas hasta 50 km/h. Sábado mejora con mínima 5°C y máxima 16°C.",
-    "vigencia": "25-26 jun 2026",
+    "titulo": "Onda polar: -8°C en Santa Catarina, tercer día consecutivo de frío extremo",
+    "descripcion": "Onda polar continúa con frío extremo. Santa Catarina registró -8°C por tercer día consecutivo. Rio Grande do Sul completa una semana con temperaturas bajo cero, hoy con -5°C. Casi 40 ciudades gaúchas bajo cero. Uruguay: heladas con mínimas cercanas a 0°C. Fin de semana mejora gradualmente.",
+    "vigencia": "26-27 jun 2026",
     "fuente": "MetSul/INUMET"
   },
   "enso": {
