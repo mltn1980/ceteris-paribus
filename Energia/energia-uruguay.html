@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energía Uruguay — Matriz Eléctrica · ceterisparibus</title>
+<meta name="description" content="Cómo genera Uruguay su electricidad: casi 100% renovable. Datos horarios del SCADA de ADME.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:   oklch(0.10 0.02 250);
+  --card: oklch(0.14 0.02 250);
+  --hover:oklch(0.18 0.02 250);
+  --track:oklch(0.20 0.02 250);
+  --bord: oklch(0.25 0.03 250);
+  --ink:  oklch(0.95 0.01 250);
+  --ink2: oklch(0.80 0.03 250);
+  --muted:oklch(0.55 0.04 250);
+  --em:   oklch(0.72 0.19 165);
+  --do:   oklch(0.78 0.15 85);
+  --tu:   oklch(0.70 0.16 195);
+  --hidro:#3b82f6;
+  --eol:  #22c55e;
+  --sol:  #f59e0b;
+  --bio:  #84cc16;
+  --ter:  #ef4444;
+  --green:#4ade80;
+  --amber:#fbbf24;
+}
+html{background:var(--bg);}
+body{
+  font-family:'Poppins','Segoe UI',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  font-size:15px;line-height:1.65;overflow-x:hidden;
+}
+
+/* ── MASTHEAD ── */
+.masthead{
+  background:oklch(0.08 0.025 250);
+  border-bottom:1px solid var(--bord);
+  position:relative;overflow:hidden;
+  padding:56px 24px 44px;
+}
+.masthead::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 50%, oklch(0.72 0.19 165 / .07) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, oklch(0.70 0.16 195 / .07) 0%, transparent 50%),
+    repeating-linear-gradient(90deg,transparent 0,transparent 79px,oklch(1 0 0 / .015) 79px,oklch(1 0 0 / .015) 80px),
+    repeating-linear-gradient(0deg,  transparent 0,transparent 79px,oklch(1 0 0 / .015) 79px,oklch(1 0 0 / .015) 80px);
+}
+.masthead>*{position:relative;}
+.mast-inner{max-width:1080px;margin:0 auto;}
+.mast-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+.back-link{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  border:1px solid var(--bord);padding:6px 14px;
+  transition:color .15s,border-color .15s;
+}
+.back-link:hover{color:var(--ink2);border-color:var(--muted);}
+.mast-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--em);background:oklch(0.72 0.19 165 / .1);
+  border:1px solid oklch(0.72 0.19 165 / .25);
+  padding:5px 14px;
+}
+.mast-badge::before{
+  content:'';width:7px;height:7px;background:var(--em);border-radius:50%;
+  animation:pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.85);}}
+.masthead h1{
+  font-size:clamp(28px,5vw,60px);font-weight:800;line-height:1.05;
+  margin-bottom:16px;max-width:820px;
+}
+.masthead h1 .line1{display:block;color:var(--ink);}
+.masthead h1 .line2{
+  display:block;
+  background:linear-gradient(95deg,var(--em),var(--tu) 45%,var(--do));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.mast-deck{font-size:15px;color:var(--ink2);font-weight:400;line-height:1.75;max-width:600px;margin-bottom:32px;}
+.mast-deck strong{color:var(--ink);}
+.mast-stats{display:flex;gap:28px;flex-wrap:wrap;}
+.mstat{border-left:2px solid oklch(0.72 0.19 165 / .5);padding-left:16px;}
+.mstat.b{border-left-color:oklch(0.70 0.16 195 / .5);}
+.mstat.d{border-left-color:oklch(0.78 0.15 85 / .5);}
+.mstat-lbl{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.mstat-val{font-size:28px;font-weight:700;color:var(--ink);line-height:1;}
+.mstat-sub{font-size:11px;color:var(--ink2);margin-top:3px;}
+
+/* ── TABS ── */
+.tabs-bar{
+  background:oklch(0.085 0.025 250);
+  border-bottom:1px solid var(--bord);
+  position:sticky;top:0;z-index:100;
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs-bar::-webkit-scrollbar{display:none;}
+.tabs-inner{max-width:1080px;margin:0 auto;display:flex;}
+.tab-btn{
+  background:none;border:none;cursor:pointer;
+  font-family:'Poppins',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);
+  padding:0 20px;height:48px;
+  white-space:nowrap;
+  border-bottom:3px solid transparent;
+  transition:color .15s,border-color .15s,background .15s;
+  position:relative;
+}
+.tab-btn:hover{color:var(--ink2);background:oklch(1 0 0 / .025);}
+.tab-btn.active{color:var(--em);border-bottom-color:var(--em);}
+/* colored dot per tab */
+.tab-btn::after{
+  content:'';width:6px;height:6px;border-radius:50%;
+  display:inline-block;margin-left:7px;vertical-align:middle;
+  background:var(--muted);transition:background .15s;
+  position:relative;top:-1px;
+}
+.tab-btn.active::after{background:var(--em);}
+.tab-btn[data-tab="mensual"]::after   {background:#3b82f6;}
+.tab-btn[data-tab="mix"]::after       {background:linear-gradient(135deg,#3b82f6 33%,#22c55e 66%,#f59e0b);}
+.tab-btn[data-tab="generadores"]::after{background:#84cc16;}
+.tab-btn[data-tab="diario"]::after    {background:#22c55e;}
+.tab-btn[data-tab="estacional"]::after{background:oklch(0.70 0.16 195);}
+.tab-btn[data-tab="historico"]::after {background:oklch(0.78 0.15 85);}
+.tab-btn.active::after{background:var(--em) !important;}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.tab-panel{display:none;padding:48px 0 56px;}
+.tab-panel.active{display:block;}
+
+/* ── SECTION HEADER ── */
+.sec-kicker{
+  font-size:11px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--em);margin-bottom:8px;
+}
+.sec-title{font-size:26px;font-weight:700;color:var(--ink);margin-bottom:8px;line-height:1.2;}
+.sec-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;line-height:1.65;max-width:680px;}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px;}
+@media(max-width:800px){.kpi-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr;}}
+.kpi{
+  background:var(--card);border:1px solid var(--bord);
+  padding:22px 20px;position:relative;overflow:hidden;
+}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.green::before{background:var(--em);}
+.kpi.blue::before{background:var(--tu);}
+.kpi.amber::before{background:var(--do);}
+.kpi.red::before{background:var(--ter);}
+.kpi-lbl{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.kpi-val{font-size:36px;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
+.kpi-unit{font-size:12px;color:var(--ink2);}
+.kpi-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45;}
+
+/* ── EXPLICACIÓN ── */
+.explica{
+  background:oklch(0.72 0.19 165 / .05);
+  border:1px solid oklch(0.72 0.19 165 / .15);
+  border-left:3px solid var(--em);
+  padding:28px 32px;margin-top:28px;
+}
+.explica h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:14px;}
+.explica p{font-size:14px;color:var(--ink2);margin-bottom:10px;line-height:1.75;}
+.explica p:last-child{margin-bottom:0;}
+.explica strong{color:var(--ink);}
+.fuentes-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;}
+@media(max-width:700px){.fuentes-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:380px){.fuentes-grid{grid-template-columns:1fr;}}
+.fuente-item{padding:14px 12px;border:1px solid var(--bord);}
+.fuente-dot{width:10px;height:10px;border-radius:50%;margin-bottom:8px;}
+.fuente-nombre{font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px;}
+.fuente-desc{font-size:12px;color:var(--ink2);line-height:1.5;}
+
+/* ── TOOLTIP ── */
+.tooltip{
+  display:none;position:fixed;z-index:200;
+  background:oklch(0.14 0.02 250);border:1px solid oklch(0.28 0.03 250);
+  padding:12px 14px;pointer-events:none;min-width:160px;
+  font-size:12px;box-shadow:0 8px 32px oklch(0 0 0 / .5);
+}
+.tooltip.show{display:block;}
+.tooltip-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.tooltip-row{display:flex;justify-content:space-between;gap:16px;margin-bottom:3px;}
+.tooltip-row:last-child{margin-bottom:0;border-top:1px solid var(--bord);padding-top:4px;margin-top:4px;}
+.tooltip-src{color:var(--ink2);}
+.tooltip-mw{font-weight:600;color:var(--ink);}
+
+/* ── LEGEND ── */
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:20px;}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink2);}
+.leg-dot{width:11px;height:11px;border-radius:2px;flex-shrink:0;}
+
+/* ── MIX BARS ── */
+.mix-table{display:flex;flex-direction:column;gap:12px;margin-top:4px;}
+.mix-row{display:grid;grid-template-columns:130px 1fr 72px 52px;align-items:center;gap:10px;}
+@media(max-width:500px){.mix-row{grid-template-columns:100px 1fr 64px 46px;gap:7px;}}
+.mix-src{font-size:13px;font-weight:600;color:var(--ink);}
+.mix-track{height:26px;background:var(--track);overflow:hidden;}
+.mix-fill{height:100%;transition:width 0.6s ease;}
+.mix-mw{font-size:12px;color:var(--ink2);text-align:right;white-space:nowrap;}
+.mix-pct{font-size:13px;font-weight:600;color:var(--ink2);text-align:right;white-space:nowrap;}
+
+/* ── CALLOUT ── */
+.callout{
+  background:oklch(0.78 0.15 85 / .05);
+  border:1px solid oklch(0.78 0.15 85 / .18);
+  border-left:3px solid var(--do);
+  padding:20px 24px;margin-top:24px;
+}
+.callout p{font-size:13px;color:var(--ink2);line-height:1.75;margin:0;}
+.callout strong{color:var(--ink);}
+.callout.green{
+  background:oklch(0.72 0.19 165 / .05);
+  border-color:oklch(0.72 0.19 165 / .18);
+  border-left-color:var(--em);
+}
+
+/* ── GENERADORES ── */
+.gen-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.gen-card{background:var(--card);border:1px solid var(--bord);}
+.gen-summary{
+  display:grid;grid-template-columns:16px 1fr auto 20px;
+  align-items:center;gap:14px;padding:16px 20px;
+  cursor:pointer;list-style:none;user-select:none;
+  transition:background .15s;
+}
+.gen-summary:hover{background:var(--hover);}
+.gen-summary::-webkit-details-marker{display:none;}
+.gen-summary::marker{display:none;}
+.gen-dot-sq{width:16px;height:16px;border-radius:3px;flex-shrink:0;}
+.gen-info{min-width:0;}
+.gen-name{font-size:14px;font-weight:700;color:var(--ink);display:block;}
+.gen-meta{font-size:11px;color:var(--muted);margin-top:1px;}
+.gen-pct-big{font-size:22px;font-weight:700;color:var(--ink);text-align:right;white-space:nowrap;}
+.gen-chevron{color:var(--muted);font-size:13px;text-align:center;transition:transform .2s;flex-shrink:0;}
+details[open]>.gen-summary>.gen-chevron{transform:rotate(180deg);}
+.gen-body{padding:8px 20px 18px;border-top:1px solid var(--bord);}
+.gen-body-note{font-size:11px;color:var(--muted);margin-bottom:10px;padding-top:6px;}
+.gen-row{display:grid;grid-template-columns:1fr 140px 68px 38px;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid oklch(1 0 0 / .03);}
+.gen-row:last-child{border-bottom:none;}
+.gen-row-name{font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gen-row-track{height:7px;background:var(--track);overflow:hidden;}
+.gen-row-fill{height:100%;transition:width .4s ease;}
+.gen-row-mw{font-size:11px;color:var(--ink2);text-align:right;white-space:nowrap;}
+.gen-row-pct{font-size:11px;color:var(--muted);text-align:right;}
+.gen-other-row{font-size:11px;color:var(--muted);padding:7px 0 2px;font-style:italic;}
+@media(max-width:580px){.gen-row{grid-template-columns:1fr 0px 60px 36px;}.gen-row-track{display:none;}}
+
+/* ── HISTÓRICO ── */
+.hist-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;}
+@media(max-width:700px){.hist-grid{grid-template-columns:1fr;}}
+.year-chart{display:flex;align-items:flex-end;gap:6px;height:220px;}
+.yr-col{flex:1;display:flex;flex-direction:column-reverse;position:relative;cursor:default;}
+.yr-col:hover .seg{filter:brightness(1.15);}
+.yr-lbl{text-align:center;font-size:10px;font-weight:500;color:var(--ink2);margin-top:6px;}
+.yr-val{text-align:center;font-size:9px;color:var(--muted);margin-top:2px;}
+.yr-sample{text-align:center;font-size:8px;color:var(--muted);opacity:.7;}
+.seg{width:100%;transition:height 0.3s ease;}
+
+.trend-chart{display:flex;align-items:flex-end;gap:6px;height:180px;position:relative;}
+.trend-ref{position:absolute;left:0;right:0;border-top:1px dashed oklch(1 0 0 / .3);}
+.trend-ref::before{content:'100%';position:absolute;right:0;top:-14px;font-size:9px;color:oklch(1 0 0 / .4);}
+.trend-col{flex:1;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;position:relative;}
+.trend-bar{border-radius:2px 2px 0 0;min-height:4px;}
+.trend-bar.t-over{background:linear-gradient(to top,#16a34a,#4ade80);}
+.trend-bar.t-near{background:linear-gradient(to top,#334155,#64748b);}
+.trend-bar.t-low{background:linear-gradient(to top,#7c2d12,#ea580c);}
+.trend-top{font-size:9px;text-align:center;position:absolute;top:-16px;left:0;right:0;}
+.trend-lbl{font-size:10px;font-weight:500;color:var(--ink2);text-align:center;margin-top:6px;}
+
+/* growth table */
+.growth-grid{display:grid;grid-template-columns:82px 58px 1fr 22px 1fr 58px 50px;gap:8px 10px;align-items:center;}
+@media(max-width:600px){.growth-grid{grid-template-columns:72px 50px 1fr 18px 1fr 50px 44px;gap:7px 6px;}}
+.gs-hdr{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-bottom:6px;border-bottom:1px solid var(--bord);}
+.gs-hdr-c{text-align:center;}.gs-hdr-r{text-align:right;}
+.gs-name{font-size:13px;font-weight:600;color:var(--ink);}
+.gs-val{font-size:12px;color:var(--ink2);text-align:right;white-space:nowrap;}
+.gs-val2{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;}
+.gs-bar{height:14px;background:var(--track);overflow:hidden;}
+.gs-fill{height:100%;transition:width .4s ease;}
+.gs-arrow{text-align:center;color:var(--muted);font-size:13px;}
+.gs-delta{font-size:12px;font-weight:700;text-align:right;white-space:nowrap;}
+.delta-up{color:#4ade80;}.delta-dn{color:#f87171;}
+
+/* ── ESTACIONALIDAD ── */
+.sea-legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:22px;align-items:center;}
+.sea-leg-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2);}
+.sea-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:620px){.sea-grid{grid-template-columns:1fr;}}
+.sea-chart{background:var(--card);border:1px solid var(--bord);padding:16px 12px 10px;}
+.sea-chart-lbl{font-size:12px;font-weight:700;margin-bottom:6px;letter-spacing:.02em;}
+svg text{font-family:'Poppins',sans-serif;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
+.foot-inner{max-width:1080px;margin:0 auto;}
+.foot-src{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.06em;}
+.foot-src a{color:var(--ink2);text-decoration:none;}
+.foot-src a:hover{color:var(--ink);}
+
+@media(max-width:640px){
+  .wrap{padding:0 16px;}
+  .masthead{padding:40px 16px 30px;}
+  .mast-stats{gap:18px;}
+  .tab-panel{padding:32px 0 40px;}
+  .explica{padding:18px 16px;}
+  .kpi-val{font-size:28px;}
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="mast-inner">
+    <div class="mast-top">
+      <div class="mast-badge">Datos ADME · SCADA · Mayo 2026</div>
+      <a href="../index.html" class="back-link">← Inicio</a>
+    </div>
+    <h1>
+      <span class="line1">Uruguay genera electricidad</span>
+      <span class="line2">casi 100 % renovable</span>
+    </h1>
+    <p class="mast-deck">En mayo de 2026, Uruguay cubrió el <strong>113 %</strong> de su demanda eléctrica con fuentes limpias — agua, viento, sol y biomasa. El excedente se exportó a Argentina y Brasil.</p>
+    <div class="mast-stats">
+      <div class="mstat">
+        <div class="mstat-lbl">% Renovable promedio</div>
+        <div class="mstat-val">113 %</div>
+        <div class="mstat-sub">del mes de mayo</div>
+      </div>
+      <div class="mstat b">
+        <div class="mstat-lbl">Días exportando energía</div>
+        <div class="mstat-val">17 / 24</div>
+        <div class="mstat-sub">días del mes</div>
+      </div>
+      <div class="mstat d">
+        <div class="mstat-lbl">Pico eólico registrado</div>
+        <div class="mstat-val">1.384 MW</div>
+        <div class="mstat-sub">8 de mayo a las 14 h</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<nav class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="resumen"     onclick="showTab('resumen')">Resumen</button>
+    <button class="tab-btn"        data-tab="mensual"     onclick="showTab('mensual')">12 meses</button>
+    <button class="tab-btn"        data-tab="mix"         onclick="showTab('mix')">Mix mayo</button>
+    <button class="tab-btn"        data-tab="generadores" onclick="showTab('generadores')">Generadores</button>
+    <button class="tab-btn"        data-tab="diario"      onclick="showTab('diario')">Evolución diaria</button>
+    <button class="tab-btn"        data-tab="estacional"  onclick="showTab('estacional')">Estacionalidad</button>
+    <button class="tab-btn"        data-tab="historico"   onclick="showTab('historico')">Histórico</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════ RESUMEN ══ -->
+<div class="tab-panel active" id="panel-resumen">
+<div class="wrap">
+  <div class="sec-kicker">Resumen · Mayo 2026</div>
+  <div class="sec-title">La energía en cuatro números</div>
+
+  <div class="kpi-grid">
+    <div class="kpi green">
+      <div class="kpi-lbl">Renovable promedio</div>
+      <div class="kpi-val">113 %</div>
+      <div class="kpi-unit">de la demanda cubierta</div>
+      <div class="kpi-note">El 100 % es autosuficiencia; más del 100 % significa que se exportó electricidad</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-lbl">Demanda promedio</div>
+      <div class="kpi-val">1.488</div>
+      <div class="kpi-unit">MW consumidos por hora</div>
+      <div class="kpi-note">Equivale a alimentar ~1,5 millones de hogares simultáneamente</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-lbl">Récord mensual eólico</div>
+      <div class="kpi-val">1.384</div>
+      <div class="kpi-unit">MW de viento (8/mayo)</div>
+      <div class="kpi-note">El viento cubrió sólo ese día el 87 % de la demanda total</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-lbl">Térmica (gas/fueloil)</div>
+      <div class="kpi-val">2,3 %</div>
+      <div class="kpi-unit">de la generación total</div>
+      <div class="kpi-note">Solo se encendió los días con poco viento y baja hidráulica</div>
+    </div>
+  </div>
+
+  <div class="explica">
+    <h3>¿De dónde viene la electricidad?</h3>
+    <p>Uruguay abastece su sistema eléctrico principalmente con cuatro fuentes renovables. Las centrales térmicas existen como respaldo, pero casi no se usan.</p>
+    <div class="fuentes-grid">
+      <div class="fuente-item" style="background:oklch(0.60 0.18 240 / .06);border-color:oklch(0.60 0.18 240 / .2)">
+        <div class="fuente-dot" style="background:var(--hidro)"></div>
+        <div class="fuente-nombre">Hidroeléctrica</div>
+        <div class="fuente-desc">Salto Grande, Bonete, Baygorria y Palmar. El agua de los ríos mueve turbinas.</div>
+      </div>
+      <div class="fuente-item" style="background:oklch(0.70 0.22 145 / .06);border-color:oklch(0.70 0.22 145 / .2)">
+        <div class="fuente-dot" style="background:var(--eol)"></div>
+        <div class="fuente-nombre">Eólica</div>
+        <div class="fuente-desc">Parques eólicos en el norte y litoral. Uruguay es líder mundial en penetración eólica.</div>
+      </div>
+      <div class="fuente-item" style="background:oklch(0.75 0.17 70 / .06);border-color:oklch(0.75 0.17 70 / .2)">
+        <div class="fuente-dot" style="background:var(--sol)"></div>
+        <div class="fuente-nombre">Solar</div>
+        <div class="fuente-desc">Paneles fotovoltaicos. Genera al mediodía y nada de noche.</div>
+      </div>
+      <div class="fuente-item" style="background:oklch(0.75 0.22 125 / .06);border-color:oklch(0.75 0.22 125 / .2)">
+        <div class="fuente-dot" style="background:var(--bio)"></div>
+        <div class="fuente-nombre">Biomasa</div>
+        <div class="fuente-desc">Residuos de la industria forestal (cáscara, aserrín). Genera en forma constante.</div>
+      </div>
+      <div class="fuente-item" style="background:oklch(0.55 0.22 25 / .06);border-color:oklch(0.55 0.22 25 / .2)">
+        <div class="fuente-dot" style="background:var(--ter)"></div>
+        <div class="fuente-nombre">Térmica</div>
+        <div class="fuente-desc">Gas y fueloil. Reserva de última instancia. En mayo casi no se necesitó.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ 12 MESES ══ -->
+<div class="tab-panel" id="panel-mensual">
+<div class="wrap">
+  <div class="sec-kicker">Evolución mensual · Jun 2025 – May 2026</div>
+  <div class="sec-title">Producción por mes y demanda</div>
+  <div class="sec-sub">Promedio horario de generación por fuente en los últimos 12 meses. La línea blanca es la demanda. Cuando las barras superan la línea, Uruguay exportó electricidad ese mes. Pasá el cursor para ver el detalle.</div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hidro)"></div>Hidroeléctrica</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--bio)"></div>Biomasa</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--eol)"></div>Eólica</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--sol)"></div>Solar</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--ter)"></div>Térmica</div>
+    <div class="leg-item">
+      <svg width="28" height="12" style="vertical-align:middle;flex-shrink:0;margin-right:2px;">
+        <line x1="0" y1="6" x2="28" y2="6" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-dasharray="5 3"/>
+        <circle cx="14" cy="6" r="3.5" fill="rgba(255,255,255,0.85)" stroke="#07101c" stroke-width="1.5"/>
+      </svg>
+      Demanda
+    </div>
+  </div>
+
+  <svg id="chart-mensual" viewBox="0 0 720 248" style="width:100%;height:auto;display:block;overflow:visible;"></svg>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ MIX ══ -->
+<div class="tab-panel" id="panel-mix">
+<div class="wrap">
+  <div class="sec-kicker">Composición · Mayo 2026</div>
+  <div class="sec-title">Mix de generación del mes</div>
+  <div class="sec-sub">Participación promedio de cada fuente en la generación total. La suma es 100 % de lo generado; la diferencia con la demanda es la energía exportada.</div>
+
+  <div class="mix-table" id="mix-table"></div>
+
+  <div class="callout">
+    <p>En mayo, Uruguay generó en promedio <strong>1.716 MW</strong> por hora y consumió <strong>1.488 MW</strong>. Los <strong>228 MW</strong> excedentes se exportaron a la región — el equivalente a abastecer toda Montevideo con energía limpia y regalar el sobrante.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ GENERADORES ══ -->
+<div class="tab-panel" id="panel-generadores">
+<div class="wrap">
+  <div class="sec-kicker">Generadores · Ene–May 2026 (YTD)</div>
+  <div class="sec-title">¿Quién produce cada tipo de energía?</div>
+  <div class="sec-sub">Los generadores conectados al sistema eléctrico nacional, con su aporte promedio horario acumulado enero–mayo 2026. Fuente: ADME SCADA — datos por planta.</div>
+
+  <div class="gen-list">
+
+    <details class="gen-card" open>
+      <summary class="gen-summary">
+        <div class="gen-dot-sq" style="background:var(--hidro)"></div>
+        <div class="gen-info">
+          <span class="gen-name">Hidroeléctrica</span>
+          <span class="gen-meta">4 centrales · 584 MW promedio YTD</span>
+        </div>
+        <div class="gen-pct-big">40 %</div>
+        <div class="gen-chevron">▾</div>
+      </summary>
+      <div class="gen-body">
+        <div class="gen-body-note">Promedio horario ene–may 2026 · % del total hidroeléctrico</div>
+        <div class="gen-row">
+          <div class="gen-row-name">Salto Grande <span style="color:var(--muted);font-size:10px">(binacional UY–AR)</span></div>
+          <div class="gen-row-track"><div class="gen-row-fill" style="width:100%;background:var(--hidro)"></div></div>
+          <div class="gen-row-mw">333.7 MW</div><div class="gen-row-pct">57 %</div>
+        </div>
+        <div class="gen-row">
+          <div class="gen-row-name">Palmar</div>
+          <div class="gen-row-track"><div class="gen-row-fill" style="width:41%;background:var(--hidro);opacity:.75"></div></div>
+          <div class="gen-row-mw">137.0 MW</div><div class="gen-row-pct">23 %</div>
+        </div>
+        <div class="gen-row">
+          <div class="gen-row-name">Bonete</div>
+          <div class="gen-row-track"><div class="gen-row-fill" style="width:20%;background:var(--hidro);opacity:.6"></div></div>
+          <div class="gen-row-mw">67.5 MW</div><div class="gen-row-pct">12 %</div>
+        </div>
+        <div class="gen-row">
+          <div class="gen-row-name">Baygorria</div>
+          <div class="gen-row-track"><div class="gen-row-fill" style="width:14%;background:var(--hidro);opacity:.5"></div></div>
+          <div class="gen-row-mw">46.0 MW</div><div class="gen-row-pct">8 %</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="gen-card">
+      <summary class="gen-summary">
+        <div class="gen-dot-sq" style="background:var(--eol)"></div>
+        <div class="gen-info">
+          <span class="gen-name">Eólica</span>
+          <span class="gen-meta">37 parques · 496 MW promedio YTD</span>
+        </div>
+        <div class="gen-pct-big">34 %</div>
+        <div class="gen-chevron">▾</div>
+      </summary>
+      <div class="gen-body">
+        <div class="gen-body-note">Top 10 parques por aporte · % del total eólico</div>
+        <div class="gen-row"><div class="gen-row-name">Pampa</div><div class="gen-row-track"><div class="gen-row-fill" style="width:100%;background:var(--eol)"></div></div><div class="gen-row-mw">44.8 MW</div><div class="gen-row-pct">9.0 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Valentines</div><div class="gen-row-track"><div class="gen-row-fill" style="width:61%;background:var(--eol);opacity:.86"></div></div><div class="gen-row-mw">27.1 MW</div><div class="gen-row-pct">5.5 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Arias</div><div class="gen-row-track"><div class="gen-row-fill" style="width:60%;background:var(--eol);opacity:.83"></div></div><div class="gen-row-mw">26.7 MW</div><div class="gen-row-pct">5.4 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Palomas</div><div class="gen-row-track"><div class="gen-row-fill" style="width:56%;background:var(--eol);opacity:.8"></div></div><div class="gen-row-mw">24.9 MW</div><div class="gen-row-pct">5.0 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Juan Pablo Terra</div><div class="gen-row-track"><div class="gen-row-fill" style="width:55%;background:var(--eol);opacity:.78"></div></div><div class="gen-row-mw">24.8 MW</div><div class="gen-row-pct">5.0 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Maldonado II</div><div class="gen-row-track"><div class="gen-row-fill" style="width:47%;background:var(--eol);opacity:.75"></div></div><div class="gen-row-mw">21.1 MW</div><div class="gen-row-pct">4.3 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Melowind</div><div class="gen-row-track"><div class="gen-row-fill" style="width:46%;background:var(--eol);opacity:.72"></div></div><div class="gen-row-mw">20.4 MW</div><div class="gen-row-pct">4.1 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Cerro Grande</div><div class="gen-row-track"><div class="gen-row-fill" style="width:45%;background:var(--eol);opacity:.7"></div></div><div class="gen-row-mw">20.2 MW</div><div class="gen-row-pct">4.1 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Carapé I</div><div class="gen-row-track"><div class="gen-row-fill" style="width:43%;background:var(--eol);opacity:.67"></div></div><div class="gen-row-mw">19.1 MW</div><div class="gen-row-pct">3.9 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Florida I</div><div class="gen-row-track"><div class="gen-row-fill" style="width:40%;background:var(--eol);opacity:.64"></div></div><div class="gen-row-mw">18.0 MW</div><div class="gen-row-pct">3.6 %</div></div>
+        <div class="gen-other-row">+ 27 parques menores (Kiyú, Artilleros, Florida II, Peralta, Talas, Minas, Carapé II, Luz de Río…) · 249.0 MW · 50.2 %</div>
+      </div>
+    </details>
+
+    <details class="gen-card">
+      <summary class="gen-summary">
+        <div class="gen-dot-sq" style="background:var(--bio)"></div>
+        <div class="gen-info">
+          <span class="gen-name">Biomasa</span>
+          <span class="gen-meta">12 plantas · 224 MW promedio YTD</span>
+        </div>
+        <div class="gen-pct-big">15 %</div>
+        <div class="gen-chevron">▾</div>
+      </summary>
+      <div class="gen-body">
+        <div class="gen-body-note">Residuos forestales e industriales · % del total biomasa</div>
+        <div class="gen-row"><div class="gen-row-name">UPM Paso de los Toros <span style="color:var(--muted);font-size:10px">(UPM 2)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:100%;background:var(--bio)"></div></div><div class="gen-row-mw">115.1 MW</div><div class="gen-row-pct">51 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Montes del Plata <span style="color:var(--muted);font-size:10px">(Conchillas)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:66%;background:var(--bio);opacity:.8"></div></div><div class="gen-row-mw">75.5 MW</div><div class="gen-row-pct">34 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">UPM Fray Bentos <span style="color:var(--muted);font-size:10px">(ex Botnia)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:8%;background:var(--bio);opacity:.65"></div></div><div class="gen-row-mw">8.7 MW</div><div class="gen-row-pct">4 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Bioener</div><div class="gen-row-track"><div class="gen-row-fill" style="width:8%;background:var(--bio);opacity:.6"></div></div><div class="gen-row-mw">8.7 MW</div><div class="gen-row-pct">4 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Fenirol</div><div class="gen-row-track"><div class="gen-row-fill" style="width:7%;background:var(--bio);opacity:.55"></div></div><div class="gen-row-mw">7.7 MW</div><div class="gen-row-pct">3 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Galofer</div><div class="gen-row-track"><div class="gen-row-fill" style="width:6%;background:var(--bio);opacity:.5"></div></div><div class="gen-row-mw">6.6 MW</div><div class="gen-row-pct">3 %</div></div>
+        <div class="gen-other-row">+ Alur, Weyerhaeuser, Los Piques y otros · 1.8 MW · 1 %</div>
+      </div>
+    </details>
+
+    <details class="gen-card">
+      <summary class="gen-summary">
+        <div class="gen-dot-sq" style="background:var(--sol)"></div>
+        <div class="gen-info">
+          <span class="gen-name">Solar</span>
+          <span class="gen-meta">18 parques · 56 MW promedio YTD</span>
+        </div>
+        <div class="gen-pct-big">3.9 %</div>
+        <div class="gen-chevron">▾</div>
+      </summary>
+      <div class="gen-body">
+        <div class="gen-body-note">Fotovoltaica · % del total solar · (mayor en verano, menor en invierno)</div>
+        <div class="gen-row"><div class="gen-row-name">El Naranjal</div><div class="gen-row-track"><div class="gen-row-fill" style="width:100%;background:var(--sol)"></div></div><div class="gen-row-mw">12.0 MW</div><div class="gen-row-pct">21 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">La Jacinta Solar</div><div class="gen-row-track"><div class="gen-row-fill" style="width:91%;background:var(--sol);opacity:.88"></div></div><div class="gen-row-mw">10.9 MW</div><div class="gen-row-pct">20 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Menafra Solar</div><div class="gen-row-track"><div class="gen-row-fill" style="width:38%;background:var(--sol);opacity:.78"></div></div><div class="gen-row-mw">4.5 MW</div><div class="gen-row-pct">8 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">UTE PTA FV</div><div class="gen-row-track"><div class="gen-row-fill" style="width:36%;background:var(--sol);opacity:.75"></div></div><div class="gen-row-mw">4.3 MW</div><div class="gen-row-pct">8 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Alto Cielo</div><div class="gen-row-track"><div class="gen-row-fill" style="width:34%;background:var(--sol);opacity:.72"></div></div><div class="gen-row-mw">4.1 MW</div><div class="gen-row-pct">7 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Albisu</div><div class="gen-row-track"><div class="gen-row-fill" style="width:28%;background:var(--sol);opacity:.68"></div></div><div class="gen-row-mw">3.3 MW</div><div class="gen-row-pct">6 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Del Litoral</div><div class="gen-row-track"><div class="gen-row-fill" style="width:28%;background:var(--sol);opacity:.65"></div></div><div class="gen-row-mw">3.3 MW</div><div class="gen-row-pct">6 %</div></div>
+        <div class="gen-other-row">+ Arapey Solar, Dicano, Yarnel, Natelu, Petilcoran, Fenima, Raditon y otros · 13.4 MW · 24 %</div>
+      </div>
+    </details>
+
+    <details class="gen-card">
+      <summary class="gen-summary">
+        <div class="gen-dot-sq" style="background:var(--ter)"></div>
+        <div class="gen-info">
+          <span class="gen-name">Térmica</span>
+          <span class="gen-meta">5 plantas · 89 MW promedio YTD <span style="color:var(--muted)">(solo respaldo)</span></span>
+        </div>
+        <div class="gen-pct-big">6.1 %</div>
+        <div class="gen-chevron">▾</div>
+      </summary>
+      <div class="gen-body">
+        <div class="gen-body-note">Gas natural y fueloil · Reserva de última instancia · % del total térmico</div>
+        <div class="gen-row"><div class="gen-row-name">Ciclo Combinado PTB <span style="color:var(--muted);font-size:10px">(gas natural)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:100%;background:var(--ter)"></div></div><div class="gen-row-mw">61.1 MW</div><div class="gen-row-pct">69 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Punta del Tigre A <span style="color:var(--muted);font-size:10px">(fueloil)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:34%;background:var(--ter);opacity:.75"></div></div><div class="gen-row-mw">20.8 MW</div><div class="gen-row-pct">23 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">Motores Central Batlle <span style="color:var(--muted);font-size:10px">(fueloil)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:11%;background:var(--ter);opacity:.6"></div></div><div class="gen-row-mw">6.7 MW</div><div class="gen-row-pct">8 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">PTA 7 y 8 <span style="color:var(--muted);font-size:10px">(sin uso en 2026)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:0%;background:var(--ter)"></div></div><div class="gen-row-mw">0 MW</div><div class="gen-row-pct">0 %</div></div>
+        <div class="gen-row"><div class="gen-row-name">CTR La Tablada <span style="color:var(--muted);font-size:10px">(sin uso en 2026)</span></div><div class="gen-row-track"><div class="gen-row-fill" style="width:0%;background:var(--ter)"></div></div><div class="gen-row-mw">0 MW</div><div class="gen-row-pct">0 %</div></div>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="callout" style="margin-top:20px;">
+    <p><strong>Dos empresas de celulosa explican el 85 % de la biomasa.</strong> UPM 2 (Paso de los Toros, inaugurada en 2023) y Montes del Plata (Conchillas) usan sus residuos forestales para generar electricidad y venderla a UTE. Este crecimiento es lo que se ve en el gráfico histórico: la biomasa pasó de 90 MW en 2018 a más de 200 MW en 2024–2026, aportando una base estable que no depende de la lluvia ni del viento.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ DIARIO ══ -->
+<div class="tab-panel" id="panel-diario">
+<div class="wrap">
+  <div class="sec-kicker">Producción diaria · Mayo 2026</div>
+  <div class="sec-title">Generación, demanda y balance por día</div>
+  <div class="sec-sub">Barras apiladas = generación total por fuente. Línea blanca = demanda. Lo que sobresale por encima de la línea es energía exportada; si la barra queda por debajo, Uruguay importó ese día.</div>
+
+  <div class="legend" style="margin-bottom:16px;">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hidro)"></div>Hidro</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--bio)"></div>Biomasa</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--eol)"></div>Eólica</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--sol)"></div>Solar</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--ter)"></div>Térmica</div>
+    <div class="leg-item">
+      <svg width="28" height="12" style="vertical-align:middle;flex-shrink:0;margin-right:2px;">
+        <line x1="0" y1="6" x2="28" y2="6" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-dasharray="5 3"/>
+        <circle cx="14" cy="6" r="3.5" fill="rgba(255,255,255,0.85)" stroke="#07101c" stroke-width="1.5"/>
+      </svg>
+      Demanda
+    </div>
+  </div>
+
+  <svg id="chart-diario" viewBox="0 0 860 250" style="width:100%;height:auto;display:block;overflow:visible;"></svg>
+
+  <div class="callout green" style="margin-top:20px;">
+    <p><strong>Los días 8–12 de mayo</strong> fueron excepcionales: el viento generó más de 1.100–1.250 MW, la demanda era de ~1.500 MW y Uruguay exportó <strong>500–900 MW</strong> a Argentina y Brasil. Los días 23–24 muestran el otro extremo: menos viento e hidráulica obligó a usar térmica y se redujo el excedente.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ ESTACIONAL ══ -->
+<div class="tab-panel" id="panel-estacional">
+<div class="wrap">
+  <div class="sec-kicker">Estacionalidad · 2018–2026</div>
+  <div class="sec-title">Comportamiento estacional por fuente</div>
+  <div class="sec-sub">Cada fuente tiene su propio patrón anual. La zona gris muestra el promedio histórico 2018–2025; la línea de color con puntos muestra los datos reales de 2026 (disponibles: enero a mayo).</div>
+
+  <div class="sea-legend">
+    <div class="sea-leg-item">
+      <svg width="34" height="14" style="vertical-align:middle;flex-shrink:0;">
+        <polygon points="0,14 34,14 34,3 0,3" fill="rgba(148,163,184,0.12)"/>
+        <line x1="0" y1="8" x2="34" y2="8" stroke="rgba(148,163,184,0.55)" stroke-width="1.5"/>
+      </svg>
+      Promedio histórico 2018–2025
+    </div>
+    <div class="sea-leg-item">
+      <svg width="34" height="14" style="vertical-align:middle;flex-shrink:0;">
+        <line x1="0" y1="7" x2="34" y2="7" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" stroke-dasharray="5 3"/>
+      </svg>
+      2025
+    </div>
+    <div class="sea-leg-item">
+      <svg width="34" height="14" style="vertical-align:middle;flex-shrink:0;">
+        <line x1="0" y1="7" x2="34" y2="7" stroke="rgba(255,255,255,0.5)" stroke-width="2.5"/>
+        <circle cx="17" cy="7" r="3.5" fill="rgba(255,255,255,0.7)" stroke="#07101c" stroke-width="1.5"/>
+      </svg>
+      2026 (puntos = datos disponibles)
+    </div>
+  </div>
+
+  <div class="sea-grid">
+    <div class="sea-chart">
+      <div class="sea-chart-lbl" style="color:#3b82f6">Hidroeléctrica</div>
+      <svg id="sea-hidro" viewBox="0 0 320 165" width="100%" height="165"></svg>
+    </div>
+    <div class="sea-chart">
+      <div class="sea-chart-lbl" style="color:#22c55e">Eólica</div>
+      <svg id="sea-eolica" viewBox="0 0 320 165" width="100%" height="165"></svg>
+    </div>
+    <div class="sea-chart">
+      <div class="sea-chart-lbl" style="color:#84cc16">Biomasa</div>
+      <svg id="sea-biomasa" viewBox="0 0 320 165" width="100%" height="165"></svg>
+    </div>
+    <div class="sea-chart">
+      <div class="sea-chart-lbl" style="color:#94a3b8">Demanda</div>
+      <svg id="sea-demanda" viewBox="0 0 320 165" width="100%" height="165"></svg>
+    </div>
+    <div class="sea-chart">
+      <div class="sea-chart-lbl" style="color:#f59e0b">Solar</div>
+      <svg id="sea-solar" viewBox="0 0 320 165" width="100%" height="165"></svg>
+    </div>
+    <div class="sea-chart">
+      <div class="sea-chart-lbl" style="color:#ef4444">Térmica</div>
+      <svg id="sea-termica" viewBox="0 0 320 165" width="100%" height="165"></svg>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:24px;">
+    <p><strong>Patrones clave:</strong> La hidroeléctrica alcanza su pico en julio–agosto (lluvias de invierno en la cuenca del Plata) y su mínimo en marzo–abril. La eólica sopla más fuerte en invierno. La solar sigue el sol: máxima en verano (dic–ene) y mínima en junio. La biomasa y la térmica son las únicas fuentes "despachables": se usan cuando las renovables no alcanzan. En 2026, la biomasa está muy por encima de su promedio histórico, reflejando la nueva capacidad instalada.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ HISTÓRICO ══ -->
+<div class="tab-panel" id="panel-historico">
+<div class="wrap">
+  <div class="sec-kicker">Tendencia 2018–2026</div>
+  <div class="sec-title">Evolución histórica de la matriz</div>
+  <div class="sec-sub">Promedios anuales de generación por fuente, calculados hora a hora desde el SCADA de ADME. El sistema registra datos a partir del 9 de marzo de 2018. El año 2026 es parcial (enero–mayo).</div>
+
+  <div class="hist-grid">
+    <div>
+      <div class="sec-kicker" style="margin-bottom:12px;">Generación promedio por fuente (MW)</div>
+      <div class="legend" style="margin-bottom:14px;">
+        <div class="leg-item"><div class="leg-dot" style="background:var(--hidro)"></div>Hidro</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--bio)"></div>Biomasa</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--eol)"></div>Eólica</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--sol)"></div>Solar</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--ter)"></div>Térmica</div>
+      </div>
+      <div class="year-chart" id="year-mix"></div>
+    </div>
+
+    <div>
+      <div class="sec-kicker" style="margin-bottom:12px;">% Renovable por año</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+        <span style="display:inline-block;width:10px;height:10px;background:#4ade80;border-radius:2px;margin-right:5px;vertical-align:middle;"></span>≥ 100 % — exportando &nbsp;
+        <span style="display:inline-block;width:10px;height:10px;background:#64748b;border-radius:2px;margin-right:5px;vertical-align:middle;"></span>95–99 % — casi total
+      </p>
+      <div style="position:relative;padding-top:20px;">
+        <div class="trend-chart" id="year-renov"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="sec-kicker" style="margin-bottom:4px;">Generación por fuente: 2018 vs. 2025 — promedios anuales</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Comparación de los promedios anuales ponderados por horas. 2018 incluye solo marzo–diciembre (primer año con datos SCADA).</p>
+    <div id="fuente-growth"></div>
+  </div>
+
+  <div class="callout" style="margin-top:28px;">
+    <p><strong>Los años de sequía revelan la única vulnerabilidad del sistema.</strong> En 2021 y 2023, caudales bajos en los ríos redujeron drásticamente la generación hidráulica, y la térmica tuvo que compensar: el porcentaje renovable cayó a 82–91 %. En años normales (2019, 2024, 2025), Uruguay opera por encima del 97–99 % renovable. La respuesta estructural fue clara: <strong>la biomasa casi se triplicó</strong> entre 2018 y 2025 (90 → 205 MW), aportando generación estable que no depende de la lluvia ni del viento.</p>
+  </div>
+
+  <div style="margin-top:16px;">
+    <p style="font-size:11px;color:var(--muted);">
+      Fuente: ADME · Sistema SCADA — pronos.adme.com.uy · Datos disponibles desde el 9 de marzo de 2018. Promedios anuales ponderados por horas.
+    </p>
+  </div>
+</div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-src">
+      Fuente: <a href="https://pronos.adme.com.uy/gpf.php" target="_blank" rel="noopener">ADME · Sistema SCADA</a> —
+      datos de generación por fuente, actualización horaria ·
+      Elaboración: <a href="../index.html">ceterisparibus-cp</a> · Mayo 2026
+    </div>
+  </div>
+</footer>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-title" id="tt-title"></div>
+  <div id="tt-rows"></div>
+</div>
+
+<script>
+// ── TAB SWITCHING ─────────────────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelector('[data-tab="' + id + '"]').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── DATOS ──────────────────────────────────────────────────────────────────
+const monthly12 = [
+  ["Jun '25", 1004.4, 505.6,  38.2,  30.3, 197.5, 1609.6],
+  ["Jul '25",  923.5, 511.4,  39.1,  46.5, 243.0, 1641.2],
+  ["Ago '25",  875.9, 633.5,  53.2,   4.1, 245.8, 1480.5],
+  ["Sep '25",  941.1, 549.7,  58.8,   4.7, 209.6, 1340.4],
+  ["Oct '25",  587.4, 552.3,  58.0,   1.9, 167.2, 1231.0],
+  ["Nov '25",  545.9, 526.7,  70.3,   1.4, 146.2, 1287.2],
+  ["Dic '25",  644.0, 421.2,  70.1,  50.6, 239.3, 1528.9],
+  ["Ene '26",  651.1, 508.5,  73.4,  44.3, 212.5, 1469.9],
+  ["Feb '26",  548.7, 441.9,  66.4, 146.8, 227.5, 1507.9],
+  ["Mar '26",  389.2, 525.8,  53.4, 137.4, 217.9, 1349.4],
+  ["Abr '26",  526.5, 475.0,  44.3,  46.0, 224.4, 1269.1],
+  ["May '26",  819.2, 523.6,  41.7,  71.6, 239.9, 1505.4],
+];
+
+// [dia, hidro, eolica, solar, termica, biomasa, pct_renov]
+const daily = [
+  ["01/5", 450, 467, 15,   0, 308, 107.7],
+  ["02/5", 288, 801, 56,   0, 265, 114.0],
+  ["03/5", 638, 369, 67,   0, 180, 101.7],
+  ["04/5", 762, 546, 48,  20, 165, 108.4],
+  ["05/5", 928, 336, 35,   6, 136, 102.8],
+  ["06/5", 846, 711, 34,   0, 217, 133.2],
+  ["07/5", 791, 811,  5,   0, 230, 134.0],
+  ["08/5", 635,1212, 49,   0, 244, 137.1],
+  ["09/5",1021,1250, 17,   0, 259, 156.9],
+  ["10/5", 854,1130, 65,   0, 257, 156.0],
+  ["11/5",1045, 730, 63,   0, 264, 134.3],
+  ["12/5", 992,1074, 61,   0, 172, 146.9],
+  ["13/5",1089, 330, 56,  61, 157, 104.6],
+  ["14/5",1131, 269, 36,  96, 148, 100.1],
+  ["15/5",1193, 143, 62,  82, 164,  96.9],
+  ["16/5", 987, 293, 47,   4, 189,  99.8],
+  ["17/5", 613, 508, 30,   0, 252, 100.0],
+  ["18/5", 968, 288, 60,  51, 188,  96.7],
+  ["19/5", 668, 673, 59,   0, 263, 100.5],
+  ["20/5", 643, 727, 57,   0, 289, 102.4],
+  ["21/5",1018, 297, 38,  68, 274,  96.0],
+  ["22/5",1107, 176, 43,  66, 301,  96.1],
+  ["23/5", 702, 245, 38, 253, 309,  83.7],
+  ["24/5", 595, 292, 16, 241, 282,  83.1],
+];
+
+const mix = [
+  { src:"Hidroeléctrica", pct:48.5, color:"var(--hidro)", mw:832 },
+  { src:"Eólica",         pct:33.2, color:"var(--eol)",   mw:570 },
+  { src:"Biomasa",        pct:13.4, color:"var(--bio)",   mw:230 },
+  { src:"Solar",          pct:2.6,  color:"var(--sol)",   mw:44  },
+  { src:"Térmica",        pct:2.3,  color:"var(--ter)",   mw:40  },
+];
+
+const COLORS = {
+  hidro: getComputedStyle(document.documentElement).getPropertyValue('--hidro').trim() || '#3b82f6',
+  eol:   getComputedStyle(document.documentElement).getPropertyValue('--eol').trim()   || '#22c55e',
+  sol:   getComputedStyle(document.documentElement).getPropertyValue('--sol').trim()   || '#f59e0b',
+  ter:   getComputedStyle(document.documentElement).getPropertyValue('--ter').trim()   || '#ef4444',
+  bio:   getComputedStyle(document.documentElement).getPropertyValue('--bio').trim()   || '#84cc16',
+};
+
+function positionTooltip(ev) {
+  var tt = document.getElementById('tooltip');
+  var x = ev.clientX + 14;
+  var y = ev.clientY - 10;
+  if (x + 180 > window.innerWidth) x = ev.clientX - 180;
+  tt.style.left = x + 'px';
+  tt.style.top  = y + 'px';
+}
+
+function row_tt(label, val, color) {
+  return '<div class="tooltip-row"><span class="tooltip-src" style="color:'+color+'">'+label+'</span><span class="tooltip-mw">'+val.toFixed(0)+' MW</span></div>';
+}
+
+// ── GRÁFICO MENSUAL ────────────────────────────────────────────────────────
+(function buildMonthly() {
+  var svg = document.getElementById('chart-mensual');
+  if (!svg) return;
+  var tt = document.getElementById('tooltip');
+  var ttTitle = document.getElementById('tt-title');
+  var ttRows  = document.getElementById('tt-rows');
+
+  var W=720, H=248, PL=52, PR=12, PT=24, PB=56;
+  var PW=W-PL-PR, PH=H-PT-PB;
+  var MaxY=1900;
+  var N=monthly12.length;
+  var groupW=PW/N;
+  var barW=groupW*0.70;
+  var barOff=(groupW-barW)/2;
+  var baseY=PT+PH;
+  var yearSep=7;
+
+  function bx(i){ return (PL+i*groupW+barOff).toFixed(1); }
+  function cx(i){ return (PL+i*groupW+groupW/2).toFixed(1); }
+  function py(v){ return (PT+PH*(1-v/MaxY)).toFixed(1); }
+
+  var layers=[
+    {key:1,col:'#3b82f6'},
+    {key:5,col:'#84cc16'},
+    {key:2,col:'#22c55e'},
+    {key:3,col:'#f59e0b'},
+    {key:4,col:'#ef4444'},
+  ];
+
+  var html='';
+  [0,600,1200,1800].forEach(function(v){
+    var y=py(v);
+    var lbl=v>=1000?(v/1000).toFixed(1)+'k':v;
+    html+='<line x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'" stroke="rgba(255,255,255,'+(v===0?.1:.05)+')" stroke-width="1"/>';
+    html+='<text x="'+(PL-5)+'" y="'+(parseFloat(y)+3.5).toFixed(1)+'" text-anchor="end" font-size="10" fill="rgba(255,255,255,0.38)">'+lbl+'</text>';
+  });
+  html+='<text x="14" y="'+(PT+PH/2)+'" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.28)" transform="rotate(-90,14,'+(PT+PH/2)+')">MW prom.</text>';
+
+  var sepX=(PL+yearSep*groupW).toFixed(1);
+  html+='<line x1="'+sepX+'" y1="'+PT+'" x2="'+sepX+'" y2="'+(baseY+4)+'" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-dasharray="3 3"/>';
+  html+='<text x="'+(parseFloat(sepX)-4)+'" y="'+(PT-6)+'" text-anchor="end" font-size="9" fill="rgba(255,255,255,0.35)">2025</text>';
+  html+='<text x="'+(parseFloat(sepX)+4)+'" y="'+(PT-6)+'" text-anchor="start" font-size="9" fill="rgba(255,255,255,0.35)">2026</text>';
+
+  var demPts=[];
+  monthly12.forEach(function(row,i){
+    var vals=[0,row[1],row[2],row[3],row[4],row[5]];
+    var cumH=0;
+    layers.forEach(function(lyr){
+      var v=vals[lyr.key];
+      var h=(v/MaxY)*PH;
+      html+='<rect x="'+bx(i)+'" y="'+(baseY-cumH-h).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+lyr.col+'"/>';
+      cumH+=h;
+    });
+    var lx=cx(i), ly=baseY+14;
+    var mesCorto=row[0].split(' ')[0];
+    html+='<text x="'+lx+'" y="'+ly+'" text-anchor="end" font-size="10" fill="rgba(255,255,255,0.6)" transform="rotate(-40,'+lx+','+ly+')">'+mesCorto+'</text>';
+    demPts.push(lx+','+py(row[6]));
+    html+='<rect class="mo-hit" data-idx="'+i+'" x="'+(PL+i*groupW).toFixed(1)+'" y="'+PT+'" width="'+groupW.toFixed(1)+'" height="'+(PH+4)+'" fill="transparent" style="cursor:pointer"/>';
+  });
+
+  html+='<polyline points="'+demPts.join(' ')+'" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2" stroke-dasharray="5 3" stroke-linejoin="round" stroke-linecap="round"/>';
+  monthly12.forEach(function(row,i){
+    html+='<circle cx="'+cx(i)+'" cy="'+py(row[6])+'" r="4" fill="rgba(255,255,255,0.88)" stroke="#07101c" stroke-width="1.5"/>';
+  });
+
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  svg.innerHTML=html;
+
+  svg.querySelectorAll('.mo-hit').forEach(function(rect){
+    rect.addEventListener('mouseenter',function(){
+      var i=parseInt(this.getAttribute('data-idx'),10);
+      var r=monthly12[i];
+      var mes=r[0],h=r[1],e=r[2],s=r[3],t=r[4],b=r[5],dem=r[6];
+      var gen=h+e+s+t+b;
+      var pct=((h+e+s+b)/gen*100).toFixed(1);
+      var bal=gen>dem?'↑ Exportó '+(gen-dem).toFixed(0)+' MW':'↓ Importó '+(dem-gen).toFixed(0)+' MW';
+      ttTitle.textContent=mes;
+      ttRows.innerHTML=
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#3b82f6">Hidro</span><span class="tooltip-mw">'+h.toFixed(0)+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#22c55e">Eólica</span><span class="tooltip-mw">'+e.toFixed(0)+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#84cc16">Biomasa</span><span class="tooltip-mw">'+b.toFixed(0)+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#f59e0b">Solar</span><span class="tooltip-mw">'+s.toFixed(0)+' MW</span></div>'+
+        (t>1?'<div class="tooltip-row"><span class="tooltip-src" style="color:#ef4444">Térmica</span><span class="tooltip-mw">'+t.toFixed(0)+' MW</span></div>':'')+
+        '<div class="tooltip-row"><span class="tooltip-src">Total generado</span><span class="tooltip-mw">'+Math.round(gen)+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:rgba(255,255,255,0.7)">Demanda</span><span class="tooltip-mw">'+dem.toFixed(0)+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src">Renovable</span><span class="tooltip-mw" style="color:#4ade80">'+pct+' %</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-mw" style="color:'+(gen>dem?'#4ade80':'#f87171')+'">'+bal+'</span></div>';
+      tt.classList.add('show');
+    });
+    rect.addEventListener('mousemove',function(ev){positionTooltip(ev);});
+    rect.addEventListener('mouseleave',function(){tt.classList.remove('show');});
+  });
+})();
+
+// ── MIX HORIZONTAL ────────────────────────────────────────────────────────
+(function buildMix() {
+  var table = document.getElementById('mix-table');
+  var tt = document.getElementById('tooltip');
+  var ttTitle = document.getElementById('tt-title');
+  var ttRows  = document.getElementById('tt-rows');
+  var DEM_MAY = 1505;
+
+  mix.forEach(function(m) {
+    var row = document.createElement('div');
+    row.className = 'mix-row';
+    row.style.cursor = 'pointer';
+    row.innerHTML =
+      '<div class="mix-src">' + m.src + '</div>' +
+      '<div class="mix-track">' +
+        '<div class="mix-fill" style="width:' + m.pct + '%;background:' + m.color + '"></div>' +
+      '</div>' +
+      '<div class="mix-mw">' + m.mw + ' MW</div>' +
+      '<div class="mix-pct">' + m.pct.toFixed(1) + ' %</div>';
+    table.appendChild(row);
+
+    row.addEventListener('mouseenter', function() {
+      var demPct = (m.mw / DEM_MAY * 100).toFixed(1);
+      ttTitle.textContent = m.src;
+      ttRows.innerHTML =
+        '<div class="tooltip-row"><span class="tooltip-src">Promedio mensual</span><span class="tooltip-mw">'+m.mw+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src">% de lo generado</span><span class="tooltip-mw">'+m.pct.toFixed(1)+' %</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src">% de la demanda cubierta</span><span class="tooltip-mw" style="color:'+m.color+'">'+demPct+' %</span></div>';
+      tt.classList.add('show');
+    });
+    row.addEventListener('mousemove', function(ev){ positionTooltip(ev); });
+    row.addEventListener('mouseleave', function(){ tt.classList.remove('show'); });
+  });
+})();
+
+// ── DIARIO ────────────────────────────────────────────────────────────────
+(function buildDailyProduction() {
+  var svg = document.getElementById('chart-diario');
+  if (!svg) return;
+  var tt = document.getElementById('tooltip');
+  var ttTitle = document.getElementById('tt-title');
+  var ttRows  = document.getElementById('tt-rows');
+
+  var W=860, H=250, PL=52, PR=12, PT=20, PB=36;
+  var PW=W-PL-PR, PH=H-PT-PB;
+  var MaxY=2800;
+  var N=daily.length;
+  var groupW=PW/N;
+  var barW=groupW*0.75;
+  var barOff=(groupW-barW)/2;
+  var baseY=PT+PH;
+
+  var layers=[
+    {key:1,col:'#3b82f6'},
+    {key:5,col:'#84cc16'},
+    {key:2,col:'#22c55e'},
+    {key:3,col:'#f59e0b'},
+    {key:4,col:'#ef4444'},
+  ];
+
+  function bx(i){ return (PL+i*groupW+barOff).toFixed(1); }
+  function cx(i){ return (PL+i*groupW+groupW/2).toFixed(1); }
+  function py(v){ return (PT+PH*(1-v/MaxY)).toFixed(1); }
+
+  var html='';
+  [0,700,1400,2100,2800].forEach(function(v){
+    var y=py(v);
+    var lbl=v>=1000?(v/1000).toFixed(1)+'k':v;
+    html+='<line x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'" stroke="rgba(255,255,255,'+(v===0?.1:.05)+')" stroke-width="1"/>';
+    html+='<text x="'+(PL-5)+'" y="'+(parseFloat(y)+3.5).toFixed(1)+'" text-anchor="end" font-size="9.5" fill="rgba(255,255,255,0.38)">'+lbl+'</text>';
+  });
+  html+='<text x="13" y="'+(PT+PH/2)+'" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.28)" transform="rotate(-90,13,'+(PT+PH/2)+')">MW prom.</text>';
+
+  var demPts=[];
+  daily.forEach(function(row,i){
+    var h=row[1],e=row[2],s=row[3],t=row[4],b=row[5],pct=row[6];
+    var ren=h+e+s+b;
+    var dem=ren/(pct/100);
+    var vals=[0,h,e,s,t,b];
+    var cumH=0;
+    layers.forEach(function(lyr){
+      var v=vals[lyr.key];
+      var bh=(v/MaxY)*PH;
+      html+='<rect x="'+bx(i)+'" y="'+(baseY-cumH-bh).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="'+lyr.col+'"/>';
+      cumH+=bh;
+    });
+    if(i===0||i===4||i===8||i===12||i===16||i===20||i===23){
+      var dayNum=row[0].split('/')[0];
+      html+='<text x="'+cx(i)+'" y="'+(baseY+14)+'" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)">'+dayNum+'</text>';
+    }
+    demPts.push(cx(i)+','+py(dem));
+    html+='<rect class="dy-hit" data-idx="'+i+'" x="'+(PL+i*groupW).toFixed(1)+'" y="'+PT+'" width="'+groupW.toFixed(1)+'" height="'+(PH+4)+'" fill="transparent" style="cursor:pointer"/>';
+  });
+
+  html+='<polyline points="'+demPts.join(' ')+'" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2" stroke-dasharray="5 3" stroke-linejoin="round" stroke-linecap="round"/>';
+  daily.forEach(function(row,i){
+    var ren=row[1]+row[2]+row[3]+row[5];
+    var dem=ren/(row[6]/100);
+    html+='<circle cx="'+cx(i)+'" cy="'+py(dem)+'" r="3.5" fill="rgba(255,255,255,0.85)" stroke="#07101c" stroke-width="1.5"/>';
+  });
+  html+='<text x="'+(PL+PW/2)+'" y="'+(H-4)+'" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.3)">mayo 2026 — día del mes</text>';
+
+  svg.innerHTML=html;
+
+  svg.querySelectorAll('.dy-hit').forEach(function(rect){
+    rect.addEventListener('mouseenter',function(){
+      var i=parseInt(this.getAttribute('data-idx'),10);
+      var row=daily[i];
+      var h=row[1],e=row[2],s=row[3],t=row[4],b=row[5],pct=row[6];
+      var ren=h+e+s+b, gen=h+e+s+t+b;
+      var dem=Math.round(ren/(pct/100));
+      var bal=gen-dem;
+      var balStr=bal>=0
+        ?'<span style="color:#4ade80">↑ Exportó '+Math.round(bal)+' MW</span>'
+        :'<span style="color:#f87171">↓ Importó '+Math.abs(Math.round(bal))+' MW</span>';
+      ttTitle.textContent='Mayo '+row[0].split('/')[0];
+      ttRows.innerHTML=
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#3b82f6">Hidro</span><span class="tooltip-mw">'+h+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#22c55e">Eólica</span><span class="tooltip-mw">'+e+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#84cc16">Biomasa</span><span class="tooltip-mw">'+b+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#f59e0b">Solar</span><span class="tooltip-mw">'+s+' MW</span></div>'+
+        (t>0?'<div class="tooltip-row"><span class="tooltip-src" style="color:#ef4444">Térmica</span><span class="tooltip-mw">'+t+' MW</span></div>':'')+
+        '<div class="tooltip-row"><span class="tooltip-src">Total generado</span><span class="tooltip-mw">'+gen+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:rgba(255,255,255,0.7)">Demanda</span><span class="tooltip-mw">'+dem+' MW</span></div>'+
+        '<div class="tooltip-row">'+balStr+'</div>';
+      tt.classList.add('show');
+    });
+    rect.addEventListener('mousemove',function(ev){positionTooltip(ev);});
+    rect.addEventListener('mouseleave',function(){tt.classList.remove('show');});
+  });
+})();
+
+// ── DATOS HISTÓRICOS ──────────────────────────────────────────────────────
+// [año, hidro, eolica, solar, termica, biomasa, demanda, %renov, nota]
+const hist = [
+  [2018, 731, 534, 40,  36,  90, 1267, 97.5, "mar-dic"],
+  [2019, 899, 538, 43,  33,  97, 1263, 98.0, "anual"],
+  [2020, 453, 618, 47,  91, 117, 1250, 93.1, "anual"],
+  [2021, 596, 562, 49, 280, 118, 1282, 82.5, "anual"],
+  [2022, 628, 545, 51, 148, 107, 1325, 90.0, "anual"],
+  [2023, 387, 540, 47, 108, 129, 1343, 91.1, "anual"],
+  [2024, 814, 533, 47,  15, 206, 1393, 99.0, "anual"],
+  [2025, 680, 504, 56,  28, 205, 1427, 98.1, "anual"],
+  [2026, 584, 496, 56,  89, 224, 1418, 93.9, "ene-may"],
+];
+
+// ── MIX POR AÑO ───────────────────────────────────────────────────────────
+(function buildYearMix() {
+  var container = document.getElementById('year-mix');
+  var CHART_H = 200, MAX_MW = 1900;
+  var layers = [
+    {idx:1, key:'h', label:'Hidro',   color:COLORS.hidro},
+    {idx:5, key:'b', label:'Biomasa', color:COLORS.bio},
+    {idx:2, key:'e', label:'Eólica',  color:COLORS.eol},
+    {idx:3, key:'s', label:'Solar',   color:COLORS.sol},
+    {idx:4, key:'t', label:'Térmica', color:COLORS.ter},
+  ];
+  var tt = document.getElementById('tooltip');
+  var ttTitle = document.getElementById('tt-title');
+  var ttRows  = document.getElementById('tt-rows');
+
+  hist.forEach(function(row) {
+    var yr=row[0],h=row[1],e=row[2],s=row[3],t=row[4],b=row[5],dem=row[6],pct=row[7],muestra=row[8];
+    var vals={h:h,e:e,s:s,t:t,b:b};
+    var col = document.createElement('div');
+    col.className = 'yr-col';
+
+    layers.forEach(function(layer) {
+      var mw = vals[layer.key];
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      seg.style.height = ((mw/MAX_MW)*CHART_H)+'px';
+      seg.style.background = layer.color;
+      col.appendChild(seg);
+    });
+
+    var demLine = document.createElement('div');
+    demLine.style.cssText = 'position:absolute;left:0;right:0;border-top:2px dashed rgba(255,255,255,0.4);bottom:'+((dem/MAX_MW)*CHART_H)+'px;';
+    col.appendChild(demLine);
+
+    var lbl = document.createElement('div'); lbl.className='yr-lbl'; lbl.textContent=yr; col.appendChild(lbl);
+    var smpl = document.createElement('div'); smpl.className='yr-sample'; smpl.textContent='('+muestra+')'; col.appendChild(smpl);
+
+    col.addEventListener('mousemove', function(ev) {
+      ttTitle.textContent = yr + ' — muestra: ' + muestra;
+      var gen=h+e+s+t+b;
+      ttRows.innerHTML =
+        row_tt('Hidro', h, COLORS.hidro)+row_tt('Eólica', e, COLORS.eol)+
+        row_tt('Solar', s, COLORS.sol)+row_tt('Biomasa', b, COLORS.bio)+row_tt('Térmica', t, COLORS.ter)+
+        '<div class="tooltip-row"><span class="tooltip-src">Total generado</span><span class="tooltip-mw">'+Math.round(gen)+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src">Demanda</span><span class="tooltip-mw">'+dem+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src">% Renovable</span><span class="tooltip-mw" style="color:#4ade80">'+pct+'%</span></div>';
+      tt.classList.add('show'); positionTooltip(ev);
+    });
+    col.addEventListener('mouseleave', function(){tt.classList.remove('show');});
+    container.appendChild(col);
+  });
+})();
+
+// ── % RENOVABLE POR AÑO ───────────────────────────────────────────────────
+(function buildYearRenov() {
+  var container = document.getElementById('year-renov');
+  var CHART_H = 160, MAX_PCT = 108;
+  var tt = document.getElementById('tooltip');
+  var ttTitle = document.getElementById('tt-title');
+  var ttRows  = document.getElementById('tt-rows');
+
+  var ref = document.createElement('div');
+  ref.className = 'trend-ref';
+  ref.style.bottom = ((100/MAX_PCT)*CHART_H)+'px';
+  container.appendChild(ref);
+
+  hist.forEach(function(row) {
+    var yr=row[0],h=row[1],e=row[2],s=row[3],t=row[4],b=row[5],dem=row[6],pct=row[7],muestra=row[8];
+    var col = document.createElement('div');
+    col.className = 'trend-col';
+    col.style.cursor = 'pointer';
+
+    var barH = Math.min((pct/MAX_PCT)*CHART_H, CHART_H);
+    var cls = pct>=100?'t-over':(pct>=95?'t-near':'t-low');
+    var bar = document.createElement('div');
+    bar.className = 'trend-bar '+cls;
+    bar.style.height = barH+'px';
+
+    var topLbl = document.createElement('div');
+    topLbl.className = 'trend-top';
+    topLbl.style.color = pct>=100?'#4ade80':'#94a3b8';
+    topLbl.textContent = pct.toFixed(0)+'%';
+
+    var lbl = document.createElement('div'); lbl.className='trend-lbl'; lbl.textContent=yr;
+
+    col.appendChild(topLbl); col.appendChild(bar); col.appendChild(lbl);
+    container.appendChild(col);
+
+    col.addEventListener('mouseenter', function() {
+      var gen=h+e+s+t+b;
+      var pctColor = pct>=100?'#4ade80':pct>=95?'#94a3b8':'#fb923c';
+      var contextNote = t>100?'Año de sequía — térmica encendida':pct>=100?'Exportando energía limpia':'Casi 100% renovable';
+      ttTitle.textContent = yr + (muestra!=='anual'?' ('+muestra+')':'');
+      ttRows.innerHTML =
+        '<div class="tooltip-row"><span class="tooltip-src">% Renovable</span><span class="tooltip-mw" style="color:'+pctColor+'">'+pct+'%</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#3b82f6">Hidro</span><span class="tooltip-mw">'+h+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#22c55e">Eólica</span><span class="tooltip-mw">'+e+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:#84cc16">Biomasa</span><span class="tooltip-mw">'+b+' MW</span></div>'+
+        (t>5?'<div class="tooltip-row"><span class="tooltip-src" style="color:#ef4444">Térmica</span><span class="tooltip-mw">'+t+' MW</span></div>':'')+
+        '<div class="tooltip-row"><span class="tooltip-src">Demanda</span><span class="tooltip-mw">'+dem+' MW</span></div>'+
+        '<div class="tooltip-row"><span class="tooltip-src" style="color:'+pctColor+'">'+contextNote+'</span></div>';
+      tt.classList.add('show');
+    });
+    col.addEventListener('mousemove', function(ev){ positionTooltip(ev); });
+    col.addEventListener('mouseleave', function(){ tt.classList.remove('show'); });
+  });
+})();
+
+// ── CRECIMIENTO POR FUENTE ────────────────────────────────────────────────
+(function buildGrowth() {
+  var container = document.getElementById('fuente-growth');
+  var base = hist[0], last = hist[7];
+  var src = [
+    {label:'Biomasa', b2018:base[5], b2026:last[5], color:COLORS.bio},
+    {label:'Solar',   b2018:base[3], b2026:last[3], color:COLORS.sol},
+    {label:'Eólica',  b2018:base[2], b2026:last[2], color:COLORS.eol},
+    {label:'Hidro',   b2018:base[1], b2026:last[1], color:COLORS.hidro},
+    {label:'Demanda', b2018:base[6], b2026:last[6], color:'#94a3b8'},
+  ];
+  var maxMW = 1600;
+  var tt = document.getElementById('tooltip');
+  var ttTitle = document.getElementById('tt-title');
+  var ttRows  = document.getElementById('tt-rows');
+  var fmt = function(n){ return n>=1000?(Math.floor(n/1000)+'.'+String(n%1000).padStart(3,'0')):n; };
+
+  container.className = 'growth-grid';
+  container.innerHTML =
+    '<div class="gs-hdr">Fuente</div>'+
+    '<div class="gs-hdr gs-hdr-r">2018</div>'+
+    '<div class="gs-hdr"></div>'+
+    '<div class="gs-hdr gs-hdr-c"></div>'+
+    '<div class="gs-hdr"></div>'+
+    '<div class="gs-hdr">2026</div>'+
+    '<div class="gs-hdr gs-hdr-r">Var.</div>';
+
+  src.forEach(function(s, rowIdx) {
+    var p18 = Math.max((s.b2018/maxMW)*100, 2);
+    var p26 = Math.max((s.b2026/maxMW)*100, 2);
+    var delta = Math.round(((s.b2026 - s.b2018)/s.b2018)*100);
+    var deltaStr = (delta>0?'+':'')+delta+'%';
+    var deltaClass = delta>0?'delta-up':'delta-dn';
+
+    container.insertAdjacentHTML('beforeend',
+      '<div class="gs-name" data-gr="'+rowIdx+'">'+s.label+'</div>'+
+      '<div class="gs-val" data-gr="'+rowIdx+'">'+fmt(s.b2018)+'&nbsp;MW</div>'+
+      '<div class="gs-bar" data-gr="'+rowIdx+'"><div class="gs-fill" style="width:'+p18+'%;background:'+s.color+';opacity:.45"></div></div>'+
+      '<div class="gs-arrow" data-gr="'+rowIdx+'">→</div>'+
+      '<div class="gs-bar" data-gr="'+rowIdx+'"><div class="gs-fill" style="width:'+p26+'%;background:'+s.color+'"></div></div>'+
+      '<div class="gs-val2" data-gr="'+rowIdx+'">'+fmt(s.b2026)+'&nbsp;MW</div>'+
+      '<div class="gs-delta '+deltaClass+'" data-gr="'+rowIdx+'">'+deltaStr+'</div>'
+    );
+  });
+
+  src.forEach(function(s, rowIdx) {
+    var cells = container.querySelectorAll('[data-gr="'+rowIdx+'"]');
+    var delta = Math.round(((s.b2026-s.b2018)/s.b2018)*100);
+    var dColor = delta>0?'#4ade80':'#f87171';
+    cells.forEach(function(cell) {
+      cell.style.cursor = 'pointer';
+      cell.addEventListener('mouseenter', function() {
+        ttTitle.textContent = s.label + ' — 2018 vs. 2025';
+        ttRows.innerHTML =
+          '<div class="tooltip-row"><span class="tooltip-src" style="color:'+s.color+';opacity:.6">2018</span><span class="tooltip-mw">'+fmt(s.b2018)+' MW</span></div>'+
+          '<div class="tooltip-row"><span class="tooltip-src" style="color:'+s.color+'">2025</span><span class="tooltip-mw">'+fmt(s.b2026)+' MW</span></div>'+
+          '<div class="tooltip-row"><span class="tooltip-src">Variación</span><span class="tooltip-mw" style="color:'+dColor+'">'+(delta>0?'+':'')+delta+' %</span></div>'+
+          '<div class="tooltip-row"><span class="tooltip-src">Diferencia</span><span class="tooltip-mw" style="color:'+dColor+'">'+(delta>0?'+':'')+Math.round(s.b2026-s.b2018)+' MW</span></div>';
+        tt.classList.add('show');
+      });
+      cell.addEventListener('mousemove', function(ev){ positionTooltip(ev); });
+      cell.addEventListener('mouseleave', function(){ tt.classList.remove('show'); });
+    });
+  });
+})();
+
+// ── ESTACIONALIDAD ───────────────────────────────────────────────────────────
+const SEA_HIST = {
+  hidro:   [541.8, 565.4, 441.2, 451.9, 648.0, 775.2, 861.2, 818.1, 731.4, 671.2, 646.2, 571.4],
+  eolica:  [541.9, 491.4, 488.8, 490.5, 521.4, 549.1, 607.1, 632.3, 579.5, 557.2, 575.4, 518.2],
+  solar:   [ 59.4,  58.1,  50.7,  42.9,  34.1,  30.9,  34.2,  44.3,  46.2,  53.2,  59.3,  60.9],
+  termica: [221.0, 171.3, 139.0,  35.0,  54.7,  54.1,  75.1,  72.9,  71.8,  52.0,  82.2, 123.6],
+  biomasa: [136.1, 137.1, 124.5, 128.0, 122.0, 137.0, 152.2, 155.4, 140.0, 134.1, 112.1, 137.9],
+  demanda: [1361.6,1370.5,1261.1,1171.4,1283.3,1446.1,1501.4,1411.4,1285.6,1203.7,1231.4,1320.0],
+};
+const SEA_2025 = {
+  hidro:   [542.5, 557.9, 514.2, 380.4, 631.1,1004.4, 923.5, 875.9, 941.1, 587.4, 545.9, 644.0],
+  eolica:  [492.7, 463.8, 433.5, 467.1, 489.1,  505.6, 511.4, 633.5, 549.7, 552.3, 526.7, 421.2],
+  solar:   [ 72.6,  62.3,  61.1,  54.0,  38.3,   38.2,  39.1,  53.2,  58.8,  58.0,  70.3,  70.1],
+  termica: [ 66.1, 111.1,  19.0,   0.0,   6.1,   30.3,  46.5,   4.1,   4.7,   1.9,   1.4,  50.6],
+  biomasa: [223.7, 196.0, 193.5, 224.5, 172.4,  197.5, 243.0, 245.8, 209.6, 167.2, 146.2, 239.3],
+  demanda: [1489.2,1543.4,1378.1,1242.6,1354.5,1609.6,1641.2,1480.5,1340.4,1231.0,1287.2,1528.9],
+};
+const SEA_2026 = {
+  hidro:   [651.1, 548.7, 389.2, 526.5, 819.2, null, null, null, null, null, null, null],
+  eolica:  [508.5, 441.9, 525.8, 475.0, 523.6, null, null, null, null, null, null, null],
+  solar:   [ 73.4,  66.4,  53.4,  44.3,  41.7, null, null, null, null, null, null, null],
+  termica: [ 44.3, 146.8, 137.4,  46.0,  71.6, null, null, null, null, null, null, null],
+  biomasa: [212.5, 227.5, 217.9, 224.4, 239.9, null, null, null, null, null, null, null],
+  demanda: [1469.9,1507.9,1349.4,1269.1,1505.4, null, null, null, null, null, null, null],
+};
+
+(function buildSeasonality() {
+  var charts = [
+    {id:'sea-hidro',   hist:SEA_HIST.hidro,   y2025:SEA_2025.hidro,   actual:SEA_2026.hidro,   color:'#3b82f6', maxY:1100},
+    {id:'sea-eolica',  hist:SEA_HIST.eolica,  y2025:SEA_2025.eolica,  actual:SEA_2026.eolica,  color:'#22c55e', maxY:700},
+    {id:'sea-biomasa', hist:SEA_HIST.biomasa,  y2025:SEA_2025.biomasa, actual:SEA_2026.biomasa, color:'#84cc16', maxY:260},
+    {id:'sea-demanda', hist:SEA_HIST.demanda,  y2025:SEA_2025.demanda, actual:SEA_2026.demanda, color:'#94a3b8', maxY:1700},
+    {id:'sea-solar',   hist:SEA_HIST.solar,   y2025:SEA_2025.solar,   actual:SEA_2026.solar,   color:'#f59e0b', maxY:80},
+    {id:'sea-termica', hist:SEA_HIST.termica,  y2025:SEA_2025.termica, actual:SEA_2026.termica, color:'#ef4444', maxY:260},
+  ];
+  var mLabels = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var W=320, H=165, PL=40, PR=10, PT=12, PB=28;
+  var PW=W-PL-PR;
+  var PH=H-PT-PB;
+
+  charts.forEach(function(c) {
+    var svg = document.getElementById(c.id);
+    if (!svg) return;
+    var maxY = c.maxY;
+    var px = function(i) { return PL + (i/11)*PW; };
+    var py = function(v) { return PT + PH*(1 - v/maxY); };
+    var baseY = PT+PH;
+    var html='';
+
+    [0, maxY/2, maxY].forEach(function(v) {
+      var y = py(v);
+      var lbl = v >= 1000 ? (v/1000).toFixed(1)+'k' : Math.round(v);
+      html += '<line x1="'+PL+'" y1="'+y.toFixed(1)+'" x2="'+(W-PR)+'" y2="'+y.toFixed(1)+'" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>';
+      html += '<text x="'+(PL-4)+'" y="'+(y+3.5).toFixed(1)+'" text-anchor="end" font-size="8.5" fill="rgba(255,255,255,0.32)">'+lbl+'</text>';
+    });
+
+    var areaPts = PL+','+baseY;
+    for (var i=0; i<12; i++) areaPts += ' '+px(i).toFixed(1)+','+py(c.hist[i]).toFixed(1);
+    areaPts += ' '+(W-PR)+','+baseY;
+    html += '<polygon points="'+areaPts+'" fill="rgba(148,163,184,0.10)"/>';
+
+    html += '<polyline points="'+c.hist.map(function(v,i){
+      return px(i).toFixed(1)+','+py(v).toFixed(1);
+    }).join(' ')+'" fill="none" stroke="rgba(148,163,184,0.55)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>';
+
+    html += '<polyline points="'+c.y2025.map(function(v,i){
+      return px(i).toFixed(1)+','+py(v).toFixed(1);
+    }).join(' ')+'" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" stroke-dasharray="5 3" stroke-linejoin="round" stroke-linecap="round"/>';
+
+    var seg=[];
+    for (var i=0; i<=12; i++) {
+      var v = i<12 ? c.actual[i] : null;
+      if (v !== null) {
+        seg.push(px(i).toFixed(1)+','+py(v).toFixed(1));
+      } else {
+        if (seg.length >= 2) {
+          html += '<polyline points="'+seg.join(' ')+'" fill="none" stroke="'+c.color+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+        }
+        seg=[];
+      }
+    }
+
+    for (var i=0; i<12; i++) {
+      if (c.actual[i] !== null) {
+        html += '<circle cx="'+px(i).toFixed(1)+'" cy="'+py(c.actual[i]).toFixed(1)+'" r="3.5" fill="'+c.color+'" stroke="#07101c" stroke-width="1.5"/>';
+      }
+    }
+
+    mLabels.forEach(function(m, i) {
+      if (i%2===0 || i===11) {
+        html += '<text x="'+px(i).toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,0.35)">'+m+'</text>';
+      }
+    });
+
+    var step = PW/11;
+    for (var i=0; i<12; i++) {
+      var rx = px(i) - step/2;
+      html += '<rect class="sea-hit" data-idx="'+i+'" x="'+rx.toFixed(1)+'" y="'+PT+'" width="'+step.toFixed(1)+'" height="'+PH+'" fill="transparent" style="cursor:crosshair"/>';
+    }
+    html += '<line class="sea-vline" x1="'+px(0).toFixed(1)+'" y1="'+PT+'" x2="'+px(0).toFixed(1)+'" y2="'+baseY+'" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3 3" display="none"/>';
+
+    svg.innerHTML = html;
+
+    var tt      = document.getElementById('tooltip');
+    var ttTitle = document.getElementById('tt-title');
+    var ttRows  = document.getElementById('tt-rows');
+    var vline   = svg.querySelector('.sea-vline');
+
+    svg.querySelectorAll('.sea-hit').forEach(function(rect) {
+      rect.addEventListener('mouseenter', function() {
+        var idx = parseInt(this.getAttribute('data-idx'), 10);
+        var xpos = px(idx).toFixed(1);
+        vline.setAttribute('x1', xpos);
+        vline.setAttribute('x2', xpos);
+        vline.removeAttribute('display');
+
+        var histVal = c.hist[idx];
+        var val25   = c.y2025[idx];
+        var actVal  = c.actual[idx];
+        ttTitle.textContent = mLabels[idx];
+        ttRows.innerHTML =
+          '<div class="tooltip-row"><span class="tooltip-src" style="color:rgba(148,163,184,0.7)">Prom. 2018–2025</span><span class="tooltip-mw">'+Math.round(histVal)+' MW</span></div>'+
+          '<div class="tooltip-row"><span class="tooltip-src" style="color:rgba(255,255,255,0.65)">2025</span><span class="tooltip-mw">'+Math.round(val25)+' MW</span></div>'+
+          (actVal !== null
+            ? '<div class="tooltip-row"><span class="tooltip-src" style="color:'+c.color+'">2026</span><span class="tooltip-mw">'+Math.round(actVal)+' MW</span></div>'
+            : '<div class="tooltip-row"><span class="tooltip-src" style="color:rgba(255,255,255,0.3)">2026</span><span class="tooltip-mw" style="color:rgba(255,255,255,0.3)">sin datos</span></div>') +
+          (actVal !== null
+            ? '<div class="tooltip-row"><span class="tooltip-src">vs 2025</span><span class="tooltip-mw" style="color:'+(actVal>=val25?'#4ade80':'#f87171')+'">'+(actVal>=val25?'+':'')+(Math.round(actVal)-Math.round(val25))+' MW</span></div>'
+            : '');
+        tt.classList.add('show');
+      });
+      rect.addEventListener('mousemove', function(ev) { positionTooltip(ev); });
+      rect.addEventListener('mouseleave', function() {
+        vline.setAttribute('display','none');
+        tt.classList.remove('show');
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
