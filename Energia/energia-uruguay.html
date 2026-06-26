@@ -323,28 +323,28 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <div class="masthead">
   <div class="mast-inner">
     <div class="mast-top">
-      <div class="mast-badge">Datos ADME · SCADA · Mayo 2026</div>
+      <div class="mast-badge">Datos ADME · SCADA · Jun 25, 2026</div>
     </div>
     <h1>
       <span class="line1">Uruguay genera electricidad</span>
       <span class="line2">casi 100 % renovable</span>
     </h1>
-    <p class="mast-deck">En mayo de 2026, Uruguay cubrió el <strong>113 %</strong> de su demanda eléctrica con fuentes limpias — agua, viento, sol y biomasa. El excedente se exportó a Argentina y Brasil.</p>
+    <p class="mast-deck">En junio 2026, Uruguay cubre el <strong>85 %</strong> de su demanda eléctrica con fuentes limpias — el resto lo importa de Argentina y Brasil. Invierno con demanda máxima y vientos récord de hasta 1.267 MW.</p>
     <div class="mast-stats">
       <div class="mstat">
         <div class="mstat-lbl">% Renovable promedio</div>
-        <div class="mstat-val">113 %</div>
-        <div class="mstat-sub">del mes de mayo</div>
+        <div class="mstat-val">85 %</div>
+        <div class="mstat-sub">jun 24-25 · provisional</div>
       </div>
       <div class="mstat b">
-        <div class="mstat-lbl">Días exportando energía</div>
-        <div class="mstat-val">17 / 24</div>
-        <div class="mstat-sub">días del mes</div>
+        <div class="mstat-lbl">Demanda promedio</div>
+        <div class="mstat-val">1.860 MW</div>
+        <div class="mstat-sub">jun 24-25 · invierno</div>
       </div>
       <div class="mstat d">
         <div class="mstat-lbl">Pico eólico registrado</div>
-        <div class="mstat-val">1.384 MW</div>
-        <div class="mstat-sub">8 de mayo a las 14 h</div>
+        <div class="mstat-val">1.267 MW</div>
+        <div class="mstat-sub">25 de jun · a las 15 h</div>
       </div>
     </div>
   </div>
@@ -355,7 +355,7 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
   <div class="tabs-inner">
     <button class="tab-btn active" data-tab="resumen"     onclick="showTab('resumen')">Resumen</button>
     <button class="tab-btn"        data-tab="mensual"     onclick="showTab('mensual')">12 meses</button>
-    <button class="tab-btn"        data-tab="mix"         onclick="showTab('mix')">Mix mayo</button>
+    <button class="tab-btn"        data-tab="mix"         onclick="showTab('mix')">Mix jun '26</button>
     <button class="tab-btn"        data-tab="generadores" onclick="showTab('generadores')">Generadores</button>
     <button class="tab-btn"        data-tab="diario"      onclick="showTab('diario')">Evolución diaria</button>
     <button class="tab-btn"        data-tab="estacional"  onclick="showTab('estacional')">Estacionalidad</button>
@@ -368,33 +368,33 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <!-- ══════════════════════════════════════════════════════ RESUMEN ══ -->
 <div class="tab-panel active" id="panel-resumen">
 <div class="wrap">
-  <div class="sec-kicker">Resumen · Mayo 2026</div>
+  <div class="sec-kicker">Resumen · Jun '26 · provisional</div>
   <div class="sec-title">La energía en cuatro números</div>
 
   <div class="kpi-grid">
     <div class="kpi green">
       <div class="kpi-lbl">Renovable promedio</div>
-      <div class="kpi-val">113 %</div>
+      <div class="kpi-val">85 %</div>
       <div class="kpi-unit">de la demanda cubierta</div>
-      <div class="kpi-note">El 100 % es autosuficiencia; más del 100 % significa que se exportó electricidad</div>
+      <div class="kpi-note">Invierno con alta demanda; el resto se importa de Argentina y Brasil (jun 24-25)</div>
     </div>
     <div class="kpi blue">
       <div class="kpi-lbl">Demanda promedio</div>
-      <div class="kpi-val">1.488</div>
+      <div class="kpi-val">1.860</div>
       <div class="kpi-unit">MW consumidos por hora</div>
-      <div class="kpi-note">Equivale a alimentar ~1,5 millones de hogares simultáneamente</div>
+      <div class="kpi-note">Pico invernal: calefacción eléctrica + industria activa en junio</div>
     </div>
     <div class="kpi amber">
-      <div class="kpi-lbl">Récord mensual eólico</div>
-      <div class="kpi-val">1.384</div>
-      <div class="kpi-unit">MW de viento (8/mayo)</div>
-      <div class="kpi-note">El viento cubrió sólo ese día el 87 % de la demanda total</div>
+      <div class="kpi-lbl">Récord eólico jun '26</div>
+      <div class="kpi-val">1.267</div>
+      <div class="kpi-unit">MW de viento (25/jun · 15 h)</div>
+      <div class="kpi-note">El viento cubrió en esa hora el 67 % de la demanda total</div>
     </div>
     <div class="kpi red">
       <div class="kpi-lbl">Térmica (gas/fueloil)</div>
-      <div class="kpi-val">2,3 %</div>
+      <div class="kpi-val">4,9 %</div>
       <div class="kpi-unit">de la generación total</div>
-      <div class="kpi-note">Solo se encendió los días con poco viento y baja hidráulica</div>
+      <div class="kpi-note">Mayor uso que en mayo por la demanda invernal y menor aporte hidro nocturno</div>
     </div>
   </div>
 
@@ -425,7 +425,7 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
       <div class="fuente-item" style="background:oklch(0.55 0.22 25 / .06);border-color:oklch(0.55 0.22 25 / .2)">
         <div class="fuente-dot" style="background:var(--ter)"></div>
         <div class="fuente-nombre">Térmica</div>
-        <div class="fuente-desc">Gas y fueloil. Reserva de última instancia. En mayo casi no se necesitó.</div>
+        <div class="fuente-desc">Gas y fueloil. Reserva de última instancia. En junio cubre picos nocturnos de demanda invernal.</div>
       </div>
     </div>
   </div>
@@ -435,9 +435,9 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <!-- ══════════════════════════════════════════════════════ 12 MESES ══ -->
 <div class="tab-panel" id="panel-mensual">
 <div class="wrap">
-  <div class="sec-kicker">Evolución mensual · Jun 2025 – May 2026</div>
+  <div class="sec-kicker">Evolución mensual · Jul 2025 – Jun 2026</div>
   <div class="sec-title">Producción por mes y demanda</div>
-  <div class="sec-sub">Promedio horario de generación por fuente en los últimos 12 meses. La línea blanca es la demanda. Cuando las barras superan la línea, Uruguay exportó electricidad ese mes. Pasá el cursor para ver el detalle.</div>
+  <div class="sec-sub">Promedio horario de generación por fuente en los últimos 12 meses. La línea blanca es la demanda. Cuando las barras superan la línea, Uruguay exportó electricidad ese mes. Jun 2026 es provisional (2 días). Pasá el cursor para ver el detalle.</div>
 
   <div class="legend">
     <div class="leg-item"><div class="leg-dot" style="background:var(--hidro)"></div>Hidroeléctrica</div>
@@ -461,14 +461,14 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <!-- ══════════════════════════════════════════════════════ MIX ══ -->
 <div class="tab-panel" id="panel-mix">
 <div class="wrap">
-  <div class="sec-kicker">Composición · Mayo 2026</div>
-  <div class="sec-title">Mix de generación del mes</div>
-  <div class="sec-sub">Participación promedio de cada fuente en la generación total. La suma es 100 % de lo generado; la diferencia con la demanda es la energía exportada.</div>
+  <div class="sec-kicker">Composición · Jun 24, 2026 (día completo)</div>
+  <div class="sec-title">Mix de generación — jun 24-25</div>
+  <div class="sec-sub">Participación promedio de cada fuente en la generación total del 24 de junio. La suma es 100 % de lo generado localmente; Uruguay importó adicionalmente ~246 MW de Argentina y Brasil para cubrir la demanda invernal.</div>
 
   <div class="mix-table" id="mix-table"></div>
 
   <div class="callout">
-    <p>En mayo, Uruguay generó en promedio <strong>1.716 MW</strong> por hora y consumió <strong>1.488 MW</strong>. Los <strong>228 MW</strong> excedentes se exportaron a la región — el equivalente a abastecer toda Montevideo con energía limpia y regalar el sobrante.</p>
+    <p>El 24 de junio, Uruguay generó en promedio <strong>1.649 MW</strong> por hora y consumió <strong>1.889 MW</strong>. Los <strong>246 MW</strong> restantes se importaron de la región — es invierno, la demanda es máxima y la hidráulica nocturna cae al mínimo mientras el viento sostiene el sistema.</p>
   </div>
 </div>
 </div>
@@ -476,9 +476,9 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <!-- ══════════════════════════════════════════════════════ GENERADORES ══ -->
 <div class="tab-panel" id="panel-generadores">
 <div class="wrap">
-  <div class="sec-kicker">Generadores · Ene–May 2026 (YTD)</div>
+  <div class="sec-kicker">Generadores · Ene–Jun 2026 (YTD)</div>
   <div class="sec-title">¿Quién produce cada tipo de energía?</div>
-  <div class="sec-sub">Los generadores conectados al sistema eléctrico nacional, con su aporte promedio horario acumulado enero–mayo 2026. Fuente: ADME SCADA — datos por planta.</div>
+  <div class="sec-sub">Los generadores conectados al sistema eléctrico nacional, con su aporte promedio horario acumulado enero–mayo 2026. Junio provisional. Fuente: ADME SCADA — datos por planta.</div>
 
   <div class="gen-list">
 
@@ -619,7 +619,7 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <!-- ══════════════════════════════════════════════════════ DIARIO ══ -->
 <div class="tab-panel" id="panel-diario">
 <div class="wrap">
-  <div class="sec-kicker">Producción diaria · Mayo 2026</div>
+  <div class="sec-kicker">Producción diaria · Mayo 2026 (referencia)</div>
   <div class="sec-title">Generación, demanda y balance por día</div>
   <div class="sec-sub">Barras apiladas = generación total por fuente. Línea blanca = demanda. Lo que sobresale por encima de la línea es energía exportada; si la barra queda por debajo, Uruguay importó ese día.</div>
 
@@ -651,7 +651,7 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <div class="wrap">
   <div class="sec-kicker">Estacionalidad · 2018–2026</div>
   <div class="sec-title">Comportamiento estacional por fuente</div>
-  <div class="sec-sub">Cada fuente tiene su propio patrón anual. La zona gris muestra el promedio histórico 2018–2025; la línea de color con puntos muestra los datos reales de 2026 (disponibles: enero a mayo).</div>
+  <div class="sec-sub">Cada fuente tiene su propio patrón anual. La zona gris muestra el promedio histórico 2018–2025; la línea de color con puntos muestra los datos reales de 2026 (disponibles: enero a junio).</div>
 
   <div class="sea-legend">
     <div class="sea-leg-item">
@@ -714,7 +714,7 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
 <div class="wrap">
   <div class="sec-kicker">Tendencia 2018–2026</div>
   <div class="sec-title">Evolución histórica de la matriz</div>
-  <div class="sec-sub">Promedios anuales de generación por fuente, calculados hora a hora desde el SCADA de ADME. El sistema registra datos a partir del 9 de marzo de 2018. El año 2026 es parcial (enero–mayo).</div>
+  <div class="sec-sub">Promedios anuales de generación por fuente, calculados hora a hora desde el SCADA de ADME. El sistema registra datos a partir del 9 de marzo de 2018. El año 2026 es parcial (enero–junio, jun provisional).</div>
 
   <div class="hist-grid">
     <div>
@@ -767,7 +767,7 @@ footer{border-top:1px solid var(--bord);padding:28px 24px;text-align:center;}
     <div class="foot-src">
       Fuente: <a href="https://pronos.adme.com.uy/gpf.php" target="_blank" rel="noopener">ADME · Sistema SCADA</a> —
       datos de generación por fuente, actualización horaria ·
-      Elaboración: <a href="../index.html">ceterisparibus-cp</a> · Mayo 2026
+      Elaboración: <a href="../index.html">ceterisparibus-cp</a> · Jun 2026
     </div>
   </div>
 </footer>
@@ -790,7 +790,6 @@ function showTab(id) {
 
 // ── DATOS ──────────────────────────────────────────────────────────────────
 const monthly12 = [
-  ["Jun '25", 1004.4, 505.6,  38.2,  30.3, 197.5, 1609.6],
   ["Jul '25",  923.5, 511.4,  39.1,  46.5, 243.0, 1641.2],
   ["Ago '25",  875.9, 633.5,  53.2,   4.1, 245.8, 1480.5],
   ["Sep '25",  941.1, 549.7,  58.8,   4.7, 209.6, 1340.4],
@@ -802,6 +801,7 @@ const monthly12 = [
   ["Mar '26",  389.2, 525.8,  53.4, 137.4, 217.9, 1349.4],
   ["Abr '26",  526.5, 475.0,  44.3,  46.0, 224.4, 1269.1],
   ["May '26",  819.2, 523.6,  41.7,  71.6, 239.9, 1505.4],
+  ["Jun '26★", 718.5, 600.7,  47.7,  57.4, 211.1, 1860.1],
 ];
 
 // [dia, hidro, eolica, solar, termica, biomasa, pct_renov]
@@ -833,11 +833,11 @@ const daily = [
 ];
 
 const mix = [
-  { src:"Hidroeléctrica", pct:48.5, color:"var(--hidro)", mw:832 },
-  { src:"Eólica",         pct:33.2, color:"var(--eol)",   mw:570 },
-  { src:"Biomasa",        pct:13.4, color:"var(--bio)",   mw:230 },
-  { src:"Solar",          pct:2.6,  color:"var(--sol)",   mw:44  },
-  { src:"Térmica",        pct:2.3,  color:"var(--ter)",   mw:40  },
+  { src:"Hidroeléctrica", pct:54.8, color:"var(--hidro)", mw:904 },
+  { src:"Eólica",         pct:21.5, color:"var(--eol)",   mw:354 },
+  { src:"Biomasa",        pct:16.2, color:"var(--bio)",   mw:266 },
+  { src:"Térmica",        pct:4.9,  color:"var(--ter)",   mw:81  },
+  { src:"Solar",          pct:2.7,  color:"var(--sol)",   mw:45  },
 ];
 
 const COLORS = {
@@ -1099,7 +1099,7 @@ const hist = [
   [2023, 387, 540, 47, 108, 129, 1343, 91.1, "anual"],
   [2024, 814, 533, 47,  15, 206, 1393, 99.0, "anual"],
   [2025, 680, 504, 56,  28, 205, 1427, 98.1, "anual"],
-  [2026, 584, 496, 56,  89, 224, 1418, 93.9, "ene-may"],
+  [2026, 606, 514, 55,  84, 222, 1492, 93.6, "ene-jun"],
 ];
 
 // ── MIX POR AÑO ───────────────────────────────────────────────────────────
@@ -1294,12 +1294,12 @@ const SEA_2025 = {
   demanda: [1489.2,1543.4,1378.1,1242.6,1354.5,1609.6,1641.2,1480.5,1340.4,1231.0,1287.2,1528.9],
 };
 const SEA_2026 = {
-  hidro:   [651.1, 548.7, 389.2, 526.5, 819.2, null, null, null, null, null, null, null],
-  eolica:  [508.5, 441.9, 525.8, 475.0, 523.6, null, null, null, null, null, null, null],
-  solar:   [ 73.4,  66.4,  53.4,  44.3,  41.7, null, null, null, null, null, null, null],
-  termica: [ 44.3, 146.8, 137.4,  46.0,  71.6, null, null, null, null, null, null, null],
-  biomasa: [212.5, 227.5, 217.9, 224.4, 239.9, null, null, null, null, null, null, null],
-  demanda: [1469.9,1507.9,1349.4,1269.1,1505.4, null, null, null, null, null, null, null],
+  hidro:   [651.1, 548.7, 389.2, 526.5, 819.2, 718.5, null, null, null, null, null, null],
+  eolica:  [508.5, 441.9, 525.8, 475.0, 523.6, 600.7, null, null, null, null, null, null],
+  solar:   [ 73.4,  66.4,  53.4,  44.3,  41.7,  47.7, null, null, null, null, null, null],
+  termica: [ 44.3, 146.8, 137.4,  46.0,  71.6,  57.4, null, null, null, null, null, null],
+  biomasa: [212.5, 227.5, 217.9, 224.4, 239.9, 211.1, null, null, null, null, null, null],
+  demanda: [1469.9,1507.9,1349.4,1269.1,1505.4,1860.1, null, null, null, null, null, null],
 };
 
 (function buildSeasonality() {
@@ -1307,7 +1307,7 @@ const SEA_2026 = {
     {id:'sea-hidro',   hist:SEA_HIST.hidro,   y2025:SEA_2025.hidro,   actual:SEA_2026.hidro,   color:'#3b82f6', maxY:1100},
     {id:'sea-eolica',  hist:SEA_HIST.eolica,  y2025:SEA_2025.eolica,  actual:SEA_2026.eolica,  color:'#22c55e', maxY:700},
     {id:'sea-biomasa', hist:SEA_HIST.biomasa,  y2025:SEA_2025.biomasa, actual:SEA_2026.biomasa, color:'#84cc16', maxY:260},
-    {id:'sea-demanda', hist:SEA_HIST.demanda,  y2025:SEA_2025.demanda, actual:SEA_2026.demanda, color:'#94a3b8', maxY:1700},
+    {id:'sea-demanda', hist:SEA_HIST.demanda,  y2025:SEA_2025.demanda, actual:SEA_2026.demanda, color:'#94a3b8', maxY:2000},
     {id:'sea-solar',   hist:SEA_HIST.solar,   y2025:SEA_2025.solar,   actual:SEA_2026.solar,   color:'#f59e0b', maxY:80},
     {id:'sea-termica', hist:SEA_HIST.termica,  y2025:SEA_2025.termica, actual:SEA_2026.termica, color:'#ef4444', maxY:260},
   ];
