@@ -206,6 +206,7 @@ tbody td.label{color:#8ba0bc;font-size:.78rem}
       <div class="legend-item"><div class="legend-dot" style="background:#22d3ee"></div>IMEBA adicional INIA</div>
       <div class="legend-item"><div class="legend-dot" style="background:#6ee7b7"></div>IMEBA adicional MEVIR</div>
       <div class="legend-item"><div class="legend-dot" style="background:#f5c842"></div>Patrimonio Agropecuario</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fb923c"></div>FIS (Fondo Inspección Sanitaria)</div>
       <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>IRA / IMAGRO (pre-2006)</div>
     </div>
     <div class="bar-chart" id="bar-agro-serie" style="gap:5px"></div>
@@ -260,9 +261,10 @@ const AGRO = {
   mevir:[0.194,0.194,0.02,0.129,0.142,0.121,0.144,0.214,0.319,0.297,0.291,0.306,0.365,0.34,0.351,0.364,0.422,0.404,0.405,0.362,0.329,0.323,0.308,0.359,0.364,0.477,0.532,0.34,0.36,0.439],
   inia:[0.436,0.452,0.428,0.307,0.325,0.296,0.355,0.503,0.746,0.692,0.686,0.763,0.913,0.846,0.859,0.972,1.066,1.035,1.024,0.989,0.852,0.937,0.882,0.96,0.969,1.208,1.347,0.957,1.003,1.174],
   pat:[0.771,1.267,1.256,0.871,0.955,0.262,0.013,0.007,0.006,0.004,0.003,0.001,0.166,0.387,0.506,0.752,0.794,1.325,1.788,1.584,1.389,1.172,1.039,0.992,1.134,1.082,1.155,0.998,0.959,0.972],
-  ira:[0.224,0.029,0.015,0.008,0.034,0.011,0.011,0.048,0.098,0.114,0.115,0.215,0.028,0.027,0.005,0.003,0.006,0.002,0.001,0.0,0.002,0.0,null,null,null,null,null,null,null,null],
-  total:[3.303,4.328,4.084,2.785,2.832,1.869,1.959,2.952,4.864,4.615,4.665,4.833,4.226,3.798,4.132,4.946,5.002,5.281,5.952,5.558,5.022,4.808,4.799,4.956,5.056,6.167,6.507,4.778,4.832,5.753],
-  varia:[null,31.0,-5.6,-31.8,1.7,-34.0,4.8,50.7,64.8,-5.1,1.1,3.6,-12.6,-10.1,8.8,19.7,1.1,5.6,12.7,-6.6,-9.6,-4.3,-0.2,3.3,2.0,22.0,5.5,-26.6,1.1,19.1]
+  ira:[0.224,0.029,0.015,0.008,0.034,0.011,0.011,0.048,0.098,0.114,0.115,0.215,0.028,0.027,0.005,0.003,0.006,0.002,0.001,null,0.002,null,null,null,null,null,null,null,null,null],
+  fis:[0.3067,0.2092,0.2394,0.2047,0.2001,0.1736,0.1579,0.5752,0.9251,0.923,1.0654,0.9063,1.0495,0.9026,0.8729,0.9779,0.9918,0.8921,1.0107,1.0402,1.0722,1.0185,1.098,1.1349,1.0945,1.5362,1.4658,1.0784,1.1012,1.3384],
+  total:[3.61,4.537,4.323,2.99,3.032,2.043,2.117,3.527,5.789,5.538,5.73,5.739,5.276,4.701,5.005,5.924,5.994,6.173,6.963,6.598,6.094,5.826,5.897,6.091,6.151,7.703,7.973,5.856,5.933,7.091],
+  varia:[null,25.7,-4.7,-30.8,1.4,-32.6,3.6,66.6,64.1,-4.3,3.5,0.2,-8.1,-10.9,6.5,18.4,1.2,3.0,12.8,-5.2,-7.6,-4.4,1.2,3.3,1.0,25.2,3.5,-26.6,1.3,19.5]
 };
 
 // ── UTILIDADES ──
@@ -449,7 +451,7 @@ function buildComposicion(){
 
 // ── AGRO ──
 function buildAgro(){
-  const {years,imeba,mevir,inia,pat,ira,total,varia} = AGRO;
+  const {years,imeba,mevir,inia,pat,ira,fis,total,varia} = AGRO;
   const n = years.length;
 
   // KPIs último año (2025)
@@ -467,9 +469,10 @@ function buildAgro(){
   const mxT = Math.max(...total.filter(v=>v));
   document.getElementById('bar-agro-serie').innerHTML = years.map((yr,i)=>{
     const tot = total[i]||0;
-    const im = imeba[i]||0, me = mevir[i]||0, in_ = inia[i]||0, pt = pat[i]||0, ir = ira[i]||0;
+    const im = imeba[i]||0, me = mevir[i]||0, in_ = inia[i]||0,
+          pt = pat[i]||0, fi = fis[i]||0, ir = ira[i]||0;
     const isSequia = yr===2023;
-    const isRecord = yr===2022;
+    const isRecord = yr===2021;
     return `<div class="stacked-row">
       <div class="bar-year" style="${isRecord?'color:#34d399':isSequia?'color:#f87171':''}">${yr}</div>
       <div class="stacked-track" style="height:22px">
@@ -477,25 +480,33 @@ function buildAgro(){
         <div class="seg" style="width:${(in_/mxT*100).toFixed(2)}%;background:#22d3ee;opacity:.85"></div>
         <div class="seg" style="width:${(me/mxT*100).toFixed(2)}%;background:#6ee7b7;opacity:.85"></div>
         <div class="seg" style="width:${(pt/mxT*100).toFixed(2)}%;background:#f5c842;opacity:.85"></div>
+        <div class="seg" style="width:${(fi/mxT*100).toFixed(2)}%;background:#fb923c;opacity:.85"></div>
         ${ir?`<div class="seg" style="width:${(ir/mxT*100).toFixed(2)}%;background:#64748b;opacity:.7"></div>`:''}
       </div>
       <div class="bar-val" style="${isRecord?'color:#34d399':isSequia?'color:#f87171':''}">$${fmt(tot,2)}B</div>
     </div>`;
   }).join('');
 
-  // Variación interanual (desde 1997)
+  // Variación interanual — barras DIVERGENTES (negativo=izquierda, positivo=derecha)
   const varData = years.slice(1).map((yr,i)=>({yr, v:varia[i+1]}));
   const mxV = Math.max(...varData.map(d=>Math.abs(d.v||0)));
   document.getElementById('bar-agro-var').innerHTML = varData.map(({yr,v})=>{
     if(v===null||v===undefined) return '';
     const pos = v>=0;
-    const pct = (Math.abs(v)/mxV*100).toFixed(1);
+    const halfPct = (Math.abs(v)/mxV*50).toFixed(2); // max = 50% del ancho total
+    const col = pos?'#34d399':'#f87171';
+    // Positivo: fill desde el centro hacia la derecha
+    // Negativo: fill desde el centro hacia la izquierda
+    const fillStyle = pos
+      ? `left:50%;width:${halfPct}%;border-radius:0 4px 4px 0;`
+      : `right:50%;width:${halfPct}%;border-radius:4px 0 0 4px;`;
     return `<div class="bar-row">
-      <div class="bar-year" style="color:${pos?'#34d399':'#f87171'}">${yr}</div>
-      <div class="bar-track" style="background:rgba(130,170,225,.07)">
-        <div class="bar-fill" style="width:${pct}%;background:${pos?'#34d399':'#f87171'};opacity:.8"></div>
+      <div class="bar-year" style="color:${col}">${yr}</div>
+      <div class="bar-track" style="background:rgba(130,170,225,.07);position:relative;overflow:visible">
+        <div style="position:absolute;left:50%;top:0;width:1px;height:100%;background:rgba(130,170,225,.25);z-index:1"></div>
+        <div style="position:absolute;${fillStyle}height:100%;background:${col};opacity:.85"></div>
       </div>
-      <div class="bar-val" style="color:${pos?'#34d399':'#f87171'}">${pos?'+':''}${fmt(v,1)}%</div>
+      <div class="bar-val" style="color:${col}">${pos?'+':''}${fmt(v,1)}%</div>
     </div>`;
   }).join('');
 
@@ -503,10 +514,11 @@ function buildAgro(){
   const i25 = years.indexOf(2025);
   const tot25 = total[i25];
   const comp25 = [
-    {label:'IMEBA base', val:imeba[i25], col:'#34d399'},
-    {label:'IMEBA adicional INIA', val:inia[i25], col:'#22d3ee'},
-    {label:'IMEBA adicional MEVIR', val:mevir[i25], col:'#6ee7b7'},
-    {label:'Patrimonio Agropecuario', val:pat[i25], col:'#f5c842'},
+    {label:'IMEBA base', val:imeba[i25]||0, col:'#34d399'},
+    {label:'IMEBA adicional INIA', val:inia[i25]||0, col:'#22d3ee'},
+    {label:'IMEBA adicional MEVIR', val:mevir[i25]||0, col:'#6ee7b7'},
+    {label:'Patrimonio Agropecuario', val:pat[i25]||0, col:'#f5c842'},
+    {label:'FIS', val:fis[i25]||0, col:'#fb923c'},
   ];
   const mxComp = Math.max(...comp25.map(c=>c.val));
   document.getElementById('bar-agro-pct').innerHTML = comp25.map(c=>`
