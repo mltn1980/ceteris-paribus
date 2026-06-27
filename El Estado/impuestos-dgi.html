@@ -53,6 +53,7 @@ body{background:#0a111e;color:#dfe8f2;font-family:'Inter','Segoe UI',system-ui,s
 /* CSS bar charts */
 .bar-chart{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .bar-row{display:grid;grid-template-columns:52px 1fr 72px;align-items:center;gap:10px}
+.comp-row{display:grid;grid-template-columns:170px 1fr 52px;align-items:center;gap:10px}
 .bar-year{font-size:.78rem;color:#8ba0bc;text-align:right;font-variant-numeric:tabular-nums}
 .bar-track{background:rgba(130,170,225,.1);border-radius:4px;height:22px;position:relative;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width .8s ease;min-width:2px}
@@ -522,8 +523,8 @@ function buildAgro(){
   ];
   const mxComp = Math.max(...comp25.map(c=>c.val));
   document.getElementById('bar-agro-pct').innerHTML = comp25.map(c=>`
-    <div class="bar-row">
-      <div class="bar-year" style="color:${c.col};font-weight:600;font-size:.76rem">${c.label}</div>
+    <div class="comp-row">
+      <div style="color:${c.col};font-weight:600;font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.label}</div>
       <div class="bar-track">
         <div class="bar-fill" style="width:${(c.val/mxComp*100).toFixed(1)}%;background:${c.col}"></div>
       </div>
