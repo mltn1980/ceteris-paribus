@@ -1,9 +1,9 @@
 {
-  "fecha": "2026-06-17",
+  "fecha": "2026-06-26",
   "fuente": "Cámara Mercantil de Productos del País",
   "precios": {
     "maiz": {
-      "precio": 247,
+      "precio": 245,
       "desc": "Grado II disponible - Mvd."
     },
     "girasol": {
@@ -11,7 +11,7 @@
       "desc": "Industria zafra nueva - Mvd."
     },
     "soja": {
-      "precio": 380,
+      "precio": 390,
       "desc": "Industria zafra nueva - Mvd."
     }
   }
